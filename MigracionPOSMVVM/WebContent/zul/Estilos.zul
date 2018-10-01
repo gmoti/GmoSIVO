@@ -1,0 +1,46 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="new page title" border="normal">
+
+<style>
+
+.g-tb{
+	font-size:14px;
+	height:25px;
+	width:150px;
+}	
+.g-cb{
+	font-size:14px;
+	height:25px;
+	width:150px;
+}	
+
+
+
+
+</style>
+
+
+<label value="Etiqueta" />
+
+<button label="click" onClick="" />
+
+<label value="Etiqueta" />
+
+<combobox zclass="g-cb">
+<comboitem label="uno"/>
+<comboitem label="dos"/>
+</combobox>
+
+<combobox width="150px" height="25px">
+<comboitem label="uno"/>
+<comboitem label="dos"/>
+</combobox>
+
+<textbox value="contenido" sclass="g-tb"/>
+
+<textbox value="contenido"/>
+
+
+</window>
+</zk>

@@ -1,0 +1,65 @@
+<?page title="Menu Principal" contentType="text/html;charset=UTF-8"?>
+<!-- Latest compiled and minified CSS -->
+<?link rel="stylesheet" href="../css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="../css/mCliente.css"?>
+<?link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"?>
+<!-- Latest compiled and minified JavaScript -->
+<?script src="js/bootstrap.min.js" ?>
+
+<window border="none" width="100%" height="100%"		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMenuPrincipal')">
+		
+		
+	<div width="100%" style="background-color:black;color: white;" height="40px">
+		<hbox>
+			<label value="@load(vm.sucursalDes)"/>
+			<label value="::"/>
+			<label value="@load(vm.usuario)"/>			
+		</hbox>																			
+	</div>
+	
+	<div>		
+		<menubar>
+			<menu label="Venta">
+				<menupopup>
+					<menuitem label="Venta Directa" onClick="@command('seleccionMenu',arg='M1_1')"/>
+					<menuseparator />
+					<menuitem label="Presupuestos" onClick="@command('seleccionMenu',arg='M1_2')"/>
+					<menuseparator />
+					<menuitem label="Encargos" onClick="@command('seleccionMenu',arg='M1_3')"/>
+					<menuseparator />
+					<menuitem label="Liberacion de encargos" onClick="@command('seleccionMenu',arg='M1_4')"/>
+				</menupopup>
+			</menu>
+	
+			<menu label="Mantenedores">
+				<menupopup>			
+					<menuitem label="Clientes" onClick="@command('seleccionMenu',arg='M2_1')"/>
+					<menuseparator />
+					<menuitem label="Graduacion cliente" onClick="@command('seleccionMenu',arg='M2_2')"/>
+					<menuseparator />
+					<menuitem label="Medico" onClick="@command('seleccionMenu',arg='M2_3')"/>
+					<menuseparator />
+					<menuitem label="Albaran" />
+					<menuseparator />
+					<menuitem label="Cambio de folio" />
+				</menupopup>
+			</menu>
+	
+			<menu label="Informes">
+				<menupopup>
+					<menuitem label="Listado Informe optico" onClick="@command('seleccionMenu',arg='M3_1')"/>
+					<menuitem label="Listado Total del dia" onClick="@command('seleccionMenu',arg='M3_2')"/>
+					<menuitem label="Listado de boletas" onClick="@command('seleccionMenu',arg='M3_3')"/>
+					<menuitem label="Listado de presupuestos" onClick="@command('seleccionMenu',arg='M3_4')"/>
+					<menuitem label="Listado de encargos pendientes de entrega" onClick="@command('seleccionMenu',arg='M3_5')"/>
+					<menuitem label="Busqueda general de articulos" onClick="@command('seleccionMenu',arg='M3_6')"/>
+					<menuitem label="Copia de guias y boletas" onClick="@command('seleccionMenu',arg='M3_7')"/>
+					
+				</menupopup>
+			</menu>
+		</menubar>
+	</div>
+	
+		
+</window>

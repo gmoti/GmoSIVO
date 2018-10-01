@@ -1,0 +1,114 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="reporte5" width="100%" height="100%" border="none"	
+     		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoTrabajosPendientes')">			
+			
+	<style>   
+    .MyGridRowHeight
+        tr.z-row td.z-row-inner div.z-row-content{
+            border:1px solid white;
+            border-right:1px solid transparent;
+            padding:0px;
+            margin:0px;
+     }
+	</style>
+	
+	<div width="100%" height="100%">
+	
+		<borderlayout>
+		<north>
+			<div width="100%" height="100%">
+	
+			<div width="100%" style="background-color:black;color: white">
+				<label value="LISTADO DE ENCARGOS" />						
+				<space width="400px"/>
+				<toolbarbutton image="/image/Print_32x32.png" onClick="@command('reporte')"/>
+				<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte5.detach()"/>																
+			</div>	
+		
+			<grid sclass="MyGridRowHeight">
+				<columns>
+					<column width="150px" />
+					<column width="180px" />
+					<column width="100px" />					
+					<column width="180px" />
+					<column width="50px" />
+					<column width="100px" />					
+					<column width="180px" />
+					<column width="100px" />
+					<column width="180px" />										
+				</columns>
+				<rows>
+					<row>
+						<label value="Numero de encargo"/>
+						<textbox value="@bind(vm.listadoTrabajosPendientesForm.codigo)" width="175px"/>
+						
+						<label value="Cliente"/>
+						<textbox value="@bind(vm.listadoTrabajosPendientesForm.cliente)" width="175px"/>						
+						<button label="B"/>
+						
+						<label value="Divisa"/>						
+						<combobox model="@bind(vm.listadoTrabajosPendientesForm.listaDivisas)" 
+									width="175px" selectedItem="@bind(vm.divisaBean)">
+							<template name="model">
+								<comboitem label="@load(each.descripcion)"/>
+							</template>						
+						</combobox>
+						
+						<label value="Fecha inicio"/>
+						<datebox value = "@bind(vm.fechaInicio)" format="dd/MM/yyyy" width="175px"/>
+					</row>
+					
+					<row>
+						<label value="Fecha fin"/>
+						<datebox value = "@bind(vm.fechaFin)" format="dd/MM/yyyy" width="175px"/>
+						
+						<label value="Local(Tienda)"/>
+						<textbox value="@load(vm.listadoTrabajosPendientesForm.local)" width="175px"/>				
+						
+						<space/>
+						<space/>
+						<space/>
+						<label value="Cerrado"/>
+						<textbox value="@load(vm.listadoTrabajosPendientesForm.cerrado)" width="30px"/>				
+					</row>
+					
+					<row>
+						<label value="Anulado"/>
+						<combobox width="175px" selectedItem="@bind(vm.anulado)">
+							<comboitem value="0"  label="Seleccione"/>
+							<comboitem value="N"  label="No"/>	
+							<comboitem value="S"  label="Si"/>					
+						</combobox>
+						<space/>
+						<space/>
+						<space/>
+						<space/>
+						<space/>
+						<space/>					
+					</row>				
+					
+				</rows>
+			</grid>
+		</div>		
+		</north>
+		
+		<center>
+		
+			<div height="100%" width="100%" >
+			<iframe id="reporte" height="100%" width="100%" 
+						autohide="true" content="@bind(vm.fileContent)">
+			</iframe>		
+			</div>		
+		</center>
+		
+		</borderlayout>
+		
+	
+			
+		
+			
+		
+	</div>
+</window>
+</zk>

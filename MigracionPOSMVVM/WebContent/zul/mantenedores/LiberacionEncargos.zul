@@ -1,0 +1,187 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winLiberacionEncargo" border="normal" closable="false" width="100%" height="100%"
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerLiberacionEncargos')">		
+		
+		<style>   
+		    .MyGridRowHeight
+		        tr.z-row td.z-row-inner div.z-row-content{
+		            border:1px solid white;
+		            border-right:1px solid transparent;
+		            padding:0px;
+		            margin:0px;
+		     }
+		</style>		
+		
+		<div width="100%" height="100%">
+			<div width="100%" style="background-color:black;color: white;">
+				<label value="LIBERACION DE ENCARGOS" />
+			</div>	
+					
+			<div width="100%" style="background-color:black;color: white;" align="right">						
+			    <toolbarbutton image="/image/buscar.png" onClick="@command('buscar_liberacion')" />
+			    <toolbarbutton image="/image/Check_32x32.png" onClick="@command('liberacion_pedido')" />
+			    <toolbarbutton image="/image/Remove_32x32.png" onClick="winLiberacionEncargo.detach()" />				
+			</div>
+			
+			<div width="100%" style="background-color:gray; color: white;" align="center">
+				<label value="Fecha desde:"/><datebox value="@bind(vm.fdesde)" format="dd/MM/yyyy"/>
+				<space width="30px"/>
+				<label value="Fecha hasta:"/><datebox value="@bind(vm.fhasta)" format="dd/MM/yyyy"/>
+			</div>			
+		
+			<div width="100%" height="100%" >
+			<borderlayout>
+				<north>
+					<div width="100%" height="300px" >
+					
+						<div width="100%" style="background-color:black;color: white;">
+							<space width="20px"/>
+							<label value="Codigo" />
+							<space width="50px"/>
+							<label value="Fecha Encargo" />
+							<space width="40px"/>
+							<label value="Fecha Entrega" />
+							<space width="50px"/>
+							<label value="Cliente" />
+							<space width="270px"/>
+							<label value="Agente" />
+							<space width="50px"/>
+							<label value="Grupo" />
+							<space width="50px"/>
+							<combobox selectedItem="@bind(vm.estadoEncargo)" width="180px">
+								<comboitem value="1" label="Estado encargo"/>
+								<comboitem value="2"  label="No Liberado"/>
+								<comboitem value="3"  label="Liberado"/>
+								<comboitem value="4"  label="Entregado"/>
+							</combobox>
+							<space width="10px"/>
+							<label value="Seleccionar" />							
+						</div>			
+					
+						<div width="100%">
+							<grid model="@bind(vm.busquedaLiberacionesForm.listaPedidos)"  
+									sclass="MyGridRowHeight" emptyMessage="Sin datos cargados" width="100%" height="295px">
+								<columns>
+									<column width="120px" />
+									<column width="150px" />
+									<column width="150px" />
+									<column width="350px" />
+									<column width="120px" />
+									<column width="120px" />
+									<column width="180px" />
+									<column width="120px" />
+								</columns>
+								<template name="model">							
+									<row>
+										<textbox value="@load(each.cod_lista_lib)"  width="110px" style="text-decoration: underline; color:blue" 
+												onClick="@command('seleccionaDetalle',pedido=each)"/>
+										<textbox value="@load(each.fecha)"  width="140px" disabled="true"/>
+										<textbox value="@load(each.fecha_entrega)"  width="140px" disabled="true"/>
+										<textbox value="@load(each.cliente)"  width="340px" disabled="true"/>
+										<textbox value="@load(each.agente)"  width="110px" disabled="true"/>
+										<textbox value="@load(each.grupo)"  width="110px" disabled="true"/>
+										<space width="200px"/>
+										<checkbox checked="@bind(each.checked)"/>								
+									</row>							
+								</template>
+							</grid>
+						</div>
+					</div>
+				</north>
+
+				<center>
+					<div width="100%" height="300px">
+						<borderlayout>
+						
+							<west width="70%">
+								<div>								
+									<div width="100%" style="background-color:black;color: white;">
+									    
+										<label value="No" />
+										<space width="10px"/>
+										<label value="Articulo" />
+										<space width="50px"/>
+										<label value="Descripcion" />
+										<space width="200px"/>
+										<label value="1 Hora" />
+										<space width="10px"/>
+										<label value="Ojo" />
+										<space width="15px"/>
+										<label value="Esfera" />
+										<space width="8px"/>
+										<label value="Cilindro" />
+										<space width="5px"/>
+										<label value="Cantidad" />
+										<space width="20px"/>
+										<label value="Detalle" />
+									</div>								
+								
+									<grid model="@bind(vm.busquedaLiberacionesForm.listaDetalle)" 
+											sclass="MyGridRowHeight" emptyMessage="Sin datos cargados" width="100%" height="295px">
+										<columns>
+										    <column width="20px" />
+											<column width="120px" />
+											<column width="300px" />
+											<column width="60px" />
+											<column width="60px" />
+											<column width="60px" />
+											<column width="60px" />
+											<column width="60px" />
+											<column width="50px" />
+											<column width="120px" />
+										</columns>
+										<template name="model">
+											<row>
+												<textbox value=""  width="15px" disabled="true"/>
+												<textbox value="@load(each.articulo)"  width="110px" disabled="true"/>
+												<textbox value="@load(each.descripcion)"  width="295px" disabled="true"/>
+												<textbox value="@load(each.unahora)"  width="50px" disabled="true"/>
+												<textbox value="@load(each.ojo)"  width="50px" disabled="true"/>
+												<textbox value="@load(each.esfera)"  width="50px" disabled="true"/>
+												<textbox value="@load(each.cilindro)"  width="50px" disabled="true"/>
+												<textbox value="@load(each.cantidad)"  width="110px" disabled="true"/>
+												<space width="50px"/>
+												<button onClick="@command('detalle_suplemento',pedido=each)"  width="50px"/>
+											</row>
+										</template>
+									</grid>
+								</div>
+							</west>
+							
+							<east width="30%">
+								<div>
+									<div width="100%" style="background-color:black;color: white;">
+										<space width="10px"/>
+										<label value="Id" />
+										<space width="50"/>
+										<label value="Descripcion" />
+										<space width="80"/>
+										<label value="Valor" />
+									</div>
+								
+									<grid model="@bind(vm.busquedaLiberacionesForm.listaSuplementos)" 
+											sclass="MyGridRowHeight" emptyMessage="Sin datos cargados" width="100%" height="295px">
+										<columns>
+											<column width="80px" />
+											<column width="200px" />
+											<column width="80px" />
+										</columns>
+										<template name="model">
+											<row>
+												<textbox value="@load(each.tratami)"  width="75px" disabled="true"/>
+												<textbox value="@load(each.descripcion)"  width="195px" disabled="true"/>
+												<textbox value="@load(each.valor)"  width="70px" disabled="true"/>											
+											</row>
+										</template>
+									</grid>
+								</div>
+							</east>
+							
+						</borderlayout>
+					</div>
+				</center>
+			</borderlayout>
+			</div>
+		</div>
+</window>

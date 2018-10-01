@@ -1,0 +1,91 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winBusquedaConvenio" border="none" width="60%" height="55%" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaConvenio')">
+		
+		
+		<style>
+			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
+			border:1px solid white; border-right:1px solid transparent;
+			padding:0px; margin:0px; }
+		</style>
+		
+		<borderlayout>
+			<north>
+				<div width="98%" height="30%">				
+					
+					<div width="100%" style="background-color:black;color: white" height="40px">
+						<label value="Busqueda Convenios" style="float: left"/>	
+						<div style="float: right">					
+							<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaConvenio.detach()"/>	
+						</div>				
+					</div>
+					
+					
+					<div width="100%">
+
+						<grid sclass="MyGridRowHeight" height="150x">
+							<columns>
+								<column width="250px" />
+								<column width="200px" />
+							</columns>
+							<rows>
+								<row>
+									<label value="Codigo convenio"/>
+									<textbox width="180px" value="@bind(vm.busquedaConveniosForm.codigo)"/>
+								</row>
+								<row>
+									<label value="Nombre convenio"/>
+									<textbox value="@bind(vm.busquedaConveniosForm.nombre)" width="180px"/>
+								</row>
+								<row>
+									<label value="Nif empresa"/>
+									<textbox value="@bind(vm.busquedaConveniosForm.empresa)" width="180px"/>
+								</row>
+								<row>
+									<label />									
+									<toolbarbutton image="/iconos/lupa.png" label="Buscar"  onClick="@command('buscarConvenios')"/>
+								</row>
+							</rows>
+						</grid>
+						
+					</div>
+				</div>
+			</north>
+			
+			<center> 
+				<div width="98%" height="70%">
+				
+					<div width="100%" style="background-color:black;color: white">
+						<space width="10px"/>
+						<label value="Codigo" />
+						<space width="50px"/>
+						<label value="Descripcion" />
+						<space width="365px"/>
+						<label value="Seleccion" />						
+					</div>
+					<div width="100%">	
+						
+						<grid model="@load(vm.busquedaConveniosForm.lista_convenios)"
+								sclass="MyGridRowHeight" height="200px">
+							<columns>
+								<column width="100px" />
+								<column width="500px" />
+								<column width="50px" />
+							</columns>
+							<template name="model">
+								<row>
+									<textbox value="@load(each.id)" disabled="true"/>
+									<textbox value="@load(each.descripcion)" width="490px" disabled="true"/>
+									
+									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaConvenio',arg=each)"/>
+								</row>
+							</template>
+						</grid>	
+						
+					</div>
+				</div>
+			</center>
+		</borderlayout>
+</window>
+</zk>

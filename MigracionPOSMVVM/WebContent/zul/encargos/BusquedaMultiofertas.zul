@@ -1,0 +1,269 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winBusquedaMultiofertas" border="none" width="65%" 
+		height="80%" position="center" closable="false" mode="modal" sizable="false" 		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaMultiofertas')">
+		
+		<style>    
+		    .MyGridRowHeight
+		        tr.z-row td.z-row-inner div.z-row-content{
+		            border:1px solid white;
+		            border-right:1px solid transparent;
+		            padding:0px;
+		            margin:0px;            
+		     }
+		     
+		     .z-combobox-inp
+		     { height: 20px; }
+		     
+		     .z-button-inp
+		     { height: 15px; }
+		</style>
+		
+		
+		<borderlayout>
+			<north >			
+				<div width="100%" height="30%">	
+				
+					<div width="100%" style="background-color:black;color: white">
+						<label value="BUSQUEDA PRODUCTOS MULTIOFERTAS" />
+						<!--  <div style="text-align: right;">-->
+						<space width="400px"/>
+						<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaMultiofertas.detach()"/>							
+					</div>	
+					
+					<grid sclass="MyGridRowHeight">
+						<columns>
+							<column width="300px" />
+							<column width="300px" />
+							<column width="80px" />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tipo de familia" />								
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaTipoFamilia)"
+									selectedItem="@bind(vm.tipoFamiliaBean)"
+									onSelect="@command('manejoComboBox',accion='tipofamilia')" placeholder="Seleccione"
+									onRightClick="@command('comboSetNull',objetoBean=vm.tipoFamiliaBean)"
+									width="290px">
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<space/>
+							</row>
+							
+							<row>
+								<label value="Familias de productos multiofertas" />								
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaFamilias)"
+									selectedItem="@bind(vm.familiaBean)"
+									onSelect="@command('manejoComboBox',accion='familia')"
+									placeholder="Seleccione"
+									onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
+									width="290px">
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<space/>
+							</row>
+							
+							<row>
+								<label value="Sub-familia de Productos" />								
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
+									selectedItem="@bind(vm.subFamiliaBean)"
+									onSelect="@command('manejoComboBox',accion='subfamilia')"
+									placeholder="Seleccione"
+									onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
+									width="290px">
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<space/>
+							</row>
+							
+							<row>
+								<label value="Grupo de Productos" />								
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
+									selectedItem="@bind(vm.grupoFamiliaBean)"
+									placeholder="Seleccione"
+									onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
+									width="290px">
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<space/>
+							</row>
+							
+							<row>
+								<label value="Código de Producto SAP" />								
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
+								<space/>
+							</row>
+							
+							<row>
+								<label value="Codigo Barra Producto" />
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
+								<button label="click" onClick="@command('buscarProducto')" />
+							</row>
+
+						</rows>
+					</grid>										
+				</div>					
+			</north>
+			
+			<center>
+				<div width="100%" height="100%">
+				
+					<div height="45%" visible="@bind(vm.verGraduacion)">	
+						<radiogroup id="ojos"/>
+						<!-- <radiogroup id="ojosLentillas"/>	 -->
+					
+						<div width="100%" style="background-color:black;color: white">
+							<label value="Seleccion por:" />													
+						</div>
+								
+						<grid sclass="MyGridRowHeight" >						
+							<columns>
+								<column  hflex="2"/>
+								<column  hflex="1"/>
+								<column  hflex="1"/>
+								<column  hflex="1"/>
+								<column  hflex="1"/>
+								<column  hflex="1"/>
+								<column  hflex="1"/>
+							</columns>						
+												
+							<rows>
+								<row>
+								<cell colspan="1"/>
+								<cell colspan="1"/>	
+								<cell colspan="1"/>							
+								<label value="Esfera" />
+								<label value="Cilindro" />
+								<label value="Diametro" />
+								<cell colspan="1"/>
+								</row>
+								
+								<row>								
+								<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" />
+								<cell colspan="1"/>
+								<label value="O.D" />								
+								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
+								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
+								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
+								
+								<checkbox label="Cerca" checked="@bind(vm.cerca)"/>
+								</row>
+								
+								<row>															
+								<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)"/>
+								<button label="B" onClick="" width="30px"/>								
+								<label value="O.I" />
+								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
+								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
+								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
+								<cell colspan="1"/>
+								</row>
+							</rows>
+						</grid>
+					</div>
+					
+					<div height="45%" visible="true">
+					
+						<div width="100%" style="background-color:black;color: white">
+							<space width="10px"/>
+							<label value="Codigo articulo" />	
+							<space width="80px"/>
+							<label value="Descripcion" />
+							<space width="190px"/>
+							<label value="Precio" />
+							<space width="15px"/>
+							<label value="Cantidad" />
+							<space width="15px"/>
+							<label value="Grupo" />
+							<space width="15px"/>
+							<label value="Ver tratami" />												
+						</div>
+						
+						<grid model="@bind(vm.busquedaProductosForm.listaProductosMultioferta)" sclass="MyGridRowHeight" height="120px" emptyMessage="Sin registros">
+							<columns>
+								<column width="150px" />
+								<column width="300px" />
+								<column width="100px" />
+								<column width="100px" />
+								<column width="60px" />
+								<column width="80px" />
+							</columns>
+							<template name="model">
+								<row>
+									<textbox value="@load(each.codigo)" readonly="true"/>
+									<textbox value="@load(each.descripcion)" readonly="true" width="290px"/>
+									<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
+									<intbox value="@load(each.cantidad)"  style="text-align:right" format="#,###,##0" locale="it" width="90px" readonly="true"/>
+									<textbox value="@load(each.grupo)"  width="58px"/>
+									<button label="Ver" onClick="@command('AgregarSuplementos',producto=each,index=forEachStatus.index)" />
+								</row>
+							</template>
+						</grid>
+					</div>	
+					
+					<div height="45%" visible="true">					
+						<div width="100%" style="background-color:black;color: white">
+							<space width="10px"/>
+							<label value="Articulo" />	
+							<space width="80px"/>
+							<label value="Descripcion" />
+							<space width="210px"/>
+							<label value="Precio Iva" />
+							<space width="15px"/>
+							<label value="Importe" />
+							<space width="20px"/>
+							<label value="Grupo" />
+							<space width="10px"/>
+							<label value="Estado" />												
+						</div>
+						
+						<grid model="@bind(vm.busquedaProductosForm.listaProductos)" sclass="MyGridRowHeight" height="150px" emptyMessage="Sin registros">
+							<columns>
+								<column width="150px" />
+								<column width="300px" />
+								<column width="100px" />
+								<column width="100px" />
+								<column width="60px" />
+								<column width="40px" />
+								<column width="60px" />
+							</columns>
+							<template name="model">
+								<row>
+									<textbox value="@load(each.cod_barra)" readonly="true"/>
+									<textbox value="@load(each.descripcion)" readonly="true" width="290px"/>
+									<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
+									<intbox value="@load(each.importe)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
+									<textbox value="@load(each.grupo)" readonly="true" width="58px"/>
+									<textbox value="@load(each.estado)" readonly="true" width="38px"/>
+									<button label="Sel" onClick="@command('pasarProductoMultioferta',producto=each)" />
+								</row>
+							</template>
+						</grid>					
+					</div>					
+							
+				</div>					
+			</center>		
+		</borderlayout>
+</window>
+</zk>

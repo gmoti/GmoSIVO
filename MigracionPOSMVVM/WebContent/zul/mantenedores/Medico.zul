@@ -1,0 +1,104 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winCliente" border="none" width="100%" height="100%" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMedico')  ">
+			
+	<style>   
+	    .MyGridRowHeight
+	        tr.z-row td.z-row-inner div.z-row-content{
+	            border:1px solid white;
+	            border-right:1px solid transparent;
+	            padding:0px;
+	            margin:0px;
+	     }
+	</style>	
+	
+	<div width="100%" height="100%">
+	
+		<div width="100%" style="background-color:black;color: white;">
+				<label value="Clientes" />
+				<space width="700px"/>
+				<toolbarbutton image="/image/Check_32x32.png" onClick="@command('grabaVenta')" />
+			   	<toolbarbutton image="/image/Remove_32x32.png" onClick="winCliente.detach()" />
+		</div>	
+	
+		<div  width="100%" height="100%">
+			<grid sclass="MyGridRowHeight">
+				<columns>
+					<column width="200px" />
+					<column width="550px" />					
+				</columns>
+				<rows>
+					<row>				
+						<label value="Codigo"/>
+						<cell style="padding: 0px 0px 0px 0px">
+							<textbox value="@bind(vm.medicoForm.codigo)" width="150px" disabled="true"/>	
+							<space width="20px"/>					
+							<label value="Rut" />
+							<space width="20px"/>
+							<textbox value="@bind(vm.medicoForm.rut)" width="150px" onBlur="@command('retornaDv')"/>
+							<textbox value="@bind(vm.medicoForm.dv)" width="50px" disabled="true"/>
+							<button width="50px" onClick="@command('buscarMedico')"/>
+						</cell>
+					</row>
+					
+					<row>				
+						<label value="Apellidos"/>
+						<textbox value="@bind(vm.medicoForm.apellidos)" width="400px"/>
+					</row>
+					
+					<row>				
+						<label value="Nombres"/>
+						<textbox value="@bind(vm.medicoForm.nombres)" width="400px"/>
+					</row>
+					
+					<row>				
+						<label value="Direccion"/>
+						<textbox value="@bind(vm.medicoForm.direccion)" width="500px"/>
+					</row>
+					
+					<row>				
+						<label value="Localidad"/>
+						<textbox value="@bind(vm.medicoForm.locali)" width="500px"/>
+					</row>
+					
+					<row>				
+						<label value="Provincia"/>
+						<combobox model="@bind(vm.medicoForm.listaProvincia)">
+							<template name="model">
+								<comboitem label="each.descripcion"/>
+							</template>						
+						</combobox>
+					</row>
+					
+					<row>				
+						<label value="Doctor Externo"/>
+						<checkbox checked="@bind(vm.medicoForm.externo)"/>
+					</row>
+					
+					<row>				
+						<label value="Telefono"/>
+						<textbox value="@bind(vm.medicoForm.tfno)" width="500px"/>
+					</row>
+					
+					<row>				
+						<label value="Fax"/>
+						<textbox value="@bind(vm.medicoForm.fax)" width="500px"/>
+					</row>
+					
+					<row>				
+						<label value="Correo Electronico"/>
+						<textbox value="@bind(vm.medicoForm.email)" width="500px"/>
+					</row>
+					
+					<row>				
+						<label value="Codigo postal"/>
+						<textbox value="@bind(vm.medicoForm.codpos)" width="500px"/>
+					</row>
+					
+				</rows>
+			</grid>
+		</div>
+	</div>
+
+</window>

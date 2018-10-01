@@ -1,0 +1,130 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winBusquedaAvanzadaEncargo" border="none" width="60%" 
+		height="60%" position="center" closable="false" mode="modal" sizable="false" 		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaAvanzadaEncargo')">
+		
+		
+<style>    
+    .MyGridRowHeight
+        tr.z-row td.z-row-inner div.z-row-content{
+            border:1px solid white;
+            border-right:1px solid transparent;
+            padding:0px;
+            margin:0px;            
+     }
+     
+     .z-combobox-inp
+     { height: 20px; }
+     
+     .z-button-inp
+     { height: 15px; }
+</style>
+
+
+	<borderlayout>
+		<north>
+		<div width="100%" height="30%">	
+				<div width="100%" style="background-color:black;color: white">
+					<label value="Busqueda Avanzada de Encargos" />						
+					<space width="400px"/>
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)"/>													
+				</div>	
+				
+				<grid sclass="MyGridRowHeight">
+					<columns>
+						<column width="300px" />
+						<column width="300px" />
+					</columns>
+					<rows>
+						<row>
+						<label value="Codigo de Encargo" />
+						<textbox value="@bind(vm.busquedaPedidosForm.encargo)"/>
+						</row>
+						
+						<row>
+						<label value="Rut de Cliente" />
+						<textbox value="@bind(vm.busquedaPedidosForm.cliente)"/>
+						</row>
+						
+						<row>
+						<label value="Fecha de Encargo" />
+						<datebox value="@bind(vm.fecha_encargo)" format="dd/MM/yyyy"/>
+						</row>
+						
+						<row>
+						<label value="Agente" />
+						<combobox
+							model="@load(vm.busquedaPedidosForm.lista_agentes)" 
+							selectedItem="@bind(vm.agenteBean)">
+							<template name="model">
+								<comboitem label="@load(each.usuario)" />
+							</template>
+						</combobox>
+						</row>
+						
+						<row>
+						<space width="85px"/>
+						<button label="click" onClick="@command('buscar')"/>
+						</row>
+					</rows>
+				</grid>									
+			</div>			
+			
+		</north>
+	
+		<center>
+			<div height="70%">				
+				
+				<div width="100%" style="background-color:black;color: white">
+					<space width="10px"/>
+					<label value="Agente" />	
+					<space width="100px"/>
+					<label value="Codigo" />
+					<space width="80px"/>
+					<label value="F. Pedido" />
+					<space width="20px"/>
+					<label value="Hora" />
+					<space width="40px"/>
+					<label value="F. Entrega" />		
+					<space width="25px"/>
+					<label value="Anticipo" />
+					<space width="30px"/>			
+					<label value="Sel" />								
+					</div>	
+					<grid model= "@load(vm.busquedaPedidosForm.lista_pedidos)" 
+							sclass="MyGridRowHeight" height="100%"  emptyMessage="Sin registros" style="overflow: scroll;">						
+					<columns>
+						<column width="150px"/>
+						<column width="150px"/>
+						<column width="100px" />
+						<column width="80px" />
+						<column width="100px" /> 
+						<column width="100px" />
+						<column width="60px" />
+					</columns>						
+					<template name="model">							
+						<row>
+							<textbox value="@load(each.agente)" width="180px" readonly="true"/>							
+							<textbox value="@load(each.cliente)" width="180px" readonly="true"/>
+							
+							<textbox value="@load(each.fechaP)" width="100px" readonly="true"/>
+							<textbox value="@load(each.horaP)" width="80px" readonly="true"/>
+							  
+							<textbox value="@load(each.fechasEntragas)" width="100px" readonly="true"/>
+							<textbox value="@load(each.anticipo)" width="100px" readonly="true"/>
+							
+							<button label="Sel" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)
+									@global-command('encargoSeleccionado', arg=vm.busquedaPedidosForm.lista_pedidos, arg2=each)"/>
+								
+						</row>							
+					</template>
+					</grid>	
+				
+			</div>
+		</center>
+	
+	</borderlayout>
+
+</window>
+</zk>

@@ -1,0 +1,91 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winBusquedaGeneralArticulos" border="none" width="100%" height="100%" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaGeneralArticulos')">
+		
+		
+		<style>
+			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
+			border:1px solid white; border-right:1px solid transparent;
+			padding:0px; margin:0px; }
+		</style>
+		
+		<div width="100%" height="100%">
+		
+			<borderlayout>
+				<north>
+					<div height="100%" width="100%">
+						<div width="100%" style="background-color:black;color: white">
+							<label value="BUSQUEDA GENERAL DE ARTICULOS" /><space width="400px"/>
+							<toolbarbutton image="/image/Print_32x32.png" onClick="@command('reporte')"/>
+							<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaGeneralArticulos.detach()"/>																
+						</div>
+						
+						<div width="100%" height="100%" style="padding:15px 0px 0px 0px">
+							<hbox>
+								<label value="Codigo articulo"/>								
+								<textbox value="@bind(vm.codigo)"/>
+								
+								<label value="Descripcion"/>
+								<textbox value="@bind(vm.descripcion)"/>
+							</hbox>
+						</div>
+					</div>
+				</north>
+				
+				<center>
+					<div height="100%" width="100%" children="@load(vm.informeBusquedaProductoForm.listaBusquedaProducto)" style="overflow: scroll;" >					
+						<template name="children">
+						
+							<div width="100%" style="background-color:black;color: white">
+								<space width="10px"/>
+								<label value="Articulo"/>
+								<space width="80px"/>
+								<label value="Descripcion"/>
+								<space width="280px"/>								
+								<label value="Familia"/>
+								<space width="25px"/>
+								<label value="Sub Familia"/>
+								<space width="13px"/>
+								<label value="Grupo Familia"/>															
+							</div>
+						
+							<div width="100%">
+								<textbox value="@load(each.codigoBarra)" width="150px" disabled="true"/>
+								<textbox value="@load(each.descripcion)" width="350px" disabled="true"/>
+								<textbox value="@load(each.familia)" width="100px" disabled="true"/>
+								<textbox value="@load(each.subFamilia)" width="100px" disabled="true"/>
+								<textbox value="@load(each.grupoFamilia)" width="100px" disabled="true"/>								
+							</div>	
+							
+							<div width="100%" style="background-color:black;color: white">
+								<space width="20px"/>
+								<label value="Precio"/>
+								<space width="60px"/>																		
+								<label value="Precio Iva"/>
+								<space width="60px"/>
+								<label value="Tarifa"/>																									
+							</div>								
+							
+							<div width="100%" children="@load(each.listaBusquedaProducto)">
+								<template name="children" var="detalle">									
+							
+									<div width="100%">
+										<intbox value="@load(detalle.precio)" width="130px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
+										<intbox value="@load(detalle.precioIva)" width="130px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
+										<textbox value="@load(detalle.tarifa)" width="130px" disabled="true" style="text-align:center"/>																	
+									</div>
+							
+								</template>
+							</div>									
+				
+						</template>
+					</div>	
+				</center>
+				
+			</borderlayout>
+
+		</div>
+		
+</window>
+</zk>

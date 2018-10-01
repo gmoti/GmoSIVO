@@ -1,0 +1,135 @@
+<?page title="Busca Producto" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winBuscaProductoVenta"  border="none" width="900px" visible="@bind(vm.winVisibleBusqueda)"
+		height="700px" position="center" closable="false" mode="modal" sizable="false" 	
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProduct')">
+		
+<style>    
+    .MyGridRowHeight
+        tr.z-row td.z-row-inner div.z-row-content{
+            border:1px solid white;
+            border-right:1px solid transparent;
+            padding:0px;
+            margin:0px;            
+     }
+     
+     .z-combobox-inp
+     { height: 20px; }
+     
+     .z-button-inp
+     { height: 15px; }
+</style>
+
+		<borderlayout>
+			<north>
+			<div width="100%" height="30%">	
+					<div width="100%" style="background-color:black;color: white" height="40px">
+						<label value="Busqueda Productos" />
+						<div style="float: right">					
+							<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('seleccionaProducto',win=winBuscaProductoVenta)"/>		
+						</div>																			
+					</div>	
+							
+					<hbox>
+					<label value="Familia de Productos" />
+					<space width="77px"/>
+					<combobox model="@load(vm.busquedaProductosForm.listaFamilias)" 
+								selectedItem="@bind(vm.familiaBean)" 
+								onSelect="@command('cargaSubFamilias')" 
+								placeholder="Seleccione"
+								onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)" width="300px">						
+						<template name='model'>
+							<comboitem label="@load(each.descripcion)"/>
+						</template>
+					</combobox>					
+					</hbox>	
+					
+					<hbox>
+					<label value="Sub-familia de Productos" />
+					<space width="50px"/>
+					<combobox model="@load(vm.busquedaProductosForm.listaSubFamilias)" 
+								selectedItem="@bind(vm.subFamiliaBean)" 
+								onSelect="@command('cargaGrupoFamilias')" 
+								placeholder="Seleccione"
+								onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)" width="300px">													
+						<template name='model'>
+							<comboitem label="@load(each.descripcion)"/>
+						</template>
+					</combobox>					
+					</hbox>			
+					
+					<hbox>
+					<label value="Grupo de Productos" />
+					<space width="85px"/>
+					<combobox model="@load(vm.busquedaProductosForm.listaGruposFamilias)" 
+								selectedItem="@bind(vm.grupoFamiliaBean)" 
+								placeholder="Seleccione"
+								onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)" width="300px">														
+						<template name='model'>
+							<comboitem label="@load(each.descripcion)"/>
+						</template>
+					</combobox>					
+					</hbox>
+				
+					<hbox>
+					<label value="Código de Producto SAP" />
+					<space width="50px"/>
+					<textbox value = "@bind(vm.busquedaProductosForm.codigoBusqueda)" />					
+					</hbox>
+				
+					<hbox>
+					<label value="Codigo Barra Producto" />
+					<space width="66px"/>
+					<textbox value = "@bind(vm.busquedaProductosForm.codigoBarraBusqueda)"/>
+					
+					<button image="/iconos/lupa.png" label="Buscar" onClick="@command('despachador',arg='buscar')"/>					
+					</hbox>						
+				</div>			
+				
+			</north>
+
+			<center>
+				<div height="70%">				
+					
+					<div width="100%" style="background-color:black;color: white">
+						<space width="50px"/>
+						<label value="Articulo" />	
+						<space width="100px"/>
+						<label value="Descripcion" />
+						<space width="270px"/>
+						<label value="Precio iva" />
+						<space width="10px"/>
+						<label value="Grupo" />
+						<space width="10px"/>
+						<label value="Accion" />												
+						</div>	
+						<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
+								sclass="MyGridRowHeight" height="300px"  emptyMessage="Sin registros">						
+						<columns>
+							<column width="180px"/>
+							<column width="400px"/>
+							<column width="80px" />
+							<column width="60px" />
+							<column width="60px" /> 
+						</columns>						
+						<template name="model">							
+							<row>
+								<textbox value="@load(each.cod_barra)" width="180px" readonly="true"/>							
+								<textbox value="@load(each.descripcion)" width="400px" readonly="true"/>  
+								<doublebox value="@load(each.precio)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+								<textbox value="@load(each.grupo)" width="60px" readonly="true"/> 								
+										
+								<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',win=winBuscaProductoVenta) 
+										@global-command('actProdGrid',arg=each)"/>		
+									
+							</row>							
+						</template>
+						</grid>	
+					
+				</div>
+			</center>
+
+		</borderlayout>
+
+	</window>
+</zk>

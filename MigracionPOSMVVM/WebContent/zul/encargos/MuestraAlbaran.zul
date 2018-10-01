@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winMuestraAlbaran" border="none" width="25%" height="20%" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMuestraAlbaran')">
+		
+		<div>
+			<div width="100%" style="background-color:black;color: white">
+				<label value="Albaran de entrega" />
+				<space width="150px"/>
+				<button iconSclass="z-icon-close" onClick="winMuestraAlbaran.detach()"/>
+		    </div>
+		    
+		    <div style="Padding : 15px 0px 0px 10px">
+		    	<label value="Codigo"/>
+		    	<textbox value="@bind(vm.devolucionForm.codigo1)" width="30px" disabled="true"/>
+		    	<textbox value="@bind(vm.devolucionForm.codigo2)" width="150px" disabled="true"/>
+		    </div>
+		</div>
+</window>
+</zk>

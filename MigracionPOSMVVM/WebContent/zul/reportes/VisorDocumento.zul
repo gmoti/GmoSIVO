@@ -1,0 +1,18 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window id="winVisorDocumento" border="none" width="80%" height="80%" position="center" closable="false" mode="modal" sizable="false"
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVisorDocumento')">		
+		
+		<div height="100%" width="100%">		
+			<div width="100%" style="background-color:black;color: white">			
+				<label value="@bind(vm.title)" />				
+					<space width="50px"/>
+				<button label="Salir" onClick="winVisorDocumento.detach()" />			
+			</div>
+		
+			<div height="100%" width="100%">
+				<iframe id="reporte" height="100%" width="100%"
+					autohide="true" src="@bind(vm.fileContent)">
+				</iframe>
+			</div>
+		</div>
+</window>

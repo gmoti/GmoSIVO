@@ -1,0 +1,26 @@
+
+.container{
+	background-color:black;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.row{
+	background-color:#c1c1c1;
+	margin-top:1px;
+	padding:0.5px;
+}
+.titulodv{
+	background-color:black;
+	
+}
+.titulo{
+	font-size:130%;
+	color:#FFFFFF;
+	margin-top:2px;
+}
+.z-separator-horizontal, .z-separator-horizontal-bar{
+	height: 2px;
+}
+.z-button i{
+	font-size:12px;
+}
+

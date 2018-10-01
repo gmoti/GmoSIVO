@@ -1,0 +1,325 @@
+<?page title="Mantenedor Clientes" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="win" sclass="container-fluid"  border="normal" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		xmlns:n="native"
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')" 
+		validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.cliente) @save(vm.cliente, before='ingresarCliente')  @validator('cl.gmo.pos.validador.ValidacionCliente')">
+	<style>
+		
+	</style>
+	<div sclass="row titulodv">
+	   <div sclass="col-sm-10">
+			<div sclass="form-group">
+				<label sclass="titulo">Clientes</label>
+			</div>
+	   </div>	
+	    <div sclass="col-sm-">
+			<div sclass="form-group">
+				<button  sclass="btn-success" tooltiptext="Nuevo Usuario" iconSclass="fa fa-user-plus" onClick="@command('nuevoUsuario',arg1=vm)"/>
+				<button  sclass="btn-success" iconSclass="fa fa-file"  />
+				<button  sclass="btn-success" tooltiptext="Ingresar Cliente" iconSclass="fa fa-check" onClick="@command('ingresarCliente',arg=vm)" />
+				<button  sclass="btn-success" tooltiptext="Cerrar" iconSclass="fa fa-times" onClick="@command('cerrar',arg1=win)" />
+			</div>
+	   </div>
+	</div>	
+	
+	<separator/>
+	
+	<div sclass="row">
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group col-lg-offset-4">
+					<label value="Codigo:"/>	
+					<intbox readonly="true" sclass="form-control-lg" value="@load(vm.codigo)"/>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label  value="Rut:"/>
+					<textbox  sclass="form-control-col" value="@bind(vm.rut) @bind(fx.nif)" maxlength="8" constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/> -
+				</div>
+				<div sclass="col-sm-2">
+					<textbox sclass="form-control col-xs-" value="@bind(vm.dv) @bind(fx.dvnif)" maxlength="1"  constraint="no empty, /[0-9kK]{1}/ : Ingresa digito verificador válido."/>
+				</div>
+				<div  sclass="col-sm-">
+					<button id="buscar" iconSclass="z-icon-search" onClick="@command('buscar',arg1=vm.rut,arg2=vm.dv)" />
+				</div>
+				<div sclass="error" >
+				  	<n:strong><label value="@load(vmsgs['dvnif'])" /></n:strong>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="F. Nacimiento:"/>
+					<datebox format="dd/mm/yyyy" placeholder="dd/mm/yyyy" sclass="form-control-" value="@bind(vm.fechaNac)"/>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Apellidos:"/>
+					<textbox  sclass="form-control-lg" id="apellidos" value="@bind(vm.apellidos)" maxlength="49" constraint="no empty, /[a-zA-K ]{0,49}/ : El campo tiene caracteres Invalidos, favor validar!"/>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-8">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Edad:"/>
+					<textbox  sclass="form-control-sm" value="@bind(vm.edad)" maxlength="2" constraint="/[0-9]{0,2}/ : Sólo se permiten números!"/>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Nombres:"/>
+					<textbox  sclass="form-control-lg" value="@bind(vm.nombres)" maxlength="49" constraint="no empty, /[a-zA-K ]{0,49}/ : El campo tiene caracteres Invalidos, favor validar!"/>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-8">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Agente:"/>
+					<combobox model="@load(vm.listaAgentes)" selectedItem="@bind(vm.agente)" value="@bind(vm.sagente)" readonly="true">
+						<template name="model">
+							<comboitem value="@load(each.nombre_completo)" label="@load(each.usuario)"/>
+						</template>	
+					</combobox>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Tipo Vía:"/>
+					<combobox model="@load(vm.listaTipoVia)" selectedItem="@bind(vm.tipo_via)" value="@bind(vm.stipovia)" readonly="true">
+						<template name="model">
+							<comboitem  value="@load(each.codigo)" label="@load(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Dirección:"/>
+					<textbox  sclass="form-control-lg" value="@bind(vm.via)" />
+				</div>
+			</div>
+		</div>	
+		<div sclass="col">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Número:"/>
+					<textbox  sclass="form-control-sm" value="@bind(vm.numero)" constraint="no empty, /[0-9]{2,10}/ : Sólo se permiten números!"/>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Localidad:"/>
+					<textbox sclass="form-control-lg" value="@bind(vm.localidad)"/>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Provincia / Comuna:"/>
+					<combobox model="@load(vm.listaProvincia)" selectedItem="@bind(vm.provincia_cliente)"  value="@bind(vm.sprovincia)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.codigo)" label="@load(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Bloque/ Dpto.:"/>
+					<textbox  sclass="form-control-sm" value="@bind(vm.bloque)"/>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Cod. Postal:"/>
+					<textbox  sclass="form-control-lg" value="@bind(vm.cod_postal)" />
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-8">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Persona Contacto:"/>
+					<textbox  sclass="form-control-lg" value="@bind(vm.remitente)"/>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Email:"/>
+					<textbox  sclass="form-control-lg" value="@bind(fx.email) @bind(vm.email)" constraint="/.+@.+\.[a-z]+/: Favor ingresa un e-mail válido"/>
+				</div>
+				<div sclass="error" >
+				  	<n:strong><label value="@load(vmsgs['email'])" /></n:strong>
+				</div>
+				
+			</div>
+		</div>	
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">	
+					<label value="Teléfono:"/>
+			
+					<!--<combobox value="02"  width="30%">
+						<comboitem value="02" label="02"/>
+						<comboitem value="32" label="32"/>
+						<comboitem value="33" label="33"/>
+						<comboitem value="34" label="34"/>
+						<comboitem value="35" label="35"/>
+						<comboitem value="41" label="41"/>
+						<comboitem value="42" label="42"/>
+						<comboitem value="43" label="43"/>
+						<comboitem value="45" label="45"/>
+						<comboitem value="51" label="51"/>
+						<comboitem value="52" label="52"/>
+						<comboitem value="53" label="53"/>
+						<comboitem value="55" label="55"/>
+						<comboitem value="57" label="57"/>
+						<comboitem value="58" label="58"/>
+						<comboitem value="61" label="61"/>
+						<comboitem value="63" label="63"/>
+						<comboitem value="64" label="64"/>
+						<comboitem value="65" label="65"/>
+						<comboitem value="67" label="67"/>
+						<comboitem value="71" label="71"/>
+						<comboitem value="72" label="72"/>
+						<comboitem value="73" label="73"/>
+						<comboitem value="75" label="75"/>
+					</combobox>-->
+					
+					<textbox  sclass="form-control-lg" placeholder="0221234567" value="@bind(vm.telefono)" maxlength="10" constraint="no empty, /[0-9]{9,10}/ : Teléfono Incorrecto!"/>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Sexo:"/>
+					<radiogroup id="sexo" >
+							Hombre<radio  value="H" checked="@bind(vm.rhombre)" radiogroup="sexo"/>
+							Mujer<radio value="M"  checked="@bind(vm.rmujer)" radiogroup="sexo"/>
+							Institución<radio value="I" hecked="@bind(vm.rempresa)" radiogroup="sexo"/>
+					</radiogroup>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col-sm-4">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Profesión:"/>
+					<textbox  sclass="form-control-lg" value="@bind(vm.profesion)"/>
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-8">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label value="Teléfono Móvil:"/>
+					<textbox  sclass="form-control-lg" placeholder="56912345678" value="@bind(vm.telefono_movil)" maxlength="11" constraint="no empty, /[0-9]{11}/ : Teléfono Incorrecto!"/>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<separator/>
+	<div sclass="row titulodv">
+		<div sclass="form-group">
+			<label sclass="titulo">Facturación</label>
+		</div>	
+	</div>	
+	<separator/>
+	<div sclass="row">
+		<div sclass="col-sm-6">
+			<div sclass="row">
+				<div sclass="form-group">
+					<label  value="A :"/>
+					<textbox  sclass="form-control-col" value="@bind(vm.nif_cliente_agregado_factura)"/>  -
+				</div>
+				<div sclass="col-sm-2">
+					<textbox sclass="form-control col-xs-" value="@bind(vm.dvFactura)"/>
+				</div>
+				<div  sclass="col-sm-">
+					<button  iconSclass="z-icon-search" onClick="@command('buscar_cliente_factura',arg1=vm.nif_cliente_agregado_factura,arg2=vm.dvFactura)" />
+				</div>
+			</div>
+		</div>	
+		<div sclass="col-sm-6">
+			 <!--<bandbox>
+			 	<bandpopup> </bandpopup>
+			 </bandbox>-->
+		</div>	
+	</div>
+	<div sclass="row">
+		<div sclass="col-sm-6">
+			<div sclass="form-group">
+				<label value="Giro:"/>
+				<textbox  sclass="form-control-md" value="@bind(vm.giro)"/>
+				<button  iconSclass="z-icon-search"  />
+			</div>
+		</div>
+		<div sclass="col-sm-6">
+			 <label value="@bind(vm.nombre_cliente_factura)"/>
+		</div>
+	</div>
+	<separator/>
+	<div sclass="row titulodv">
+		<div sclass="form-group">
+			<label sclass="titulo" >Marketing</label>
+		</div>	
+	</div>	
+	<separator/>
+	<div sclass="row">
+		<div sclass="form-group">
+			<label>Indique por qué medio desea recibir información de productos y promociones.</label>
+		</div>	
+	</div>	
+	<separator/>
+	<div sclass="row">
+		
+		<div sclass="form-group">
+			<checkbox id="cpostal" label="Codigo Postal."  checked="@bind(vm.cpostal)" /> <checkbox id="cemail" label="Correo Electrónico." checked="@bind(vm.cemail)" /> <checkbox id="csms" label="Mensaje SMS (Celular)." checked="@bind(vm.csms)"/> <checkbox id="ctelefonia" label="Llamado Telefónico." checked="@bind(vm.ctelefonia)" /> <checkbox id="cndata" label="No quiero ser contactado." checked="@bind(vm.cnodata)"/> 				
+			<label visible="@load(empty vmsgs)"
+                                value="@load(empty vmsgs ? 'Datos Ingresados Correctamenete!' : '', before='ingresarCliente')" /> 
+		</div>	
+	</div>	
+	</window>
+</zk>

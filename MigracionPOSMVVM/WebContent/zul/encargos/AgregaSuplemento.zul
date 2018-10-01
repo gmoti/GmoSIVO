@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winAgregaSuplemento" border="none" width="40%" height="40%" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAgregaSuplemento')">
+		
+		<div>
+			<div width="100%" style="background-color:black;color: white">
+				<label value="Suplementos" />
+				<space width="300px"/>
+				<button iconSclass="z-icon-close" onClick="winAgregaSuplemento.detach()"/>
+		    </div>
+
+			<div>
+				<vbox>
+					<label value="Seleccionar" />
+					<space />					
+					<space />
+					<button label="Agregar" />
+				</vbox>
+			</div>
+
+			<div>
+		    	
+		    	<div width="100%" style="background-color:black;color: white">
+					<label value="Codigo"/>
+					<space width="30px"/>
+					<label value="Descripcion"/>
+					<space width="200px"/>
+					<label value="Valor"/>
+		    	</div>		    
+		    
+		    	<grid model="@bind(vm.suplementosForm.listaSuplementos)">
+		    		<columns>
+		    			<column width="80px"/>
+		    			<column width="200px"/>
+		    			<column width="30px"/>
+		    		</columns>
+		    		<template name="model">		    		
+		    			<row>
+		    				<textbox value="@load(each.tratami)" width="75px"/>
+		    				<textbox value="@load(each.descripcion)" width="195px"/>
+		    				<textbox value="@load(each.valor)" width="25px"/>		    				
+		    			</row>		    		
+		    		</template>		    		
+		    	</grid>
+		    </div>
+
+		</div>
+</window>
+</zk>

@@ -1,0 +1,8 @@
+<?page title="Verifica Impresion" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="none" closable="true" width="40%" height="15%">
+		<caption label="Seleccion documento"/>				
+		<radio label="Boleta"/>
+		<button image="/image/Check_24x24.png" onClick="" />
+	</window>
+</zk>

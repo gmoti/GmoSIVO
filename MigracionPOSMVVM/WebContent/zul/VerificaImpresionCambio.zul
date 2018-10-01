@@ -1,0 +1,9 @@
+<?page title="Verifica Impresion Cambio" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="none" width="35%" height="15%">
+		<caption label="Imprimir Ticket de Cambio"/>
+		<button image="/image/Check_24x24.png" onClick=""/>
+		<space width="100px"/>
+		<button image="/image/Remove_24x24.png" onClick=""/>		
+	</window>
+</zk>

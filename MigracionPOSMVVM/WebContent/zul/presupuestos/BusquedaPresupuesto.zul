@@ -1,0 +1,63 @@
+<?page title="Busqueda Presupuesto" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winBusquedaPresupuesto"  border="normal" width="550px"
+		height="400px" position="center"  mode="modal" sizable="false" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaPresupuesto')">
+
+		<style>
+			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
+			border:1px solid white; border-right:1px solid transparent;
+			padding:0px; margin:0px; }
+
+			.z-combobox-inp { height: 20px; }
+
+			.z-button-inp { height: 15px; }
+		</style>
+
+		<div>
+			<div width="100%" height="10%" style="background-color:black;color: white">
+			    <label>Selecciona Presupuesto</label> 
+			    <space width="100px"/>
+			    <button iconSclass="z-icon-times-circle fa-3x" 
+			    		onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto)" />															
+			</div>
+			
+			<div width="100%" height="10%" style="background-color:black;color: white">	
+				<space width="15px"/>		
+				<label value="Agente"/>
+				<space width="40px"/>
+				<label value="Fecha"/>
+				<space width="40px"/>
+				<label value="Codigo"/>
+				<space width="40px"/>
+				<label value="Estado"/>
+				<space width="40px"/>
+				<label value="Accion"/>
+			</div>
+		
+			<div height="90%">
+				<grid model="@load(vm.presupuesto.listaPresupuestos)"  sclass="MyGridRowHeight" style="overflow: scroll;" height="300px">
+					<columns>
+						<column width="100px" />
+						<column width="100px" />
+						<column width="100px" />
+						<column width="100px" />
+						<column width="100px" />
+					</columns>
+					<template name="model">
+						<row>
+							<textbox value="@load(each.id_agente)" readonly="true"/>
+							<textbox value="@load(each.fecha)" readonly="true"/>
+							<textbox value="@load(each.codigo)" readonly="true"/>
+							<textbox value="@load(each.cerrado eq 'S' ? 'Cerrado' : 'Abierto')" readonly="true"/>					
+							<button label="Sel" 
+								onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto) 
+										@global-command('presupuestoSeleccionado', arg=vm.presupuesto, arg2=each)" />
+						</row>
+					</template>
+				</grid>
+			</div>
+		</div>
+
+	</window>
+</zk>

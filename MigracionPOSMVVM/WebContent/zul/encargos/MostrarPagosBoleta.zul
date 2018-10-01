@@ -1,0 +1,96 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winMostrarPagosBoleta" border="none" width="60%" 
+		height="40%" position="center" closable="false" mode="modal" sizable="false" 		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMostrarPagosBoleta')">
+		
+		
+	<style>
+		.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
+		border:1px solid white; border-right:1px solid transparent;
+		padding:0px; margin:0px; }
+	</style>	
+		
+		
+	<div width="100%" height="100%">
+	
+		<div width="100%" style="background-color:black;color: white">
+			<label value="SELECCION PAGO"/>
+			<space width="400px"/>
+			<toolbarbutton image="/image/Remove_32x32.png" onClick="winMostrarPagosBoleta.detach()"/>	
+		</div>	
+	
+		<borderlayout>
+			<west width="50%">
+				<div>
+					<div width="100%" style="background-color:black;color: white">
+						<label value="Fecha"/>
+						<space width="10px"/>
+						<label value="Forma Pago"/>
+						<space width="10px"/>
+						<label value="Monto"/>
+						<space width="10px"/>
+						<label value="Eliminar"/>
+					</div>
+					<div width="100%">
+						<grid model="@bind(vm.seleccionPagoForm.listaPagos)" sclass="MyGridRowHeight" height="90%">
+							<columns>
+								<column width="100px"/>
+								<column width="150px"/>
+								<column width="100px"/>
+								<column width="30px"/>
+							</columns>
+							<template name="model">
+								<row>
+									<textbox value="@bind(each.fecha)"/>
+									<textbox value="@bind(each.forma_pago)"/>
+									<textbox value="@bind(each.v_a_pagar)"/>
+									<button label="Eli"/>
+								</row>
+							</template>
+						</grid>
+					</div>			
+				</div>		
+			</west>
+			 
+			<east width="50%">
+				<div width="100%">
+					<div width="100%" style="background-color:black;color: white">
+						<label value="Fecha"/>
+						<space width="5px"/>
+						<label value="No Boleta"/>
+						<space width="5px"/>
+						<label value="Tipo"/>
+						<space width="5px"/>
+						<label value="Importe"/>
+						<space width="5px"/>
+						<label value="Cod.Venta"/>
+					</div>			
+					<div width="100%">
+						<grid model="@bind(vm.seleccionPagoForm.lista_boletas)" sclass="MyGridRowHeight" height="90%">
+							<columns>
+								<column width="100px" />
+								<column width="150px" />
+								<column width="100px" />
+								<column width="150px" />
+								<column width="100px" />
+							</columns>
+							
+							<template name="model">							
+								<row>
+									<textbox value="@bind(each.fecha)"/>
+									<intbox value="@bind(each.numero)"/>
+									<textbox value="@bind(each.tipo)"/>	
+									<intbox value="@bind(each.importe)"/>
+									<textbox value="@bind(each.pedvtcb)"/>							
+								</row>							
+							</template>
+						</grid>
+					</div>
+				</div>			
+			</east>
+		</borderlayout>	
+	</div>	
+
+</window>
+</zk>

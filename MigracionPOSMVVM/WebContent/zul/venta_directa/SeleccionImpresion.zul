@@ -1,0 +1,24 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winSeleccionImpresion" border="none" width="20%" height="20%" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionaImpresion')">
+		
+		
+		<div>
+			<div width="100%" style="background-color:black;color: white">
+				<label value="Seleccion docuemnto" />
+				<button iconSclass="z-icon-close" onClick="self.detach()"/>
+			</div>
+			
+			<radiogroup selectedItem="@bind(vm.seleccion)" orient="vertical">
+				<radio label="Boleta" value="1"/>
+				<radio label="Guia despacho" value="2"/>
+			</radiogroup>
+				
+			<div style="text-align: right;">				
+				<button label="ok" onClick="@command('selecciona', win=winSeleccionImpresion)"/>
+			</div>		
+		</div>
+
+</window>
+</zk>

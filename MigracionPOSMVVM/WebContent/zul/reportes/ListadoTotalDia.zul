@@ -1,0 +1,29 @@
+<?page title="Listado Total Dia" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="test" title="Listado Total Dia" 	
+     viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoTotalDia')"	
+		border="normal" width="100%" height="100%" closable="true">
+		
+		<borderlayout>
+			<north>
+				<div>
+					<label value="Fecha incio" />
+					<datebox format="dd/MM/yyyy" value="@bind(vm.fecha)"/>
+					<button id="btn" label="Emitir"
+						onClick="@command('reporte')" />
+
+				</div>
+			</north>
+			<center>
+				<div height="100%" width="100%">
+					<iframe id="reporte" height="100%" width="100%" 
+						autohide="true" content="@bind(vm.fileContent)">
+					</iframe>
+				</div>
+			</center>
+			<south>
+				<div></div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

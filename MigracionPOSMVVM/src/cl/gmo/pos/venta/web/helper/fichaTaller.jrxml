@@ -1,0 +1,1790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaTaller" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="100" uuid="b05f8f81-d64f-4204-908e-e489f06ba1a0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="817"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<import value="static net.sf.jasperreports.expressions.functions.TextFunctions.*"/>
+	<import value="static net.sf.jasperreports.expressions.functions.LogicalFunctions.*"/>
+	<import value="static net.sf.jasperreports.expressions.functions.MathFunctions.*"/>
+	<import value="static net.sf.jasperreports.expressions.functions.DateTimeFunctions.*"/>
+	<parameter name="imagen" class="java.lang.String"/>
+	<parameter name="imagen_barra" class="java.lang.String"/>
+	<field name="numero_encargo" class="java.lang.String"/>
+	<field name="numero_encargo2" class="java.lang.String"/>
+	<field name="grupo" class="java.lang.String"/>
+	<field name="caja" class="java.lang.String"/>
+	<field name="agente" class="java.lang.String"/>
+	<field name="nombre_agente" class="java.lang.String"/>
+	<field name="fecha_encargo" class="java.lang.String"/>
+	<field name="fecha_entrega" class="java.lang.String"/>
+	<field name="codigo_cliente" class="java.lang.String"/>
+	<field name="nombre_cliente" class="java.lang.String"/>
+	<field name="apellido_cliente" class="java.lang.String"/>
+	<field name="telefono_cliente" class="java.lang.String"/>
+	<field name="rut_cliente" class="java.lang.String"/>
+	<field name="codigo_medico" class="java.lang.String"/>
+	<field name="medico" class="java.lang.String"/>
+	<field name="telefono_medico" class="java.lang.String"/>
+	<field name="cod_armazon" class="java.lang.String"/>
+	<field name="descripcion_armazon" class="java.lang.String"/>
+	<field name="color_armazon" class="java.lang.String"/>
+	<field name="material_armazon" class="java.lang.String"/>
+	<field name="sexo_armazon" class="java.lang.String"/>
+	<field name="calibre_armazon" class="java.lang.String"/>
+	<field name="puente_armazon" class="java.lang.String"/>
+	<field name="altura_armazon" class="java.lang.String"/>
+	<field name="estilo_armazon" class="java.lang.String"/>
+	<field name="cod_critalD" class="java.lang.String"/>
+	<field name="descripcion_critalD" class="java.lang.String"/>
+	<field name="ojo_cristalD" class="java.lang.String"/>
+	<field name="esfera_cristalD" class="java.lang.String"/>
+	<field name="cilindro_cristalD" class="java.lang.String"/>
+	<field name="eje_critalD" class="java.lang.String"/>
+	<field name="dnpl_critalD" class="java.lang.String"/>
+	<field name="dnpc_critalD" class="java.lang.String"/>
+	<field name="adicion_critalD" class="java.lang.String"/>
+	<field name="color_cristalD" class="java.lang.String"/>
+	<field name="trat_cristalD" class="java.lang.String"/>
+	<field name="tipo_cristalD" class="java.lang.String"/>
+	<field name="ind_cristalD" class="java.lang.String"/>
+	<field name="diametro_cristalD" class="java.lang.String"/>
+	<field name="suplemento_cristaD" class="java.lang.String"/>
+	<field name="valor_suple_cristalD" class="java.lang.String"/>
+	<field name="cod_cristalI" class="java.lang.String"/>
+	<field name="descripcion_critalI" class="java.lang.String"/>
+	<field name="ojo_cristalI" class="java.lang.String"/>
+	<field name="esfera_cristalI" class="java.lang.String"/>
+	<field name="cilindro_cristalI" class="java.lang.String"/>
+	<field name="eje_critalI" class="java.lang.String"/>
+	<field name="dnpl_critalI" class="java.lang.String"/>
+	<field name="dnpc_critalI" class="java.lang.String"/>
+	<field name="adicion_critalI" class="java.lang.String"/>
+	<field name="color_cristalI" class="java.lang.String"/>
+	<field name="trat_cristalI" class="java.lang.String"/>
+	<field name="tipo_cristalI" class="java.lang.String"/>
+	<field name="ind_cristalI" class="java.lang.String"/>
+	<field name="diametro_cristalI" class="java.lang.String"/>
+	<field name="suplemento_cristaI" class="java.lang.String"/>
+	<field name="valor_suple_cristalI" class="java.lang.String"/>
+	<field name="saldo" class="java.lang.String"/>
+	<field name="imagen" class="java.lang.String"/>
+	<field name="imagen_barra" class="java.lang.String"/>
+	<field name="nota" class="java.lang.String"/>
+	<field name="region" class="java.lang.String"/>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="-2" width="244" height="20" uuid="8044fb1f-7ad3-45b3-b8bd-5bc4ff5a315e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHA PARA MONTAJE EN TALLER]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="652" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="39" width="64" height="11" uuid="255a0b65-4e3b-4446-a6d8-7248d8feb5b7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="39" width="179" height="11" uuid="43acfd0c-0f1b-4669-b046-47bb88b51ffd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="254" y="39" width="68" height="11" uuid="035b406c-356c-4850-99c1-4f0c323e0437"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="38" width="40" height="11" uuid="3a0d7e2b-2b11-4032-9c4f-35c9c5bc2031"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rut]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="327" y="50" width="52" height="11" uuid="2ca3fa1e-a284-4611-be55-654bd49ceb3f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rut_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="50" width="73" height="11" uuid="bc781c95-b91e-4ab7-85aa-dc291dc15f9d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="72" width="77" height="11" uuid="163caaad-1562-4fd0-9212-8f161b53d8f8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono_medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="72" width="164" height="11" uuid="f8e29cc6-0e82-45eb-8237-8e6761148f18"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="72" width="79" height="11" uuid="4c94782c-866d-42fa-8289-e057fe979d46"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_medico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="61" width="60" height="11" uuid="40beaf64-1a38-44ce-b1b2-9aa188b99ed3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[M?dico]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="11" y="50" width="69" height="11" uuid="9e29258f-b1b6-42e1-ad23-ebbe9f5df567"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="39" width="64" height="11" uuid="1aae49f5-b881-4a12-9e45-c4975583dd9e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="39" width="179" height="11" uuid="a7c4352c-11ab-4066-8bbc-182f26201363"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="75" y="50" width="95" height="11" uuid="4b42924f-4700-47f6-99ad-c1566b01347f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="50" width="85" height="11" uuid="b7696949-4ace-42ff-b7e4-9af9fb3fad09"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido_cliente}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="-17" width="555" height="107" uuid="d58e7bf1-659c-457e-87ca-4814648de7cc"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="254" y="39" width="68" height="11" uuid="ee8c376f-50d8-4042-a493-ef8fabccf1fa"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="38" width="40" height="11" uuid="7db549f1-6125-48bf-96e9-31c5244f3e2d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rut]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="327" y="50" width="52" height="11" uuid="bc094bbb-523e-409d-b281-dac41567859a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rut_cliente}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="-17" width="555" height="107" uuid="e1fd7ae4-ef91-45c4-947c-461e4d77de73"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="11" y="39" width="64" height="11" uuid="f0efe72b-8e83-4a39-8c9f-fd0324f472e5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="39" width="179" height="11" uuid="15d79c7f-475c-4f03-abee-ce8e5cb6c428"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="254" y="39" width="68" height="11" uuid="96fbbfcd-c11b-4304-8f38-5ccc55f30498"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="38" width="40" height="11" uuid="1290fa6c-e018-4ce4-8243-51d888b27de9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rut]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="61" width="72" height="11" uuid="5f289c7a-ae0f-4207-8d0e-135e100e9fed"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="-12" width="90" height="11" uuid="2459a1b5-3aa4-40e3-b0d9-5b2d73436308"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Encargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="-12" width="40" height="11" uuid="0fce486e-95f5-4eff-8413-750cc1472899"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Grupo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="-12" width="40" height="11" uuid="8cb34e02-4d51-4fd9-bfa3-12c4b05e47a8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="-12" width="40" height="11" uuid="79f2404e-f908-41ed-a58e-b7597dc05119"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Vendedor]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="396" y="32" width="155" height="45" uuid="f7841262-da6e-42f8-ba8d-7a8cd2b26485"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="396" y="33" width="153" height="20" uuid="9626fa46-9757-4dfa-b93e-44161f67ac41"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Saldo Pendiente de Cobro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="54" width="11" height="20" uuid="f653fd4b-fe75-4e30-9a49-654a30dc6bee"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="171" width="555" height="1" uuid="c8792f60-57cc-4d67-95a6-3bf1eb380146"/>
+			</line>
+			<line>
+				<reportElement x="0" y="226" width="555" height="1" uuid="60c5eea5-f03b-4bf5-a785-3547414cd90f"/>
+			</line>
+			<line>
+				<reportElement x="0" y="202" width="555" height="1" uuid="e8b603b0-21aa-4976-ac6c-3fe7e8d3efc3"/>
+			</line>
+			<line>
+				<reportElement x="2" y="258" width="555" height="1" uuid="3de2c0cb-2e18-4a76-aecd-92f458df3b4c"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="149" width="30" height="11" uuid="0c53f8b1-9da8-43e4-8c4a-ee6fc13b6de7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="159" width="30" height="11" uuid="d9a2cf9a-b86d-4325-b6a4-67b2b77a779e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Calibre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="159" width="26" height="11" uuid="dd00e84f-6bf0-4a15-aed2-8d10332b6aa8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Puente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="159" width="26" height="11" uuid="14d1a896-d334-4f10-abc4-cf421d889ba0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Altura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="148" width="34" height="11" uuid="468e65f6-5d2a-47ed-8a63-c31574052750"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="148" width="26" height="11" uuid="68263825-2709-43e6-ad92-3e0bc271c47d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="159" width="26" height="12" uuid="c986ef2d-d861-463b-a52b-418c644fefb1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Estilo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="191" width="30" height="11" uuid="1c165a10-e405-4b67-b05d-a5bf9be5f7e4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="191" width="30" height="11" uuid="18c91e7e-7742-4db3-91d8-1cfc07567406"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Trat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="191" width="30" height="11" uuid="5b065146-3de4-4fa3-b616-ff659acd202e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="191" width="30" height="11" uuid="d9cbea71-0cb3-4dac-b08c-7c67343ac460"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ind]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="384" y="191" width="30" height="11" uuid="a6013285-11c5-4b7d-b0c7-6d605b889f13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Diam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="204" width="105" height="11" uuid="4d1353ed-f78a-4a13-a085-60cf38a1a423"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suplementos del ojo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="247" width="29" height="11" uuid="27731604-c149-4558-8b98-e62328019dc8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="247" width="30" height="11" uuid="34fe9702-4966-423e-804f-d7185a84ca51"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Trat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="247" width="30" height="11" uuid="fc28ad8e-24c4-4268-910f-2998bfc4f2ca"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="247" width="30" height="11" uuid="01961c09-9832-42ba-b9f5-739280f31c24"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ind]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="384" y="247" width="30" height="11" uuid="dbf7e937-0b11-4815-af4e-c7bf0c552447"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Diam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="263" width="105" height="11" uuid="40f68b5d-ca61-4f97-bde5-64327330fabd"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suplementos del ojo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="15" y="-12" width="80" height="11" uuid="01f4a2e3-753a-49ce-966d-117b9c3c749f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_encargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="-1" width="90" height="12" uuid="ca986b13-4d8a-4b55-b50e-43b01a46bdb3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_encargo2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="-1" width="40" height="12" uuid="bb9a924c-958b-435e-bb4e-3d3144fbe412"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grupo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="287" y="-1" width="40" height="12" uuid="936ed9e1-8b27-4846-87b8-f2a1edc8abbe"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caja}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="-1" width="52" height="12" uuid="ad791206-e935-492c-863e-456431221953"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="-1" width="176" height="12" uuid="6ea83a0b-5744-421f-a10b-592072723c14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_agente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="157" y="11" width="75" height="11" uuid="d6ebe4d6-22e4-4e15-91e7-91b81b2f3f0a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Encargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="11" width="80" height="11" uuid="1808883f-c003-43ab-95f9-d921c2bb309d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Entrega]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="22" width="75" height="11" uuid="2a4c269a-d05c-474e-94c4-d7d4667555fd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_encargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="22" width="80" height="11" uuid="7f1c16a3-2c7f-492c-abb5-64837538d9c7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_entrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="50" width="69" height="11" uuid="90b31a95-3342-47f0-a428-200e7404d1ee"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="50" width="95" height="11" uuid="4cad5183-898d-429d-a3f0-d26822c122b5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="50" width="85" height="11" uuid="e6d6710d-bc26-4608-a5ae-0ae327e3c30a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="50" width="73" height="11" uuid="98581a4e-2dfc-4656-aa86-481698449458"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="50" width="52" height="11" uuid="2faba205-05cc-4b39-9530-121790a9d604"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rut_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="72" width="79" height="11" uuid="f074957a-c0d7-4f58-8c31-62c4be6fb25b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="72" width="164" height="11" uuid="7aa21772-1236-4738-bea4-d03842617f3a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="72" width="77" height="11" uuid="dac5171a-1081-4d66-9db8-050b71d25f34"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono_medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="136" width="64" height="13" uuid="a3625952-e706-41da-b617-264d5d224f6a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="136" width="364" height="12" uuid="d585b5a9-bc9c-4aac-8587-c37b9539667a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="149" width="69" height="11" uuid="148f6375-3ccf-47d9-ae71-63449d08ec6a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{color_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="148" width="84" height="11" uuid="a875758a-180e-4b42-a319-5055a7b7f204"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="148" width="72" height="11" uuid="55c6a283-957d-490f-aec1-8a9ed11e5aa5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sexo_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="159" width="75" height="11" uuid="91491d8f-bfec-44e0-85d6-0ffa481822b2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calibre_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="159" width="100" height="11" uuid="0299a09d-d10c-4966-8f1e-3c496b3e8e33"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{puente_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="159" width="106" height="11" uuid="5162264b-345c-4957-883b-5f8e0a1a5fb6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{altura_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="159" width="100" height="11" uuid="2d34226c-5b57-4bf2-b976-907dc58b4ab6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estilo_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="171" width="61" height="11" uuid="da0c54d5-5689-4ad9-9ec8-883edce4ece3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_critalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="171" width="363" height="11" uuid="216319c0-9337-44a6-b00a-1310fac06e41"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="181" width="16" height="11" uuid="0ae24a89-8397-426a-9aaa-84da3aa30613"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ojo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="27" y="181" width="61" height="11" uuid="1fc38d05-dc20-40a8-9c29-59a486d3f279"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="83" y="181" width="13" height="11" uuid="8057a78b-d26d-4399-8cd2-b857b5d46863"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Esf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="181" width="16" height="11" uuid="a58abdb2-a545-420a-9c12-b4cb26c536c4"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="181" width="18" height="11" uuid="10687ae0-fc3c-419b-8f10-0368d9bb18e6"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Eje]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="271" y="181" width="57" height="11" uuid="86d57460-f094-4217-80d0-3ba9edd0fc11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eje_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="181" width="18" height="11" uuid="011d1e7b-96bd-4f0b-aef8-aa07f6571a1c"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpl]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="344" y="181" width="58" height="11" uuid="d2e32d81-4819-4cbc-95e4-b7ab16c96482"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpl_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="399" y="181" width="21" height="11" uuid="0a8441f7-d15f-4944-b481-1d619367f635"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpc]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="424" y="181" width="60" height="11" uuid="4ca03dd9-ede7-40e6-a18c-67a6bd09c812"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpc_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="482" y="181" width="16" height="11" uuid="e4d3398a-d462-4b6e-bfcc-763a02afcb25"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Add]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="499" y="181" width="72" height="11" uuid="a4aff9c9-1c8e-466d-9c30-a9a8b5d177fd"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{adicion_critalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="181" width="71" height="11" uuid="45bb84b4-987e-463f-965f-61f05314ce75"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{esfera_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="181" width="74" height="11" uuid="41a6c354-1b3a-4476-9653-018a8d18ba7d"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cilindro_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="191" width="68" height="11" uuid="20fa40e0-a7e6-48cd-a0f5-66777cd150c5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{color_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="191" width="63" height="11" uuid="aa3217aa-99d6-4de1-967d-d8b50c99d11b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trat_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="191" width="66" height="11" uuid="b3368c9e-55e5-4d17-82c1-31988bee717a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="192" width="59" height="11" uuid="f513c78f-ec02-4ba1-86a8-7f98ec3ff007"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ind_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="192" width="82" height="11" uuid="feb9384b-fafa-434c-836e-fb27cf516ef4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diametro_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="204" width="58" height="11" uuid="b493de15-aee6-4fec-bdd0-770073453c91"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="214" width="514" height="12" uuid="0850cfb7-554e-430f-9d43-c05d2add0feb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{suplemento_cristaD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="227" width="60" height="11" uuid="fec40fc5-ae48-419e-9ac6-943207327e69"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="237" width="16" height="11" uuid="6cd427bd-50b3-4146-8425-bcbacdd901ba"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ojo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="122" y="226" width="363" height="12" uuid="86103c1a-2324-4dc3-9371-5867a2e02a6e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion_critalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="237" width="61" height="11" uuid="3b058744-8a33-4251-b114-158e182f3ccf"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="83" y="237" width="13" height="11" uuid="a3d63714-d5e2-411d-a80c-72855ae3b7bd"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Esf]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="237" width="71" height="11" uuid="9f37cc2f-aea2-495e-abc4-411ad4e1df38"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{esfera_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="167" y="237" width="16" height="11" uuid="3ce063a0-2bcb-4a3f-b62e-7276d8e6fa49"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cil]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="185" y="237" width="74" height="11" uuid="81fc2aa2-cf68-444e-a561-fe2bccfc8c70"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cilindro_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="254" y="237" width="18" height="11" uuid="c83cdb37-935b-4e0a-9c81-72a3b8d122f5"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Eje]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="271" y="237" width="55" height="11" uuid="26d2b9d4-367e-48f2-a73d-180801062e3f"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eje_critalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="237" width="18" height="11" uuid="393ea5fc-3bf4-4939-a37f-e634eca20521"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpl]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="344" y="237" width="58" height="11" uuid="960abea8-9267-4e1a-a4a8-a7089d41c978"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpl_critalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="399" y="237" width="21" height="11" uuid="0b293ef7-00ee-4b8c-a0ae-7782c9a495f8"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpc]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="424" y="237" width="74" height="11" uuid="4e076972-e81c-4c6e-99cc-6ea3b805d332"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpc_critalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="482" y="237" width="16" height="11" uuid="71e66480-3eaa-4acf-b7d3-2e208a9a852f"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Add]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="499" y="237" width="72" height="11" uuid="48d09163-15a5-4c27-90e2-67e988717023"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{adicion_critalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="247" width="69" height="11" uuid="9a00fb8b-d017-4737-b9ce-1ab40a4b9b77"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{color_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="247" width="63" height="11" uuid="f6b21f4d-014b-4b80-8b40-dba47c439060"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trat_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="247" width="66" height="11" uuid="ee0033c2-8ac6-4991-9a43-836fb1c0ce0d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="247" width="59" height="11" uuid="00317123-746a-4211-9396-a31ffca488dc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ind_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="247" width="83" height="11" uuid="9236eb7a-ecf4-4a40-ba83-919e14227a88"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diametro_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="263" width="58" height="11" uuid="cfd79f34-3baf-470f-931c-a1d39f05988b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="273" width="512" height="11" uuid="696ca038-3d8f-48cb-8a0a-d2b62963003c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{suplemento_cristaI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="54" width="100" height="20" uuid="89e7af5d-7713-49a2-9f92-9483fa58c444"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="2" y="322" width="555" height="101" uuid="3001dd6e-a16b-4023-bce2-b6a0e201dcd9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="239" y="327" width="40" height="11" uuid="59446202-2b93-47b5-b0a1-39a04ceb77db"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Grupo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="251" y="405" width="77" height="11" uuid="c0776fc2-340e-42ac-b171-8a0d7cccf52d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono_medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="338" width="40" height="12" uuid="bd4efba6-74c4-45d3-b65f-f6edc43e791e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caja}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="361" width="80" height="11" uuid="7ca1ad9d-ebde-477b-bb67-3a38d8ae96b3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_entrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="338" width="90" height="12" uuid="9352ac73-bad4-45ce-8c0d-35500e935de9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_encargo2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="83" y="383" width="95" height="11" uuid="681e41e0-5a29-4f2b-b1eb-e13339b4aa62"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="149" y="327" width="90" height="11" uuid="e6aee468-3610-45ce-b572-cab30bc4ad68"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Encargo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="433" y="393" width="100" height="20" uuid="265f2f67-dc0e-4886-9a64-7570e8cc0b59"/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="394" width="60" height="11" uuid="59c0c2e2-1386-4af4-bb61-bf8bc894b936"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[M?dico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="394" width="72" height="11" uuid="50ab6a48-5301-4116-93a9-8d2f24b8dc33"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="320" y="338" width="52" height="12" uuid="f5a55af9-35c0-47b8-8090-0a5f267de349"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="405" width="79" height="11" uuid="c81b65a6-51c8-412c-871a-5fb97ee6e853"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="383" width="52" height="11" uuid="f699a2bc-247c-4385-8543-7a7e796150c0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rut_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="327" width="40" height="11" uuid="3f15dfed-9d92-41e8-8c1a-303920f808e3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="393" width="11" height="20" uuid="fa5cc063-3bb3-4540-838c-0784ba210f5b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="372" width="153" height="20" uuid="8111220c-2985-4bdd-9065-343a84b9199c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Pendiente de Cobro]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="163" y="383" width="85" height="11" uuid="ec9a5d54-71d0-4709-b67c-1a6def3fd344"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="327" width="80" height="11" uuid="97bca1a7-8e60-49e6-a42c-04b64cf3a3c8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_encargo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="253" y="372" width="68" height="11" uuid="f807a24a-6323-4d2f-8a95-d00150d35ee9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="393" y="371" width="155" height="45" uuid="4aa87c69-ad4d-4aba-b4b5-28fed70ea4a6"/>
+			</rectangle>
+			<textField>
+				<reportElement x="373" y="338" width="176" height="12" uuid="158fd142-75c9-4e37-9afa-05917b974882"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_agente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="327" width="40" height="11" uuid="67542050-1f57-46f6-b4fe-35f28e2b22f5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Vendedor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="248" y="383" width="73" height="11" uuid="90aba1c9-1501-4a84-a32a-09d1e1827712"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="361" width="75" height="11" uuid="23d7f3c8-96f5-4381-b3de-85ea53b181a4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_encargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="405" width="164" height="11" uuid="07af5ef4-6a5f-4999-9aa7-70a4978dafba"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="383" width="69" height="11" uuid="42e2f63b-f227-4e73-a7f0-7f523528a2f6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="338" width="40" height="12" uuid="9d223021-8ad1-4d04-bde9-83507ed8d44f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grupo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="82" y="372" width="179" height="11" uuid="4984ff05-176f-42d4-8f59-8128cebece0c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="350" width="80" height="11" uuid="98b76287-0b19-4c79-9b8d-61a200475307"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="372" width="40" height="11" uuid="b36018f9-4562-41f1-905a-8ecd9b931953"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rut]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="392" width="100" height="20" uuid="41c4344a-e371-4a25-83bc-880e13ec66ba"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="397" y="393" width="11" height="20" uuid="6ac2d2ef-6c29-40bc-b553-746747a33057"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="371" width="153" height="20" uuid="62793e0a-0332-4e5f-9100-5711870de59a"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Saldo Pendiente de Cobro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="349" width="75" height="11" uuid="7eb6a2ca-62e1-4f1f-ab5a-a3ce9bf5e674"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de Encargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="372" width="64" height="11" uuid="a208bd48-bc71-437c-9664-7bce7f7eb46d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="488" width="30" height="11" uuid="b95ebc95-dd7c-4014-a9b2-aec053964b41"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Calibre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="488" width="26" height="11" uuid="839be210-5bce-461b-b337-dbcb026c4971"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Puente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="478" width="69" height="11" uuid="561eda91-b498-4ebd-a380-59515f2c509b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{color_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="488" width="100" height="11" uuid="0f5d26ed-6e39-42ce-b2a9-6168b1a3996d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estilo_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="477" width="72" height="11" uuid="db75ad9b-d5e2-4e54-ac56-e86d0a3fff10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sexo_armazon}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="129" y="477" width="34" height="11" uuid="de713564-2149-4a29-8014-62b0ca2822ea"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="477" width="26" height="11" uuid="6c2da29d-2b64-47df-b91e-92182abc6541"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="488" width="75" height="11" uuid="934b5ea6-8780-49d1-9661-6e1504ba35fc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calibre_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="488" width="106" height="11" uuid="b2d4238d-37bf-4b65-a8cf-862bd9294978"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{altura_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="465" width="64" height="13" uuid="eabeedec-9a0e-4d58-9200-f434aa1f06c0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_armazon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="477" width="84" height="11" uuid="63ba0f45-fb4a-4c1a-bf0d-da58a5519a9b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material_armazon}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="478" width="30" height="11" uuid="c574177a-dff7-4213-95a7-766a4eb36750"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="135" y="488" width="100" height="11" uuid="7fcab9c1-7ac3-4349-a8e0-ec02bd65da4d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{puente_armazon}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="367" y="488" width="26" height="12" uuid="69489b59-f68b-49e7-80ac-30373874d052"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Estilo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="488" width="26" height="11" uuid="1ce88042-4fb1-4f60-bf72-6d9fb044d317"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Altura]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="115" y="465" width="364" height="12" uuid="f3a1b9ee-8268-49b1-b857-4806c7aeacfe"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion_armazon}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="499" width="555" height="1" uuid="22ab4a5e-a59d-438c-b704-74321d5d24d9"/>
+			</line>
+			<staticText>
+				<reportElement x="294" y="520" width="30" height="11" uuid="76b0efbd-1e27-4372-9fa3-835f83354257"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ind]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="191" width="18" height="11" uuid="d3436e0b-2805-4837-81c4-8462cbfba318"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Eje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="510" width="16" height="11" uuid="e6773035-1148-4820-bb37-ed4e87ddbbcf"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Add]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="228" y="520" width="66" height="11" uuid="988fbb18-ea81-4c1c-a300-1a771721e14e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="192" y="510" width="74" height="11" uuid="114a67a5-728d-4085-8e85-01ff52ac8f0d"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cilindro_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="500" width="61" height="11" uuid="0077acf7-b164-4960-90d8-d4c78906b5b1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_critalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="520" width="63" height="11" uuid="ee63fae2-b57d-4652-ac3a-c1af2d0cc2a4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trat_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="510" width="58" height="11" uuid="3ca29fbb-6376-451c-bdbf-ace4f94c9c51"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpl_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="510" width="18" height="11" uuid="3afe3e6d-af54-4658-8ae0-9e420485fd50"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpl]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="520" width="30" height="11" uuid="6537a73c-4831-4ad6-8bee-b4a60c96cb00"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Diam]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="431" y="510" width="60" height="11" uuid="d89a653b-3f4d-47d9-b691-2c87a83ac337"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpc_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="104" y="520" width="30" height="11" uuid="015c3c49-c1f2-489d-8d0d-abf409ef3199"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Trat]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="278" y="510" width="57" height="11" uuid="92733da1-d4ee-4ba0-a178-1b4ab01b4cb9"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eje_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="204" y="520" width="30" height="11" uuid="73d7f119-9245-4367-8e97-709d45f209a9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="520" width="30" height="11" uuid="0251a29f-7764-41a5-a8a7-86a08841a4e4"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="174" y="510" width="16" height="11" uuid="188df144-6fed-48a6-bbff-6e48d23db7de"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cil]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="510" width="61" height="11" uuid="f339d996-af72-4493-91c0-7ed045a54633"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="500" width="363" height="11" uuid="5eebf781-cfa8-4bc1-b3d9-f3ba4bca3efd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion_critalD}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="531" width="555" height="1" uuid="443fe7ab-d673-48a8-985f-0901e44f51d7"/>
+			</line>
+			<staticText>
+				<reportElement x="406" y="510" width="21" height="11" uuid="64dde048-b960-4611-90bc-274e7fd739d8"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpc]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="109" y="510" width="71" height="11" uuid="27c93781-133b-4a59-9868-63cc5e6db2d3"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{esfera_cristalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="510" width="16" height="11" uuid="b154c6db-d53c-4ee9-ad6a-87c1e9b6ebef"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ojo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="317" y="521" width="59" height="11" uuid="a0a5bed9-6bad-4ea1-b5e3-4fcd82ee571a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ind_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="36" y="520" width="68" height="11" uuid="250f1b32-f4c8-4842-b3df-2ba46a9d668e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{color_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="521" width="82" height="11" uuid="09516804-f4c5-4c34-8566-8e01fc785ac9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diametro_cristalD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="510" width="72" height="11" uuid="8ddf138e-5e82-4fd4-b788-500a8678755d"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{adicion_critalD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="90" y="510" width="13" height="11" uuid="64bc36b0-35e3-4d21-ba2e-696dad9f6570"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Esf]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="533" width="58" height="11" uuid="be78d0c5-3321-4c32-90e4-9c0ced49ebde"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalD}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="555" width="555" height="1" uuid="0924b2df-ee24-4bf5-9ac7-6e38b2b75106"/>
+			</line>
+			<staticText>
+				<reportElement x="5" y="533" width="105" height="11" uuid="95bc0024-1c37-4df1-ab80-5fb53161d1df"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suplementos del ojo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="17" y="543" width="515" height="12" uuid="357a7fdb-2d58-4f10-825b-bdba59a78f52"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{suplemento_cristaD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="566" width="55" height="11" uuid="5befccd4-6faa-4280-8462-7e8f670d12a1"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eje_critalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="477" y="566" width="16" height="11" uuid="1d077412-3ecd-463f-a0be-9463cffc45bc"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Add]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="133" y="576" width="63" height="11" uuid="bbdcc6a7-91f8-45bf-b753-1425382f6c86"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trat_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="294" y="576" width="30" height="11" uuid="74f48d5b-08bd-420f-9ee1-1d3ea51d1854"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ind]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="228" y="576" width="66" height="11" uuid="5637d395-5e88-4512-b4c9-51579f767bb9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="566" width="72" height="11" uuid="78c1145a-aaf6-4ed4-9ebc-7371021e897e"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{adicion_critalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="104" y="576" width="30" height="11" uuid="77856d7e-fbaa-452d-8f5c-4a6d9cb40f18"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Trat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="566" width="16" height="11" uuid="6aa9648a-b537-4502-a1aa-106fb106fda3"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ojo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="411" y="576" width="83" height="11" uuid="c3f214d6-8d8c-4916-8483-a6bfe9ae8e31"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diametro_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="17" y="600" width="515" height="11" uuid="f4f6a314-fdd3-4d59-9cdc-b8e83bd2ce1e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{suplemento_cristaI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="394" y="566" width="21" height="11" uuid="98ee5a79-48c1-49f7-8224-35fa4248f0a8"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpc]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="22" y="566" width="61" height="11" uuid="de2a72dd-28b6-4547-92ae-fb29417fe8bf"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="319" y="566" width="18" height="11" uuid="b03a4d49-df71-4a8d-8f93-5e0f8f80fe80"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dnpl]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="566" width="13" height="11" uuid="85109e93-707d-4e72-a20f-d1fda65f1b61"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Esf]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="590" width="58" height="11" uuid="48444f45-05a8-4979-903f-9dad92ea1a03"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojo_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="162" y="566" width="16" height="11" uuid="de60bf2f-7d8d-423c-8dc2-7634a7ea15c4"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Cil]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="556" width="60" height="11" uuid="0685fe6d-4475-41e1-8358-44f4e732158a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cod_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="204" y="576" width="30" height="11" uuid="eb9fd153-772c-458f-97f8-1de9458af806"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="317" y="576" width="59" height="11" uuid="e81860f7-95fd-41a4-b142-60fd4e4f4ffd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ind_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="339" y="566" width="58" height="11" uuid="e2cdb01b-38f4-4e44-a654-10452e4d067d"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpl_critalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="379" y="576" width="30" height="11" uuid="f85fb5e2-e99b-4a9a-825f-16eba229306c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Diam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="576" width="29" height="11" uuid="dc543c11-f73d-4756-85ee-efdde167bf5d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="587" width="555" height="1" uuid="73965dca-4a44-440c-9d6b-56a6646ac301"/>
+			</line>
+			<textField>
+				<reportElement x="180" y="566" width="74" height="11" uuid="d990f267-6c63-468a-abcc-1da4df4be8c8"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cilindro_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="590" width="105" height="11" uuid="55cf59e0-f291-4118-a6b9-0f62f5b98369"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suplementos del ojo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="97" y="566" width="71" height="11" uuid="ea44ac5f-e10b-41a4-8783-0f16f9370e3c"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{esfera_cristalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="566" width="74" height="11" uuid="3557fd75-4a8a-4696-aa52-4fc8cce91014"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnpc_critalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="555" width="363" height="12" uuid="7f4dc76d-8b4a-46f5-945b-2d0fdce42662"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion_critalI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="35" y="576" width="69" height="11" uuid="903e4e06-e1d6-401e-a8a2-ac17ab4ab157"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{color_cristalI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="249" y="566" width="18" height="11" uuid="a6352657-f308-441a-9617-47871e706654"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Eje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="510" width="18" height="11" uuid="2825813d-c499-47de-88e7-94448014892d"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Eje]]></text>
+			</staticText>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" hyperlinkTarget="Blank">
+				<reportElement x="11" y="0" width="146" height="32" uuid="33d78a74-80cb-4fa0-8940-78e45a39a1cc"/>
+				<imageExpression><![CDATA[$F{imagen}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="620" width="528" height="32" uuid="da47eade-ad30-4496-84d9-f3f0d644998d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="291" width="528" height="26" uuid="9236ea29-9495-4a51-a1e4-c44799de5963"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle">
+				<reportElement x="4" y="340" width="146" height="32" uuid="29ed1179-8420-4171-93ba-0fb1e86934f0"/>
+				<imageExpression><![CDATA[$F{imagen}]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" hyperlinkTarget="&lt;NULL&gt;">
+				<reportElement x="11" y="98" width="160" height="32" uuid="73f10950-162a-483a-a2d0-48aaede85f08"/>
+				<imageExpression><![CDATA[$F{imagen_barra}]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" hyperlinkTarget="&lt;NULL&gt;">
+				<reportElement x="1" y="430" width="160" height="32" uuid="a0595b8d-5a9c-4a59-845d-0ef0108458a0"/>
+				<imageExpression><![CDATA[$F{imagen_barra}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="10" y="60" width="50" height="11" uuid="282ba4fe-ad2b-4932-a514-7b79995f7b36"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[M?dico]]></text>
+			</staticText>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" hyperlinkTarget="&lt;NULL&gt;">
+				<reportElement x="496" y="93" width="52" height="44" uuid="73f10950-162a-483a-a2d0-48aaede85f08"/>
+				<imageExpression><![CDATA[$F{region}]]></imageExpression>
+			</image>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle" hyperlinkTarget="&lt;NULL&gt;">
+				<reportElement x="500" y="426" width="52" height="44" uuid="73f10950-162a-483a-a2d0-48aaede85f08"/>
+				<imageExpression><![CDATA[$F{region}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

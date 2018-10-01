@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fichaTaller" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb21b9f0-69b8-4d80-8290-c96009a1a55b">
+	<property name="ireport.zoom" value="1.6105100000000048"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="108"/>
+	<field name="numero_encargo" class="java.lang.String"/>
+	<field name="numero_encargo2" class="java.lang.String"/>
+	<field name="grupo" class="java.lang.String"/>
+	<field name="caja" class="java.lang.String"/>
+	<field name="agente" class="java.lang.String"/>
+	<field name="nombre_agente" class="java.lang.String"/>
+	<field name="fecha_encargo" class="java.lang.String"/>
+	<field name="fecha_entrega" class="java.lang.String"/>
+	<field name="codigo_cliente" class="java.lang.String"/>
+	<field name="nombre_cliente" class="java.lang.String"/>
+	<field name="apellido_cliente" class="java.lang.String"/>
+	<field name="telefono_cliente" class="java.lang.String"/>
+	<field name="rut_cliente" class="java.lang.String"/>
+	<field name="codigo_medico" class="java.lang.String"/>
+	<field name="medico" class="java.lang.String"/>
+	<field name="telefono_medico" class="java.lang.String"/>
+	<field name="cod_armazon" class="java.lang.String"/>
+	<field name="descripcion_armazon" class="java.lang.String"/>
+	<field name="color_armazon" class="java.lang.String"/>
+	<field name="material_armazon" class="java.lang.String"/>
+	<field name="sexo_armazon" class="java.lang.String"/>
+	<field name="calibre_armazon" class="java.lang.String"/>
+	<field name="puente_armazon" class="java.lang.String"/>
+	<field name="altura_armazon" class="java.lang.String"/>
+	<field name="estilo_armazon" class="java.lang.String"/>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="16" y="6" width="244" height="20" uuid="2997ecf0-1098-4a2c-a9f5-420177c49469"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHA PARA MONTAJE EN TALLER]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="298" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="21" width="555" height="101" uuid="c40b7ba8-5709-4a3f-a70f-271de7085375"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="16" y="71" width="64" height="11" uuid="799b7f58-31c6-4cd0-a52f-7f6da2da412f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="71" width="179" height="11" uuid="fcd6d388-14dd-4aec-a3ea-847e62a5bd28"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="259" y="71" width="68" height="11" uuid="036290d2-cd6c-451a-b9df-04e9825d0af3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="70" width="40" height="11" uuid="417e06bb-ce9a-4dcf-b699-df2533261df7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rut]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="93" width="60" height="11" uuid="52e4671a-5f72-437d-acd5-0fa8247aed44"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Medico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="93" width="72" height="11" uuid="f8d93b15-3858-4049-9a1c-056a62e21a28"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Telefonos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="26" width="90" height="11" uuid="a2cc977c-c6fb-43c6-bb0e-7b0e3f5ea83b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Encargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="26" width="40" height="11" uuid="d049ffa6-c074-4ffd-a20b-b564e0f69881"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Grupo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="26" width="40" height="11" uuid="9c8ca7bd-8882-4542-bd54-7a067dbc81be"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="26" width="40" height="11" uuid="0cc2f3ca-b3b9-4dc7-bb14-6ea3f1d7e0c5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Vendedor]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="396" y="70" width="155" height="45" uuid="8faaccf5-544a-4fae-bbd9-49aa6967359b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="396" y="71" width="153" height="20" uuid="5f7895b5-d07b-44db-bd20-a9c6c5f1a47f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo Pendiente de Cobro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="92" width="11" height="20" uuid="8589ea03-9cee-4aaa-802a-340f3a48ccc2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="156" width="555" height="1" uuid="e62daea6-3d78-4a09-ba4f-1f716abd959c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="212" width="555" height="1" uuid="045a2d9f-ba6d-45df-b690-f51ea001d5a7"/>
+			</line>
+			<line>
+				<reportElement x="0" y="188" width="555" height="1" uuid="7dad2fc7-6775-419c-92d4-e43bb7e952fc"/>
+			</line>
+			<line>
+				<reportElement x="0" y="239" width="555" height="1" uuid="4a2e34ad-5546-4c9c-9412-3be7fc3fcf06"/>
+			</line>
+			<staticText>
+				<reportElement x="16" y="135" width="30" height="11" uuid="f0b68247-218a-4bbb-9d8c-f68a43230d1b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="145" width="30" height="11" uuid="012bf3f7-77cb-4e34-910c-8e4f02efbadd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Calibre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="145" width="26" height="11" uuid="18e8b475-eb6b-4d8c-a0b4-e35987bcd216"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Puente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="145" width="26" height="11" uuid="627cf132-fee2-4eb7-8aaf-f0a5ec7cdbb3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Altura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="134" width="34" height="11" uuid="073b02e1-39cb-4885-a080-f0200b402f93"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="134" width="26" height="11" uuid="00ff3e79-efa6-4be8-a762-6d15d9c3055f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="145" width="26" height="12" uuid="d7a3096f-b0a3-450e-8669-013ff547f12d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Estilo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="176" width="30" height="11" uuid="64c0a020-f7db-4512-97ce-069eeb130411"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="176" width="30" height="11" uuid="db72414b-0b92-47ab-8ad0-549313fe268b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Trat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="176" width="30" height="11" uuid="7ba42ac3-f566-4686-bc8f-f2244d61865a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="176" width="30" height="11" uuid="01c3c596-9956-46eb-a33b-997328810db6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ind]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="176" width="30" height="11" uuid="2845e135-66ae-4f84-b161-e909de4a9a59"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Diam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="190" width="79" height="11" uuid="77db740b-1cdb-4b56-a382-5b73af275f0a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suplementos del ojo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="200" width="91" height="11" uuid="4684cb40-a38f-48b1-b690-a4f5e2bbfe8e"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ESPESOR DE BORDE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="227" width="30" height="11" uuid="b0af8541-ccc2-40c1-a328-a7252a16f66c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="227" width="30" height="11" uuid="050731de-7390-4093-b45a-9e43e6324be2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Trat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="227" width="30" height="11" uuid="e17ed272-01d6-4fd8-a54e-4f3559e78546"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="227" width="30" height="11" uuid="98ed4173-36b6-406f-bb1b-bb75145e00f1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ind]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="227" width="30" height="11" uuid="50106feb-4bf7-4558-9ddd-9e79637ab601"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Diam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="241" width="79" height="11" uuid="8b3a5231-5756-44f8-a224-f52c0a4395da"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Suplementos del ojo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="252" width="91" height="11" uuid="3bbcd168-569d-4dd7-96b1-c49f81295ad1"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ESPESOR DE BORDE]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

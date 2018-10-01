@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window  id="winAutorizaBorrarPago" border="none" height="25%" width="40%" 		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAutorizaBorrarPago')">
+		
+		<style>
+			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
+			border:1px solid white; border-right:1px solid transparent;
+			padding:0px; margin:0px; }
+		</style>
+
+		<div width="100%" height="100%">
+			<div width="100%" style="background-color:black;color: white;">
+					<label value="Autorizador" />
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="winAutorizaBorrarPago.detach()"/>
+			</div>
+			<grid sclass="MyGridRowHeight">
+				<columns>
+					<column label="" />
+					<column label="" />
+				</columns>
+				<rows>
+					<row>
+						<label value="Usuario" />
+						<textbox value = "@bind(vm.user)"/>
+					</row>
+
+					<row>
+						<label value="Contraseña" />
+						<textbox value = "@bind(vm.pass)" type = "password"/>
+					</row>
+
+					<row>
+						<label value="Procedimientos" />
+						<combobox value="@bind(vm.procedimiento)">
+							<comboitem label="Selecciona" value="0"/>
+							<comboitem label="Anula cambio" value="1"/>
+							<comboitem label="Modificar forma pago" value="2"/>
+						</combobox>
+					</row>
+				</rows>
+			</grid>
+			
+			<div  width="100%" align="center">
+				<button label="Aceptar" onClick="@command('autoriza')" />							
+			</div>
+
+		</div>
+
+</window>

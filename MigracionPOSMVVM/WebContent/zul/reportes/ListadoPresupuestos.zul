@@ -1,0 +1,99 @@
+<?page title="Listado de Presupuestos" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="reporte4" title="Listado de presupuestos" 	
+     viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoPresupuesto')"	
+		border="normal" width="100%" height="100%" closable="true">
+		
+<style>   
+    .MyGridRowHeight
+        tr.z-row td.z-row-inner div.z-row-content{
+            border:1px solid white;
+            border-right:1px solid transparent;
+            padding:0px;
+            margin:0px;
+     }
+</style>
+		
+		<caption>
+			<button label="Emitir"	onClick="@command('reporte')" />
+		</caption>
+		
+		<borderlayout>
+			<north>
+				<div>
+					<grid sclass="MyGridRowHeight">
+						<columns>
+							<column width="150px"/>
+							<column width="230px"/>
+							<column width="150px"/>
+							<column width="230px"/>
+							<column width="150px"/>
+							<column width="230px"/>												
+						</columns>
+						<rows>
+							<row>
+								<label value="Codigo" />
+								<textbox value = "@bind(vm.listadoPresupuestosForm.codigo)" width="180px"/>
+								
+								<label value="Divisa" />								
+								<combobox model = "@bind(vm.listadoPresupuestosForm.listaDivisas)" 
+										width="180px" 
+										selectedItem="@bind(vm.divisaBean)" placeholder="Seleccione" 
+										onRightClick="@command('comboSetNull',objetoBean=vm.divisaBean)">
+									<template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<label/>
+								<label/>								
+							</row>
+							<row>
+								<label value="Fecha inicio" />
+								<datebox value = "@bind(vm.fechaInicio)" format="dd/MM/yyyy" />	
+
+								<label value="Fecha termino" />
+								<datebox value = "@bind(vm.fechaFin)" format="dd/MM/yyyy" />	
+												
+								<label value="Cerrado" />
+								<combobox  width="180px" placeholder="Seleccione" 
+											selectedItem="@bind(vm.listadoPresupuestosForm.cerrado)">
+									<comboitem label="Seleccione" value="0"/>
+									<comboitem label="Si" value="S"/>
+									<comboitem label="No" value="N"/>
+								</combobox>
+							</row>
+							<row>
+								<label value="Cliente" />
+								<textbox value = "@bind(vm.listadoPresupuestosForm.cliente)" width="180px"/>
+								<button label="B" onClick="" width="30px"/>
+								
+								
+								<checkbox  width="180px" label="Listado detallado"/>
+								
+								<label value="Forma de pago" />
+								<combobox model="@bind(vm.listadoPresupuestosForm.listaFormasPago)" 
+											width="180px" placeholder="Seleccione" 
+											selectedItem="@bind(vm.formaPagoBean)" 
+											onRightClick="@command('comboSetNull',objetoBean=vm.formaPagoBean)">
+								   <template name="model">
+									<comboitem label="@load(each.descripcion)"/>
+								   </template>										
+								</combobox>							
+							</row>
+						</rows>
+					</grid>
+				</div>
+			</north>
+			<center>
+				<div height="800px" width="800px">
+					<iframe id="reporte" height="100%" width="100%" 
+						autohide="true" content="@bind(vm.fileContent)">
+					</iframe>
+				</div>
+			</center>
+			<south>
+				<div></div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

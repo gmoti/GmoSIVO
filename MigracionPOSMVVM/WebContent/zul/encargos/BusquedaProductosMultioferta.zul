@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winBusquedaProductosMultioferta" border="none" width="50%" height="50%" 
+		position="center" closable="false" mode="modal" sizable="false"
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaProductosMultioferta')">
+		
+		<style>
+			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
+			border:1px solid white; border-right:1px solid transparent;
+			padding:0px; margin:0px; }
+		</style>		
+		
+		<div width="100%" height="100%">
+		
+			<div style="background-color:black;color: white;" width="100%">
+				<label value="Multiofertas asociadas" />
+				<button iconSclass="z-icon-close" onClick="@command('cerrar',win=winBusquedaProductosMultioferta)"/>
+			</div>
+			
+			<space height="5px"/>
+			
+			<div style="background-color:black;color: white;" width="100%">
+				<space width="10px"/>
+				<label value="Articulo" />
+				<space width="10px"/>
+				<label value="Descripcion" />
+				<space width="250px"/>
+				<label value="Agr" />
+			</div>
+			
+			<div width="100%">
+				<grid model="@bind(vm.busquedaProductosForm.listaProductosMultioferta)" 
+						sclass="MyGridRowHeight" style="overflow: scroll;" emptyMessage="Sin Regsitros" width="100%" height="100%">
+					<columns>
+						<column width="150px" />
+						<column width="300px" />
+						<column width="30px" />
+					</columns>
+					<template name="model">
+						<row>
+							<textbox value="@load(each.codigo)" visible="false"/>
+							<textbox value="@load(each.cod_barra)"/>
+							<textbox value="@load(each.descripcion)"/>
+							<button label="agregar" onClick="@command('actProdGridVentaPedido', producto = each) @command('cerrar',win=winBusquedaProductosMultioferta)"/>
+						</row>
+					</template>
+				</grid>
+			</div>
+		</div>
+</window>
+</zk>

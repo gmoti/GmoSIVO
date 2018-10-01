@@ -1,0 +1,21 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winBuscaProductoDirecto"  border="none" width="500px" height="110px" 
+		position="center" mode="modal" sizable="false" 		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductoDirecto')">
+		
+		<div>
+			<div width="100%" style="background-color:black;color: white;">
+					<label value="BUSQUEDA PRODUCTOS" />
+					<space width="70px"/>
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="winBuscaProductoDirecto.detach()" />
+			</div>
+			<hbox style="padding : 10px 0px 0px 0px">
+				<label value="Codigo barra producto"/>
+				<textbox value = "@bind(vm.cdg)" onClick="@command('buscarProducto',win=winBuscaProductoDirecto )"/>
+				<button label="click" onClick="@command('buscarProducto',win=winBuscaProductoDirecto )" />
+			</hbox>	
+		</div>
+
+</window>
+</zk>
