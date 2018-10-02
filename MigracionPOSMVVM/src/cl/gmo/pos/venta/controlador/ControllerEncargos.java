@@ -1618,17 +1618,28 @@ public class ControllerEncargos implements Serializable {
 				descuento_max = ventaPedidoForm.getPorcentaje_descuento_max();
 				
 				if (dto <= descuento_max) {
-					document.getElementById('accion').value = "descuento_total_monto";
-		        	document.getElementById('cantidad_linea').value = campo;
-		        	document.getElementById('subTotal').focus();
-		        	document.ventaPedidoForm.submit();
-		        	
-		        	ventaPedidoForm.setAccion("descuento_total_monto");
-		        	ventaPedidoForm.setCantidad_linea(campo);
-		        	ventaPedidoForm
+		        	try {
+		        		ventaPedidoForm.setAccion("descuento_total_monto");
+			        	ventaPedidoForm.setCantidad_linea(Integer.valueOf(String.valueOf(campo)));		        		
+						ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+					} catch (Exception e) {						
+						e.printStackTrace();
+					}
 					
 				}else {
+					//carga autorizador
 					
+					/*descuento = campo; 
+					descuento_porc = dto;
+					
+					var tipo = document.ventaPedidoForm.tipo_pedido.value;
+					var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
+					showPopWin(url, 690, 130, devuelve_descuento_total_monto, false);*/
+					
+					
+					Window winAutoriza = (Window)Executions.createComponents(
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+					winAutoriza.doModal();
 					
 				}				
 				
@@ -1636,17 +1647,18 @@ public class ControllerEncargos implements Serializable {
 				Messagebox.show("Valor no puede ser mayor al monto total");
 				ventaPedidoForm.setDescuento(dto_total_monto);
 				return;				
-			}
-			
-			
-			
+			}	
 			
 		}else {
 			
 			
-		}	
-		
-		
+			
+			
+			
+			
+			
+			
+		}		
 	}
 	
 	

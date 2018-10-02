@@ -412,7 +412,7 @@
 									<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy" width="150px"/>
 									<intbox  value="@bind(vm.ventaPedidoForm.subTotal)" 
 											style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
-									<intbox  value="@bind(vm.ventaPedidoForm.descuento)"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.descuento)" onBlur="@command('actualiza_descuento_total_monto')"/>
 									<intbox  />
 									<intbox  value="@bind(vm.ventaPedidoForm.total)" 
 											style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
