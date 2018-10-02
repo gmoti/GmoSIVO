@@ -115,9 +115,15 @@ public class ControllerEncargos implements Serializable {
 	
 	private String selConvenio;
 	
-	private String usuario;
-	//private String sucursal;
+	private String usuario;	
 	private String sucursalDes;
+	
+	//variables validaciones
+	
+	private long dto_total_monto = 0;
+	
+	
+	
 	
 	
 	@Init
@@ -1575,6 +1581,74 @@ public class ControllerEncargos implements Serializable {
 		}		
 		
 	}	
+	
+	
+	//====================  Validaciones varias ========================
+	//==================================================================
+	@Command
+	public void actualiza_descuento_total_monto() {
+		
+		// descuento original
+		// dto_total_monto 
+		long campo = 0;
+		long descuento_max = 0;
+		long total = 0;
+		long dto = 0;
+		
+		campo = ventaPedidoForm.getDescuento();
+		total = ventaPedidoForm.getSubTotal();
+		dto   = (campo * 100) / total;	
+		
+		
+		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
+			Messagebox.show("La venta esta cerrada, no es posible modificar");
+			return;
+		}	
+		
+		if (ventaPedidoForm.getBloquea().equals("bloquea")) {
+			Messagebox.show("Valor no puede ser mayor al monto total");			
+			ventaPedidoForm.setDescuento(dto_total_monto);
+			return;
+		}		
+		
+		
+		if (dto_total_monto > 0) {
+			
+			if(campo <= total) {
+				descuento_max = ventaPedidoForm.getPorcentaje_descuento_max();
+				
+				if (dto <= descuento_max) {
+					document.getElementById('accion').value = "descuento_total_monto";
+		        	document.getElementById('cantidad_linea').value = campo;
+		        	document.getElementById('subTotal').focus();
+		        	document.ventaPedidoForm.submit();
+		        	
+		        	ventaPedidoForm.setAccion("descuento_total_monto");
+		        	ventaPedidoForm.setCantidad_linea(campo);
+		        	ventaPedidoForm
+					
+				}else {
+					
+					
+				}				
+				
+			}else {
+				Messagebox.show("Valor no puede ser mayor al monto total");
+				ventaPedidoForm.setDescuento(dto_total_monto);
+				return;				
+			}
+			
+			
+			
+			
+		}else {
+			
+			
+		}	
+		
+		
+	}
+	
 	
 	
 	//======================Getter and Setter===========================
