@@ -31,6 +31,8 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import com.google.protobuf.Message;
+
 import cl.gmo.pos.venta.controlador.presupuesto.BusquedaConveniosDispatchActions;
 import cl.gmo.pos.venta.controlador.presupuesto.PresupuestoDispatchActions;
 import cl.gmo.pos.venta.controlador.presupuesto.PresupuestoHelper;
@@ -121,7 +123,7 @@ public class ControllerEncargos implements Serializable {
 	//variables validaciones
 	
 	private long dto_total_monto = 0;
-	
+	private long dto_total = 0;
 	
 	
 	
@@ -184,6 +186,10 @@ public class ControllerEncargos implements Serializable {
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
 		//sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		
+		//inicializo descuento
+		dto_total_monto = ventaPedidoForm.getDescuento();
+		dto_total = ventaPedidoForm.getDtcoPorcentaje();
 		
 	}
 	
@@ -1224,26 +1230,23 @@ public class ControllerEncargos implements Serializable {
      		//document.ventaDirectaForm.submit();    		
      		ventaPedidoForm.setAccion("eliminarProductoMultiOferta");
      		ventaPedidoForm.setError("");
-     		ventaPedidoForm.setAddProducto(index.toString());
-			
-			
+     		ventaPedidoForm.setAddProducto(index.toString());			
 		}else {
 			//document.getElementById('productoSeleccionado').value = codigo;
      		//document.getElementById('accion').value = "eliminarProducto";
      		//document.ventaDirectaForm.submit();         		
      		ventaPedidoForm.setAccion("eliminarProducto");
      		ventaPedidoForm.setError("");
-     		ventaPedidoForm.setAddProducto(index.toString()); 		
-     		
+     		ventaPedidoForm.setAddProducto(index.toString());      		
 		}	
 		
  		try {
 			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 			
-			if (!ventaPedidoForm.getError().equals("")) {
+			/*if (!ventaPedidoForm.getError().equals("")) {
 				Messagebox.show(ventaPedidoForm.getError());
 			    return;
-			}
+			}*/
 			
 		} catch (Exception e) {
 			e.printStackTrace();					
@@ -1585,6 +1588,7 @@ public class ControllerEncargos implements Serializable {
 	
 	//====================  Validaciones varias ========================
 	//==================================================================
+	@NotifyChange({"ventaPedidoForm"})
 	@Command
 	public void actualiza_descuento_total_monto() {
 		
@@ -1614,7 +1618,7 @@ public class ControllerEncargos implements Serializable {
 		
 		if (dto_total_monto > 0) {
 			
-			if(campo <= total) {
+			if(campo <= ventaPedidoForm.getTotal()) {
 				descuento_max = ventaPedidoForm.getPorcentaje_descuento_max();
 				
 				if (dto <= descuento_max) {
@@ -1651,17 +1655,196 @@ public class ControllerEncargos implements Serializable {
 			
 		}else {
 			
-			
-			
-			
-			
-			
-			
-			
+			if (campo > 0) {
+
+				if (campo <= ventaPedidoForm.getTotal()) {
+					
+					descuento_max = ventaPedidoForm.getPorcentaje_descuento_max();
+					
+					if(dto <= descuento_max) {								        		
+						try {
+							ventaPedidoForm.setAccion("descuento_total_monto");
+				        	ventaPedidoForm.setCantidad_linea(Integer.valueOf(String.valueOf(campo)));
+							ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);							
+						} catch (Exception e) {							
+							e.printStackTrace();
+						}						
+					}else {
+						
+						/*descuento = campo; 
+						descuento_porc = dto;
+						
+						var tipo = document.ventaPedidoForm.tipo_pedido.value
+						var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
+						showPopWin(url, 690, 130, devuelve_descuento_total_monto, false);*/
+						
+						Window winAutoriza = (Window)Executions.createComponents(
+				                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+						winAutoriza.doModal();
+					}
+					
+					
+				}else {					
+					Messagebox.show("Valor no puede ser mayor al monto total");
+					ventaPedidoForm.setDescuento(dto_total_monto);
+					return;
+				}			
+				
+			}
 		}		
 	}
 	
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void actualiza_descuento_total() {
+		
+		//variable original
+		//dto_total
+		long campo = 0;
+		long descuento_max = 0;
+		
+		campo = ventaPedidoForm.getDtcoPorcentaje();
+		
+		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
+			Messagebox.show("La venta esta cerrada, no es posible modificar");
+			return;
+		}	
+		
+		if (ventaPedidoForm.getBloquea().equals("bloquea")) {
+			Messagebox.show("Valor no puede ser mayor al monto total");			
+			ventaPedidoForm.setDescuento(dto_total_monto);
+			return;
+		}
+		
+		if ((campo < 0) || (campo > 100)) {
+			Messagebox.show("Valor debe estar entre 0 y 100");
+			ventaPedidoForm.setDtcoPorcentaje(Integer.valueOf(String.valueOf(dto_total)));
+			return;		
+		}
+		
+		
+		if (dto_total > 0) {		
+				
+			descuento_max = ventaPedidoForm.getPorcentaje_descuento_max();
+			
+			if(campo <= descuento_max) {					
+	        	//document.getElementById('cantidad_descuento').value = campo.replace(',','.'); 	        	
+	        	try {
+	        		ventaPedidoForm.setAccion("descuento_total");
+					ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+				} catch (Exception e) {						
+					e.printStackTrace();
+				}		        	
+				
+			}else {
+				//autorizador
+				
+				/*descuento = campo;
+				var tipo = document.ventaPedidoForm.tipo_pedido.value
+				var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
+				if(tipo == '0'){
+					alert("Debes seleccionar un tipo de Encargo");
+				}else{
+					$j("#tipo_pedido").focus();
+					showPopWin(url, 690, 130, devuelve_descuento_total, false);
+				}*/
+				Window winAutoriza = (Window)Executions.createComponents(
+		                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+				winAutoriza.doModal();					
+			}			
+			
+			
+		}else {		
+			
+			if(campo > 0) {
+				
+				descuento_max = ventaPedidoForm.getPorcentaje_descuento_max();
+				
+				if(campo <= descuento_max) {					
+		        	//document.getElementById('cantidad_descuento').value = campo.replace(',','.'); 	        	
+		        	try {
+		        		ventaPedidoForm.setAccion("descuento_total");
+						ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+					} catch (Exception e) {						
+						e.printStackTrace();
+					}		        	
+					
+				}else {
+					//autorizador
+					
+					/*descuento = campo;
+					var tipo = document.ventaPedidoForm.tipo_pedido.value
+					var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
+					if(tipo == '0'){
+						alert("Debes seleccionar un tipo de Encargo");
+					}else{
+						$j("#tipo_pedido").focus();
+						showPopWin(url, 690, 130, devuelve_descuento_total, false);
+					}*/
+					Window winAutoriza = (Window)Executions.createComponents(
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+					winAutoriza.doModal();					
+				}				
+				
+			}			
+		}		
+	}	
 	
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void actualiza_descuento(@BindingParam("index")int index, @BindingParam("dcto")int dcto) {
+		
+		long campo = 0;
+		long descuento_max = 0;
+		
+		campo = dcto;
+		
+		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
+			Messagebox.show("La venta esta cerrada, no es posible modificar");
+			return;
+		}	
+		
+		if (ventaPedidoForm.getBloquea().equals("bloquea")) {
+			Messagebox.show("Valor no puede ser mayor al monto total");			
+			ventaPedidoForm.setDescuento(dto_total_monto);
+			return;
+		}
+		
+		if ((campo < 0) || (campo > 100)) {
+			Messagebox.show("Valor debe estar entre 0 y 100");
+			ventaPedidoForm.setDtcoPorcentaje(Integer.valueOf(String.valueOf(dto_total)));
+			return;		
+		}
+		
+		
+		descuento_max = ventaPedidoForm.getPorcentaje_descuento_max();
+		
+		if (campo <= descuento_max) {       	
+        	try {
+        		//document.getElementById('cantidad_descuento').value = campo.replace(',','.');	
+            	ventaPedidoForm.setAccion("descuento_linea");
+            	ventaPedidoForm.setAddProducto(String.valueOf(index));
+				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}			
+		}else {
+			
+			/*indice = index;
+			descuento = campo;
+			document.ventaPedidoForm.sobre.focus();
+			var tipo = document.ventaPedidoForm.tipo_pedido.value;
+			var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;
+			document.ventaPedidoForm.sobre.focus();		
+			showPopWin(url, 690, 130, devuelve_descuento, false);*/
+			Window winAutoriza = (Window)Executions.createComponents(
+	                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+			winAutoriza.doModal();		
+			
+		}	
+		
+	}
 	
 	//======================Getter and Setter===========================
 	//===================================================================

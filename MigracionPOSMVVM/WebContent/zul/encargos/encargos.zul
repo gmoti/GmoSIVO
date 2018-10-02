@@ -223,14 +223,14 @@
 							<label value="Descripcion" />
 							<space width="265px"/>
 							<label value="Precio IVA" />
-							<space width="20px"/>
+							<space width="20px"/>							
 							
-							<label value="Importe" />
-							<space width="20px"/>
 							<label value="Cantidad" />
 							<space width="20px"/>						
 							<label value="Descuento" />
 							<space width="15px"/>
+							<label value="Importe" />
+							<space width="20px"/>
 							
 							<label value="Grupo" />
 							<space width="15px"/>
@@ -243,8 +243,8 @@
 							<label value="Multi" />
 							<space width="50px"/>
 							
-							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" width="5px"/>
-							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" width="5px"/>												
+							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" width="50px"/>
+							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" width="50px"/>												
 						</div>
 
 						<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
@@ -272,10 +272,10 @@
 										onClick="@command('actualizaDetalles',arg=each)" 
 										readonly="true"/>
 									<textbox value="@load(each.descripcion)" width="350px" disabled="true"/>
-									<intbox value="@load(each.precio)"  width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
+									<intbox value="@load(each.precio)"  width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>									
+									<intbox value="@bind(each.cantidad)" width="80px" disabled="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+									<intbox value="@bind(each.descuento)" width="80px" onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" style="text-align:right"/>
 									<intbox value="@load(each.importe)" width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
-									<intbox value="@bind(each.cantidad)" width="80px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
-									<intbox value="@bind(each.descuento)" width="80px" style="text-align:right"/>
 									
 									<textbox value="@load(each.grupo)" width="60px" disabled="true"/>
 									<textbox value="@load(each.estado)" width="60px" disabled="true"/>
@@ -410,23 +410,15 @@
 								<row>
 									<label value="Fecha de entrega" />
 									<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy" width="150px"/>
-									<intbox  value="@bind(vm.ventaPedidoForm.subTotal)" 
-											style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.subTotal)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
 									<intbox  value="@bind(vm.ventaPedidoForm.descuento)" onBlur="@command('actualiza_descuento_total_monto')"/>
-									<intbox  />
-									<intbox  value="@bind(vm.ventaPedidoForm.total)" 
-											style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.dtcoPorcentaje)" onBlur="@command('actualiza_descuento_total')"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.total)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
 									
 									<intbox  value="@bind(vm.ventaPedidoForm.anticipo)" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox  value="@bind(vm.ventaPedidoForm.totalPendiante)" 
 											style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
-								</row>
-								<!--<row>
-									<label value="Notas" />
-									 <cell colspan="5" style="padding-left:0px"> 
-										<textbox value="@bind(vm.ventaPedidoForm.nota)" width="800px" />
-									</cell> 
-								</row>-->
+								</row>								
 							</rows>
 						</grid>
 						
