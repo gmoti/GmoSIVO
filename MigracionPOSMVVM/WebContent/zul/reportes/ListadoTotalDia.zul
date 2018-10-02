@@ -1,8 +1,14 @@
 <?page title="Listado Total Dia" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="test" title="Listado Total Dia" 	
-     viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoTotalDia')"	
-		border="normal" width="100%" height="100%" closable="true">
+	<window id="test" viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoTotalDia')"	
+		border="normal" width="100%" height="100%" closable="false">
+		
+		<div width="100%" style="background-color:black;color: white" height="40px">
+			<label value="Listado Total Dia" />
+			<div style="float: right">					
+				<toolbarbutton image="/image/Remove_32x32.png" onClick="test.detach()"/>		
+			</div>																			
+		</div>
 		
 		<borderlayout>
 			<north>
