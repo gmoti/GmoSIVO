@@ -13,18 +13,20 @@
      }
 	</style>
 	
+	
 	<div width="100%" height="100%">
 	
 		<borderlayout>
 		<north>
-			<div width="100%" height="100%">
-	
-			<div width="100%" style="background-color:black;color: white">
-				<label value="LISTADO DE ENCARGOS" />						
-				<space width="400px"/>
-				<toolbarbutton image="/image/Print_32x32.png" onClick="@command('reporte')"/>
-				<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte5.detach()"/>																
-			</div>	
+			<div width="100%" height="100%">		
+			
+			<div width="100%" style="background-color:black;color: white" height="40px">
+				<label value="LISTADO DE ENCARGOS" />
+				<div style="float: right">					
+					<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')"/>
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte5.detach()"/>		
+				</div>																			
+			</div>
 		
 			<grid sclass="MyGridRowHeight">
 				<columns>

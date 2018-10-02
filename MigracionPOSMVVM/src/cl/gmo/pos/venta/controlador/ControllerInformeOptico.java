@@ -62,8 +62,8 @@ Session sess = Sessions.getCurrent();
 		local = (String) sess.getAttribute("sucursal");	
 		nombreSucural = (String)sess.getAttribute("nombreSucural");	
 		
-		informeOpticoForm.setCdgCli("120000770");
-		informeOpticoForm.setNombreCli("Francisco");
+		informeOpticoForm.setCdgCli("0");
+		//informeOpticoForm.setNombreCli("Francisco");
 	}
 	
 	@Command

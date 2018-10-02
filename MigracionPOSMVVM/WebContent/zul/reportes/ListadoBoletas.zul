@@ -1,12 +1,14 @@
 <?page title="Listado de Boletas" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="reporte3" title="Listado de boletas" 	
-     viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoBoleta')"	
-		border="normal" width="100%" height="100%" closable="true">
+	<window id="reporte3" viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoBoleta')"	
+		border="normal" width="100%" height="100%" closable="false">
 		
-		<caption>
-			<button label="Emitir"	onClick="@command('reporte')" />
-		</caption>
+		<div width="100%" style="background-color:black;color: white" height="40px">
+			<label value="Listado de boletas" />
+			<div style="float: right">					
+				<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte3.detach()"/>		
+			</div>																			
+		</div>			
 		
 		<borderlayout>
 			<north>
@@ -19,7 +21,8 @@
 						<hbox>
 							<label value="Nro.Boleta" />
 							<textbox value ="@bind(vm.listadoBoletasForm.numero_boleta)"/>							
-						</hbox>						
+						</hbox>	
+						<button label="Emitir"	onClick="@command('reporte')" />					
 					</vbox>
 				</div>
 			</north>

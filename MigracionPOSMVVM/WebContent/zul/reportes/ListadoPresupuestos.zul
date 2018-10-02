@@ -1,22 +1,25 @@
 <?page title="Listado de Presupuestos" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="reporte4" title="Listado de presupuestos" 	
-     viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoPresupuesto')"	
-		border="normal" width="100%" height="100%" closable="true">
+	<window id="reporte4" viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoPresupuesto')"	
+		border="normal" width="100%" height="100%" closable="false">
 		
-<style>   
-    .MyGridRowHeight
-        tr.z-row td.z-row-inner div.z-row-content{
-            border:1px solid white;
-            border-right:1px solid transparent;
-            padding:0px;
-            margin:0px;
-     }
-</style>
+		<style>   
+		    .MyGridRowHeight
+		        tr.z-row td.z-row-inner div.z-row-content{
+		            border:1px solid white;
+		            border-right:1px solid transparent;
+		            padding:0px;
+		            margin:0px;
+		     }
+		</style>	
 		
-		<caption>
-			<button label="Emitir"	onClick="@command('reporte')" />
-		</caption>
+		<div width="100%" style="background-color:black;color: white" height="40px">
+			<label value="Listado de presupuestos" />
+			<div style="float: right">					
+				<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')"/>
+				<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte4.detach()"/>		
+			</div>																			
+		</div>
 		
 		<borderlayout>
 			<north>
