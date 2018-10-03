@@ -2,11 +2,16 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashMap;
 
+import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.zhtml.Big;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.helper.VentaPedidoHelper;
@@ -20,6 +25,7 @@ public class ControllerAutorizadorDescuento implements Serializable {
 	
 	private String user;
 	private String pass;
+	HashMap<String,Object> objetos;
 	
 	@Init
 	public void inicial() {
@@ -30,29 +36,50 @@ public class ControllerAutorizadorDescuento implements Serializable {
 	
 	
 	@Command
-	public void autorizadesc() {
+	public void autorizadesc(@BindingParam("win")Window win) {
 		
 		BigDecimal descuento;
-		String tipo=null;
-		/*var user = document.getElementById('user').value;
-		var pass = document.getElementById('pass').value;
-		var tipo = document.getElementById('tipo_pedido').value;
+		String tipo="";
+		BeanGlobal bg = new BeanGlobal();
 		
-		String usuario = request.getParameter(Constantes.STRING_USUARIO).toString();
-		String pass = request.getParameter(Constantes.STRING_PASS).toString();
-		String tipo = request.getParameter(Constantes.STRING_TIPO).toString();*/
-		
+		tipo = sess.getAttribute(Constantes.STRING_TIPO).toString();		
 		
 		if (!tipo.equals(Constantes.STRING_CERO))
 		{
-			 descuento = new VentaPedidoHelper().traeDecuento(user, pass, tipo);
+			 descuento = new VentaPedidoHelper().traeDecuento(user, pass, tipo);			 
+			 if(descuento.equals(new BigDecimal(-1))) {
+				 bg.setObj_1("falae");
+				 bg.setObj_2(BigDecimal.ZERO);
+				 bg.setObj_3("");				 
+			 }else {
+				 bg.setObj_1("false");
+				 bg.setObj_2(descuento);
+				 bg.setObj_3(user);
+			 }			 
+						 
 		}
 		else
 		{
 			descuento = new VentaPedidoHelper().traeDecuento(user, pass, null);
-		}		
+			if(descuento.equals(new BigDecimal(-1))) {
+				 bg.setObj_1("falae");
+				 bg.setObj_2(BigDecimal.ZERO);
+				 bg.setObj_3("");				 
+			 }else {
+				 bg.setObj_1("false");
+				 bg.setObj_2(descuento);
+				 bg.setObj_3(user);
+			 }	
+		}	
+		
+		
+		objetos = new HashMap<String,Object>();		
+		objetos.put("valores", bg);		
 			
 		sess.setAttribute("Descuento", descuento.toString());
+		
+		BindUtils.postGlobalCommand(null, null, "devuelve_descuento_total_monto", objetos);
+		win.detach();
 	}
 	
 	

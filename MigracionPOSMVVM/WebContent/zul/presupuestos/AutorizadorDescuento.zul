@@ -32,7 +32,7 @@
 			</grid>
 			
 			<div  width="100%" align="center">
-				<button label="Aceptar" onClick="@command('autorizadesc')" />							
+				<button label="Aceptar" onClick="@command('autorizadesc',win=winAutorizadorDescuento)" />							
 			</div>
 
 		</div>

@@ -96,6 +96,8 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			fecha = ventaPedidoForm.getFecha();
 			controlBotones.setEnableGenerico1("true");
 			controlBotones.setEnableGenerico2("false");
+			this.dto = 0.0;
+			
 		}
 		
 		if (arg3 instanceof VentaDirectaForm) { 
@@ -103,13 +105,13 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			fecha = ventaDirectaForm.getFecha();
 			controlBotones.setEnableGenerico1("false");
 			controlBotones.setEnableGenerico2("true");
+			this.dto = ventaDirectaForm.getDescuentoTotal();
 		}
 		
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
 		
-		this.setDiferencia_total(seleccionPagoForm.getV_total());
-		this.dto = ventaDirectaForm.getDescuentoTotal();
+		this.setDiferencia_total(seleccionPagoForm.getV_total());		
 		seleccionPagoForm.setV_a_pagar(0);		
 		
 	}
@@ -205,7 +207,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 				//formaPagoBean = null;		
 				//en caso de ser completamente pagado				    
 				    
-			    if (seleccionPagoForm.getV_a_pagar() == 0) {	    	
+			    if (seleccionPagoForm.getDiferencia() == 0) {	    	
 			    	
 			    	Window winSelecciona = (Window)Executions.createComponents(
 			                "/zul/venta_directa/SeleccionImpresion.zul", null, null);
@@ -362,6 +364,15 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		pagoBeanAux=null;
 	}
 	
+	
+	@NotifyChange({"seleccionPagoForm"})	
+	@Command
+	public void generaBoleta() {
+		
+		
+		
+		
+	}
 	
     
 	

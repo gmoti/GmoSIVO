@@ -264,7 +264,10 @@ public class ControllerVentaDirecta implements Serializable{
 	
 	@NotifyChange({"ventaDirectaForm","controlBotones"})
 	@GlobalCommand	
-    public void creaPagoExitoso(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {		
+    public void creaPagoExitoso(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {	
+		
+		String boleta="";
+		
 		
 		ventaDirectaForm.setAccion(Constantes.STRING_PAGO_EXITOSO);			
 		sess.setAttribute(Constantes.STRING_TICKET, ventaDirectaForm.getEncabezado_ticket() + "/" + ventaDirectaForm.getNumero_ticket());
@@ -283,9 +286,16 @@ public class ControllerVentaDirecta implements Serializable{
 				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente.");
 			}else {
 				
-				//http://10.216.4.24/39%2066666666-6%201.pdf
-				String url ="http://10.216.4.24/39%10289571-1%" + ventaDirectaForm.getEstado_boleta().trim() + ".pdf";
-				//String url ="http://10.216.4.24/39%" + ventaDirectaForm.getNif() + "-" + ventaDirectaForm.getDv() + 
+				
+				String valor[] =  ventaDirectaForm.getEstado_boleta().split("_");
+				
+				//http://10.216.4.24/39 66666666-6 1.pdf
+				//http://10.216.4.24/39%2066666666-6%203.pdf
+				
+				String url ="http://10.216.4.24/39 " + 
+							ventaDirectaForm.getNif().trim() + "-" + ventaDirectaForm.getDv().trim() + " " + valor[1].trim()+".pdf";
+							
+				
 				
 				objetos = new HashMap<String,Object>();
 				objetos.put("documento",url);

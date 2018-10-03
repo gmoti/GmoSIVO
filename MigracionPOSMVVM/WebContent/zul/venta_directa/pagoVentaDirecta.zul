@@ -70,7 +70,7 @@
 				<label value="Cobro" />
 				<div style="float: right">					
 					<toolbarbutton image="/image/Save_32x32.png" onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
-     				<toolbarbutton image="/image/Print_32x32.png"/>	
+     				<toolbarbutton image="/image/Print_32x32.png" onClick="@command('generaBoleta')"/>	
 				</div>																			
 			</div>
 			

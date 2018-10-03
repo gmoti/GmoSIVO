@@ -273,10 +273,10 @@
 										readonly="true"/>
 									<textbox value="@load(each.descripcion)" width="350px" disabled="true"/>
 									<intbox value="@load(each.precio)"  width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>									
-									<intbox value="@bind(each.cantidad)" width="80px" disabled="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
-									<intbox value="@bind(each.descuento)" width="80px" onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" style="text-align:right"/>
-									<intbox value="@load(each.importe)" width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
-									
+									<intbox value="@bind(each.cantidad)" width="80px" disabled="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>									
+									<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##,###0" locale="it" 
+												onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" />									
+									<intbox value="@load(each.importe)" width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>									
 									<textbox value="@load(each.grupo)" width="60px" disabled="true"/>
 									<textbox value="@load(each.estado)" width="60px" disabled="true"/>
 									<textbox value="@load(each.tipo)" width="60px" disabled="true"/>

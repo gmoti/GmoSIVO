@@ -1,6 +1,7 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -867,6 +868,8 @@ public class ControllerEncargos implements Serializable {
 	@GlobalCommand	
     public void creaPagoExitosoEncargo(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {
 		
+		String boleta="";
+		
 		ventaPedidoForm.setAccion(Constantes.STRING_PAGO_EXITOSO);			
 		//sess.setAttribute(Constantes.STRING_TICKET, ventaPedidoForm.getCodigo_suc() + "/" + ventaPedidoForm.);
 		sess.setAttribute(Constantes.STRING_TIPO_DOCUMENTO, seleccionPago.getTipo_doc());
@@ -882,6 +885,25 @@ public class ControllerEncargos implements Serializable {
 			if (ventaPedidoForm.getEstado_boleta().contains("TRUE") || ventaPedidoForm.getEstado_boleta().contains("true")) {
 				
 				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente.");
+			}else {
+				
+				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");
+				
+				//http://10.216.4.24/39%2066666666-6%201.pdf
+				//http://10.216.4.24/39%2066666666-6%203.pdf
+				
+				String url ="http://10.216.4.24/39 " + 
+						ventaPedidoForm.getNif().trim() + "-" + ventaPedidoForm.getDvnif().trim() + " " + valor[1].trim()+".pdf";			
+				
+				objetos = new HashMap<String,Object>();
+				objetos.put("documento",url);
+				objetos.put("titulo","Venta Directa");
+				
+				Window window = (Window)Executions.createComponents(
+		                "/zul/reportes/VisorDocumento.zul", null, objetos);
+				
+		        window.doModal();		
+				
 			}
 			
 			
@@ -1598,10 +1620,12 @@ public class ControllerEncargos implements Serializable {
 		long descuento_max = 0;
 		long total = 0;
 		long dto = 0;
+		String tipo="";
 		
 		campo = ventaPedidoForm.getDescuento();
 		total = ventaPedidoForm.getSubTotal();
 		dto   = (campo * 100) / total;	
+		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
 		
 		
 		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
@@ -1630,21 +1654,14 @@ public class ControllerEncargos implements Serializable {
 						e.printStackTrace();
 					}
 					
-				}else {
-					//carga autorizador
+				}else {									
 					
-					/*descuento = campo; 
-					descuento_porc = dto;
 					
-					var tipo = document.ventaPedidoForm.tipo_pedido.value;
-					var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
-					showPopWin(url, 690, 130, devuelve_descuento_total_monto, false);*/
-					
+					sess.setAttribute("tipo", tipo);
 					
 					Window winAutoriza = (Window)Executions.createComponents(
 			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
-					winAutoriza.doModal();
-					
+					winAutoriza.doModal();					
 				}				
 				
 			}else {
@@ -1671,12 +1688,7 @@ public class ControllerEncargos implements Serializable {
 						}						
 					}else {
 						
-						/*descuento = campo; 
-						descuento_porc = dto;
-						
-						var tipo = document.ventaPedidoForm.tipo_pedido.value
-						var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
-						showPopWin(url, 690, 130, devuelve_descuento_total_monto, false);*/
+						sess.setAttribute("tipo", tipo);
 						
 						Window winAutoriza = (Window)Executions.createComponents(
 				                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
@@ -1692,7 +1704,8 @@ public class ControllerEncargos implements Serializable {
 				
 			}
 		}		
-	}
+	}	
+	
 	
 	@NotifyChange({"ventaPedidoForm"})
 	@Command
@@ -1702,8 +1715,10 @@ public class ControllerEncargos implements Serializable {
 		//dto_total
 		long campo = 0;
 		long descuento_max = 0;
+		String tipo="";
 		
 		campo = ventaPedidoForm.getDtcoPorcentaje();
+		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
 		
 		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
 			Messagebox.show("La venta esta cerrada, no es posible modificar");
@@ -1730,6 +1745,7 @@ public class ControllerEncargos implements Serializable {
 			if(campo <= descuento_max) {					
 	        	//document.getElementById('cantidad_descuento').value = campo.replace(',','.'); 	        	
 	        	try {
+	        		ventaPedidoForm.setCantidad_descuento(campo);
 	        		ventaPedidoForm.setAccion("descuento_total");
 					ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 				} catch (Exception e) {						
@@ -1739,18 +1755,18 @@ public class ControllerEncargos implements Serializable {
 			}else {
 				//autorizador
 				
-				/*descuento = campo;
-				var tipo = document.ventaPedidoForm.tipo_pedido.value
-				var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
-				if(tipo == '0'){
-					alert("Debes seleccionar un tipo de Encargo");
-				}else{
-					$j("#tipo_pedido").focus();
-					showPopWin(url, 690, 130, devuelve_descuento_total, false);
-				}*/
-				Window winAutoriza = (Window)Executions.createComponents(
-		                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
-				winAutoriza.doModal();					
+				if (!tipo.equals("0")) {
+					
+					sess.setAttribute("tipo", tipo);
+					
+					Window winAutoriza = (Window)Executions.createComponents(
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+					winAutoriza.doModal();	
+					
+				}else {
+					Messagebox.show("Debes seleccionar un tipo de Encargo");
+					return;
+				}								
 			}			
 			
 			
@@ -1763,6 +1779,7 @@ public class ControllerEncargos implements Serializable {
 				if(campo <= descuento_max) {					
 		        	//document.getElementById('cantidad_descuento').value = campo.replace(',','.'); 	        	
 		        	try {
+		        		ventaPedidoForm.setCantidad_descuento(campo);
 		        		ventaPedidoForm.setAccion("descuento_total");
 						ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 					} catch (Exception e) {						
@@ -1772,18 +1789,18 @@ public class ControllerEncargos implements Serializable {
 				}else {
 					//autorizador
 					
-					/*descuento = campo;
-					var tipo = document.ventaPedidoForm.tipo_pedido.value
-					var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;	
-					if(tipo == '0'){
-						alert("Debes seleccionar un tipo de Encargo");
-					}else{
-						$j("#tipo_pedido").focus();
-						showPopWin(url, 690, 130, devuelve_descuento_total, false);
-					}*/
-					Window winAutoriza = (Window)Executions.createComponents(
-			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
-					winAutoriza.doModal();					
+					if (!tipo.equals("0")) {
+						
+						sess.setAttribute("tipo", tipo);
+						
+						Window winAutoriza = (Window)Executions.createComponents(
+				                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+						winAutoriza.doModal();	
+						
+					}else {
+						Messagebox.show("Debes seleccionar un tipo de Encargo");
+						return;
+					}						
 				}				
 				
 			}			
@@ -1797,8 +1814,10 @@ public class ControllerEncargos implements Serializable {
 		
 		long campo = 0;
 		long descuento_max = 0;
+		String tipo="";
 		
 		campo = dcto;
+		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
 		
 		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
 			Messagebox.show("La venta esta cerrada, no es posible modificar");
@@ -1823,6 +1842,7 @@ public class ControllerEncargos implements Serializable {
 		if (campo <= descuento_max) {       	
         	try {
         		//document.getElementById('cantidad_descuento').value = campo.replace(',','.');	
+        		ventaPedidoForm.setCantidad_descuento(campo);
             	ventaPedidoForm.setAccion("descuento_linea");
             	ventaPedidoForm.setAddProducto(String.valueOf(index));
 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
@@ -1838,6 +1858,9 @@ public class ControllerEncargos implements Serializable {
 			var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;
 			document.ventaPedidoForm.sobre.focus();		
 			showPopWin(url, 690, 130, devuelve_descuento, false);*/
+			
+			sess.setAttribute("tipo", tipo);
+			
 			Window winAutoriza = (Window)Executions.createComponents(
 	                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
 			winAutoriza.doModal();		
@@ -1845,6 +1868,57 @@ public class ControllerEncargos implements Serializable {
 		}	
 		
 	}
+	
+	//===================== Retorno del autorizador =====================
+	//===================================================================
+	@NotifyChange({"ventaPedidoForm"})
+	@GlobalCommand
+	public void devuelve_descuento_total_monto(@BindingParam("valores")BeanGlobal valores) {
+		
+		String acceso="";
+		BigDecimal descuento_autorizado= BigDecimal.ZERO;
+		String usuario="";
+		long dto = 0;
+		BigDecimal bgdto = BigDecimal.ZERO;
+		
+		dto = (ventaPedidoForm.getDescuento() * 100) / ventaPedidoForm.getSubTotal();
+		
+		bgdto = BigDecimal.valueOf(dto);
+		
+		acceso = (String)valores.getObj_1();
+		descuento_autorizado = (BigDecimal)valores.getObj_2();
+		usuario   = (String)valores.getObj_3();		
+		
+		if(acceso.equals("true")) {
+			
+			if(bgdto.compareTo(descuento_autorizado)==1) {				
+				
+				Messagebox.show("El descuento mximo autorizado es de " + descuento_autorizado);
+				//document.ventaPedidoForm.submit();
+				return;
+			}else {						
+				
+				try {					
+					ventaPedidoForm.setCantidad_linea(Integer.valueOf(String.valueOf(ventaPedidoForm.getDescuento())));
+					ventaPedidoForm.setAccion("descuento_total_monto");
+					ventaPedidoForm.setDescuento_autoriza(usuario);				
+					ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
+				
+			}
+			
+			
+		}else {			
+			
+			Messagebox.show("Usted no esta autorizado, para realizar este tipo de descuento");
+			//document.ventaPedidoForm.submit();
+			return;
+		}	
+		
+	}
+	
 	
 	//======================Getter and Setter===========================
 	//===================================================================
