@@ -208,9 +208,9 @@ public class SeleccionPagoDispatchActions{
 			}
 			
 			System.out.println("PASO POR SPAGO 2 5 3");
-			//FQuiroz efectua una recarga del contenido del formulario
-			//this.carga_formulario(formulario, session, formulario.getFecha());
-			formulario = this.carga_formulario(formulario, session, formulario.getFecha());
+			
+			this.carga_formulario(formulario, session, formulario.getFecha());
+			//formulario = this.carga_formulario(formulario, session, formulario.getFecha());
 			
 			if (null != formulario.getConvenio() && null != formulario.getConvenio().getId() && !(Constantes.STRING_BLANCO.equals(formulario.getConvenio().getId()))) {
 				System.out.println("PASO POR SPAGO 2 5 4");

@@ -146,7 +146,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		
 		//grabar variables de sesion para el pago
 		sess.setAttribute(Constantes.STRING_LISTA_PAGOS, seleccionPagoForm.getListaPagos());
-		sess.setAttribute(Constantes.STRING_TOTAL, seleccionPagoForm.getV_a_pagar());
+		//sess.setAttribute(Constantes.STRING_TOTAL, seleccionPagoForm.getV_a_pagar());
 		sess.setAttribute(Constantes.STRING_LISTA_FORMAS_PAGOS, seleccionPagoForm.getListaFormasPago());
 		sess.setAttribute(Constantes.STRING_FECHA, seleccionPagoForm.getFecha());			
 		
@@ -207,14 +207,20 @@ public class ControllerPagoVentaDirecta implements Serializable{
 				//formaPagoBean = null;		
 				//en caso de ser completamente pagado				    
 				    
-			    if (seleccionPagoForm.getDiferencia() == 0) {	    	
+			    if (seleccionPagoForm.getDiferencia() == 0) {	   
 			    	
-			    	Window winSelecciona = (Window)Executions.createComponents(
-			                "/zul/venta_directa/SeleccionImpresion.zul", null, null);
+			    	objetos = new HashMap<String,Object>();		
+					objetos.put("origen",origen);
+			    	
+			    	Window winSeleccionaPago = (Window)Executions.createComponents(
+			                "/zul/venta_directa/SeleccionImpresion.zul", null, objetos);
 					
-			    	winSelecciona.doModal();  	
-			    	
+			    	winSeleccionaPago.doModal(); 			    	
 			    }
+			    
+			    //color en cero el monto ingresado
+			    seleccionPagoForm.setV_a_pagar(0);
+			    
 				
 			} catch (Exception e) {				
 				e.printStackTrace();
@@ -369,8 +375,66 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	@Command
 	public void generaBoleta() {
 		
+		if (seleccionPagoForm.getTiene_pagos()==0) {			
+			Messagebox.show("No hay pagos, no es posible imprimir");
+			return;			
+		}
 		
+		if (seleccionPagoForm.getEstado().equals("PAGADO_TOTAL")) {			
+			Messagebox.show("No es posible imprimir documentos, la venta ya se encuentra pagada en su totalidad");
+			return;
+		}
 		
+		if(seleccionPagoForm.getOrigen().equals("PEDIDO")) {
+			
+			if(seleccionPagoForm.getAnticipo_pedido()==0) {
+				
+				if (seleccionPagoForm.getTiene_pagos_actuales().equals("true")) {
+					
+					objetos = new HashMap<String,Object>();		
+					objetos.put("origen","PEDIDO");
+					
+					//ventana de seleccion de impresion
+					Window winSeleccionaGenera = (Window)Executions.createComponents(
+			                "/zul/venta_directa/SeleccionImpresion.zul", null, objetos);
+					winSeleccionaGenera.doModal();
+					
+				}else {
+					
+					Messagebox.show("No hay pagos nuevos para imprimir");
+					return;
+				} 			
+				
+			}else {		
+				
+				Messagebox.show("El monto pagado no puede ser menor al Anticipo total");
+				return;
+			}		
+			
+			
+		}else {// distinto a pedido
+			
+			if(seleccionPagoForm.getDiferencia()==0) {
+				
+				if(seleccionPagoForm.getTiene_pagos_actuales().equals("true")) {
+					
+					objetos = new HashMap<String,Object>();		
+					objetos.put("origen","DIRECTA");
+					
+					//ventana de seleccion de impresion
+					Window winSelecciona = (Window)Executions.createComponents(
+			                "/zul/venta_directa/SeleccionImpresion.zul", null, objetos);					
+				}else {
+					Messagebox.show("No hay pagos nuevos para imprimir");
+					return;
+				}				
+				
+			}else {		
+				
+				Messagebox.show("Existen pagos pendientes, no se puede imprimir");
+				return;				
+			}			
+		}		
 		
 	}
 	

@@ -137,9 +137,6 @@ public class ControllerEncargos implements Serializable {
 		beanControlBotones = new BeanControlBotones();	
 		beanControlCombos  = new BeanControlCombos();
 		
-		beanControlBotones.setEnableNew("false");
-		beanControlBotones.setEnableListar("true");
-		
 		ventaPedidoForm          = new VentaPedidoForm();		
 		ventaPedidoDispatchActions = new VentaPedidoDispatchActions();
 		devolucionDispatchActions  = new DevolucionDispatchActions();
@@ -175,12 +172,16 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedidoDesdePresupuesto(ventaPedidoForm, sess);			
 		}		
 		
+		beanControlBotones.setEnableNew("false");
+		beanControlBotones.setEnableListar("true");		
+		
 		beanControlCombos.setComboAgenteEnable("true");
 		beanControlCombos.setComboDivisaEnable("true");
 		beanControlCombos.setComboFpagoEnable("true");
 		beanControlCombos.setComboIdiomaEnable("true");
 		beanControlCombos.setComboPromoEnable("true");
-		beanControlCombos.setComboTiposEnable("true");		
+		beanControlCombos.setComboTiposEnable("true");	
+		
 				
 		posicionCombo();
 		
@@ -799,7 +800,7 @@ public class ControllerEncargos implements Serializable {
 					sess.setAttribute("TIPO_PEDIDO", null);				
 				
 				sess.setAttribute(Constantes.STRING_LISTA_PAGOS, seleccionPagoForm.getListaPagos());
-				sess.setAttribute(Constantes.STRING_PORCENTAJE_ANTICIPO, ventaPedidoForm.getAnticipo());
+				sess.setAttribute(Constantes.STRING_PORCENTAJE_ANTICIPO, ventaPedidoForm.getPorcentaje_anticipo());
 				sess.setAttribute(Constantes.STRING_FORMA_PAGO_ORIGEN, formaPagoBean.getId());
 				sess.setAttribute(Constantes.STRING_ORIGEN, Constantes.STRING_PEDIDO);
 				sess.setAttribute(Constantes.STRING_TOTAL, ventaPedidoForm.getTotal());
@@ -889,15 +890,14 @@ public class ControllerEncargos implements Serializable {
 				
 				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");
 				
-				//http://10.216.4.24/39%2066666666-6%201.pdf
-				//http://10.216.4.24/39%2066666666-6%203.pdf
+				//http://10.216.4.24/39%2066666666-6%201.pdf	
 				
 				String url ="http://10.216.4.24/39 " + 
 						ventaPedidoForm.getNif().trim() + "-" + ventaPedidoForm.getDvnif().trim() + " " + valor[1].trim()+".pdf";			
 				
 				objetos = new HashMap<String,Object>();
 				objetos.put("documento",url);
-				objetos.put("titulo","Venta Directa");
+				objetos.put("titulo","Encargo");
 				
 				Window window = (Window)Executions.createComponents(
 		                "/zul/reportes/VisorDocumento.zul", null, objetos);
@@ -1053,6 +1053,8 @@ public class ControllerEncargos implements Serializable {
 		beanControlBotones.setEnableGrid("false");
 		beanControlBotones.setEnableGrabar("false");
 		
+		
+		
 		buscarCliente();
 	}	
 	
@@ -1093,6 +1095,7 @@ public class ControllerEncargos implements Serializable {
 	        	ventaPedidoForm.setFlujo(Constantes.STRING_FORMULARIO);  
 	        	
 	        	beanControlBotones.setEnableListar("false");
+	        	beanControlBotones.setEnableBuscar("false");
 	        	
 					
 			}else {

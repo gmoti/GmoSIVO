@@ -71,6 +71,7 @@
 				<div style="float: right">					
 					<toolbarbutton image="/image/Save_32x32.png" onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
      				<toolbarbutton image="/image/Print_32x32.png" onClick="@command('generaBoleta')"/>	
+     					
 				</div>																			
 			</div>
 			
@@ -99,8 +100,8 @@
      									instant="true"/>
      									
      								<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
-     								<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" 
-     									visible="@bind(vm.controlBotones.enableGenerico1)"/>
+     								<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" format="#,###,##0" locale="it" width="120px" 
+     									visible="@bind(vm.controlBotones.enableGenerico1)" readonly="true" />
      									
      							</row>
      							<row>
@@ -164,9 +165,16 @@
      				</east>     				
      			</borderlayout>		
      				
-			</div>	
-				
+			</div>				
 		</div>
-		
+		<!-- 
+		<popup id="popPregunta" >		    
+			<window id="ventana" mode="modal" visible="false">
+				<label value="ingrese nombre"/>
+				<textbox/>
+				<button onClick="ventana.detach()"/>			
+			</window>		
+		</popup>	
+		 -->
 	</window>	
 </zk>

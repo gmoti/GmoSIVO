@@ -106,9 +106,9 @@
 					<template name="model">							
 						<row>
 							<textbox value="@load(each.agente)" width="180px" readonly="true"/>							
-							<textbox value="@load(each.cliente)" width="180px" readonly="true"/>
+							<textbox value="@load(each.cdg)" width="180px" readonly="true"/>
 							
-							<textbox value="@load(each.fechaP)" width="100px" readonly="true"/>
+							<textbox value="@load(each.fechaPedido)" width="100px" readonly="true"/>
 							<textbox value="@load(each.horaP)" width="80px" readonly="true"/>
 							  
 							<textbox value="@load(each.fechasEntragas)" width="100px" readonly="true"/>

@@ -2,11 +2,13 @@
 <window id="winVisorDocumento" border="none" width="80%" height="80%" position="center" closable="false" mode="modal" sizable="false"
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVisorDocumento')">		
 		
-		<div height="100%" width="100%">		
-			<div width="100%" style="background-color:black;color: white">			
-				<label value="@bind(vm.title)" />				
-					<space width="50px"/>
-				<button label="Salir" onClick="winVisorDocumento.detach()" />			
+		<div height="100%" width="100%">			
+			
+			<div width="100%" style="background-color:black;color: white" height="40px">
+				<label value="@bind(vm.title)" />
+				<div style="float: right">					
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="winVisorDocumento.detach()"/>		
+				</div>																			
 			</div>
 		
 			<div height="100%" width="100%">

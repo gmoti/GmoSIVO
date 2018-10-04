@@ -25,18 +25,18 @@
 						</div>	
 						
 						<div style="text-align: right;" height="40px">
-							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)"/>
-							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)"/>
-							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)"/>
-							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)"/>
+							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo"/>
+							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos"/>
+							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos"/>
+							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Encargo"/>
 							
-							<toolbarbutton image="/iconos/boleta.png" onClick="@command('mostrar_pagos_boletas')"  	disabled="@bind(vm.beanControlBotones.enableListar)"/>
-							<toolbarbutton image="/iconos/Hoja.png" onClick="@command('generaFichaTecnica')" 	    disabled="@bind(vm.beanControlBotones.enableTaller)"/>
-							<toolbarbutton image="/iconos/cliente.gif" onClick="@command('generaFichaCliente')"        disabled="@bind(vm.beanControlBotones.enableCliente)"/>
+							<toolbarbutton image="/iconos/boleta.png" onClick="@command('mostrar_pagos_boletas')"  	disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Mostrar Pagos y Boletas"/>
+							<toolbarbutton image="/iconos/Hoja.png" onClick="@command('generaFichaTecnica')" 	    disabled="@bind(vm.beanControlBotones.enableTaller)" tooltiptext="Ficha Taller"/>
+							<toolbarbutton image="/iconos/cliente.gif" onClick="@command('generaFichaCliente')"        disabled="@bind(vm.beanControlBotones.enableCliente)" tooltiptext="Ficha Cliente"/>
 							
-							<toolbarbutton image="/iconos/money2.png" onClick="@command('validaCantidadProductosMulit')"    disabled="@bind(vm.beanControlBotones.enablePagar)"/>
-							<toolbarbutton image="/iconos/check.png" onClick="@command('ingresa_pedido')"  				  disabled="@bind(vm.beanControlBotones.enableGrabar)"/>
-							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', win=winEncargos)"/>										
+							<toolbarbutton image="/iconos/money2.png" onClick="@command('validaCantidadProductosMulit')"    disabled="@bind(vm.beanControlBotones.enablePagar)" tooltiptext="Totalizar Encargos"/>
+							<toolbarbutton image="/iconos/check.png" onClick="@command('ingresa_pedido')"  				  disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Guardar"/>
+							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', win=winEncargos)" tooltiptext="Cerrar"/>										
 						</div>					
 					</div>
 					
@@ -410,14 +410,14 @@
 								<row>
 									<label value="Fecha de entrega" />
 									<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy" width="150px"/>
-									<intbox  value="@bind(vm.ventaPedidoForm.subTotal)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.subTotal)" style="text-align:right ;background-color: #d5f4e6;" format="#,###,##0" locale="it" disabled="true"/>
 									<intbox  value="@bind(vm.ventaPedidoForm.descuento)" onBlur="@command('actualiza_descuento_total_monto')"/>
 									<intbox  value="@bind(vm.ventaPedidoForm.dtcoPorcentaje)" onBlur="@command('actualiza_descuento_total')"/>
-									<intbox  value="@bind(vm.ventaPedidoForm.total)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.total)" style="text-align:right; background-color: #d5f4e6;" format="#,###,##0" locale="it" disabled="true"/>
 									
-									<intbox  value="@bind(vm.ventaPedidoForm.anticipo)" style="text-align:right" format="#,###,##0" locale="it"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.anticipo_pagado)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
 									<intbox  value="@bind(vm.ventaPedidoForm.totalPendiante)" 
-											style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+											style="text-align:right; background-color: #d5f4e6;" format="#,###,##0" locale="it" disabled="true"/>
 								</row>								
 							</rows>
 						</grid>
