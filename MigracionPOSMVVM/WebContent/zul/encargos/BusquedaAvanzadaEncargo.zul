@@ -24,12 +24,14 @@
 
 	<borderlayout>
 		<north>
-		<div width="100%" height="30%">	
-				<div width="100%" style="background-color:black;color: white">
-					<label value="Busqueda Avanzada de Encargos" />						
-					<space width="400px"/>
-					<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)"/>													
-				</div>	
+		<div width="100%" height="30%">					
+				
+				<div width="100%" style="background-color:black;color: white" height="40px">
+					<label value="Busqueda Avanzada de Encargos" />
+					<div style="float: right">					
+						<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)"/>		
+					</div>																			
+				</div>
 				
 				<grid sclass="MyGridRowHeight">
 					<columns>
@@ -64,8 +66,8 @@
 						</row>
 						
 						<row>
-						<space width="85px"/>
-						<button label="click" onClick="@command('buscar')"/>
+						<space width="85px"/>						
+						<button image="/iconos/lupa.png" label="Buscar" onClick="@command('buscar')"/>
 						</row>
 					</rows>
 				</grid>									
@@ -93,7 +95,7 @@
 					<label value="Sel" />								
 					</div>	
 					<grid model= "@load(vm.busquedaPedidosForm.lista_pedidos)" 
-							sclass="MyGridRowHeight" height="100%"  emptyMessage="Sin registros" style="overflow: scroll;">						
+							sclass="MyGridRowHeight" height="200px"  emptyMessage="Sin registros">						
 					<columns>
 						<column width="150px"/>
 						<column width="150px"/>
@@ -112,11 +114,10 @@
 							<textbox value="@load(each.horaP)" width="80px" readonly="true"/>
 							  
 							<textbox value="@load(each.fechasEntragas)" width="100px" readonly="true"/>
-							<textbox value="@load(each.anticipo)" width="100px" readonly="true"/>
-							
-							<button label="Sel" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)
-									@global-command('encargoSeleccionado', arg=vm.busquedaPedidosForm.lista_pedidos, arg2=each)"/>
-								
+							<textbox value="@load(each.anticipo)" width="100px" readonly="true"/>						
+									
+							<toolbarbutton image="/iconos/add.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)
+									@global-command('encargoSeleccionado', arg=vm.busquedaPedidosForm.lista_pedidos, arg2=each)"/>										
 						</row>							
 					</template>
 					</grid>	

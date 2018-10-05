@@ -124,7 +124,7 @@ public class ControllerPresupuesto implements Serializable{
 
 
 	@Command
-	public void busquedaPresupuesto() {
+	public void listar_detalles() {
 		
 		objetos = new HashMap<String,Object>();		
 		objetos.put("presupuestoForm",presupuestoForm);
@@ -303,7 +303,7 @@ public class ControllerPresupuesto implements Serializable{
 	//=================================================================
 	@NotifyChange({"presupuestoForm"})
 	@Command
-	public void lista_detalles(){}
+	public void busquedaPresupuesto(){}
 	
 	
 	
@@ -573,17 +573,18 @@ public class ControllerPresupuesto implements Serializable{
 	
 	public void posicionaCombos() {
 			
-		Optional<AgenteBean> a = presupuestoForm.getListaAgentes().stream().filter(s -> presupuestoForm.getAgente().equals(s.getUsuario())).findFirst();		
-		agenteBean = a.get();		
+		Optional<AgenteBean> a = presupuestoForm.getListaAgentes().stream().filter(s -> presupuestoForm.getAgente().equals(s.getClass())).findFirst();		
+		if (a.isPresent()) agenteBean = a.get(); else agenteBean=null;		
 		
 		Optional<DivisaBean> b = presupuestoForm.getListaDivisas().stream().filter(s -> presupuestoForm.getDivisa().equals(s.getId())).findFirst();
-		divisaBean = b.get();
+		if (b.isPresent()) divisaBean = b.get(); else divisaBean=null;	
 		
 		Optional<FormaPagoBean> c = presupuestoForm.getListaFormasPago().stream().filter(s -> presupuestoForm.getForma_pago().equals(s.getId())).findFirst();
-		formaPagoBean = c.get();
+		if (c.isPresent()) formaPagoBean = c.get(); else formaPagoBean=null;	
 		
 		Optional<IdiomaBean> d = presupuestoForm.getListaIdiomas().stream().filter(s -> presupuestoForm.getIdioma().equals(s.getId())).findFirst();
-		idiomaBean = d.get();
+		if (d.isPresent()) idiomaBean = d.get(); else idiomaBean=null;
+		
 	}
 	
 	

@@ -1922,8 +1922,74 @@ public class ControllerEncargos implements Serializable {
 		
 	}
 	
+	//===================== Valida grupo ================================
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void actualiza_grupo(@BindingParam("index")int index) {
+		
+		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
+			Messagebox.show("La venta esta cerrada, no es posible modificar productos");
+			return;
+		}
+		
+		
+		if (ventaPedidoForm.getFlujo().equals("modificar")) {			
+			if(!ventaPedidoForm.getBloquea().equals("bloquea")) {	        	
+	        	
+	        	try {
+	        		ventaPedidoForm.setAccion("grupo");
+		        	ventaPedidoForm.setAddProducto(String.valueOf(index));
+					ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}			
+				
+			}else {				
+				Messagebox.show("Encargo bloqueado, no es posible modificar productos");
+				return;
+			}			
+			
+		}else {			
+        	
+			try {
+				ventaPedidoForm.setAccion("grupo");
+	        	ventaPedidoForm.setAddProducto(String.valueOf(index));
+				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}			
+		}		
+	}
 	
-	//======================Getter and Setter===========================
+	//=================== Seleccion Tratamientos ============================
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void seleccionTratamientos(@BindingParam("index")int index,
+									  @BindingParam("producto")ProductosBean producto) {
+		
+    	try {
+    		ventaPedidoForm.setAccion("ver_Suplementos");
+        	ventaPedidoForm.setAddProducto(String.valueOf(index));
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			
+			objetos = new HashMap<String,Object>();		
+			objetos.put("producto",producto);
+			objetos.put("busquedaProductos",busquedaProductosForm);
+			
+			Window windowAgregaSuplementoEnc = (Window)Executions.createComponents(
+	                "/zul/encargos/AgregaSuplemento.zul", null, objetos);
+			
+			windowAgregaSuplementoEnc.doModal();			
+			
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	//======================Getter and Setter============================
 	//===================================================================
 	public VentaPedidoForm getVentaPedidoForm() {
 		return ventaPedidoForm;

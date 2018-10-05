@@ -14,16 +14,16 @@
 			.z-button-inp { height: 15px; }
 		</style>
 
-		<div>
-			<div width="100%" height="10%" style="background-color:black;color: white">
-			    <label>Selecciona Presupuesto</label> 
-			    <space width="100px"/>
-			    <button iconSclass="z-icon-times-circle fa-3x" 
-			    		onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto)" />															
-			</div>
+		<div>			
+			<div width="100%" style="background-color:black;color: white" height="25px">
+				<label>Selecciona Presupuesto</label> 	
+				<div style="float: right">			
+					<toolbarbutton image="/iconos/cancel.png" onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto)"/>							
+				</div>				
+			</div>			
 			
 			<div width="100%" height="10%" style="background-color:black;color: white">	
-				<space width="15px"/>		
+				<space width="5px"/>		
 				<label value="Agente"/>
 				<space width="40px"/>
 				<label value="Fecha"/>
@@ -31,28 +31,28 @@
 				<label value="Codigo"/>
 				<space width="40px"/>
 				<label value="Estado"/>
-				<space width="40px"/>
-				<label value="Accion"/>
+				<!-- <space width="30px"/>
+				<label value="Accion"/> -->
 			</div>
 		
 			<div height="90%">
-				<grid model="@load(vm.presupuesto.listaPresupuestos)"  sclass="MyGridRowHeight" style="overflow: scroll;" height="300px">
+				<grid model="@load(vm.presupuesto.listaPresupuestos)"  sclass="MyGridRowHeight" height="260px">
 					<columns>
 						<column width="100px" />
 						<column width="100px" />
 						<column width="100px" />
 						<column width="100px" />
-						<column width="100px" />
+						<column width="50px" />
 					</columns>
 					<template name="model">
 						<row>
 							<textbox value="@load(each.id_agente)" readonly="true"/>
 							<textbox value="@load(each.fecha)" readonly="true"/>
 							<textbox value="@load(each.codigo)" readonly="true"/>
-							<textbox value="@load(each.cerrado eq 'S' ? 'Cerrado' : 'Abierto')" readonly="true"/>					
-							<button label="Sel" 
-								onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto) 
-										@global-command('presupuestoSeleccionado', arg=vm.presupuesto, arg2=each)" />
+							<textbox value="@load(each.cerrado eq 'S' ? 'Cerrado' : 'Abierto')" readonly="true"/>
+							
+							<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto) 
+										@global-command('presupuestoSeleccionado', arg=vm.presupuesto, arg2=each)" />							
 						</row>
 					</template>
 				</grid>

@@ -10,11 +10,13 @@
 			padding:0px; margin:0px; }
 		</style>		
 		
-		<div width="100%" height="100%">
-		
-			<div style="background-color:black;color: white;" width="100%">
+		<div width="100%" height="100%">		
+			
+			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Multiofertas asociadas" />
-				<button iconSclass="z-icon-close" onClick="@command('cerrar',win=winBusquedaProductosMultioferta)"/>
+				<div style="float: right">					
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('cerrar',win=winBusquedaProductosMultioferta)"/>		
+				</div>																			
 			</div>
 			
 			<space height="5px"/>
@@ -28,9 +30,9 @@
 				<label value="Agr" />
 			</div>
 			
-			<div width="100%">
+			<div width="100%" height="200px">
 				<grid model="@bind(vm.busquedaProductosForm.listaProductosMultioferta)" 
-						sclass="MyGridRowHeight" style="overflow: scroll;" emptyMessage="Sin Regsitros" width="100%" height="100%">
+						sclass="MyGridRowHeight"  emptyMessage="Sin Regsitros" width="100%" height="200px">
 					<columns>
 						<column width="150px" />
 						<column width="300px" />
@@ -41,7 +43,7 @@
 							<textbox value="@load(each.codigo)" visible="false"/>
 							<textbox value="@load(each.cod_barra)"/>
 							<textbox value="@load(each.descripcion)"/>
-							<button label="agregar" onClick="@command('actProdGridVentaPedido', producto = each) @command('cerrar',win=winBusquedaProductosMultioferta)"/>
+							<toolbarbutton image="/iconos/add.png" onClick="@command('actProdGridVentaPedido', producto = each) @command('cerrar',win=winBusquedaProductosMultioferta)"/>
 						</row>
 					</template>
 				</grid>

@@ -24,14 +24,14 @@
 					
 					<div width="100%" style="background-color:black;color: white" height="40px">					
 						<div style="text-align: right;">											
-							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevoPresupuesto')"/>
-							<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimirPresupuesto')" />
-							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminar_Presupuesto')"/>
-							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaPresupuesto')"/>
-							<toolbarbutton image="/iconos/lista.png" onClick="@command('lista_detalles')"/>
-							<toolbarbutton image="/iconos/transfer.png" onClick="@command('crearEncargo')"/>
-							<toolbarbutton image="/iconos/check.png" onClick="@command('grabarPresupuesto')"/>
-							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', arg=winPresupuesto)"/>									
+							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevoPresupuesto')" tooltiptext="Nuevo Presupuesto"/>
+							<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimirPresupuesto')" tooltiptext="Imprimir Presupuesto"/>
+							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminar_Presupuesto')" tooltiptext="Eliminar Presupuesto"/>
+							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaPresupuesto')" tooltiptext="Busqueda Avanzada Presupuesto"/>
+							<toolbarbutton image="/iconos/lista.png" onClick="@command('listar_detalles')" tooltiptext="Listar Presupuestos"/>
+							<toolbarbutton image="/iconos/transfer.png" onClick="@command('crearEncargo')" tooltiptext="Traspasar a Encargo"/>
+							<toolbarbutton image="/iconos/check.png" onClick="@command('grabarPresupuesto')" tooltiptext="Grabar Presupuesto"/>
+							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', arg=winPresupuesto)" tooltiptext="Cerrar"/>									
 						</div>						
 					</div>
 					
@@ -187,7 +187,9 @@
 									<intbox value="@load(each.importe)" width="100px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
 									<intbox value="@bind(each.descuento)" width="100px" style="text-align:right"/>
-									<button label="X" width="20px" onClick="@command('deleteItem',arg=each)" />
+									
+									<toolbarbutton image="/iconos/cancel.png" width="40px" 
+											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
 								</row>
 							</template>
 						</grid>

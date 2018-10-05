@@ -23,20 +23,20 @@
 		
 		<borderlayout>
 			<north >			
-				<div width="100%" height="30%">	
-				
-					<div width="100%" style="background-color:black;color: white">
+				<div width="100%" height="30%">						
+					
+					<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="BUSQUEDA PRODUCTOS MULTIOFERTAS" />
-						<!--  <div style="text-align: right;">-->
-						<space width="400px"/>
-						<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaMultiofertas.detach()"/>							
-					</div>	
+						<div style="float: right">					
+							<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaMultiofertas.detach()"/>		
+						</div>																			
+					</div>
 					
 					<grid sclass="MyGridRowHeight">
 						<columns>
 							<column width="300px" />
 							<column width="300px" />
-							<column width="80px" />
+							<column width="120px" />
 						</columns>
 						<rows>
 							<row>
@@ -118,7 +118,8 @@
 							<row>
 								<label value="Codigo Barra Producto" />
 								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
-								<button label="click" onClick="@command('buscarProducto')" />
+								
+								<button image="/iconos/lupa.png" label="Buscar" onClick="@command('buscarProducto')"/>								
 							</row>
 
 						</rows>
@@ -216,7 +217,7 @@
 									<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
 									<intbox value="@load(each.cantidad)"  style="text-align:right" format="#,###,##0" locale="it" width="90px" readonly="true"/>
 									<textbox value="@load(each.grupo)"  width="58px"/>
-									<button label="Ver" onClick="@command('AgregarSuplementos',producto=each,index=forEachStatus.index)" />
+									<toolbarbutton image="/iconos/add.png" onClick="@command('AgregarSuplementos',producto=each,index=forEachStatus.index)" />
 								</row>
 							</template>
 						</grid>
@@ -256,7 +257,7 @@
 									<intbox value="@load(each.importe)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
 									<textbox value="@load(each.grupo)" readonly="true" width="58px"/>
 									<textbox value="@load(each.estado)" readonly="true" width="38px"/>
-									<button label="Sel" onClick="@command('pasarProductoMultioferta',producto=each)" />
+									<toolbarbutton image="/iconos/add.png" onClick="@command('pasarProductoMultioferta',producto=each)" />
 								</row>
 							</template>
 						</grid>					

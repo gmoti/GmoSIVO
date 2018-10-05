@@ -56,7 +56,7 @@
 							<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="150px"/>
 							<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="30px" disabled="true"/>
 							
-							<toolbarbutton image="/iconos/luparapida.jpg" onClick="@command('buscarCliente')"  width="30px"/>
+							<toolbarbutton image="/iconos/luparapida.jpg" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
 							<toolbarbutton image="/iconos/lupa.png" width="30px"/>
 							<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px"/>										
 						</div>
@@ -163,7 +163,7 @@
 								<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="80px" />
 								<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="150px" disabled="true"/>								
 								<toolbarbutton image="/iconos/luparapida.jpg" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-								<toolbarbutton image="/iconos/lupa.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+								<toolbarbutton image="/iconos/lupa.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" tooltiptext="Busqueda rapida convenio"/>
 								<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>
 							</div>
 							
@@ -221,47 +221,48 @@
 							<label value="Articulo"/>
 							<space width="90px"/>
 							<label value="Descripcion" />
-							<space width="265px"/>
+							<space width="245px"/>
 							<label value="Precio IVA" />
-							<space width="20px"/>							
+							<space width="15px"/>							
 							
 							<label value="Cantidad" />
-							<space width="20px"/>						
+							<space width="15px"/>						
 							<label value="Descuento" />
 							<space width="15px"/>
 							<label value="Importe" />
-							<space width="20px"/>
+							<space width="15px"/>
 							
 							<label value="Grupo" />
-							<space width="15px"/>
+							<space width="20px"/>
 							<label value="Estado" />
-							<space width="15px"/>
+							<space width="45px"/>
 							<label value="Tipo" />
-							<space width="15px"/>
-							<label value="Tratami" />
-							<space width="15px"/>
+							<space width="30px"/>
+							<label value="Ver" />																				
+							<space width="20px"/>
 							<label value="Multi" />
 							<space width="50px"/>
 							
-							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" width="50px"/>
-							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" width="50px"/>												
+							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" width="50px" tooltiptext="Busqueda multioferta"/>
+							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" width="50px" tooltiptext="Agregar productos"/>												
 						</div>
 
 						<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-						width="100%" height="80%"	sclass="MyGridRowHeight" style="overflow: scroll;">
+								width="100%" height="245px" sclass="MyGridRowHeight" >
 							<columns>
 								<column width="155px" />
-								<column width="355px" />
+								<column width="335px" />
 								<column width="85px" />
 								<column width="85px" />
 								<column width="85px" />
 								<column width="85px" />
 								
 								<column width="65px" />								
-								<column width="65px" />
-								<column width="65px" />
+								<column width="105px" />
 								<column width="65px" />
 								
+								<column width="45px" />								
+								<column width="45px" />
 								<column width="45px" />
 								<column width="45px" />
 							</columns>
@@ -271,44 +272,53 @@
 										tooltiptext="Click para ver detalles" 
 										onClick="@command('actualizaDetalles',arg=each)" 
 										readonly="true"/>
-									<textbox value="@load(each.descripcion)" width="350px" disabled="true"/>
+									<textbox value="@load(each.descripcion)" width="330px" disabled="true"/>
 									<intbox value="@load(each.precio)"  width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>									
 									<intbox value="@bind(each.cantidad)" width="80px" disabled="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>									
 									<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##,###0" locale="it" 
 												onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" />									
 									<intbox value="@load(each.importe)" width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>									
-									<textbox value="@load(each.grupo)" width="60px" disabled="true"/>
-									<textbox value="@load(each.estado)" width="60px" disabled="true"/>
-									<textbox value="@load(each.tipo)" width="60px" disabled="true"/>
-									<textbox value="" width="60px" disabled="true"/>									
+									<textbox value="@load(each.grupo)" width="60px" disabled="false"  onBlur="@command('actualiza_grupo',index=forEachStatus.index)" style="text-align:right"/>
+									<!-- <textbox value="@load(each.estado)" width="60px" disabled="true"/> -->
 									
-									<toolbarbutton image="/iconos/add.png" width="40px" onClick="@command('multiofertaProducto',producto=each)" visible="@bind(each.familia eq 'MUL'?'true':'false')"/>
-									<toolbarbutton image="/iconos/cancel.png" width="40px" onClick="@command('deleteItem',arg=each)"/>						
+									<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="100px"/>									
+									<textbox value="@load(each.tipo)" width="60px" disabled="true"/>
+									
+									<toolbarbutton image="/iconos/add.png" width="40px" 
+										onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
+									
+									<toolbarbutton image="/iconos/add.png" width="40px" 
+										onClick="@command('multiofertaProducto',producto=each)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
+										
+									<space width="40px" />
+										
+									<toolbarbutton image="/iconos/cancel.png" width="40px" 
+											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
 									
 								</row>
 							</template>
 						</grid>
 					</div>
 					
-					<div width="100%" height="10%" style="padding-left:350px">					
-						<div width="720px" style="background-color:black;color: white;">
+					<div width="100%" height="10%" style="padding-left:300px">					
+						<div width="815px" style="background-color:black;color: white;">
 							<label value="Graduacion del articulo" />
 						</div>
 						<div>
 							<hbox>
 								<label value="Esfera" />
-								<doublebox value="@load(vm.productoBean.esfera)" width="60px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.esfera)" width="75px" disabled="true" style="text-align:right"/>
 								<label value="Cilindro" />
-								<doublebox value="@load(vm.productoBean.cilindro)" width="60px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.cilindro)" width="75px" disabled="true" style="text-align:right"/>
 								<label value="Diametro" />
-								<doublebox value="@load(vm.productoBean.diametro)" width="60px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.diametro)" width="75px" disabled="true" style="text-align:right"/>
 								
 								<label value="F.Grad" />
-								<textbox value="@load(vm.productoBean.fecha_graduacion)" width="60px" disabled="true" style="text-align:right"/>
+								<textbox value="@load(vm.productoBean.fecha_graduacion)" width="75px" disabled="true" style="text-align:right"/>
 								<label value="No.Grad" />
-								<textbox value="@load(vm.productoBean.numero_graduacion)" width="60px" disabled="true" style="text-align:right"/>
+								<textbox value="@load(vm.productoBean.numero_graduacion)" width="75px" disabled="true" style="text-align:right"/>
 								<label value="Ojo" />
-								<textbox value="@load(vm.productoBean.ojo)" width="60px" disabled="true" style="text-align:right"/>								
+								<textbox value="@load(vm.productoBean.ojo)" width="75px" disabled="true" style="text-align:right"/>								
 							</hbox>
 						</div>						
 					</div>

@@ -15,12 +15,12 @@
 		</style>
 		
 		
-		<div>
-			<div width="100%" height="10%" style="background-color:black;color: white">
-			    <label>Selecciona Encargo</label> 
-			    <space width="400px"/>
-			    <button iconSclass="z-icon-times-circle fa-3x" 
-			    		onClick="@command('seleccionaProducto',win=winBusquedaEncargo)" />															
+		<div>			
+			<div width="100%" style="background-color:black;color: white" height="40px">
+				<label value="Selecciona Encargo" />
+				<div style="float: right">					
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('seleccionaProducto',win=winBusquedaEncargo)"/>		
+				</div>																			
 			</div>
 			
 			<div width="100%" height="10%" style="background-color:black;color: white">	
@@ -42,9 +42,8 @@
 		
 			<div height="90%">
 				<grid model="@load(vm.lista_pedidos)"  
-						sclass="MyGridRowHeight" 
-						style="overflow: scroll;" 
-						height="300px">
+						sclass="MyGridRowHeight" 						 
+						height="280px">
 					<columns>
 						<column width="150px" />
 						<column width="100px" />
@@ -63,10 +62,9 @@
 							<textbox value="@load(each.fechasEntragas)" readonly="true"/>	
 							<textbox value="@load(each.anticipo)" readonly="true"/>	
 																							
-										
-							<button label="Sel" 
-								onClick="@command('seleccionaProducto',win=winBusquedaEncargo) 
-										@global-command('encargoSeleccionado', arg=vm.lista_pedidos, arg2=each)" />
+							<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',win=winBusquedaEncargo) 
+										@global-command('encargoSeleccionado', arg=vm.lista_pedidos, arg2=each)"/>
+							
 						</row>
 					</template>
 				</grid>

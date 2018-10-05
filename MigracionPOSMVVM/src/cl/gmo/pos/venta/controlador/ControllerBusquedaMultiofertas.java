@@ -232,12 +232,12 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		busquedaProductosForm.setAccion("ver_Suplementos");		
 		busquedaProductosForm.setAddProducto(String.valueOf(index));
 		busquedaProductosForm.setIndex_multi(producto.getIndexMulti());
-		
+		busquedaProductosForm.setEstado("");
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 		
 		//producto con suplemento obligatorio
 		
-		if (busquedaProductosForm.getEstado().equals("producto_con_suplemento_obligatorio")) {
+		if (busquedaProductosForm.getEstado().equals(Constantes.STRING_PRODUCTO_CON_SUPLEMENTO)) {
 			
 			objetos = new HashMap<String,Object>();		
 			objetos.put("producto",producto);

@@ -12,12 +12,13 @@
 	</style>	
 		
 		
-	<div width="100%" height="100%">
+	<div width="100%" height="100%">	
 	
-		<div width="100%" style="background-color:black;color: white">
-			<label value="SELECCION PAGO"/>
-			<space width="400px"/>
-			<toolbarbutton image="/image/Remove_32x32.png" onClick="winMostrarPagosBoleta.detach()"/>	
+		<div width="100%" style="background-color:black;color: white" height="40px">
+			<label value="Seleccion Pago" />
+			<div style="float: right">					
+				<toolbarbutton image="/image/Remove_32x32.png" onClick="winMostrarPagosBoleta.detach()"/>		
+			</div>																			
 		</div>	
 	
 		<borderlayout>
@@ -45,7 +46,7 @@
 									<textbox value="@bind(each.fecha)"/>
 									<textbox value="@bind(each.forma_pago)"/>
 									<textbox value="@bind(each.v_a_pagar)"/>
-									<button label="Eli"/>
+									<toolbarbutton image="/image/Remove_32x32.png"/>
 								</row>
 							</template>
 						</grid>

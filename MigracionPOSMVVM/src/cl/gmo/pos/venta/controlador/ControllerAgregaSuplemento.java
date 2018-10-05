@@ -25,7 +25,9 @@ public class ControllerAgregaSuplemento implements Serializable {
 	
 	@Init
 	public void inicial(@ExecutionArgParam("producto")ProductosBean producto,
-						@ExecutionArgParam("busquedaProductos")BusquedaProductosForm busquedaProductos) {	
+						@ExecutionArgParam("busquedaProductos")BusquedaProductosForm busquedaProductos) {
+		
+		suplementoDispatchActions = new SuplementoDispatchActions();
 		
 		suplementosForm = new SuplementosForm();
 		suplementoDispatchActions.carga(suplementosForm, sess);	

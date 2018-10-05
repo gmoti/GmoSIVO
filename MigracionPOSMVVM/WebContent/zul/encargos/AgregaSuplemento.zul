@@ -3,19 +3,20 @@
 <window id="winAgregaSuplemento" border="none" width="40%" height="40%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAgregaSuplemento')">
 		
-		<div>
-			<div width="100%" style="background-color:black;color: white">
+		<div>		    
+		    <div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Suplementos" />
-				<space width="300px"/>
-				<button iconSclass="z-icon-close" onClick="winAgregaSuplemento.detach()"/>
-		    </div>
+				<div style="float: right">					
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="winAgregaSuplemento.detach()"/>		
+				</div>																			
+			</div>
 
 			<div>
 				<vbox>
 					<label value="Seleccionar" />
 					<space />					
 					<space />
-					<button label="Agregar" />
+					<button image="/iconos/add.png" label="Agregar"/>					
 				</vbox>
 			</div>
 
