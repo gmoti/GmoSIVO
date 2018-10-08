@@ -2,6 +2,7 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 
+import org.apache.commons.validator.UrlValidator;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 
@@ -13,14 +14,40 @@ public class ControllerVisorDocumento implements Serializable {
 	
 	private String fileContent;
 	private String title;
+	private String urlRecibida;
+	private boolean exito=false;
 	
 	
 	@Init
 	public void inicial(@ExecutionArgParam("documento")String url,
 			@ExecutionArgParam("titulo")String titulo) {	
 		
+		
+		urlRecibida = url;
+		
+		verificaArchivo();
+		
 		fileContent = url;
 		title = titulo;
+		
+	}
+	
+	
+	public void verificaArchivo() {
+		
+		UrlValidator validar = new UrlValidator();
+		
+		while (1==1) {	
+			
+			try {
+				Thread.sleep(8000);
+				break;
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}			
+		}
+		
 		
 	}
 

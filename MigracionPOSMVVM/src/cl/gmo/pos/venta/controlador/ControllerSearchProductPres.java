@@ -139,6 +139,25 @@ public class ControllerSearchProductPres implements Serializable {
 	public void seleccionaProducto(@BindingParam("producto")ProductosBean producto) {	
 		
 		objetos = new HashMap<String,Object>();
+		
+		if (busquedaAvanzadaLentilla.equals("true")) {
+			
+			if (ojoDerecho)
+			   producto.setOjo("derecho");
+			else
+			   producto.setOjo("izquierdo");	
+			
+		}else if(busquedaAvanzada.equals("true")) {
+			
+			if (ojoDerecho)
+			   producto.setOjo("derecho");
+			else
+			   producto.setOjo("izquierdo");
+			
+		}	
+		
+		
+		
 		objetos.put("producto",producto);
 		
 		

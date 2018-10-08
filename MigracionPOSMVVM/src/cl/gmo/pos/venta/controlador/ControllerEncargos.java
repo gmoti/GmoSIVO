@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.Cookie;
-
 import org.apache.log4j.Logger;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -20,7 +18,6 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.impl.BinderUtil.UtilContext;
 import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -32,17 +29,15 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import com.google.protobuf.Message;
+
 
 import cl.gmo.pos.venta.controlador.presupuesto.BusquedaConveniosDispatchActions;
-import cl.gmo.pos.venta.controlador.presupuesto.PresupuestoDispatchActions;
 import cl.gmo.pos.venta.controlador.presupuesto.PresupuestoHelper;
 import cl.gmo.pos.venta.controlador.ventaDirecta.BusquedaProductosDispatchActions;
 import cl.gmo.pos.venta.controlador.ventaDirecta.DevolucionDispatchActions;
 import cl.gmo.pos.venta.controlador.ventaDirecta.VentaPedidoDispatchActions;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
 import cl.gmo.pos.venta.utils.Constantes;
-import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.DivisaBean;
@@ -169,24 +164,34 @@ public class ControllerEncargos implements Serializable {
 		//Si el encargo es invocado desde presupuesto, debe pasar por aqui
 		if(arg.equals("presupuesto")) {			
 			ventaPedidoForm.setDesde_presupuesto(Constantes.STRING_TRUE);
-			ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedidoDesdePresupuesto(ventaPedidoForm, sess);			
-		}		
+			ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedidoDesdePresupuesto(ventaPedidoForm, sess);	
+			
+			beanControlBotones.setEnableNew("false");
+			beanControlBotones.setEnableListar("false");
+			
+			beanControlCombos.setComboAgenteEnable("false");
+			beanControlCombos.setComboDivisaEnable("true");
+			beanControlCombos.setComboFpagoEnable("false");
+			beanControlCombos.setComboIdiomaEnable("true");
+			beanControlCombos.setComboPromoEnable("false");
+			beanControlCombos.setComboTiposEnable("false");			
+			
+		}else {		
 		
-		beanControlBotones.setEnableNew("false");
-		beanControlBotones.setEnableListar("true");		
-		
-		beanControlCombos.setComboAgenteEnable("true");
-		beanControlCombos.setComboDivisaEnable("true");
-		beanControlCombos.setComboFpagoEnable("true");
-		beanControlCombos.setComboIdiomaEnable("true");
-		beanControlCombos.setComboPromoEnable("true");
-		beanControlCombos.setComboTiposEnable("true");	
-		
+			beanControlBotones.setEnableNew("false");
+			beanControlBotones.setEnableListar("true");		
+			
+			beanControlCombos.setComboAgenteEnable("true");
+			beanControlCombos.setComboDivisaEnable("true");
+			beanControlCombos.setComboFpagoEnable("true");
+			beanControlCombos.setComboIdiomaEnable("true");
+			beanControlCombos.setComboPromoEnable("true");
+			beanControlCombos.setComboTiposEnable("true");	
+		}
 				
 		posicionCombo();
 		
-		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
-		//sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 		//inicializo descuento
@@ -201,20 +206,23 @@ public class ControllerEncargos implements Serializable {
 	
 	//============ Nuevo Pedido ====================
 	//==============================================
-	@NotifyChange({"ventaPedidoForm","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean"})	
+	@NotifyChange({"ventaPedidoForm","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean","productoBean","fecha","fechaEntrega"})
 	@Command
 	public void nuevo_Pedido() {	
 		
 		
+		ventaPedidoForm = new VentaPedidoForm();		
+		productoBean = new ProductosBean();
+		
 		ventaPedidoForm = ventaPedidoDispatchActions.nuevoFormulario(ventaPedidoForm, sess);
-		//ventaPedidoForm.setFlujo("nuevo");
-		beanControlBotones.setEnableListar("true");
+		ventaPedidoForm.setListaProductos(new ArrayList<ProductosBean>());
 		
 		fecha= new Date(System.currentTimeMillis());
-		fechaEntrega= new Date(System.currentTimeMillis());		
+		fechaEntrega= new Date(System.currentTimeMillis());	
+		
 		ventaPedidoForm.setFecha(dt.format(new Date(System.currentTimeMillis())));
 		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));
-		ventaPedidoForm.setPromocion("0");
+		ventaPedidoForm.setPromocion("0");		
 		
 		beanControlCombos.setComboAgenteEnable("false");
 		beanControlCombos.setComboDivisaEnable("false");
@@ -223,6 +231,7 @@ public class ControllerEncargos implements Serializable {
 		beanControlCombos.setComboPromoEnable("false");
 		beanControlCombos.setComboTiposEnable("false");		
 		
+		beanControlBotones.setEnableListar("true");		
 		
 		posicionCombo();
 		
@@ -270,7 +279,7 @@ public class ControllerEncargos implements Serializable {
 	
 	//=========Busqueda avanzada de pedidos =========
 	//===============================================
-	@NotifyChange("ventaPedidoForm")
+	@NotifyChange("ventaPedidoForm")	
 	@Command
 	public void eliminarPedido() {
 		
@@ -290,10 +299,13 @@ public class ControllerEncargos implements Serializable {
 						if( ((Integer) e.getData()).intValue() == Messagebox.OK ) {								
 							
 							ventaPedidoForm.setAccion("eliminarPedidoSeleccion");
-							ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);								
+							ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
+							BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
 						}						
 					}
 			});	
+			
+			
 			
 		}
 		
@@ -309,9 +321,17 @@ public class ControllerEncargos implements Serializable {
 					document.ventaPedidoForm.submit();
 				}
 		   }*/
-	
-	
 	}
+	
+	
+	@NotifyChange({"ventaPedidoForm","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean","productoBean","fecha","fechaEntrega"})
+	@GlobalCommand
+	public void accionNuevoPedido() {
+		
+		this.nuevo_Pedido();
+	}
+	
+	
 	
 	//=========Busqueda avanzada de pedidos =========
 	//===============================================	
@@ -507,6 +527,12 @@ public class ControllerEncargos implements Serializable {
 		String cliente			=ventaPedidoForm.getCliente();
 		String cdg="";
 		
+		
+		if (ventaPedidoForm.getListaProductos().size() < 1) {
+			//Messagebox.show("Debe ingresar articulos para generar cobros");
+			return;
+		}		
+		
 		tieneTrioMulti = ventaPedidoDispatchActions.validaTrioMultioferta(sess);
 		
 		if (codigo_pedido.equals("") && cliente.equals("")) { 
@@ -589,7 +615,8 @@ public class ControllerEncargos implements Serializable {
 	
 	//============== Graba Pedido =================
 	//=============================================
-	@NotifyChange({"ventaPedidoForm"})
+	//@NotifyChange({"ventaPedidoForm"})
+	@NotifyChange({"ventaPedidoForm","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean","productoBean","fecha","fechaEntrega"})
 	@Command
 	public void ingresa_pedido() {		
 		
@@ -606,12 +633,8 @@ public class ControllerEncargos implements Serializable {
 		ventaPedidoForm.setIdioma(idiomaBean.getId());
 		ventaPedidoForm.setDivisa(divisaBean.getId());
 		ventaPedidoForm.setTipo_pedido(tipoPedidoBean.getCodigo());	
-		ventaPedidoForm.setFecha_entrega(dt.format(fechaEntrega));
+		ventaPedidoForm.setFecha_entrega(dt.format(fechaEntrega));		
 		
-		if (ventaPedidoForm.getListaProductos().size() < 1) {
-			Messagebox.show("Debe ingresar articulos para generar cobros");
-			return;
-		}
 		
 		if (ventaPedidoForm.getNombre_cliente().equals("")) {
 			Messagebox.show("Debe seleccionar un Cliente");
@@ -628,6 +651,10 @@ public class ControllerEncargos implements Serializable {
 			return;
 		}
 		
+		if (ventaPedidoForm.getListaProductos().size() < 1) {
+			Messagebox.show("Debe ingresar articulos para generar cobros");
+			return;
+		}
 		
 		
 		if (!ventaPedidoForm.getFlujo().equals("formulario")) {	
@@ -902,7 +929,9 @@ public class ControllerEncargos implements Serializable {
 				Window window = (Window)Executions.createComponents(
 		                "/zul/reportes/VisorDocumento.zul", null, objetos);
 				
-		        window.doModal();		
+		        window.doModal();	
+		        
+		        BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
 				
 			}
 			
@@ -1092,8 +1121,8 @@ public class ControllerEncargos implements Serializable {
 	        	sess.setAttribute("NOMBRE_CLIENTE",cliente.getNombre() + " " + cliente.getApellido());	
 	        	
 	        	ventaPedidoForm.setAccion("agregarCliente");
-	        	ventaPedidoForm.setFlujo(Constantes.STRING_FORMULARIO);  
-	        	
+	        	//ventaPedidoForm.setFlujo(Constantes.STRING_FORMULARIO);  
+	        	ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 	        	beanControlBotones.setEnableListar("false");
 	        	beanControlBotones.setEnableBuscar("false");
 	        	
@@ -1347,7 +1376,7 @@ public class ControllerEncargos implements Serializable {
 		
 		String divisa="PESO";
 		String idioma="CAST";
-		String formaPago="1";
+		String formaPago="1";		
 		
 		Optional<DivisaBean> b = ventaPedidoForm.getListaDivisas().stream().filter(s -> divisa.equals(s.getId())).findFirst();
 		divisaBean = b.get();		
@@ -1358,6 +1387,15 @@ public class ControllerEncargos implements Serializable {
 		Optional<FormaPagoBean> e = ventaPedidoForm.getListaFormasPago().stream().filter(s -> formaPago.equals(s.getId())).findFirst();
 		formaPagoBean = e.get();	
 		
+		/*Optional<String> usuario = Optional.ofNullable(ventaPedidoForm.getAgente());
+		
+		if(usuario.isPresent()) {
+			Optional<AgenteBean> a = ventaPedidoForm.getListaAgentes().stream().filter(s -> ventaPedidoForm.getAgente().equals(s.getUsuario())).findFirst();		
+			agenteBean = a.get();
+		}else {
+			agenteBean = null;
+		}		
+		*/
 		agenteBean=new AgenteBean();		
 		tipoPedidoBean=null;
 		promocionBean=null;

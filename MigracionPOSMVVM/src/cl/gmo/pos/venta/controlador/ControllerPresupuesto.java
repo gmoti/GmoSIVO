@@ -156,18 +156,13 @@ public class ControllerPresupuesto implements Serializable{
 		//presupuestoForm = new PresupuestoForm();
 		//sess.setAttribute(Constantes.STRING_PRESUPUESTO, 0);
 		
-		presupuestoForm = presupuestoDispatchActions.nuevoFormulario(presupuestoForm, sess);
+		presupuestoDispatchActions.nuevoFormulario(presupuestoForm, sess);
 		
 		presupuestoForm.setDivisa("PESO");
 		presupuestoForm.setIdioma("CAST");		
 		presupuestoForm.setAgente(sess.getAttribute(Constantes.STRING_USUARIO).toString());
 		presupuestoForm.setForma_pago("1");
-		
-		/*presupuestoForm.setNif("");
-		presupuestoForm.setDvnif("");
-		presupuestoForm.setNombre_cliente("");*/
-		//
-		
+		//presupuestoForm.setFlujo(Constantes.STRING_NUEVO);
 		
 		posicionaCombos();
 		
@@ -219,12 +214,10 @@ public class ControllerPresupuesto implements Serializable{
 		//sess.setAttribute(Constantes.STRING_FORMULARIO, "PRESUPUESTO");
 		presupuestoForm.setEstado(Constantes.STRING_FORMULARIO);
 		presupuestoForm.setAccion("ingresa_presupuesto");		
-		
-		//presupuestoForm.setCodigo(Constantes.STRING_BLANCO);		
 		presupuestoForm.setForma_pago(formaPagoBean.getId());
 		presupuestoForm.setAgente(agenteBean.getUsuario());		
 		
-		presupuestoForm = presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);		
+		presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);		
 		Messagebox.show("Grabacion exitosa");	
 		
 		//Activar botones
@@ -487,7 +480,7 @@ public class ControllerPresupuesto implements Serializable{
 	        	sess.setAttribute("NOMBRE_CLIENTE",cliente.getNombre() + " " + cliente.getApellido());	
 	        	
 	        	presupuestoForm.setAccion("agregarCliente");
-	        	presupuestoForm.setFlujo(Constantes.STRING_FORMULARIO);                 
+	        	//presupuestoForm.setFlujo(Constantes.STRING_FORMULARIO);                 
 	    		presupuestoForm = presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
 	    		
 	    		

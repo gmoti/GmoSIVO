@@ -125,7 +125,7 @@ public class ControllerVentaDirecta implements Serializable{
 		
 	
 	@NotifyChange({"ventaDirectaForm","controlBotones"})
-	@Command
+	@Command	
 	public void nuevaVenta() {		
 		
 		controlBotones.setEnableGrid("true");
@@ -304,7 +304,11 @@ public class ControllerVentaDirecta implements Serializable{
 				Window window = (Window)Executions.createComponents(
 		                "/zul/reportes/VisorDocumento.zul", null, objetos);
 				
-		        window.doModal();			
+		        window.doModal();	
+		        
+		        this.nuevaVenta();
+		        //BindUtils.postGlobalCommand(null, null, "nuevaVenta", null);
+		        
 				
 			}
 			

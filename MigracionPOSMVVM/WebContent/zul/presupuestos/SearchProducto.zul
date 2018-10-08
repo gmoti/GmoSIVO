@@ -160,8 +160,7 @@
 						</grid>
 					</div>	
 					
-					<!-- Busqueda Avanzada -->				
-					<!-- <div height="45%" visible="@bind(vm.busquedaAvanzada)"> -->			
+					<!-- Busqueda Avanzada -->							
 					<div width="100%" visible="@bind(vm.busquedaAvanzada)">					
 						<div width="100%" style="background-color:black;color: white">
 							<label value="Seleccion por:" />													
