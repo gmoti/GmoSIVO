@@ -2,6 +2,7 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +43,7 @@ import cl.gmo.pos.venta.web.forms.PresupuestoForm;
 
 public class ControllerPresupuesto implements Serializable{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 834007943950085993L;
 	Session sess = Sessions.getCurrent();
 	PresupuestoHelper helper = new PresupuestoHelper();
@@ -75,6 +74,9 @@ public class ControllerPresupuesto implements Serializable{
 	@Wire
 	private Window winPresupuesto;
 	
+	private BeanControlBotones 	beanControlBotones;
+	private BeanControlCombos 	beanControlCombos;
+	
 	//Variables auxiliares para validaciones
 	//Situacion Pre y Post cambio de valor
 	
@@ -91,6 +93,9 @@ public class ControllerPresupuesto implements Serializable{
 	public void inicial(@ContextParam(ContextType.VIEW) Component view) {
 		
         Selectors.wireComponents(view, this, false);
+        
+        beanControlBotones = new BeanControlBotones();	
+		beanControlCombos  = new BeanControlCombos();
 		
 		fecha 		 = new Date(System.currentTimeMillis());
 		fechaEntrega = new Date(System.currentTimeMillis());
@@ -120,21 +125,19 @@ public class ControllerPresupuesto implements Serializable{
 		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
+		//Posicion incial
+		
+		beanControlBotones.setEnableNew("false");
+		beanControlBotones.setEnablePrint("true");
+		beanControlBotones.setEnableEliminar("true");
+		beanControlBotones.setEnableBuscar("false");
+		beanControlBotones.setEnableListar("true");
+		beanControlBotones.setEnableGenerico1("true");
+		beanControlBotones.setEnableGrabar("true");		
+		
 	}
 
 
-	@Command
-	public void listar_detalles() {
-		
-		objetos = new HashMap<String,Object>();		
-		objetos.put("presupuestoForm",presupuestoForm);
-		
-		Window window = (Window)Executions.createComponents(
-                "/zul/presupuestos/BusquedaPresupuesto.zul", null, objetos);
-		
-        window.doModal(); 		
-		
-	}
 	
 	
 	//===================== Acciones de la ToolBar ======================
@@ -143,7 +146,7 @@ public class ControllerPresupuesto implements Serializable{
 	//============ Nuevo Presupuesto ===============
 	//==============================================
 	
-	@NotifyChange({"presupuestoForm","fpagoDisable","agenteDisable","divisaBean","idiomaBean","formaPagoBean","agenteBean"})
+	@NotifyChange({"presupuestoForm","beanControlBotones","fpagoDisable","agenteDisable","divisaBean","idiomaBean","formaPagoBean","agenteBean"})
 	@Command
 	public void nuevoPresupuesto() {		
 		
@@ -152,6 +155,7 @@ public class ControllerPresupuesto implements Serializable{
 		
 		//presupuestoForm = new PresupuestoForm();
 		//sess.setAttribute(Constantes.STRING_PRESUPUESTO, 0);
+		
 		presupuestoForm = presupuestoDispatchActions.nuevoFormulario(presupuestoForm, sess);
 		
 		presupuestoForm.setDivisa("PESO");
@@ -159,20 +163,58 @@ public class ControllerPresupuesto implements Serializable{
 		presupuestoForm.setAgente(sess.getAttribute(Constantes.STRING_USUARIO).toString());
 		presupuestoForm.setForma_pago("1");
 		
+		/*presupuestoForm.setNif("");
+		presupuestoForm.setDvnif("");
+		presupuestoForm.setNombre_cliente("");*/
+		//
+		
+		
 		posicionaCombos();
 		
 		if (!bWin) {
 			wBusqueda.detach();
 			bWin=true;
 		}		
+		
+		//Posicion incial
+		
+		beanControlBotones.setEnableNew("false");
+		beanControlBotones.setEnablePrint("true");
+		beanControlBotones.setEnableEliminar("true");
+		beanControlBotones.setEnableBuscar("false");
+		beanControlBotones.setEnableListar("true");
+		beanControlBotones.setEnableGenerico1("true");
+		beanControlBotones.setEnableGrabar("true");	
+		
+		presupuestoForm.setListaProductos(new ArrayList<ProductosBean>());
 	}
 	
 	//=========== Graba Presupuesto ===============
 	//=============================================
 	
-	@NotifyChange("presupuestoForm")
+	@NotifyChange({"presupuestoForm","beanControlBotones"})
 	@Command
 	public void grabarPresupuesto() {		
+		
+		//validaciones varias
+		
+		if (presupuestoForm.getCodigo_suc().equals("")){
+			Messagebox.show("No se ha iniciado un nuevo presupuesto");
+			return;
+		}
+		
+		//Optional<FormaPagoBean> a = Optional.ofNullable(formaPagoBean);
+		Optional<AgenteBean> b = Optional.ofNullable(agenteBean);
+		
+		if(!b.isPresent()){
+			Messagebox.show("No ha seleccionado el agente");
+			return;			
+		}
+		
+		if(presupuestoForm.getListaProductos().size() == 0){
+			Messagebox.show("El presupuesto no tiene lineas");
+			return;				
+		}
 		
 		//sess.setAttribute(Constantes.STRING_FORMULARIO, "PRESUPUESTO");
 		presupuestoForm.setEstado(Constantes.STRING_FORMULARIO);
@@ -183,7 +225,17 @@ public class ControllerPresupuesto implements Serializable{
 		presupuestoForm.setAgente(agenteBean.getUsuario());		
 		
 		presupuestoForm = presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);		
-		Messagebox.show("Grabacion exitosa");		
+		Messagebox.show("Grabacion exitosa");	
+		
+		//Activar botones
+		
+		beanControlBotones.setEnablePrint("false");
+		beanControlBotones.setEnableEliminar("false");
+		beanControlBotones.setEnableBuscar("false");
+		beanControlBotones.setEnableListar("false");
+		beanControlBotones.setEnableGenerico1("false");
+		beanControlBotones.setEnableGrabar("false");		
+		
 	}
 	
 	//=========== Selecciona Presupuesto ============
@@ -299,12 +351,28 @@ public class ControllerPresupuesto implements Serializable{
 	}
 	
 	
-	//==================== Listar Presupuestos ========================
+	//==================== Buscar Presupuestos ========================
 	//=================================================================
 	@NotifyChange({"presupuestoForm"})
 	@Command
 	public void busquedaPresupuesto(){}
 	
+	
+	
+	//==================== Listar Presupuestos ========================
+	//=================================================================
+	@Command
+	public void listar_detalles() {
+		
+		objetos = new HashMap<String,Object>();		
+		objetos.put("presupuestoForm",presupuestoForm);
+		
+		Window window = (Window)Executions.createComponents(
+                "/zul/presupuestos/BusquedaPresupuesto.zul", null, objetos);
+		
+        window.doModal(); 		
+		
+	}	
 	
 	
 	//===================== Acciones comunes de la ventana ======================
@@ -392,7 +460,7 @@ public class ControllerPresupuesto implements Serializable{
 	
 	
 	
-	@NotifyChange({"presupuestoForm"})
+	@NotifyChange({"presupuestoForm","beanControlBotones"})
 	@Command
 	public void buscarCliente(@BindingParam("arg")String arg) {
 		
@@ -421,6 +489,12 @@ public class ControllerPresupuesto implements Serializable{
 	        	presupuestoForm.setAccion("agregarCliente");
 	        	presupuestoForm.setFlujo(Constantes.STRING_FORMULARIO);                 
 	    		presupuestoForm = presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+	    		
+	    		
+	    		//activo botones
+	    		beanControlBotones.setEnableListar("false");	    		
+	    		beanControlBotones.setEnableGrabar("false");	    		
+	    		
 					
 			}else {
 				Messagebox.show("El cliente no existe");
@@ -725,76 +799,61 @@ public class ControllerPresupuesto implements Serializable{
 		this.agenteBean = agenteBean;
 	}
 
-
 	public FormaPagoBean getFormaPagoBean() {
 		return formaPagoBean;
 	}
-
 
 	public void setFormaPagoBean(FormaPagoBean formaPagoBean) {
 		this.formaPagoBean = formaPagoBean;
 	}
 
-
 	public DivisaBean getDivisaBean() {
 		return divisaBean;
 	}
-
 
 	public void setDivisaBean(DivisaBean divisaBean) {
 		this.divisaBean = divisaBean;
 	}
 
-
 	public IdiomaBean getIdiomaBean() {
 		return idiomaBean;
 	}
-
 
 	public void setIdiomaBean(IdiomaBean idiomaBean) {
 		this.idiomaBean = idiomaBean;
 	}
 
-
 	public String getFpagoDisable() {
 		return fpagoDisable;
 	}
-
 
 	public void setFpagoDisable(String fpagoDisable) {
 		this.fpagoDisable = fpagoDisable;
 	}
 
-
 	public String getAgenteDisable() {
 		return agenteDisable;
 	}
-
 
 	public void setAgenteDisable(String agenteDisable) {
 		this.agenteDisable = agenteDisable;
 	}
 
-
 	public ProductosBean getProductoBean() {
 		return productoBean;
 	}
-
 
 	public void setProductoBean(ProductosBean productoBean) {
 		this.productoBean = productoBean;
 	}
 
-
 	public BusquedaConveniosForm getBusquedaConveniosForm() {
 		return busquedaConveniosForm;
 	}
 
-
 	public void setBusquedaConveniosForm(BusquedaConveniosForm busquedaConveniosForm) {
 		this.busquedaConveniosForm = busquedaConveniosForm;
 	}
-
 	
 	//========== Generales control de botones y acciones ===============
 
@@ -818,7 +877,6 @@ public class ControllerPresupuesto implements Serializable{
 		return sucursal;
 	}
 
-
 	public void setSucursal(String sucursal) {
 		this.sucursal = sucursal;
 	}
@@ -830,5 +888,21 @@ public class ControllerPresupuesto implements Serializable{
 	public void setSucursalDes(String sucursalDes) {
 		this.sucursalDes = sucursalDes;
 	}
+
+	public BeanControlBotones getBeanControlBotones() {
+		return beanControlBotones;
+	}
+
+	public void setBeanControlBotones(BeanControlBotones beanControlBotones) {
+		this.beanControlBotones = beanControlBotones;
+	}
+
+	public BeanControlCombos getBeanControlCombos() {
+		return beanControlCombos;
+	}
+
+	public void setBeanControlCombos(BeanControlCombos beanControlCombos) {
+		this.beanControlCombos = beanControlCombos;
+	}	
 	
 }

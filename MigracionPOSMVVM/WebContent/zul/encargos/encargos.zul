@@ -248,7 +248,7 @@
 						</div>
 
 						<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-								width="100%" height="245px" sclass="MyGridRowHeight" >
+								width="100%" sclass="MyGridRowHeight" >
 							<columns>
 								<column width="155px" />
 								<column width="335px" />
@@ -300,10 +300,12 @@
 						</grid>
 					</div>
 					
-					<div width="100%" height="10%" style="padding-left:300px">					
+					<div width="100%" height="10%" style="padding-left:300px">
+										
 						<div width="815px" style="background-color:black;color: white;">
 							<label value="Graduacion del articulo" />
 						</div>
+						
 						<div>
 							<hbox>
 								<label value="Esfera" />

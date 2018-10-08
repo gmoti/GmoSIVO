@@ -203,7 +203,9 @@
 								
 								<row>															
 								<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)"/>
-								<button label="B" onClick="" width="30px"/>								
+								
+								<button image="/iconos/add.png" onClick="seleccionGraduaciones.open(self)" width="150px"/>	
+															
 								<label value="O.I" />
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
@@ -218,16 +220,16 @@
 					<!-- <div height="70%"> -->
 					<div width="100%">					
 						<div width="100%" style="background-color:black;color: white">
-						<space width="50px"/>
-						<label value="Articulo" />	
-						<space width="100px"/>
-						<label value="Descripcion" />
-						<space width="270px"/>
-						<label value="Precio iva" />
-						<space width="10px"/>
-						<label value="Grupo" />
-						<space width="10px"/>
-						<label value="Accion" />												
+							<space width="50px"/>
+							<label value="Articulo" />	
+							<space width="100px"/>
+							<label value="Descripcion" />
+							<space width="270px"/>
+							<label value="Precio iva" />
+							<space width="10px"/>
+							<label value="Grupo" />
+							<space width="10px"/>
+							<label value="Accion" />												
 						</div>	
 						<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
 								sclass="MyGridRowHeight" emptyMessage="Sin registros" height="300px">						
@@ -254,6 +256,69 @@
 				</div>
 			</center>
 		</borderlayout>
+		
+		
+		
+		
+		<popup id="seleccionGraduaciones" width="800px">
+		
+			<div width="100%">
+			
+				<div width="100%" style="background-color:black;color: white" height="40px">
+						<label value="Lista de graduaciones" />
+						<div style="float: right">					
+							<toolbarbutton image="/image/Remove_32x32.png" onClick="seleccionGraduaciones.close()"/>		
+						</div>																			
+				</div>
+		
+				<div width="100%" style="background-color:black;color: white">				
+					<label value="Fecha"/>
+					<label value="Numero"/>
+					<label value="OD Esfera"/>
+					<label value="OD Cilindro"/>
+					<label value="OD Eje"/>
+					<label value="OD Adicion"/>
+					<label value="OI Esfera"/>
+					<label value="OI Cilindro"/>
+					<label value="OI Eje"/>
+					<label value="OD Adicion"/>															
+				</div>	
+			
+				<div>
+					<grid model="@bind(vm.busquedaProductosForm.listaGraduaciones)" 
+							sclass="MyGridRowHeight" width="100%" height="200px">
+						<columns>
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+						</columns>
+						<template name="model">							
+							<row>
+								<textbox value="@bind(each.fecha)"/>
+								<textbox value="@bind(each.numero)"/>
+								<textbox value="@bind(each.OD_esfera)"/>
+								<textbox value="@bind(each.OD_cilindro)"/>
+								<textbox value="@bind(each.OD_eje)"/>
+								<textbox value="@bind(each.OD_adicion)"/>
+								<textbox value="@bind(each.OI_esfera)"/>
+								<textbox value="@bind(each.OI.cilindro)"/>
+								<textbox value="@bind(each.OI.eje)"/>
+								<textbox value="@bind(each.OI.adicion)"/>	
+								<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('seleccionaGraduacion',codigo=each.codigo)"/>					
+							</row>							
+						</template>
+					</grid>
+				</div>	
+			</div>
+		
+		</popup>
 
 	</window>
 </zk>

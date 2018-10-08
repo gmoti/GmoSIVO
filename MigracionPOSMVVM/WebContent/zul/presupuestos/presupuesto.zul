@@ -24,13 +24,13 @@
 					
 					<div width="100%" style="background-color:black;color: white" height="40px">					
 						<div style="text-align: right;">											
-							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevoPresupuesto')" tooltiptext="Nuevo Presupuesto"/>
-							<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimirPresupuesto')" tooltiptext="Imprimir Presupuesto"/>
-							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminar_Presupuesto')" tooltiptext="Eliminar Presupuesto"/>
-							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaPresupuesto')" tooltiptext="Busqueda Avanzada Presupuesto"/>
-							<toolbarbutton image="/iconos/lista.png" onClick="@command('listar_detalles')" tooltiptext="Listar Presupuestos"/>
-							<toolbarbutton image="/iconos/transfer.png" onClick="@command('crearEncargo')" tooltiptext="Traspasar a Encargo"/>
-							<toolbarbutton image="/iconos/check.png" onClick="@command('grabarPresupuesto')" tooltiptext="Grabar Presupuesto"/>
+							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevoPresupuesto')" disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Presupuesto"/>
+							<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimirPresupuesto')" disabled="@bind(vm.beanControlBotones.enablePrint)" tooltiptext="Imprimir Presupuesto"/>
+							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminar_Presupuesto')" disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Presupuesto"/>
+							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaPresupuesto')" disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avanzada Presupuesto"/>
+							<toolbarbutton image="/iconos/lista.png" onClick="@command('listar_detalles')" disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Presupuestos"/>
+							<toolbarbutton image="/iconos/transfer.png" onClick="@command('crearEncargo')" disabled="@bind(vm.beanControlBotones.enableGenerico1)" tooltiptext="Traspasar a Encargo"/>
+							<toolbarbutton image="/iconos/check.png" onClick="@command('grabarPresupuesto')" disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Grabar Presupuesto"/>
 							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', arg=winPresupuesto)" tooltiptext="Cerrar"/>									
 						</div>						
 					</div>

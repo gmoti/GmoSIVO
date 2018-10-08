@@ -232,7 +232,10 @@ public class ControllerSearchProductPres implements Serializable {
 			}			
 		}
      	
-     	busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);		
+     	//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	
+     	//inicializo la busqueda
+     	busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+     	busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
 	}
 	
 	
@@ -322,12 +325,17 @@ public class ControllerSearchProductPres implements Serializable {
 			subFamiliaBean=null;				
 		
 		if (arg instanceof GrupoFamiliaBean) 
-			grupoFamiliaBean=null;				
-			
+			grupoFamiliaBean=null;		
 	}
 	
-	
-	
+	@NotifyChange({"busquedaProductosForm"})
+	@Command
+	public void seleccionaGraduacion(@BindingParam("codigo")int codigo){       
+        busquedaProductosForm.setIndex_graduacion(codigo);
+        busquedaProductosForm.setAccion("selecciona_graduacion");
+        busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	
+		
+	}
 
 
 	//---------getter and setter-----------
