@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
@@ -22,6 +23,7 @@ import cl.gmo.pos.venta.web.beans.FamiliaBean;
 import cl.gmo.pos.venta.web.beans.GrupoFamiliaBean;
 import cl.gmo.pos.venta.web.beans.ProductosBean;
 import cl.gmo.pos.venta.web.beans.SubFamiliaBean;
+import cl.gmo.pos.venta.web.beans.SuplementopedidoBean;
 import cl.gmo.pos.venta.web.beans.TipoFamiliaBean;
 import cl.gmo.pos.venta.web.forms.BusquedaProductosForm;
 import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
@@ -235,21 +237,42 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		busquedaProductosForm.setEstado("");
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 		
+		if(isOjoDerecho())
+			producto.setOjo("derecho");
+		
+		if(isOjoIzquierdo())
+			producto.setOjo("izquierdo");
+		
+		sess.setAttribute(Constantes.STRING_PRODUCTO, producto);
+		
 		//producto con suplemento obligatorio
 		
-		if (busquedaProductosForm.getEstado().equals(Constantes.STRING_PRODUCTO_CON_SUPLEMENTO)) {
+		//if (busquedaProductosForm.getEstado().equals(Constantes.STRING_PRODUCTO_CON_SUPLEMENTO)) {
 			
 			objetos = new HashMap<String,Object>();		
 			objetos.put("producto",producto);
+			objetos.put("index",index);
+			objetos.put("origen","MULTIOFERTA");
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			
 			Window windowAgregaSuplemento = (Window)Executions.createComponents(
 	                "/zul/encargos/AgregaSuplemento.zul", null, objetos);
 			
 			windowAgregaSuplemento.doModal(); 			
-		}	
+		//}	
 		
 	}	
+	
+	//=========== Mantengo la persistencia de lista de splementos=======
+	//==================================================================
+	@NotifyChange({"busquedaProductosForm"})
+	@GlobalCommand
+	public void actulizaListaSuplementosMulti(@BindingParam("suplementos")ArrayList<SuplementopedidoBean> suplementos,
+										 	@BindingParam("producto")ProductosBean producto,
+										 	@BindingParam("index")int index) {		
+		
+		busquedaProductosForm.getListaProductosMultioferta().get(index).setListaSuplementos(suplementos);			
+	} 
 	
 
 	//======= metodos getter and setter =================

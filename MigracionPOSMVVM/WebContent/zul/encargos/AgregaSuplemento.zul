@@ -7,26 +7,44 @@
 		    <div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Suplementos" />
 				<div style="float: right">					
-					<toolbarbutton image="/image/Remove_32x32.png" onClick="winAgregaSuplemento.detach()"/>		
+					<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('cerrar',win=winAgregaSuplemento)"/>		
 				</div>																			
 			</div>
 
 			<div>
 				<vbox>
-					<label value="Seleccionar" />
-					<space />					
-					<space />
-					<button image="/iconos/add.png" label="Agregar"/>					
+					<label value="Seleccionar Suplemento" />
+					<combobox model="@bind(vm.suplementosForm.suplementos)" 
+							onChange="@command('recupera_suplemento')" 
+							selectedItem="@bind(vm.suplementopedidoBean)" placeholder="Seleccione">
+						<template name="model">
+							<comboitem label="@load(each.descripcion)"/>
+						</template>						
+					</combobox>
+					<space/>
+					
+					<hbox>
+						<combobox model="@bind(vm.suplementosForm.lista_valores_suplementos)"  width="100px" 
+								selectedItem="@bind(vm.suplementosValores)">
+							<template name="model">
+								<comboitem label="@load(each.descripcion)"/>
+							</template>						
+						</combobox>
+					  	
+					 	<button image="/iconos/add.png" label="Agregar" onClick="@command('enviar')"/>
+					</hbox>
+										
 				</vbox>
 			</div>
 
 			<div>
 		    	
 		    	<div width="100%" style="background-color:black;color: white">
+		    		<space width="20px"/>
 					<label value="Codigo"/>
 					<space width="30px"/>
 					<label value="Descripcion"/>
-					<space width="200px"/>
+					<space width="100px"/>
 					<label value="Valor"/>
 		    	</div>		    
 		    
@@ -34,13 +52,15 @@
 		    		<columns>
 		    			<column width="80px"/>
 		    			<column width="200px"/>
-		    			<column width="30px"/>
+		    			<column width="55px"/>
+		    			<column width="50px"/>
 		    		</columns>
 		    		<template name="model">		    		
 		    			<row>
-		    				<textbox value="@load(each.tratami)" width="75px"/>
-		    				<textbox value="@load(each.descripcion)" width="195px"/>
-		    				<textbox value="@load(each.valor)" width="25px"/>		    				
+		    				<textbox value="@load(each.tratami)" width="75px" disabled="true"/>
+		    				<textbox value="@load(each.descripcion)" width="195px" disabled="true"/>
+		    				<textbox value="@load(each.valor)" width="50px" disabled="true"/>
+		    				<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('eliminarSuplemento',index=forEachStatus.index)"/>		    				
 		    			</row>		    		
 		    		</template>		    		
 		    	</grid>

@@ -48,6 +48,7 @@ import cl.gmo.pos.venta.web.beans.IdiomaBean;
 import cl.gmo.pos.venta.web.beans.PedidosPendientesBean;
 import cl.gmo.pos.venta.web.beans.ProductosBean;
 import cl.gmo.pos.venta.web.beans.PromocionBean;
+import cl.gmo.pos.venta.web.beans.SuplementopedidoBean;
 import cl.gmo.pos.venta.web.beans.TipoPedidoBean;
 import cl.gmo.pos.venta.web.forms.BusquedaConveniosForm;
 import cl.gmo.pos.venta.web.forms.BusquedaPedidosForm;
@@ -168,6 +169,9 @@ public class ControllerEncargos implements Serializable {
 			
 			beanControlBotones.setEnableNew("false");
 			beanControlBotones.setEnableListar("false");
+			
+			beanControlBotones.setEnableGenerico1("true");
+			beanControlBotones.setEnableGenerico2("true");			
 			
 			beanControlCombos.setComboAgenteEnable("false");
 			beanControlCombos.setComboDivisaEnable("true");
@@ -301,6 +305,8 @@ public class ControllerEncargos implements Serializable {
 							ventaPedidoForm.setAccion("eliminarPedidoSeleccion");
 							ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
 							BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
+							
+							Messagebox.show("Presupuesto eliminado");
 						}						
 					}
 			});	
@@ -946,10 +952,8 @@ public class ControllerEncargos implements Serializable {
 	//=========== Post Grabacion pago =============
 	//=============================================		
 	@NotifyChange({"ventaPedidoForm"})
-	public void postCobro() {
-		
-		//controlBotones.setEnablePagar("true");
-		//controlBotones.setEnableGenerico3("true");		
+	public void postCobro() {		
+				
 		Messagebox.show("Venta almacenada con exito");
 	}
 	
@@ -1080,9 +1084,7 @@ public class ControllerEncargos implements Serializable {
 	public void buscarClienteGenerico() {		
 		ventaPedidoForm.setNif("66666666");		
 		beanControlBotones.setEnableGrid("false");
-		beanControlBotones.setEnableGrabar("false");
-		
-		
+		beanControlBotones.setEnableGrabar("false");	
 		
 		buscarCliente();
 	}	
@@ -1158,7 +1160,8 @@ public class ControllerEncargos implements Serializable {
 	
 	@NotifyChange({"ventaPedidoForm"})
     @GlobalCommand
-	public void actProdGridVentaPedido(@BindingParam("producto")ProductosBean arg) {	
+	public void actProdGridVentaPedido(@BindingParam("producto")ProductosBean arg,
+										@BindingParam("tipo")String tipo) {	
 		
 		//no viene la graduaciion
 		arg.setImporte(arg.getPrecio());
@@ -1173,7 +1176,7 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm.setAddProducto(arg.getCod_barra());
 			//ventaPedidoForm.setGraduacion(arg.getg);
 			ventaPedidoForm.setOjo(arg.getOjo());
-			ventaPedidoForm.setDescripcion(arg.getDescripcion());
+			ventaPedidoForm.setDescripcion(tipo);
 			
 			
 			
@@ -1637,6 +1640,32 @@ public class ControllerEncargos implements Serializable {
 	}	
 	
 	
+	//=========== Mantengo la persistencia de lista de splementos=======
+	//==================================================================
+	@NotifyChange({"ventaPedidoForm"})
+	@GlobalCommand
+	public void actulizaListaSuplementos(@BindingParam("suplementos")ArrayList<SuplementopedidoBean> suplementos,
+										 @BindingParam("producto")ProductosBean producto,
+										 @BindingParam("index")int index) {		
+		//int i=0;
+		
+		ventaPedidoForm.getListaProductos().get(index).setListaSuplementos(suplementos);
+		
+		/*ArrayList<ProductosBean> pds = ventaPedidoForm.getListaProductos();
+		
+		for (ProductosBean p : pds) {			
+			if (p.getCod_barra().equals(producto.getCod_barra()) && i==index) {
+				p.setListaSuplementos(suplementos);
+				break;
+			}
+			
+			i++;
+		}
+		
+		ventaPedidoForm.setListaProductos(pds);*/
+		
+	} 	
+	
 	//====================  Validaciones varias ========================
 	//==================================================================
 	@NotifyChange({"ventaPedidoForm"})
@@ -1985,7 +2014,8 @@ public class ControllerEncargos implements Serializable {
 				e.printStackTrace();
 			}			
 		}		
-	}
+	}	
+	
 	
 	//=================== Seleccion Tratamientos ============================
 	@NotifyChange({"ventaPedidoForm"})
@@ -2000,6 +2030,8 @@ public class ControllerEncargos implements Serializable {
 			
 			objetos = new HashMap<String,Object>();		
 			objetos.put("producto",producto);
+			objetos.put("index",index);
+			objetos.put("origen","PEDIDO");
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			
 			Window windowAgregaSuplementoEnc = (Window)Executions.createComponents(

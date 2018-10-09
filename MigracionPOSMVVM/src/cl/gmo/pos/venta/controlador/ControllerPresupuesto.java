@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -334,7 +335,9 @@ public class ControllerPresupuesto implements Serializable{
 							
 							//presupuestoForm.setAccion(accion);
 							presupuestoForm = presupuestoDispatchActions.eliminarPresupuesto(presupuestoForm, sess);
-														
+							BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
+							
+							Messagebox.show("Presupuesto eliminado");							
 						}						
 					}
 			});				
@@ -373,6 +376,12 @@ public class ControllerPresupuesto implements Serializable{
 	
 	//===================== BUsqueda de convenios ===============================
 	//===========================================================================
+	
+	@NotifyChange("*")
+	@GlobalCommand
+	public void accionNuevoPedido() {		
+		this.nuevoPresupuesto();
+	}
 	
 	@NotifyChange({"presupuestoForm","busquedaConveniosForm"})
 	@Command
@@ -551,7 +560,7 @@ public class ControllerPresupuesto implements Serializable{
 	
 	@NotifyChange({"presupuestoForm"})
     @GlobalCommand
-	public void actProdGridPresupuesto(@BindingParam("producto")ProductosBean arg) {
+	public void actProdGridPresupuesto(@BindingParam("producto")ProductosBean arg, @BindingParam("tipo")String tipo) {
 		
 		//no viene la graduaciion
 		arg.setImporte(arg.getPrecio());
@@ -566,7 +575,7 @@ public class ControllerPresupuesto implements Serializable{
 			presupuestoForm.setAddProducto(arg.getCod_barra());
 			//ventaPedidoForm.setGraduacion(arg.getg);
 			presupuestoForm.setOjo(arg.getOjo());
-			presupuestoForm.setDescripcion(arg.getDescripcion());		
+			presupuestoForm.setDescripcion(tipo);		
 			
 			presupuestoForm = presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
 			
@@ -689,9 +698,11 @@ public class ControllerPresupuesto implements Serializable{
 		
 		Double dto;
 		Double total;
+		long campo = 0;
 		
 		total = presupuestoForm.getSubTotal();
-		dto   = (presupuestoForm.getDescuento() * 100) / total;		
+		dto   = (presupuestoForm.getDescuento() * 100) / total;	
+		campo = (long)presupuestoForm.getDescuento();
 		
 		if (presupuestoForm.getEstado().equals("cerrado")) {			
 			Messagebox.show("El presupuesto esta cerrado, no es posible modificar productos");
@@ -713,7 +724,7 @@ public class ControllerPresupuesto implements Serializable{
 			if (dto < presupuestoForm.getPorcentaje_descuento_max()) {
 				
 				presupuestoForm.setAccion("descuento_total_monto");
-			    presupuestoForm.setCantidad_linea(Integer.parseInt(String.valueOf(presupuestoForm.getDescuento())));			
+			    presupuestoForm.setCantidad_linea(Integer.parseInt(String.valueOf(campo)));			
 			    presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);				
 				
 			}else {
@@ -740,7 +751,7 @@ public class ControllerPresupuesto implements Serializable{
 				if(dto < presupuestoForm.getPorcentaje_descuento_max()) {
 					
 					presupuestoForm.setAccion("descuento_total_monto");
-				    presupuestoForm.setCantidad_linea(Integer.parseInt(String.valueOf(presupuestoForm.getDescuento())));			
+				    presupuestoForm.setCantidad_linea(Integer.parseInt(String.valueOf(campo)));			
 				    presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
 					
 				}else {
@@ -756,6 +767,85 @@ public class ControllerPresupuesto implements Serializable{
 		
 	}
 	
+	@NotifyChange({"presupuestoForm"})
+	@Command
+	public void actualiza_descuento_total() {
+		
+		//variable original
+		//dto_total
+		long campo = 0;
+		long descuento_max = 0;
+		String tipo="";
+		
+		campo = (long)presupuestoForm.getDtcoPorcentaje();
+		
+		if (presupuestoForm.getEstado().equals("cerrado")) {			
+			Messagebox.show("La venta esta cerrada, no es posible modificar");
+			return;
+		}			
+		
+		
+		if ((campo < 0) || (campo > 100)) {
+			Messagebox.show("Valor debe estar entre 0 y 100");
+			presupuestoForm.setDtcoPorcentaje(Integer.valueOf(String.valueOf(dto_total)));
+			return;		
+		}
+		
+		
+		if (dto_total > 0) {		
+				
+			descuento_max = presupuestoForm.getPorcentaje_descuento_max();
+			
+			if(campo <= descuento_max) {					
+	        	//document.getElementById('cantidad_descuento').value = campo.replace(',','.'); 	        	
+	        	try {
+	        		presupuestoForm.setCantidad_descuento(campo);
+	        		presupuestoForm.setAccion("descuento_total");					
+					presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+				} catch (Exception e) {						
+					e.printStackTrace();
+				}		        	
+				
+			}else {
+				//autorizador				
+				
+				Window winAutoriza = (Window)Executions.createComponents(
+		                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+				winAutoriza.doModal();				
+											
+			}			
+			
+			
+		}else {		
+			
+			if(campo > 0) {
+				
+				descuento_max = presupuestoForm.getPorcentaje_descuento_max();
+				
+				if(campo <= descuento_max) {					
+		        	//document.getElementById('cantidad_descuento').value = campo.replace(',','.'); 	        	
+		        	try {
+		        		presupuestoForm.setCantidad_descuento(campo);
+		        		presupuestoForm.setAccion("descuento_total");
+		        		presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+					} catch (Exception e) {						
+						e.printStackTrace();
+					}		        	
+					
+				}else {
+					//autorizador					
+						
+					Window winAutoriza = (Window)Executions.createComponents(
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+					winAutoriza.doModal();							
+										
+				}				
+				
+			}			
+		}		
+	}
+	
+		
 	
 	//=================getter and setter=========================
 	//============================================================

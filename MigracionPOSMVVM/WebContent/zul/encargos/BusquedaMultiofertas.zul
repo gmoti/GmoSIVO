@@ -161,18 +161,18 @@
 								</row>
 								
 								<row>								
-								<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" />
+								<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" value="derecho" />
 								<cell colspan="1"/>
 								<label value="O.D" />								
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
 								
-								<checkbox label="Cerca" checked="@bind(vm.cerca)"/>
+								<checkbox label="Cerca" checked="@bind(vm.busquedaProductosForm.chk_cerca)"/>
 								</row>
 								
 								<row>															
-								<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)"/>
+								<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)" value="izquierdo"/>
 								<button label="B" onClick="" width="30px"/>								
 								<label value="O.I" />
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
