@@ -1162,19 +1162,7 @@ public class ControllerEncargos implements Serializable {
 		
 		//no viene la graduaciion
 		arg.setImporte(arg.getPrecio());
-		arg.setCantidad(1);
-		
-		/*ArrayList<ProductosBean> productos = new ArrayList<ProductosBean>();
-		
-		if (ventaPedidoForm.getListaProductos() == null) {
-			productos.add(arg);
-			ventaPedidoForm.setListaProductos(productos);
-		}else {
-			productos = ventaPedidoForm.getListaProductos();
-			productos.add(arg);
-			ventaPedidoForm.setListaProductos(productos);
-		}	*/
-		
+		arg.setCantidad(1);		
 		
 		sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());
 		ventaPedidoForm.setAccion(Constantes.STRING_AGREGAR_PRODUCTOS);

@@ -196,8 +196,7 @@
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
 								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
-								
-								<checkbox label="Cerca" checked="@bind(vm.cerca)"/>
+								<checkbox label="Cerca" checked="@bind(vm.busquedaProductosForm.chk_cerca)"/>								
 								</row>
 								
 								<row>															

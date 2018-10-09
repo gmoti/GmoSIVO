@@ -68,7 +68,7 @@ public class ControllerSearchProductPres implements Serializable {
 	
 	private boolean ojoDerecho;
 	private boolean ojoIzquierdo;
-	private boolean cerca;
+	//private boolean cerca;
 	private String busquedaAvanzada;
 	private String busquedaAvanzadaLentilla;
 	
@@ -119,7 +119,7 @@ public class ControllerSearchProductPres implements Serializable {
 		
 		ojoDerecho=false;
 		ojoIzquierdo=false;
-		cerca=false;
+		//cerca=false;
 		busquedaAvanzada = "false";
 		busquedaAvanzadaLentilla= "false";		
 		
@@ -130,6 +130,7 @@ public class ControllerSearchProductPres implements Serializable {
 			sess.setAttribute(Constantes.STRING_FORMULARIO, Constantes.STRING_PEDIDO);	
 			
 		busquedaProductosForm = busquedaProductosDispatchActions.cargaBusquedaProductos(busquedaProductosForm, sess);
+		busquedaProductosForm.setChk_cerca(false);
 			
 	}
 	
@@ -153,6 +154,11 @@ public class ControllerSearchProductPres implements Serializable {
 			   producto.setOjo("derecho");
 			else
 			   producto.setOjo("izquierdo");
+			
+			if (busquedaProductosForm.isChk_cerca())
+				producto.setDescripcion("Cerca");
+			else
+				producto.setDescripcion("Lejos");
 			
 		}	
 		
@@ -466,13 +472,13 @@ public class ControllerSearchProductPres implements Serializable {
 		this.busquedaAvanzadaLentilla = busquedaAvanzadaLentilla;
 	}
 
-	public boolean isCerca() {
+	/*public boolean isCerca() {
 		return cerca;
 	}
 
 	public void setCerca(boolean cerca) {
 		this.cerca = cerca;
-	} 
+	} */
 
 	
 }
