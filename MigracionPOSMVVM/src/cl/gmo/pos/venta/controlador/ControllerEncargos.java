@@ -157,9 +157,11 @@ public class ControllerEncargos implements Serializable {
 		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));
 		
 		sucursal = sess.getAttribute(Constantes.STRING_SUCURSAL).toString();	
+		sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
 		
 		ventaPedidoDispatchActions.CargaFormulario(ventaPedidoForm, sess);	
 		ventaPedidoForm.setPromocion("0");
+		ventaPedidoForm.setConvenio("");
 		
 		
 		//Si el encargo es invocado desde presupuesto, debe pasar por aqui
@@ -226,7 +228,8 @@ public class ControllerEncargos implements Serializable {
 		
 		ventaPedidoForm.setFecha(dt.format(new Date(System.currentTimeMillis())));
 		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));
-		ventaPedidoForm.setPromocion("0");		
+		ventaPedidoForm.setPromocion("0");			
+		ventaPedidoForm.setConvenio("");
 		
 		beanControlCombos.setComboAgenteEnable("false");
 		beanControlCombos.setComboDivisaEnable("false");
@@ -633,6 +636,9 @@ public class ControllerEncargos implements Serializable {
 		if (!tp.isPresent())
 			tipoPedidoBean = new TipoPedidoBean();
 		
+		Optional<String> cvn = Optional.ofNullable(ventaPedidoForm.getConvenio());
+		if(!cvn.isPresent())
+			ventaPedidoForm.setConvenio("");
 		
 		ventaPedidoForm.setAgente(agenteBean.getUsuario());
 		ventaPedidoForm.setForma_pago(formaPagoBean.getId());
@@ -1167,7 +1173,7 @@ public class ControllerEncargos implements Serializable {
 		arg.setImporte(arg.getPrecio());
 		arg.setCantidad(1);		
 		
-		sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());
+		sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());		
 		ventaPedidoForm.setAccion(Constantes.STRING_AGREGAR_PRODUCTOS);
 		
 		try {
@@ -1178,6 +1184,9 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm.setOjo(arg.getOjo());
 			ventaPedidoForm.setDescripcion(tipo);
 			
+			Optional<String> cvn = Optional.ofNullable(ventaPedidoForm.getConvenio());
+			if(!cvn.isPresent())
+				ventaPedidoForm.setConvenio("");
 			
 			
 			ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
@@ -1199,16 +1208,19 @@ public class ControllerEncargos implements Serializable {
 		if (arg.getFamilia().equals("MUL")) {
 			
 			busquedaProductosForm    = new BusquedaProductosForm();
+			
 			busquedaProductosForm.setCliente(cliente.getCodigo());
+			busquedaProductosForm.setCodigoBusqueda(arg.getCod_barra());
 			busquedaProductosForm.setCodigoMultioferta(arg.getCodigo());
 			busquedaProductosForm.setIndex_multi(arg.getIndexMulti());			
-			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());			
+			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());	
+			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());
 			
 			objetos = new HashMap<String,Object>();
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			objetos.put("origen","consultaProducto");
-			objetos.put("beanProducto",arg);
-			objetos.put("ventaPedido",ventaPedidoForm);
+			/*objetos.put("beanProducto",arg);
+			objetos.put("ventaPedido",ventaPedidoForm);*/
 			
 			Window window = (Window)Executions.createComponents(
 	                "/zul/encargos/BusquedaMultiofertas.zul", null, objetos);
@@ -1230,13 +1242,15 @@ public class ControllerEncargos implements Serializable {
 			busquedaProductosForm.setCodigoBusqueda(arg.getCod_barra());
 			busquedaProductosForm.setCodigoMultioferta(arg.getCodigo());
 			busquedaProductosForm.setIndex_multi(arg.getIndexMulti());			
-			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());			
+			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());	
+			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());
+			
 			
 			objetos = new HashMap<String,Object>();
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			objetos.put("origen","encargo");
-			objetos.put("beanProducto",arg);
-			objetos.put("ventaPedido",ventaPedidoForm);
+			/*objetos.put("beanProducto",arg);
+			objetos.put("ventaPedido",ventaPedidoForm);*/
 			
 			Window window = (Window)Executions.createComponents(
 	                "/zul/encargos/BusquedaMultiofertas.zul", null, objetos);

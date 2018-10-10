@@ -53,11 +53,11 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	
 	@Init
 	public void inicial(@ExecutionArgParam("busquedaProductos")BusquedaProductosForm arg,
-						@ExecutionArgParam("origen")String arg1,
-						@ExecutionArgParam("beanProducto")ProductosBean arg2,
-						@ExecutionArgParam("ventaPedido")VentaPedidoForm arg3) {
+						@ExecutionArgParam("origen")String arg1){
+						/*@ExecutionArgParam("beanProducto")ProductosBean arg2,
+						@ExecutionArgParam("ventaPedido")VentaPedidoForm arg3) {*/
 		
-		String cdg="";
+		//String cdg="";
 		busquedaProductosForm = arg;
 		busquedaProductosMultiOfertasDispatchActions = new BusquedaProductosMultiOfertasDispatchActions();
 		
@@ -72,7 +72,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		cerca = false;
 		verGraduacion="false";
 		
-		cdg=arg3.getCodigo_suc() +"/"+ arg3.getCodigo();
+		/*cdg=arg3.getCodigo_suc() +"/"+ arg3.getCodigo();
 		
 		if (arg1.equals("encargo")) {
 			sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
@@ -86,9 +86,9 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		if (arg1.equals("consultaProducto")) {
 			sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
 			busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);			
-		}
+		}*/
 		
-		
+		busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);
 	}
 	
 	

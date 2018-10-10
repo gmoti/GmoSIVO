@@ -130,7 +130,7 @@
 			<center>
 				<div width="100%" height="100%">
 				
-					<div height="45%" visible="@bind(vm.verGraduacion)">	
+					<div height="35%" visible="@bind(vm.verGraduacion)">	
 						<radiogroup id="ojos"/>
 						<!-- <radiogroup id="ojosLentillas"/>	 -->
 					
@@ -184,7 +184,7 @@
 						</grid>
 					</div>
 					
-					<div height="45%" visible="true">
+					<div height="40%" visible="true">
 					
 						<div width="100%" style="background-color:black;color: white">
 							<space width="10px"/>
@@ -217,7 +217,8 @@
 									<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
 									<intbox value="@load(each.cantidad)"  style="text-align:right" format="#,###,##0" locale="it" width="90px" readonly="true"/>
 									<textbox value="@load(each.grupo)"  width="58px"/>
-									<toolbarbutton image="/iconos/add.png" onClick="@command('AgregarSuplementos',producto=each,index=forEachStatus.index)" />
+									<toolbarbutton image="/iconos/add.png" visible="@load(each.tiene_suple)"
+											onClick="@command('AgregarSuplementos',producto=each,index=forEachStatus.index)" />
 								</row>
 							</template>
 						</grid>
