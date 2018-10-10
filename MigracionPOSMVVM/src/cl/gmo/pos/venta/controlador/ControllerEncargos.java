@@ -1171,7 +1171,7 @@ public class ControllerEncargos implements Serializable {
 		
 		//no viene la graduaciion
 		arg.setImporte(arg.getPrecio());
-		arg.setCantidad(1);		
+		arg.setCantidad(1);		//arg cantidad seleccionada
 		
 		sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());		
 		ventaPedidoForm.setAccion(Constantes.STRING_AGREGAR_PRODUCTOS);
@@ -1205,22 +1205,25 @@ public class ControllerEncargos implements Serializable {
 		//objetos.put("reporte",media);
 		//objetos.put("titulo","Ficha Cliente");
 		
-		if (arg.getFamilia().equals("MUL")) {
+		
+		
+		if (ventaPedidoForm.getEstado().equals(Constantes.STRING_CARGA_MULTIOFERTAS)) {				
 			
 			busquedaProductosForm    = new BusquedaProductosForm();
 			
 			busquedaProductosForm.setCliente(cliente.getCodigo());
 			busquedaProductosForm.setCodigoBusqueda(arg.getCod_barra());
 			busquedaProductosForm.setCodigoMultioferta(arg.getCodigo());
-			busquedaProductosForm.setIndex_multi(arg.getIndexMulti());			
-			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());	
+			busquedaProductosForm.setIndex_multi(ventaPedidoForm.getIndex_multi());			
+			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());
+			//busquedaProductosForm.setProducto(arg.getCod_barra());
 			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());
 			
 			objetos = new HashMap<String,Object>();
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			objetos.put("origen","consultaProducto");
-			/*objetos.put("beanProducto",arg);
-			objetos.put("ventaPedido",ventaPedidoForm);*/
+			objetos.put("beanProducto",arg);
+			/*objetos.put("ventaPedido",ventaPedidoForm);*/
 			
 			Window window = (Window)Executions.createComponents(
 	                "/zul/encargos/BusquedaMultiofertas.zul", null, objetos);
@@ -1243,14 +1246,13 @@ public class ControllerEncargos implements Serializable {
 			busquedaProductosForm.setCodigoMultioferta(arg.getCodigo());
 			busquedaProductosForm.setIndex_multi(arg.getIndexMulti());			
 			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());	
-			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());
-			
+			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());						
 			
 			objetos = new HashMap<String,Object>();
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			objetos.put("origen","encargo");
-			/*objetos.put("beanProducto",arg);
-			objetos.put("ventaPedido",ventaPedidoForm);*/
+			objetos.put("beanProducto",arg);
+			/*objetos.put("ventaPedido",ventaPedidoForm);*/
 			
 			Window window = (Window)Executions.createComponents(
 	                "/zul/encargos/BusquedaMultiofertas.zul", null, objetos);
@@ -1426,6 +1428,7 @@ public class ControllerEncargos implements Serializable {
 			promocionBean=null;
 		
 	}
+	
 	
 	@Command
 	public void salir(@BindingParam("win")Window win) {
@@ -1660,25 +1663,24 @@ public class ControllerEncargos implements Serializable {
 	@GlobalCommand
 	public void actulizaListaSuplementos(@BindingParam("suplementos")ArrayList<SuplementopedidoBean> suplementos,
 										 @BindingParam("producto")ProductosBean producto,
-										 @BindingParam("index")int index) {		
-		//int i=0;
+										 @BindingParam("index")int index) {				
 		
-		ventaPedidoForm.getListaProductos().get(index).setListaSuplementos(suplementos);
-		
-		/*ArrayList<ProductosBean> pds = ventaPedidoForm.getListaProductos();
-		
-		for (ProductosBean p : pds) {			
-			if (p.getCod_barra().equals(producto.getCod_barra()) && i==index) {
-				p.setListaSuplementos(suplementos);
-				break;
-			}
-			
-			i++;
-		}
-		
-		ventaPedidoForm.setListaProductos(pds);*/
-		
+		ventaPedidoForm.getListaProductos().get(index).setListaSuplementos(suplementos);		
 	} 	
+	
+	
+	//=========Mantengo la persistencia de lista de Multiofertas =======
+	//==================================================================
+	@NotifyChange({"ventaPedidoForm"})
+	@GlobalCommand
+	public void actualizaListaProductosMulti(@BindingParam("productosMulti")ArrayList<ProductosBean> productosMulti,
+			 								 @BindingParam("producto")ProductosBean producto,
+			 								 @BindingParam("index")int index) {
+		
+		ventaPedidoForm.getListaProductos().get(index).setListaProductosMultiofertas(productosMulti);
+		
+		
+	}	
 	
 	//====================  Validaciones varias ========================
 	//==================================================================

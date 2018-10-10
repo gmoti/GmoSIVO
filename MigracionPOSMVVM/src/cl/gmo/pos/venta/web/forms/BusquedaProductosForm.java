@@ -72,6 +72,12 @@ public class BusquedaProductosForm extends GenericForm{
 	private String tienePagos;
 	private String codigo_barras;
 	
+	public BusquedaProductosForm() {
+		this.descripcion="";
+		this.codigo_barras="";
+		this.codigoBarraBusqueda="";
+		this.codigoBusqueda="";
+	}
 	
 	/*public BusquedaProductosForm() {
 		

@@ -28,7 +28,7 @@
 					<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="BUSQUEDA PRODUCTOS MULTIOFERTAS" />
 						<div style="float: right">					
-							<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaMultiofertas.detach()"/>		
+							<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('salir',win=winBusquedaMultiofertas)"/>		
 						</div>																			
 					</div>
 					
@@ -201,7 +201,8 @@
 							<label value="Ver tratami" />												
 						</div>
 						
-						<grid model="@bind(vm.busquedaProductosForm.listaProductosMultioferta)" sclass="MyGridRowHeight" height="120px" emptyMessage="Sin registros">
+						<grid model="@bind(vm.busquedaProductosForm.listaProductosMultioferta)" 
+									sclass="MyGridRowHeight" height="120px" emptyMessage="Sin registros">
 							<columns>
 								<column width="150px" />
 								<column width="300px" />
@@ -216,7 +217,7 @@
 									<textbox value="@load(each.descripcion)" readonly="true" width="290px"/>
 									<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
 									<intbox value="@load(each.cantidad)"  style="text-align:right" format="#,###,##0" locale="it" width="90px" readonly="true"/>
-									<textbox value="@load(each.grupo)"  width="58px"/>
+									<textbox value="@bind(each.grupo)"  width="58px" onBlur="@command('prueba',grupo=each.grupo,index=forEachStatus.index)"/>
 									<toolbarbutton image="/iconos/add.png" visible="@load(each.tiene_suple)"
 											onClick="@command('AgregarSuplementos',producto=each,index=forEachStatus.index)" />
 								</row>

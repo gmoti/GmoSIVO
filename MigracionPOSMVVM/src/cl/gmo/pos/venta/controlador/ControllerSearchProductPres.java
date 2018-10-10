@@ -162,13 +162,11 @@ public class ControllerSearchProductPres implements Serializable {
 			else
 				tipo="Lejos";
 			
-		}	
-		
+		}
 		
 		
 		objetos.put("producto",producto);
-		objetos.put("tipo",tipo);
-		
+		objetos.put("tipo",tipo);	
 		
 		try {
 			busquedaProductosForm.setTipofamilia(familiaBean.getTipo_fam());			
@@ -176,13 +174,12 @@ public class ControllerSearchProductPres implements Serializable {
 			
 			
 			producto.setTipoFamilia(familiaBean.getTipo_fam());
-			producto.setGrupo("0");
-			
-			//busquedaProductosForm.setFamilia(familiaBean.getCodigo());
-			//busquedaProductosForm.setSubFamilia(subFamiliaBean.getCodigo());
-			//busquedaProductosForm.setGrupo(grupoFamiliaBean.getCodigo());
+			producto.setGrupo("0");		
 			
 			boolean tieneSuple = busquedaProductosDispatchActions.tiene_suple(busquedaProductosForm, sess);
+			
+			//abriri ventana de suplementos
+			
 			
 			winVisibleBusqueda="FALSE";	
 			

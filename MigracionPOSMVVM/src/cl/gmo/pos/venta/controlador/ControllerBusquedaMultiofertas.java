@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
@@ -26,7 +27,7 @@ import cl.gmo.pos.venta.web.beans.SubFamiliaBean;
 import cl.gmo.pos.venta.web.beans.SuplementopedidoBean;
 import cl.gmo.pos.venta.web.beans.TipoFamiliaBean;
 import cl.gmo.pos.venta.web.forms.BusquedaProductosForm;
-import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
+
 
 public class ControllerBusquedaMultiofertas implements Serializable{
 
@@ -43,6 +44,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	private GrupoFamiliaBean grupoFamiliaBean;
 	private ProductosBean productosBean;
 	
+	
 	private boolean ojoDerecho;
 	private boolean ojoIzquierdo;
 	private boolean cerca;
@@ -53,12 +55,10 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	
 	@Init
 	public void inicial(@ExecutionArgParam("busquedaProductos")BusquedaProductosForm arg,
-						@ExecutionArgParam("origen")String arg1){
-						/*@ExecutionArgParam("beanProducto")ProductosBean arg2,
-						@ExecutionArgParam("ventaPedido")VentaPedidoForm arg3) {*/
+						@ExecutionArgParam("origen")String arg1,
+						@ExecutionArgParam("beanProducto")ProductosBean arg2){
+						//@ExecutionArgParam("ventaPedido")VentaPedidoForm arg3) {	
 		
-		//String cdg="";
-		busquedaProductosForm = arg;
 		busquedaProductosMultiOfertasDispatchActions = new BusquedaProductosMultiOfertasDispatchActions();
 		
 		tipoFamiliaBean = new TipoFamiliaBean();
@@ -67,26 +67,13 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		grupoFamiliaBean= new GrupoFamiliaBean();
 		productosBean   = new ProductosBean();	
 		
+		busquedaProductosForm = arg;
+		productosBean = arg2;
+		
 		ojoDerecho = false;
 		ojoIzquierdo= false;
 		cerca = false;
-		verGraduacion="false";
-		
-		/*cdg=arg3.getCodigo_suc() +"/"+ arg3.getCodigo();
-		
-		if (arg1.equals("encargo")) {
-			sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
-			
-			busquedaProductosForm.setCodigoMultioferta(arg2.getCodigo());
-			busquedaProductosForm.setIndex_multi(arg2.getIndexMulti());
-			busquedaProductosForm.setCdg(cdg);
-			busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);
-		}
-		
-		if (arg1.equals("consultaProducto")) {
-			sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
-			busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);			
-		}*/
+		verGraduacion="false";	
 		
 		busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);
 	}
@@ -137,8 +124,15 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 				return;
 			} 
 			
-		}		
+		}	
 		
+		
+			
+		busquedaProductosForm.setOjo((ojoDerecho?"derecho":"izquierdo"));
+		//busquedaProductosForm.setCodigoBusqueda("");
+		//busquedaProductosForm.setCodigoBarraBusqueda("");
+		//busquedaProductosForm.setDescripcion("");
+			
 		
 		busquedaProductosForm.setAccion("buscar");
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);		
@@ -163,11 +157,11 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			prod = new ArrayList<ProductosBean>();
 			producto.setCantidad(1);
 			prod.add(producto);
-		}	
+		}		
 		
-		busquedaProductosForm.setListaProductosMultioferta(prod);
+		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);	
+		busquedaProductosForm.setProducto(producto.getCod_barra());
 		
-		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);		
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 	}	
 	
@@ -263,18 +257,64 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		
 	}	
 	
+	
+	//salir de la ventana y mantener la persistencia
+	@Command
+	public void salir(@BindingParam("win")Window win) {
+		
+		objetos = new HashMap<String,Object>();		
+		objetos.put("productosMulti",busquedaProductosForm.getListaProductosMultioferta());
+		objetos.put("producto",productosBean);
+		objetos.put("index",0);		
+		
+		BindUtils.postGlobalCommand(null, null, "actualizaListaProductosMulti", objetos);
+		
+		win.detach();
+	}	
+	
+	
 	//=========== Mantengo la persistencia de lista de splementos=======
 	//==================================================================
 	@NotifyChange({"busquedaProductosForm"})
 	@GlobalCommand
 	public void actulizaListaSuplementosMulti(@BindingParam("suplementos")ArrayList<SuplementopedidoBean> suplementos,
-										 	@BindingParam("producto")ProductosBean producto,
-										 	@BindingParam("index")int index) {		
+										 	  @BindingParam("producto")ProductosBean producto,
+										 	  @BindingParam("index")int index) {		
 		
 		busquedaProductosForm.getListaProductosMultioferta().get(index).setListaSuplementos(suplementos);			
 	} 
 	
-
+	
+	
+	//============ Validaciones varias ==================
+	//===================================================
+	@NotifyChange({"busquedaProductosForm"})
+	@Command
+	public void prueba(@BindingParam("grupo")String grupo , @BindingParam("index")int index) {
+		
+		busquedaProductosForm.getListaProductos().get(index).setGrupo("0");
+	}
+	
+	
+	private void actualiza_grupo() {}
+	
+	
+	/*
+	function verificaNumero(campo){
+     	if (campo.value == "") {
+			campo.value = "0";
+		}
+     }
+	
+	function actualiza_grupo(indexmulti, index)
+	{					
+		document.getElementById('accion').value = "grupo";
+		document.getElementById('productoSeleccionadoSuplemento').value = indexmulti;
+		document.getElementById("indexProductos").value = index;
+		document.busquedaProductosForm.submit();	        	
+    }
+	
+*/
 	//======= metodos getter and setter =================
 
 	public BusquedaProductosForm getBusquedaProductosForm() {
@@ -315,14 +355,6 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 
 	public void setGrupoFamiliaBean(GrupoFamiliaBean grupoFamiliaBean) {
 		this.grupoFamiliaBean = grupoFamiliaBean;
-	}
-
-	public ProductosBean getProductosBean() {
-		return productosBean;
-	}
-
-	public void setProductosBean(ProductosBean productosBean) {
-		this.productosBean = productosBean;
 	}
 
 	public boolean isOjoDerecho() {
