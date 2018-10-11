@@ -6,22 +6,39 @@
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')" 
 		validationMessages="@id('vmsgs')"
         form="@id('fx') @load(vm.cliente) @save(vm.cliente, before='ingresarCliente')  @validator('cl.gmo.pos.validador.ValidacionCliente')">
-	<style>
+<style>
+	.container-fluid{
+		background: #001624;
+	}
+	.row{
+		background-color: #c1c1c1;
+	}
+	.titulo{
+		background: black;
 		
-	</style>
-	<div sclass="row titulodv">
-	   <div sclass="col-sm-10">
-			<div sclass="form-group">
-				<label sclass="titulo">Clientes</label>
-			</div>
+	}
+	.titulo .msj-titu{
+		color:white;
+		font-size:120%;
+	}
+	.z-separator-horizontal, .z-separator-horizontal-bar{
+		height:2px;
+	}
+	/*.z-window-content{
+		background-color: #062c3f;
+	}*/
+</style>
+	<div sclass="row titulo">
+	   <div sclass="col-10">
+				<label sclass="msj-titu">Clientes</label>
 	   </div>	
-	    <div sclass="col-sm-">
-			<div sclass="form-group">
+	    <div sclass="col-">
+			
 				<button  sclass="btn-success" tooltiptext="Nuevo Usuario" iconSclass="fa fa-user-plus" onClick="@command('nuevoUsuario',arg1=vm)"/>
 				<button  sclass="btn-success" iconSclass="fa fa-file"  />
 				<button  sclass="btn-success" tooltiptext="Ingresar Cliente" iconSclass="fa fa-check" onClick="@command('ingresarCliente',arg=vm)" />
 				<button  sclass="btn-success" tooltiptext="Cerrar" iconSclass="fa fa-times" onClick="@command('cerrar',arg1=win)" />
-			</div>
+			
 	   </div>
 	</div>	
 	
@@ -261,10 +278,10 @@
 		</div>	
 	</div>
 	<separator/>
-	<div sclass="row titulodv">
-		<div sclass="form-group">
-			<label sclass="titulo">Facturación</label>
-		</div>	
+	<div sclass="row titulo">
+		
+			<label sclass="msj-titu">Facturación</label>
+	
 	</div>	
 	<separator/>
 	<div sclass="row">
@@ -301,10 +318,10 @@
 		</div>
 	</div>
 	<separator/>
-	<div sclass="row titulodv">
-		<div sclass="form-group">
-			<label sclass="titulo" >Marketing</label>
-		</div>	
+	<div sclass="row titulo">
+		
+			<label sclass="msj-titu">Marketing</label>
+			
 	</div>	
 	<separator/>
 	<div sclass="row">
