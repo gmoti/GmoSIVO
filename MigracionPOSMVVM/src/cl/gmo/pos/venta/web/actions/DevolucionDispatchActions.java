@@ -2,18 +2,11 @@ package cl.gmo.pos.venta.web.actions;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Session;
 
+import cl.gmo.pos.venta.controlador.ventaDirecta.DevolucionHelper;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.AlbaranBean;
 import cl.gmo.pos.venta.web.beans.BoletaBean;
@@ -21,13 +14,10 @@ import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.DevolucionBean;
 import cl.gmo.pos.venta.web.beans.PagoBean;
 import cl.gmo.pos.venta.web.beans.ProductosBean;
-import cl.gmo.pos.venta.web.beans.TipoFamiliaBean;
 import cl.gmo.pos.venta.web.forms.DevolucionForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaDirectaForm;
 import cl.gmo.pos.venta.web.helper.BusquedaProductosHelper;
-import cl.gmo.pos.venta.web.helper.ClienteHelper;
-import cl.gmo.pos.venta.web.helper.DevolucionHelper;
 import cl.gmo.pos.venta.web.helper.SeleccionPagoHelper;
 import cl.gmo.pos.venta.web.helper.VentaDirectaHelper;
 
