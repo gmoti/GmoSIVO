@@ -2,9 +2,11 @@ package cl.gmo.pos.venta.web.helper;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.servlet.http.HttpSession;
-import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.zkoss.zk.ui.Session;
 
 
 import cl.gmo.pos.venta.utils.Constantes;
@@ -31,7 +33,7 @@ import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaDirectaForm;
 
 
-
+import cl.gmo.pos.venta.utils.Utils;
 
 public class DevolucionHelper extends Utils {
 	Logger log = Logger.getLogger( this.getClass() );
@@ -39,14 +41,16 @@ public class DevolucionHelper extends Utils {
 		try {
 			 
 			log.info("DevolucionHelper:traeDevolucion inicio");
+			
+		 		System.out.println("Existe boleta (dev) =====>"+numero +"<===>"+ tipo);
 			 	DevolucionBean dev = PosDevolucionFacade.traeDevoluciones(numero, tipo);		 	
-				
 			 	System.out.println("Existe boleta (dev) =====>"+dev.getExisteBoleta());
 			 	
 			 	dev.getExisteBoleta();
 			 	if("false".equals(dev.getExisteBoleta())){
 					formulario.setCodigo_cliente(dev.getCodigo_cliente());				
-					ClienteBean cliente = traeCliente(null, formulario.getCodigo_cliente());				
+					ClienteBean cliente = traeCliente(null, formulario.getCodigo_cliente());
+					System.out.println("CLIENTE ==>"+cliente.getNif()+"<=====>"+cliente.getDvnif());
 					formulario.setNif(cliente.getNif());
 					formulario.setDvnif(cliente.getDvnif());				
 					formulario.setNombreCliente(dev.getNombreCliente() +" "+ dev.getApellido_cliente());
@@ -72,6 +76,10 @@ public class DevolucionHelper extends Utils {
 					formulario.setFecha_albaran_devolucion(dev.getFecha());
 					formulario.setLista_productos(dev.getLista_productos());
 					
+					//CAMPOS DEVOLUCION
+					formulario.setDireccion_cli(cliente.getDireccion());
+					formulario.setNdireccion_cli(cliente.getNumero());
+					formulario.setProvincia_cliente(cliente.getProvincia_desc());
 					
 					formulario.setTieneArmCrisContacto(String.valueOf(this.tieneArmCrisContacto(formulario.getLista_productos())));
 			 	}else{
@@ -335,12 +343,12 @@ public class DevolucionHelper extends Utils {
 	    	return res;
 		}
 	 
-	 public boolean ingresaPagoAlbaran(ArrayList<PagoBean> listaPago, HttpSession session, DevolucionForm formulario, String local)
+	 public boolean ingresaPagoAlbaran(ArrayList<PagoBean> listaPago, Session sesion, DevolucionForm formulario, String local)
 	 {
 			log.info("VentaDirectaHelper:ingresaPago inicio");
 	    	boolean estado = false;
 	    	String devolucion = formulario.getTipoAlbaran();
-	    	String tipo_doc = session.getAttribute(Constantes.STRING_TIPO_DOCUMENTO).toString();
+	    	String tipo_doc = sesion.getAttribute(Constantes.STRING_TIPO_DOCUMENTO).toString();
 	    	
 	    	if("D".equalsIgnoreCase(devolucion)){
 	    		devolucion = "S";
@@ -371,7 +379,7 @@ public class DevolucionHelper extends Utils {
 														pago.getCantidad(),
 														devolucion,
 														Constantes.STRING_N,
-														session.getAttribute(Constantes.STRING_USUARIO).toString(),
+														sesion.getAttribute(Constantes.STRING_USUARIO).toString(),
 														null,
 														pago.getDescuento(),
 														tipo_doc);
@@ -454,7 +462,7 @@ public class DevolucionHelper extends Utils {
 	
 	//LMARIN NOTA DE CREDITO 20150604
 	
-	public String genera_nota_credito(String tipodoc,ArrayList<PagoBean> listaPagos,DevolucionForm devform,String foliocl,HttpSession session,DevolucionForm formulario2){
+	public String genera_nota_credito(String tipodoc,ArrayList<PagoBean> listaPagos,DevolucionForm devform,String foliocl,Session sesion,DevolucionForm formulario2){
 				
 		Utils util = new Utils();
 		String res = null;
@@ -462,7 +470,7 @@ public class DevolucionHelper extends Utils {
 		System.out.println("FOLIO DEVOLUCION HELPER ===> "+folio);
 		
 		try {					
-			res = util.genera_notacredito(tipodoc,folio,listaPagos,devform,session,formulario2);
+			res = util.genera_notacredito(tipodoc,folio,listaPagos,devform,sesion,formulario2);
 			System.out.println("Boleta devo ====>===>==>=> "+res);
 		} catch (Exception e) {
 			e.printStackTrace();
