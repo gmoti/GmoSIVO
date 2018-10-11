@@ -33,6 +33,7 @@ import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
 import cl.gmo.pos.venta.web.beans.PagoBean;
 import cl.gmo.pos.venta.web.beans.PedidosPendientesBean;
+import cl.gmo.pos.venta.web.forms.DevolucionForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaDirectaForm;
 import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
@@ -50,6 +51,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	private SeleccionPagoForm seleccionPagoForm;
 	private VentaPedidoForm  ventaPedidoForm;
 	private VentaDirectaForm ventaDirectaForm;
+	private DevolucionForm devolucionForm;
 	
 	private ClienteBean cliente;	
 	private SeleccionPagoDispatchActions seleccionPagoDispatchActions;
@@ -107,7 +109,13 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			controlBotones.setEnableGenerico2("true");
 			this.dto = ventaDirectaForm.getDescuentoTotal();
 		}
-		
+		if (arg3 instanceof DevolucionForm) { 
+			devolucionForm = (DevolucionForm)arg3;
+			fecha = seleccionPagoForm.getFecha();
+			controlBotones.setEnableGenerico1("false");
+			controlBotones.setEnableGenerico2("true");
+			this.dto = 0.0;
+		}
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
 		
@@ -130,11 +138,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		}
 		
         if(seleccionPagoForm.getOrigen().equals("ALBARAN_DEVOLUCION")) {
-			
-        	//guarda_PagoAlbaran()
-        	
-        	//si es impresion 
-        	//generaBoleta()
+        	guardarPago();
 		}
 		
 	}	
@@ -253,7 +257,10 @@ public class ControllerPagoVentaDirecta implements Serializable{
 					BindUtils.postGlobalCommand(null, null, "creaPagoExitoso", objetos);
 				
 				if(origen.equals("PEDIDO"))
-					BindUtils.postGlobalCommand(null, null, "creaPagoExitosoEncargo", objetos);				
+					BindUtils.postGlobalCommand(null, null, "creaPagoExitosoEncargo", objetos);		
+				
+				if(origen.equals("ALBARAN_DEVOLUCION"))
+					BindUtils.postGlobalCommand(null, null, "creaPagoExitosoDevolucion", objetos);
 				
 			} catch (Exception e) {
 				
