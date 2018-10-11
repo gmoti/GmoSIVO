@@ -295,7 +295,7 @@
 										onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
 									
 									<toolbarbutton image="/iconos/add.png" width="40px" 
-										onClick="@command('multiofertaProducto',producto=each)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
+										onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
 										
 									<space width="40px" />
 										

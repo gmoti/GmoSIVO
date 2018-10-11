@@ -232,8 +232,7 @@ public class BusquedaProductosMultiOfertasDispatchActions{
         }
         if(Constantes.STRING_PASAR_MULTIOFERTA.equals(accion)){
         	
-    		System.out.println("Paso 2 8 BML");
-
+    		System.out.println("Paso 2 8 BML");    		
         	
         	if("PEDIDO".equals(form_origen)){
         		

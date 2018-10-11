@@ -204,6 +204,7 @@ public class ControllerEncargos implements Serializable {
 		dto_total_monto = ventaPedidoForm.getDescuento();
 		dto_total = ventaPedidoForm.getDtcoPorcentaje();
 		
+		
 	}
 	
 	
@@ -1203,18 +1204,26 @@ public class ControllerEncargos implements Serializable {
 		
 		//objetos = new HashMap<String,Object>();
 		//objetos.put("reporte",media);
-		//objetos.put("titulo","Ficha Cliente");
+		//objetos.put("titulo","Ficha Cliente");		
 		
-		
-		
-		if (ventaPedidoForm.getEstado().equals(Constantes.STRING_CARGA_MULTIOFERTAS)) {				
+		if (ventaPedidoForm.getEstado().equals(Constantes.STRING_CARGA_MULTIOFERTAS)) {	
+			
+			//la primera vez inicializo la variable session
+			//sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS, new ArrayList<ProductosBean>());			
+			
+			int index=-1;
+			
+			for(int i=0; i < ventaPedidoForm.getListaProductos().size(); i++) {
+				index=i;
+			}		
 			
 			busquedaProductosForm    = new BusquedaProductosForm();
 			
 			busquedaProductosForm.setCliente(cliente.getCodigo());
 			busquedaProductosForm.setCodigoBusqueda(arg.getCod_barra());
 			busquedaProductosForm.setCodigoMultioferta(arg.getCodigo());
-			busquedaProductosForm.setIndex_multi(ventaPedidoForm.getIndex_multi());			
+			busquedaProductosForm.setIndex_multi(ventaPedidoForm.getIndex_multi());	
+			//busquedaProductosForm.setIndex_multi(1);
 			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());
 			//busquedaProductosForm.setProducto(arg.getCod_barra());
 			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());
@@ -1223,6 +1232,7 @@ public class ControllerEncargos implements Serializable {
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			objetos.put("origen","consultaProducto");
 			objetos.put("beanProducto",arg);
+			objetos.put("index",index);
 			/*objetos.put("ventaPedido",ventaPedidoForm);*/
 			
 			Window window = (Window)Executions.createComponents(
@@ -1236,22 +1246,27 @@ public class ControllerEncargos implements Serializable {
 	
 	@NotifyChange({"ventaPedidoForm"})
     @Command
-	public void multiofertaProducto(@BindingParam("producto")ProductosBean arg) {
+	public void multiofertaProducto(@BindingParam("producto")ProductosBean arg, @BindingParam("index")int index) {	
 		
 		
-		if (arg.getFamilia().equals("MUL")) {
+		if (arg.getFamilia().equals("MUL")) {		
+			
+			//inicializo los productos asociado a la multioferta
+			//sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS, arg.getListaProductosMultiofertas());
+			
 			busquedaProductosForm    = new BusquedaProductosForm();
 			busquedaProductosForm.setCliente(cliente.getCodigo());
 			busquedaProductosForm.setCodigoBusqueda(arg.getCod_barra());
 			busquedaProductosForm.setCodigoMultioferta(arg.getCodigo());
 			busquedaProductosForm.setIndex_multi(arg.getIndexMulti());			
 			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());	
-			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());						
+			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());		
 			
 			objetos = new HashMap<String,Object>();
 			objetos.put("busquedaProductos",busquedaProductosForm);
 			objetos.put("origen","encargo");
 			objetos.put("beanProducto",arg);
+			objetos.put("index",index);
 			/*objetos.put("ventaPedido",ventaPedidoForm);*/
 			
 			Window window = (Window)Executions.createComponents(
@@ -1679,7 +1694,7 @@ public class ControllerEncargos implements Serializable {
 		
 		ventaPedidoForm.getListaProductos().get(index).setListaProductosMultiofertas(productosMulti);
 		
-		
+		System.out.println("stop");
 	}	
 	
 	//====================  Validaciones varias ========================
