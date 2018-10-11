@@ -259,7 +259,7 @@
 									<intbox value="@load(each.importe)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
 									<textbox value="@load(each.grupo)" readonly="true" width="58px"/>
 									<textbox value="@load(each.estado)" readonly="true" width="38px"/>
-									<toolbarbutton image="/iconos/add.png" onClick="@command('pasarProductoMultioferta',producto=each)" />
+									<toolbarbutton image="/iconos/add.png" onClick="@command('pasarProductoMultioferta',producto=each,index=forEachStatus.index)" />
 								</row>
 							</template>
 						</grid>					

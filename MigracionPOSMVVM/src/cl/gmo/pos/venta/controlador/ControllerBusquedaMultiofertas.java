@@ -141,7 +141,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	
 	@NotifyChange({"busquedaProductosForm"})
 	@Command
-	public void pasarProductoMultioferta(@BindingParam("producto")ProductosBean producto) {
+	public void pasarProductoMultioferta(@BindingParam("producto")ProductosBean producto, @BindingParam("index")int index) {
 		
 		ArrayList<ProductosBean> prod;
 		
@@ -159,9 +159,12 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			prod.add(producto);
 		}		
 		
-		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);	
-		busquedaProductosForm.setProducto(producto.getCod_barra());
+		//antes de pasar el producto debo validar el grupo
+		//
+		actualiza_grupo(producto.getIndexMulti(), index);		
 		
+		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);	
+		busquedaProductosForm.setProducto(producto.getCod_barra());		
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 	}	
 	
@@ -296,25 +299,31 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	}
 	
 	
-	private void actualiza_grupo() {}
-	
-	
-	/*
-	function verificaNumero(campo){
-     	if (campo.value == "") {
-			campo.value = "0";
+	@NotifyChange({"busquedaProductosForm"})
+	private void actualiza_grupo(int indexmulti, int index) {
+		
+		ProductosBean pb = busquedaProductosForm.getListaProductos().get(index);
+		String [] grupos;
+		int i = 0;
+		
+		for(ProductosBean pbg : busquedaProductosForm.getListaProductos()) {
+			//grupos[i] = 
 		}
-     }
+		
+		
+		
+		
+		//busquedaProductosForm.setGrupos(     );
+		
+		if (pb.getGrupo().equals("")) 
+			busquedaProductosForm.getListaProductos().get(index).setGrupo("0");
+		
+		busquedaProductosForm.setAccion("grupo");
+		busquedaProductosForm.setAddProducto(String.valueOf(indexmulti));
+		busquedaProductosForm.setIndexProductos(index);
+		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
+	}
 	
-	function actualiza_grupo(indexmulti, index)
-	{					
-		document.getElementById('accion').value = "grupo";
-		document.getElementById('productoSeleccionadoSuplemento').value = indexmulti;
-		document.getElementById("indexProductos").value = index;
-		document.busquedaProductosForm.submit();	        	
-    }
-	
-*/
 	//======= metodos getter and setter =================
 
 	public BusquedaProductosForm getBusquedaProductosForm() {
