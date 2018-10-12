@@ -77,10 +77,9 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		ojoDerecho = false;
 		ojoIzquierdo= false;
 		cerca = false;
-		verGraduacion="false";	
+		verGraduacion="false";			
 		
-		busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);
-		
+		busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);		
 	}
 	
 	
@@ -131,12 +130,15 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			
 		}		
 			
-		busquedaProductosForm.setOjo((ojoDerecho?"derecho":"izquierdo"));
+		busquedaProductosForm.setOjo((ojoDerecho?"derecho":"izquierdo"));		
 		
 		
 		busquedaProductosForm.setAccion("buscar");
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 		
+		ArrayList<ProductosBean> listaProductosMultiofertaAux2 = new ArrayList<ProductosBean>();
+    	listaProductosMultiofertaAux2.addAll((ArrayList<ProductosBean>)sess.getAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS_AUX));
+    	System.out.println("stop");
 	}
 	
 	
@@ -144,9 +146,13 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	@Command
 	public void pasarProductoMultioferta(@BindingParam("producto")ProductosBean producto, @BindingParam("index")int index) {
 		
-		ArrayList<ProductosBean> prod;
+		ArrayList<ProductosBean> listaProductosMultiofertaAux2 = new ArrayList<ProductosBean>();
+    	listaProductosMultiofertaAux2.addAll((ArrayList<ProductosBean>)sess.getAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS_AUX));
+    	System.out.println("stop");
 		
-		prod = busquedaProductosForm.getListaProductosMultioferta();
+		/*ArrayList<ProductosBean> prod;
+		
+		prod = busquedaProductosForm.getListaProductosMultioferta();	
 		
 		Optional<ArrayList<ProductosBean>> p = Optional.ofNullable(prod);
 		
@@ -158,17 +164,25 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			prod = new ArrayList<ProductosBean>();
 			producto.setCantidad(1);
 			prod.add(producto);
-		}		
+		}*/
 		
-		//busquedaProductosForm.setListaProductosMultioferta(prod);
-		sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS, prod);
+
+
+		//ArrayList<ProductosBean> listaProductosMultiofertaAux2 = new ArrayList<ProductosBean>();
+    	listaProductosMultiofertaAux2.addAll((ArrayList<ProductosBean>)sess.getAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS_AUX));
+    	System.out.println("stop");
+		
+		
+		busquedaProductosForm.setCodigoBusqueda(producto.getCod_barra());		
+		busquedaProductosForm.setProducto(producto.getCodigo());
+		busquedaProductosForm.setCantidad(1);	
 		
 		//antes de pasar el producto debo validar el grupo
 		//
-		actualiza_grupo(producto.getIndexMulti(), index);		
+		//actualiza_grupo(producto.getIndexMulti(), index);	
+		busquedaProductosForm.getListaProductos().get(index).setGrupo("1");		
 		
-		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);	
-		busquedaProductosForm.setProducto(producto.getCod_barra());		
+		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);		
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 	}	
 	
@@ -207,7 +221,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			busquedaProductosForm.setAccion(Constantes.STRING_FAMILIA);
 			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());
 			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
-			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);			
+			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 		}
 		
 		if (arg.equals(Constantes.STRING_SUBFAMILIA)) {
@@ -299,7 +313,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	@Command
 	public void prueba(@BindingParam("grupo")String grupo , @BindingParam("index")int index) {
 		
-		busquedaProductosForm.getListaProductos().get(index).setGrupo("0");
+		//busquedaProductosForm.getListaProductos().get(index).setGrupo("0");
 	}
 	
 	
@@ -317,7 +331,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			i++;
 		}		
 		
-		busquedaProductosForm.setGrupos(grupos);		 
+		//busquedaProductosForm.setGrupos(grupos);		 
 		
 		/*if (pb.getGrupo().equals("")) 
 			busquedaProductosForm.getListaProductos().get(index).setGrupo("0");*/

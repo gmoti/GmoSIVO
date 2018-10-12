@@ -1196,20 +1196,9 @@ public class ControllerEncargos implements Serializable {
 			e.printStackTrace();
 		}	
 			
-		actTotal(ventaPedidoForm.getListaProductos());
-		//System.out.println("estoy en otro controlador de venta pedido");		
+		actTotal(ventaPedidoForm.getListaProductos());				
 		
-		
-		//Si es multioferta se abre la ventana nultioferta
-		
-		//objetos = new HashMap<String,Object>();
-		//objetos.put("reporte",media);
-		//objetos.put("titulo","Ficha Cliente");		
-		
-		if (ventaPedidoForm.getEstado().equals(Constantes.STRING_CARGA_MULTIOFERTAS)) {	
-			
-			//la primera vez inicializo la variable session
-			//sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS, new ArrayList<ProductosBean>());			
+		if (ventaPedidoForm.getEstado().equals(Constantes.STRING_CARGA_MULTIOFERTAS)) {			
 			
 			int index=-1;
 			
@@ -1221,11 +1210,9 @@ public class ControllerEncargos implements Serializable {
 			
 			busquedaProductosForm.setCliente(cliente.getCodigo());
 			busquedaProductosForm.setCodigoBusqueda(arg.getCod_barra());
-			busquedaProductosForm.setCodigoMultioferta(arg.getCodigo());
-			busquedaProductosForm.setIndex_multi(ventaPedidoForm.getIndex_multi());	
-			//busquedaProductosForm.setIndex_multi(1);
-			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());
-			//busquedaProductosForm.setProducto(arg.getCod_barra());
+			busquedaProductosForm.setCodigoMultioferta(ventaPedidoForm.getCodigo_mult());
+			busquedaProductosForm.setIndex_multi(ventaPedidoForm.getIndex_multi());			
+			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());			
 			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());
 			
 			objetos = new HashMap<String,Object>();

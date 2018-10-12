@@ -131,7 +131,7 @@ public class BusquedaProductosMultiOfertasDispatchActions{
     {
 		System.out.println("Paso 2 BML");
 
-		log.info("BusquedaProductosMultiOfertasDispatchActions:buscarMultioferta inicio");
+		log.info("BusquedaProductosMultiOfertasDispatchActions:buscarMultioferta inicio");		
 		
         BusquedaProductosForm formulario = (BusquedaProductosForm)form;
         formulario.setErroMultioferta(Constantes.STRING_BLANCO);
@@ -142,7 +142,6 @@ public class BusquedaProductosMultiOfertasDispatchActions{
         String local = session.getAttribute(Constantes.STRING_SUCURSAL).toString();        
         formulario.setForm_origen(formulario.getForm_origen());
         formulario.setEstadoCercaMulti("");   
-        
         
         if("PEDIDO".equals(form_origen)){
     		System.out.println("Paso 2 1 BML");
@@ -237,8 +236,7 @@ public class BusquedaProductosMultiOfertasDispatchActions{
         	if("PEDIDO".equals(form_origen)){
         		
         		System.out.println("Paso 2 8 1 BML");
-
-        		
+        		        		
         		VentaPedidoHelper pedidoHelper = new VentaPedidoHelper();
 	        	//formulario.setListaProductosMultioferta(ventaHelper.actualizaProductos(formulario.getProducto(),formulario.getCantidad(), formulario.getListaProductosMultioferta(), local, Constantes.STRING_DIRECTA));
 	        	formulario.setListaTipoFamilia(helper.traeTipoFamilias(form_origen, formulario.getCodigoMultioferta()));
@@ -247,14 +245,8 @@ public class BusquedaProductosMultiOfertasDispatchActions{
 	        	formulario.setListaProductosMultioferta((ArrayList<ProductosBean>)session.getAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS));
 	        	
 	        	ArrayList<ProductosBean> listaProductosMultiofertaAux = new ArrayList<ProductosBean>();
-	        	ArrayList<ProductosBean> pb = (ArrayList<ProductosBean>) session.getAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS_AUX);
-	        	
-	        	if(pb==null)
-	        		pb = new ArrayList<ProductosBean>();
-	        	
-	        	listaProductosMultiofertaAux.addAll(pb);
-	        	//listaProductosMultiofertaAux.addAll((ArrayList<ProductosBean>)session.getAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS_AUX));
-		        	
+	        	listaProductosMultiofertaAux.addAll((ArrayList<ProductosBean>)session.getAttribute(Constantes.STRING_LISTA_PRODUCTOS_MULTIOFERTAS_AUX));
+	        		
 	        	int i=0;
 	        	for (ProductosBean multi : formulario.getListaMultioferta()){        		
 	            	if(formulario.getCodigoMultioferta().equals(multi.getCodigo()) && multi.getIndexMulti() == formulario.getIndex_multi()){            		

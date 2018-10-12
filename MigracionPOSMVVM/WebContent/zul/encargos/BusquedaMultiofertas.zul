@@ -213,7 +213,7 @@
 							</columns>
 							<template name="model">
 								<row>
-									<textbox value="@load(each.codigo)" readonly="true"/>
+									<textbox value="@load(each.cod_barra)" readonly="true"/>
 									<textbox value="@load(each.descripcion)" readonly="true" width="290px"/>
 									<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="90px"/>
 									<intbox value="@load(each.cantidad)"  style="text-align:right" format="#,###,##0" locale="it" width="90px" readonly="true"/>
