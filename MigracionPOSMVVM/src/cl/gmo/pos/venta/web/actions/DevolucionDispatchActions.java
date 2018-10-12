@@ -335,10 +335,6 @@ public class DevolucionDispatchActions {
 						//formulario.setEstado_boleta("-1");
 						formulario.setEstado_boleta(resb);
 																							
-						
-						helper.ingresaPagoAlbaran(listaPagos, sesion, formulario, local);
-						
-						
 						formulario.setCambio(Constantes.STRING_UNO_CERO_CERO);
 						formulario.setIdioma(Constantes.STRING_CAST);
 						formulario.setBoleta_guia(formularioAux.getBoleta_guia());
@@ -352,7 +348,9 @@ public class DevolucionDispatchActions {
 						formulario.setLista_productos(formularioAux.getLista_productos());
 						formulario.setKodak(formularioAux.getKodak());
 						formulario.setEntrega(formularioAux.getEntrega());
+						formulario.setDivisa(formularioAux.getDivisa());
 						
+						helper.ingresaPagoAlbaran(listaPagos, sesion, formulario, local);
 						
 					}else{
 						System.out.println("No realizo devolucion <========");
@@ -626,17 +624,6 @@ public class DevolucionDispatchActions {
 				//LMARIN NOTA DE CREDITO 20150602
 				
 				String resnc ="",out1="";				  
-				/*resnc = helper.ingresaPago(listaPagos, session, formulario, local);
-				String [] folio = resnc.split("_");
-				//GENERA BOLETA
-				SeleccionPagoForm spagoform = (SeleccionPagoForm)session.getAttribute("SeleccionPagoForm");
-				System.out.println("GENERA BOLETA =>"+spagoform.getSerie()+"<=>"+spagoform.getBoleta_cliente()+"<=>Nif() =>"+spagoform.getNif()+"<=> Nombre_cliente() =>"+spagoform.getNombre_cliente()+"<=> Boleta_fecha_ent()=>"+spagoform.getBoleta_fecha_ent()+"<=>FECHA =>"+spagoform.getFecha()+"<=> FPAGO =>"+spagoform.getFech_pago());
-				
-			    if(folio[0].equals("1")){	
-			    	out1 = helper.genera_datos_belec("NC-1", spagoform, folio[1], session);					
-			    	System.out.println("VentaPedidoDispatchActions ==>"+out1);
-				}
-			    resnc = resnc +"_"+out1;*/
 			    
 			    System.out.println("Devo dispatch acticon ==> "+resnc);
 				formulario.setEstado_boleta(resnc);

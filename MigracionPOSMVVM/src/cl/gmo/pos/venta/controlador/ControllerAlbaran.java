@@ -30,7 +30,9 @@ import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
 public class ControllerAlbaran extends DevolucionForm{
 	
-	DevolucionForm dform ;
+	DevolucionForm dform_in;
+	DevolucionForm dform_out ;
+
 	DevolucionBean devbean ;
 	DevolucionDispatchActions dev_dis = new DevolucionDispatchActions();
 	Utils util = new Utils();
@@ -51,17 +53,17 @@ public class ControllerAlbaran extends DevolucionForm{
 	public void inicial() {
 		
 		//String local = sesion.getAttribute("sucursal").toString();
-		dform = dev_dis.cargaInicial(sesion);
-		this.setListaFormasPago(dform.getListaFormasPago());
-		this.setLista_mot_devo(dform.getLista_mot_devo());
-		this.setLista_productos(dform.getLista_productos());
-		this.setLista_albaranes(dform.getLista_albaranes());
-		this.setListaAgentes(dform.getListaAgentes());
-		this.setListaConvenios(dform.getListaConvenios());
-		this.setListaIdiomas(dform.getListaIdiomas());
-		this.setListaDivisas(dform.getListaDivisas());
-		this.setListaProvincia(dform.getListaProvincia());
-		this.setListaTipoAlbaranes(dform.getListaTipoAlbaranes());
+		dform_in = dev_dis.cargaInicial(sesion);
+		this.setListaFormasPago(dform_in.getListaFormasPago());
+		this.setLista_mot_devo(dform_in.getLista_mot_devo());
+		this.setLista_productos(dform_in.getLista_productos());
+		this.setLista_albaranes(dform_in.getLista_albaranes());
+		this.setListaAgentes(dform_in.getListaAgentes());
+		this.setListaConvenios(dform_in.getListaConvenios());
+		this.setListaIdiomas(dform_in.getListaIdiomas());
+		this.setListaDivisas(dform_in.getListaDivisas());
+		this.setListaProvincia(dform_in.getListaProvincia());
+		this.setListaTipoAlbaranes(dform_in.getListaTipoAlbaranes());
 		this.setRboleta(true);
 		this.setUsuario((String)sesion.getAttribute(Constantes.STRING_USUARIO));
 		this.setEstado_boleta("-1");
@@ -69,7 +71,7 @@ public class ControllerAlbaran extends DevolucionForm{
 	@Command
 	@NotifyChange({"*"})
 	public void cargaDatos(@BindingParam("dev") DevolucionForm form) {
-		dform = new DevolucionForm();
+		dform_in = new DevolucionForm();
 		
 		//DEFINO CONTSANTES POR DEFECTO
 		form.setTipoAlbaran("D");
@@ -82,23 +84,23 @@ public class ControllerAlbaran extends DevolucionForm{
 		}
 		
 		System.out.println("BOLETA_GUIA ==>"+form.getBoleta_guia()+" "+form.getNumero_boleta_guia());
-		dform =	dev_dis.cargaAlbaran(form,sesion);
-		System.out.println("EXISTE BOLETA ==>"+dform.getExisteBoleta());
-		if(dform.getExisteBoleta().trim().toUpperCase().equals("FALSE")) {
-				this.setNif(dform.getNif());
-				this.setDvnif(dform.getDvnif());
+		dform_in =	dev_dis.cargaAlbaran(form,sesion);
+		System.out.println("EXISTE BOLETA ==>"+dform_in.getExisteBoleta());
+		if(dform_in.getExisteBoleta().trim().toUpperCase().equals("FALSE")) {
+				this.setNif(dform_in.getNif());
+				this.setDvnif(dform_in.getDvnif());
 				this.setHora(util.traeHoraString());
 				this.setFecha_alb(util.traeFecha());
 				this.setFormaPago("CONTADO");
 				this.setIdioma("CASTELLANO");
 				this.setTipo_albaran("DEVOLUCION");
-				this.setDireccion_cli(dform.getDireccion_cli());
-				this.setNdireccion_cli(dform.getNdireccion_cli());
-				System.out.println("ALBARAN CONTROLLER ==>"+dform.getProvincia()+"<==>"+dform.getComu_cli()+"<==>"+dform.getProvincia_cliente()+"<==>"+dform.getCiudad());
-				this.setProvincia_cliente(dform.getCiudad());
+				this.setDireccion_cli(dform_in.getDireccion_cli());
+				this.setNdireccion_cli(dform_in.getNdireccion_cli());
+				System.out.println("ALBARAN CONTROLLER ==>"+dform_in.getProvincia()+"<==>"+dform_in.getComu_cli()+"<==>"+dform_in.getProvincia_cliente()+"<==>"+dform_in.getCiudad());
+				this.setProvincia_cliente(dform_in.getCiudad());
 				
 				this.getListaDivisas().forEach(t->{
-					if(t.getId().equals(dform.getDivisa())) {
+					if(t.getId().equals(dform_in.getDivisa())) {
 						this.setDivisa(t.getDescripcion());
 					}
 				 }
@@ -119,18 +121,18 @@ public class ControllerAlbaran extends DevolucionForm{
 	@Command
 	@NotifyChange({"*"})
 	public void cobrar(@BindingParam("arg1") DevolucionForm form){
-		dform = new DevolucionForm();
+		dform_in = new DevolucionForm();
 		seleccionPagoForm =  new SeleccionPagoForm();
-	    dform = form;
-	    ClienteBean cliente = util.traeCliente(dform.getNif(), "");
-		//dform = dev_dis.cargaAlbaran(dform,sesion);		
+	    dform_in = form;
+	    ClienteBean cliente = util.traeCliente(dform_in.getNif(), "");
+		//dform_in = dev_dis.cargaAlbaran(dform_in,sesion);		
 		seleccionPagoForm.setOrigen(sesion.getAttribute(Constantes.STRING_ORIGEN).toString());
 		seleccionPagoForm.setFecha(util.traeFechaHoyFormateadaString());
 
 		objetos = new HashMap<String,Object>();
 		objetos.put("cliente",cliente);
 		objetos.put("pagoForm",seleccionPagoForm);
-		objetos.put("ventaOrigenForm",dform);
+		objetos.put("ventaOrigenForm",dform_in);
 		objetos.put("origen","ALBARAN_DEVOLUCION");
 		
 		Window windowPagoVentaDirecta = (Window)Executions.createComponents(
@@ -140,62 +142,71 @@ public class ControllerAlbaran extends DevolucionForm{
 		
 	}
 	
-	@NotifyChange({"dform","controlBotones"})
+	@NotifyChange({"*","controlBotones"})
 	@GlobalCommand	
     public void creaPagoExitosoDevolucion(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {		
-		dform = new DevolucionForm();
-		dform.setAccion(Constantes.FORWARD_DEVOLUCION);			
+		dform_in = new DevolucionForm();
+		dform_out = new DevolucionForm();
+		dform_in.setAccion(Constantes.FORWARD_DEVOLUCION);			
 		sesion.setAttribute(Constantes.STRING_TIPO_ALBARAN, "DEVOLUCION");	
-		dform.setBoleta_guia(sesion.getAttribute(Constantes.STRING_TIPO_DOCUMENTO).toString());
-		dform.setNumero_boleta_guia(sesion.getAttribute("NUMERO_BOLETA_GUIA").toString());
-		dform.setLista_productos(this.getLista_productos());
-		for(ProductosBean b : dform.getLista_productos()) {
+		dform_in.setBoleta_guia(sesion.getAttribute(Constantes.STRING_TIPO_DOCUMENTO).toString());
+		dform_in.setNumero_boleta_guia(sesion.getAttribute("NUMERO_BOLETA_GUIA").toString());
+		dform_in.setLista_productos(this.getLista_productos());
+		for(ProductosBean b : dform_in.getLista_productos()) {
 			System.out.println(b.getCod_articulo()+"<=======>"+b.getDescripcion());
 		}
-		dform.setAgente(this.getAgente());
+		dform_in.setAgente(this.getAgente());
 		this.getListaAgentes().forEach(t->{
 			if(t.getUsuario().equals(this.getAgente())){
-				dform.setAgente(t.getUsuario());
-				dform.setAgenteSeleccionado(t.getUsuario());
+				dform_in.setAgente(t.getUsuario());
+				dform_in.setAgenteSeleccionado(t.getUsuario());
 			}
 		}
 		);
 		this.getLista_mot_devo().forEach(t->{
 				if(t.getDescripcion().equals(this.getMotivo())){
-					dform.setMotivo(t.getCodigo());
+					dform_in.setMotivo(t.getCodigo());
 				}
 			}
 		);
-		dform.setFecha(util.traeFechaHoyFormateadaString());
-		dform.setCodigo_cliente(sesion.getAttribute(Constantes.STRING_CLIENTE).toString());
-		dform.setAgente(sesion.getAttribute(Constantes.STRING_USUARIO).toString());
-		dform.setTipoAlbaran("D");
-		
+		dform_in.setFecha(util.traeFechaHoyFormateadaString());
+		dform_in.setCodigo_cliente(sesion.getAttribute(Constantes.STRING_CLIENTE).toString());
+		dform_in.setAgente(sesion.getAttribute(Constantes.STRING_USUARIO).toString());
+		dform_in.setTipoAlbaran("D");
+		dform_in.setCambio("1");
+		dform_in.setDivisa("PESO");
 		try {
-			dform = dev_dis.cargaAlbaran(dform,sesion);			
-			sesion.setAttribute(Constantes.STRING_TICKET, dform.getCodigo1()+ "/" + dform.getCodigo2());
-			this.setCodigo_completo(dform.getCodigo1()+ "/" + dform.getCodigo2());
+			dform_out = dev_dis.cargaAlbaran(dform_in,sesion);			
+			sesion.setAttribute(Constantes.STRING_TICKET, dform_in.getCodigo1()+ "/" + dform_in.getCodigo2());
+			
 			postCobro();
 			
-            if (dform.getEstado_boleta().trim().toUpperCase().contains("TRUE") ) {
+            if (dform_out.getEstado_boleta().trim().toUpperCase().contains("TRUE") ) {
 				
-				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente.");
+				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente (1).");
 			}else {
-				
-				//http://10.216.4.24/39%2066666666-6%201.pdf     61 66666666-6 79912
-				String url ="http://10.216.4.24/NC/61 66666666-6 79912.pdf";
-				//String url ="http://10.216.4.24/39%" + ventaDirectaForm.getNif() + "-" + ventaDirectaForm.getDv() + 
-				
-				objetos = new HashMap<String,Object>();
-				objetos.put("documento",url);
-				objetos.put("titulo","Venta Directa");
-				
-				Window window = (Window)Executions.createComponents(
-		                "/zul/reportes/VisorDocumento.zul", null, objetos);
-				
-		        window.doModal();			
-				
+				if(!dform_out.getEstado_boleta().equals("") && dform_out.getEstado_boleta()!= null) {
+					
+					String[] boleta =  dform_out.getEstado_boleta().split("_");
+					//String url ="http://10.216.4.24/NC/61 "+dform_in.getNif()+"-"+dform_in.getDvnif()+" "+boleta[1]+".pdf";
+					String url ="http://10.216.4.24/NC/61 66666666-6 79912.pdf";
+					
+					objetos = new HashMap<String,Object>();
+					objetos.put("documento",url);
+					objetos.put("titulo","Venta Directa");
+					
+					Window window = (Window)Executions.createComponents(
+			                "/zul/reportes/VisorDocumento.zul", null, objetos);
+					
+			        window.doModal();	
+			        
+				 }else {
+					 Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente (2).");
+				 }
+						
 			}
+            System.out.println("DFORM CODIGO ============>"+dform_out.getCodigo1()+ "/" + dform_out.getCodigo2());
+            this.setCodigo_completo(dform_out.getCodigo1()+ "/" + dform_out.getCodigo2());
 			
 		} catch (Exception e) {
 			

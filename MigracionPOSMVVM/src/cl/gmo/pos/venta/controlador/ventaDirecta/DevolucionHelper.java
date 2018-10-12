@@ -70,6 +70,8 @@ public class DevolucionHelper extends Utils {
 					formulario.setExisteBoleta(dev.getExisteBoleta());
 					formulario.setFecha_albaran_devolucion(dev.getFecha());
 					formulario.setLista_productos(dev.getLista_productos());
+					formulario.setDireccion_cli(cliente.getDireccion());
+					formulario.setNdireccion_cli(cliente.getNumero());
 					
 					
 					formulario.setTieneArmCrisContacto(String.valueOf(this.tieneArmCrisContacto(formulario.getLista_productos())));
@@ -345,7 +347,7 @@ public class DevolucionHelper extends Utils {
 	    		devolucion = "S";
 	    	}
 	    	
-	    	
+	    	System.out.println("DevolucionDisPatchAction ===> DEV =>"+formulario.getTipoAlbaran()+"<===> TIPO_DOC ==>"+tipo_doc+" ==>"+formulario.getCodigo1()+"/"+formulario.getCodigo2()+" CAMBIO==>"+formulario.getCambio());
 	    	try {
 	    		VentaDirectaBean vent = PosVentaFacade.traeNumerosCaja(local);
 	    		CajaBean caja = null;
@@ -360,7 +362,7 @@ public class DevolucionHelper extends Utils {
 	    		for (PagoBean pago : listaPago) {
 	    			log.info("VentaDirectaHelper:ingresaPago entrando ciclo for");
 	    			pago.setCod_venta(formulario.getCodigo1()+"/"+formulario.getCodigo2());
-	    			PosVentaFacade.insertaPagoAlbaran(formulario.getCdg_venta(),
+	    			PosVentaFacade.insertaPagoAlbaran(pago.getCod_venta(),
 														pago.getForma_pago(),
 														pago.getCantidad(),
 														pago.getFecha(),//cambiar fecha pago
