@@ -243,8 +243,8 @@
 							<label value="Multi" />
 							<space width="50px"/>
 							
-							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" width="50px" tooltiptext="Busqueda multioferta"/>
-							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" width="50px" tooltiptext="Agregar productos"/>												
+							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" disabled="@bind(vm.beanControlBotones.enableMulti)" width="50px" tooltiptext="Busqueda multioferta"/>
+							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.beanControlBotones.enableGrid)" width="50px" tooltiptext="Agregar productos"/>												
 						</div>
 
 						<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 

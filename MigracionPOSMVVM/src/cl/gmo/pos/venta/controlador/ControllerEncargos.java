@@ -173,19 +173,24 @@ public class ControllerEncargos implements Serializable {
 			beanControlBotones.setEnableListar("false");
 			
 			beanControlBotones.setEnableGenerico1("true");
-			beanControlBotones.setEnableGenerico2("true");			
+			beanControlBotones.setEnableGenerico2("true");	
+			
+			beanControlBotones.setEnableGrid("false");
+			beanControlBotones.setEnableMulti("false");
 			
 			beanControlCombos.setComboAgenteEnable("false");
 			beanControlCombos.setComboDivisaEnable("true");
 			beanControlCombos.setComboFpagoEnable("false");
 			beanControlCombos.setComboIdiomaEnable("true");
 			beanControlCombos.setComboPromoEnable("false");
-			beanControlCombos.setComboTiposEnable("false");			
+			beanControlCombos.setComboTiposEnable("false");				
 			
 		}else {		
 		
 			beanControlBotones.setEnableNew("false");
-			beanControlBotones.setEnableListar("true");		
+			beanControlBotones.setEnableListar("true");	
+			beanControlBotones.setEnableGrid("true");
+			beanControlBotones.setEnableMulti("true");
 			
 			beanControlCombos.setComboAgenteEnable("true");
 			beanControlCombos.setComboDivisaEnable("true");
@@ -239,7 +244,9 @@ public class ControllerEncargos implements Serializable {
 		beanControlCombos.setComboPromoEnable("false");
 		beanControlCombos.setComboTiposEnable("false");		
 		
-		beanControlBotones.setEnableListar("true");		
+		beanControlBotones.setEnableListar("true");	
+		beanControlBotones.setEnableGrid("true");
+		beanControlBotones.setEnableMulti("true");
 		
 		posicionCombo();
 		
@@ -1135,6 +1142,9 @@ public class ControllerEncargos implements Serializable {
 	        	beanControlBotones.setEnableListar("false");
 	        	beanControlBotones.setEnableBuscar("false");
 	        	
+	        	beanControlBotones.setEnableGrid("false");
+	    		beanControlBotones.setEnableMulti("false");
+	        	
 					
 			}else {
 				Messagebox.show("El cliente no existe");
@@ -1291,7 +1301,7 @@ public class ControllerEncargos implements Serializable {
      		//document.getElementById('productoSeleccionado').value = codigo;
      		//document.getElementById('accion').value = "eliminarProductoMultiOferta";
      		//document.ventaDirectaForm.submit();    		
-     		ventaPedidoForm.setAccion("eliminarProductoMultiOferta");
+     		ventaPedidoForm.setAccion("eliminarProductoMulti");
      		ventaPedidoForm.setError("");
      		ventaPedidoForm.setAddProducto(index.toString());			
 		}else {
