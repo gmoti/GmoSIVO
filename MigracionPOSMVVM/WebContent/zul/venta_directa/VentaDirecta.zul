@@ -10,15 +10,19 @@
 	            border-right:1px solid transparent;
 	            padding:0px;
 	            margin:0px;
-	     }
+	    }
+    	.shrink .z-toolbarbutton-img{
+      			background-size:20px 20px;
+    	}     
 	</style>
 
-	
-		<borderlayout visible="@bind(vm.controlBotones.enableGenerico1)">
-			<north>
-			
-				<div >	
-					<div width="100%" style="background-color:black;color: white" height="25px">
+	<div width="100%" height="70%" visible="@bind(vm.controlBotones.enableGenerico1)">
+		<borderlayout>
+		
+			<north height="30%">			
+				<div width="100%"  height="100%">	
+				
+					<div width="100%" height="10%" style="background-color:black;color: white">
 						<label value="VENTA DIRECTA" style="float: left"/>	
 						<div style="float: right">					
 							<label value="@load(vm.sucursalDes)"/>
@@ -27,106 +31,196 @@
 						</div>				
 					</div>	
 					
-					<div width="100%" style="background-color:black;color: white;" align="right">
+					<div width="100%" height="20%" style="background-color:black;color: white;" align="right">
 						<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevaVenta')" disabled="@bind(vm.controlBotones.enableNew)"/>
 			    		<toolbarbutton image="/iconos/money2.png" onClick="@command('pagoVenta')" disabled="@bind(vm.controlBotones.enablePagar)"/>
 			    		<toolbarbutton image="/iconos/check.png" onClick="@command('grabaVenta')" disabled="@bind(vm.controlBotones.enableGrabar)"/>
-			    		<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir')" />				
+			    		<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir')" />
+			    		<!-- <toolbarbutton image="/iconos/cancel.png" iconSclass="shrink" />	 -->	    					
 					</div>
 					
-					<div width="100%" style="padding :10px 0px 0px 0px">
-						<hbox>
-						<div width="70px">
-							<label value="Ticket" />
-						</div>
-						<div width="250px">
-							<textbox value="@load(vm.ventaDirectaForm.encabezado_ticket)" width="60px" readonly="true"/>
-							<textbox value="@bind(vm.ventaDirectaForm.numero_ticket)" width="140px" readonly="true"/>
-						</div>
-						<div width="70px">
-							<label value="Cliente" />
-						</div>
-						<div width="300px">
-							<textbox value="@bind(vm.ventaDirectaForm.nif)" width="140px"/> <!-- constraint="/^[0-9]{7,12}$/"/> -->
-							<textbox value="@bind(vm.ventaDirectaForm.dv)" width="30px" disabled="true"/>
-							<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.png"/>
-							<toolbarbutton onClick="@command('buscarClienteGenerico')" image="/iconos/cliente_generico.png"/>							
-						</div>
-						<div width="600px">
-							<textbox value="@bind(vm.ventaDirectaForm.nombreCliente)" width="500px" readonly="true"/>						
-						</div>
-						</hbox>
-					</div>
-					
-					<div width="100%" style="padding :10px 0px 0px 0px">
-					<hbox>
-						<div width="70px">
-							<label value="Caja" />
-						</div>
-						<div width="250px">
-							<intbox value = "@load(vm.ventaDirectaForm.numero_caja)" readonly="true" width="60px"/>					
-						</div>
-						<div width="70px">
-							<label value="Cajero" />
-						</div>	
-						<div width="250px">
+					<div width="100%" height="70%">
+
+						<grid>
+							<columns>
+								<column width="80px"/>
+								<column width="250px"/>
+								<column width="80px"/>
+								<column width="200px" />
+								<column width="80px"/>
+								<column width="250px"/>
+								<column width="80px"/>
+								<column width="100px"/>
+							</columns>
+							<rows>
+								<row> <!-- fila 1 -->
+									<label value="Ticket" />
+									
+									<cell colspan="1">
+										<textbox value="@load(vm.ventaDirectaForm.encabezado_ticket)" width="60px" readonly="true"/>
+										<textbox value="@bind(vm.ventaDirectaForm.numero_ticket)" width="140px" readonly="true"/>
+									</cell>
+									
+									<label value="Cliente"/>
+									
+									<cell colspan="1">
+										<textbox value="@bind(vm.ventaDirectaForm.nif)" width="140px"/> 
+										<textbox value="@bind(vm.ventaDirectaForm.dv)" width="30px" disabled="true"/>
+									</cell>
+									
+									<cell colspan="1">
+										<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.png"/>
+										<toolbarbutton onClick="@command('buscarClienteGenerico')" image="/iconos/cliente_generico.png"/>
+									</cell>
+									
+									<cell colspan="3">
+										<textbox value="@bind(vm.ventaDirectaForm.nombreCliente)" width="500px" readonly="true"/>
+									</cell>
+																		
+								</row>
+								
+								<row> <!-- fila 2 -->
+									<label value="Caja" />
+									<intbox value = "@load(vm.ventaDirectaForm.numero_caja)" readonly="true" width="60px"/>
+									
+									<label value="Cajero" />
+									
+									<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)"  selectedItem="@bind(vm.agenteBean)"
+										disabled="true" placeholder="Seleccione">
+										<template name="model">
+									  		<comboitem label="@load(each.usuario)"/>
+									  	</template>								
+									</combobox>
+									
+									<label value="Fecha" />
+									<textbox value="@load(vm.ventaDirectaForm.fecha)" readonly="true" width="80px"/>
+									
+									<label value="Hora" />
+									<textbox value="@load(vm.ventaDirectaForm.hora)" readonly="true" width="80px"/>
+								</row>
+								
+								<row> <!-- fila 3 -->
+									<label value="Tipo A" />
+									<textbox value="@load(vm.ventaDirectaForm.tipoAlbaran)" readonly="true"/>
+									
+									<label value="Agente" />							
+											
+									<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
+											  disabled="true" placeholder="Seleccione">
+										<template name="model">
+									  		<comboitem label="@load(each.usuario)"/>
+									  	</template>								
+									</combobox>
+									
+									<label value="Divisa" />					
+									<textbox value="@bind(vm.ventaDirectaForm.divisa)" width="100px" readonly="true"/>
 							
-							<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)"  selectedItem="@bind(vm.agenteBean)"
-									disabled="true" placeholder="Seleccione">
-								<template name="model">
-							  		<comboitem label="@load(each.usuario)"/>
-							  	</template>								
-							</combobox>
-												
-						</div>					
-						<div width="150px">
-							<label value="Fecha" />
-							<textbox value="@load(vm.ventaDirectaForm.fecha)" readonly="true" width="80px"/>
+									<label value="Cambio" />
+									<textbox value="@bind(vm.ventaDirectaForm.cambio)" width="50px" readonly="true"/>									
+								
+								</row>								
+							</rows>
+						</grid>
+
+
+
+
+
+					<!--  			
+						<div width="100%" style="padding :10px 0px 0px 0px">
+							<hbox>
+							<div width="70px">
+								<label value="Ticket" />
+							</div>
+							<div width="250px">
+								<textbox value="@load(vm.ventaDirectaForm.encabezado_ticket)" width="60px" readonly="true"/>
+								<textbox value="@bind(vm.ventaDirectaForm.numero_ticket)" width="140px" readonly="true"/>
+							</div>
+							<div width="70px">
+								<label value="Cliente" />
+							</div>
+							<div width="300px">
+								<textbox value="@bind(vm.ventaDirectaForm.nif)" width="140px"/> 
+								<textbox value="@bind(vm.ventaDirectaForm.dv)" width="30px" disabled="true"/>
+								<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.png"/>
+								<toolbarbutton onClick="@command('buscarClienteGenerico')" image="/iconos/cliente_generico.png"/>							
+							</div>
+							<div width="600px">
+								<textbox value="@bind(vm.ventaDirectaForm.nombreCliente)" width="500px" readonly="true"/>						
+							</div>
+							</hbox>
 						</div>
 						
-						<div width="150px">
-							<label value="Hora" />
-							<textbox value="@load(vm.ventaDirectaForm.hora)" readonly="true" width="80px"/>
-						</div>	
-					</hbox>
-					</div>
-					
-					<div width="100%" style="padding :10px 0px 0px 0px">
-					<hbox>
-						<div width="70px">
-							<label value="Tipo A" />
+						<div width="100%" style="padding :10px 0px 0px 0px">
+						<hbox>
+							<div width="70px">
+								<label value="Caja" />
+							</div>
+							<div width="250px">
+								<intbox value = "@load(vm.ventaDirectaForm.numero_caja)" readonly="true" width="60px"/>					
+							</div>
+							<div width="70px">
+								<label value="Cajero" />
+							</div>	
+							<div width="250px">
+								
+								<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)"  selectedItem="@bind(vm.agenteBean)"
+										disabled="true" placeholder="Seleccione">
+									<template name="model">
+								  		<comboitem label="@load(each.usuario)"/>
+								  	</template>								
+								</combobox>
+													
+							</div>					
+							<div width="150px">
+								<label value="Fecha" />
+								<textbox value="@load(vm.ventaDirectaForm.fecha)" readonly="true" width="80px"/>
+							</div>
+							
+							<div width="150px">
+								<label value="Hora" />
+								<textbox value="@load(vm.ventaDirectaForm.hora)" readonly="true" width="80px"/>
+							</div>	
+						</hbox>
 						</div>
-						<div width="250px">
-							<textbox value="@load(vm.ventaDirectaForm.tipoAlbaran)" readonly="true"/>
-						</div>	
-						<div width="70px">
-							<label value="Agente" />
-						</div>	
-						<div width="250px">				
-							<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
-									  disabled="true" placeholder="Seleccione">
-								<template name="model">
-							  		<comboitem label="@load(each.usuario)"/>
-							  	</template>								
-							</combobox>	
-						</div>								
 						
-						<label value="Divisa" />					
-						<textbox value="@bind(vm.ventaDirectaForm.divisa)" width="100px" readonly="true"/>
-						
-						<label value="Cambio" />
-						<textbox value="@bind(vm.ventaDirectaForm.cambio)" width="50px" readonly="true"/>				
-					</hbox>
-					</div>				
-			   </div>
-			
+						<div width="100%" style="padding :10px 0px 0px 0px">
+						<hbox>
+							<div width="70px">
+								<label value="Tipo A" />
+							</div>
+							<div width="250px">
+								<textbox value="@load(vm.ventaDirectaForm.tipoAlbaran)" readonly="true"/>
+							</div>	
+							<div width="70px">
+								<label value="Agente" />
+							</div>	
+							<div width="250px">				
+								<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
+										  disabled="true" placeholder="Seleccione">
+									<template name="model">
+								  		<comboitem label="@load(each.usuario)"/>
+								  	</template>								
+								</combobox>	
+							</div>								
+							
+							<label value="Divisa" />					
+							<textbox value="@bind(vm.ventaDirectaForm.divisa)" width="100px" readonly="true"/>
+							
+							<label value="Cambio" />
+							<textbox value="@bind(vm.ventaDirectaForm.cambio)" width="50px" readonly="true"/>				
+						</hbox>
+						</div>	--><!-- constraint="/^[0-9]{7,12}$/"/> -->
+					</div>	
+							
+			   </div>			
 			</north>
 	
 			<center>
 			
-				<div width="100%">
+				<div width="100%" height="100%">
 						
-				    <div width="100%" height="45px" style="background-color:black;color: white;">
+				    <div width="100%" height="10%" style="background-color:black;color: white;">
 				    	<space width="10px"/>
 						<label value="Codigo del articulo"/>
 						<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProductoDirecto')" disabled="@bind(vm.controlBotones.enableGrid)" />
@@ -142,9 +236,11 @@
 						<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.controlBotones.enableGrid)"/>		    
 				    </div> 
 				    
-					<div width="100%" height="430px" >	
+					<div width="100%" height="90%" >	
 						<grid model="@bind(vm.ventaDirectaForm.listaProductos)" selectedItem="@bind(vm.productoBean)" 
-							emptyMessage="Sin datos cargados" sclass="MyGridRowHeight"  width="100%" height="350px" > 
+							emptyMessage="Sin datos cargados" 
+							sclass="MyGridRowHeight"  width="100%" height="95%" 
+							style="overflow: scroll;"> 
 											
 							
 							<columns>
@@ -175,7 +271,7 @@
 			</center>
 	
 			<south>
-				<div width="100%" height="50px">
+				<div width="100%"  height="100%">
 					<hbox>
 						<space width="800px"/>
 						<label value="Total "/>
@@ -185,40 +281,41 @@
 				</div>
 			</south>
 		</borderlayout>
+	</div>
 		
-		<div visible="@bind(vm.controlBotones.enableGenerico2)" >
-		
-			<div width="100%" style="background-color:black;color: white;">
-				<label value="DATOS DE CAJA" />
-			</div>
-			
-			<grid sclass="MyGridRowHeight" width="100%" height="200px">
-				<columns>
-					<column width="150px" />
-					<column width="250px" />
-				</columns>
-				<rows>
-					<row>
-						<label value="No de caja" />
-						<combobox model="@bind(vm.ventaDirectaForm.listaCajas)" selectedItem="@bind(vm.cajaBean)">
-							<template name="model">
-								<comboitem label="@load(each.descripcion)" />
-							</template>
-						</combobox>
-					</row>
+	<div visible="@bind(vm.controlBotones.enableGenerico2)" >
 	
-					<row>
-						<label value="Cajero" />
-						<combobox model="@bind(vm.ventaDirectaForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)">
-							<template name="model">
-							<comboitem label="@load(each.usuario)" />
-							</template>
-						</combobox>
-					</row>
-				</rows>
-			</grid>
-			
-			<button label="Aceptar" onClick="@command('seleccionaCaja')" />
+		<div width="100%" style="background-color:black;color: white;">
+			<label value="DATOS DE CAJA" />
 		</div>
+		
+		<grid sclass="MyGridRowHeight" width="100%" height="200px">
+			<columns>
+				<column width="150px" />
+				<column width="250px" />
+			</columns>
+			<rows>
+				<row>
+					<label value="No de caja" />
+					<combobox model="@bind(vm.ventaDirectaForm.listaCajas)" selectedItem="@bind(vm.cajaBean)">
+						<template name="model">
+							<comboitem label="@load(each.descripcion)" />
+						</template>
+					</combobox>
+				</row>
+
+				<row>
+					<label value="Cajero" />
+					<combobox model="@bind(vm.ventaDirectaForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)">
+						<template name="model">
+						<comboitem label="@load(each.usuario)" />
+						</template>
+					</combobox>
+				</row>
+			</rows>
+		</grid>
+		
+		<button label="Aceptar" onClick="@command('seleccionaCaja')" />
+	</div>
 	
 </window>

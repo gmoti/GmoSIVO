@@ -12,8 +12,9 @@
 		<borderlayout>
 			<!-- Parte superior de la ventana -->
 			<north height="25%">
-				<div>
-					<div width="100%" style="background-color:black;color: white" height="25px">
+				<div width="100%" height="100%">
+				
+					<div width="100%" height="25px" style="background-color:black;color: white">
 						<label value="PRESUPUESTO" style="float: left"/>	
 						<div style="float: right">					
 							<label value="@load(vm.sucursalDes)"/>
@@ -22,7 +23,7 @@
 						</div>				
 					</div>
 					
-					<div width="100%" style="background-color:black;color: white" height="40px">					
+					<div width="100%" height="40px" style="background-color:black;color: white">					
 						<div style="text-align: right;">											
 							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevoPresupuesto')" disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Presupuesto"/>
 							<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimirPresupuesto')" disabled="@bind(vm.beanControlBotones.enablePrint)" tooltiptext="Imprimir Presupuesto"/>
@@ -35,7 +36,125 @@
 						</div>						
 					</div>
 					
-					<!-- Linea 1 del encabezxado -->
+					<div width="100%" height="75%">					
+						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px">
+							<columns>
+								<column width="80px"/>
+								<column width="200px"/>
+								<column width="80px"/>
+								<column width="200px"/>
+								<column width="100px"/>
+								<column label="" />
+								<column label="" />
+								<column label="" />
+							</columns>
+							<rows>
+								<row>
+									<label value="Codigo" />
+									
+									<cell colspan="1">					    	
+							    		<textbox value="@bind(vm.presupuestoForm.codigo_suc)" width="30px" disabled="true" />
+							    		<textbox value="@bind(vm.presupuestoForm.codigo)" width="150px"	disabled="true" />	
+									</cell> 
+									
+								    <label value="Cliente"/>
+								    
+								    <cell colspan="1">						
+										<textbox value="@bind(vm.presupuestoForm.nif)" width="150px"/>
+										<textbox value="@load(vm.presupuestoForm.dvnif)" width="30px" disabled="true"/>	
+									</cell>
+									
+									<cell colspan="1">							
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente',arg=vm.presupuestoForm.nif)"  width="30px"/>	
+										<toolbarbutton image="/iconos/lupa2.png" width="30px"/>							
+									</cell>
+									
+									<cell colspan="3">
+										<textbox value="@bind(vm.presupuestoForm.nombre_cliente)" width="350px" disabled="true"/>
+									</cell>						
+									
+								</row>
+								
+								<row>
+									<label value="Forma pago" />
+																	
+									<combobox id="cbx_fpago" model="@bind(vm.presupuestoForm.listaFormasPago)" 
+										width="180px" selectedItem="@bind(vm.formaPagoBean)" 
+										disabled="@bind(vm.fpagoDisable)"
+										placeholder="Seleccione" 
+										constraint="no empty: Indique la forma de pago">
+									   <template name="model">
+										<comboitem label="@load(each.descripcion)"/>
+									   </template>	
+									</combobox>									
+											
+									<label value="Divisa" />							
+									<combobox id="cbx_divisa" model="@load(vm.presupuestoForm.listaDivisas)"  
+										width="180px" selectedItem="@bind(vm.divisaBean)" disabled="true" placeholder="Seleccione">
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>	
+									</combobox>						
+								
+									<cell colspan="1">
+										<label value="Cambio" />
+										<space width="5px"/>
+										<textbox value="@bind(vm.presupuestoForm.cambio)" width="30px" disabled="true"/>							
+									</cell>
+									
+									<cell colspan="1">									
+										<label value="fecha"/>
+										<space width="5px"/>
+										<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" disabled="true" />
+									</cell>
+									
+									<cell colspan="1">	
+										<label value="Hora" />
+										<space width="5px"/>
+										<datebox value="@bind(vm.fecha)" format="hh:mm:ss" disabled="true"/>
+									</cell>								
+								</row>
+								
+								<row>
+									<label value="Agente" />	
+																	
+									<combobox id="cbx_agente" model="@bind(vm.presupuestoForm.listaAgentes)" 
+										width="180px" selectedItem="@bind(vm.agenteBean)" 
+										disabled="@bind(vm.agenteDisable)" 
+										placeholder="Seleccione"
+										constraint="no empty: Indique un agente">
+									  <template name="model">
+										<comboitem label="@load(each.usuario)" />
+									  </template>	
+									</combobox>
+								
+									<label value="Idioma" />
+									<combobox id="cbx_idioma" model="@load(vm.presupuestoForm.listaIdiomas)" 
+										width="180px" selectedItem="@bind(vm.idiomaBean)" disabled="true" placeholder="Seleccione">
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>
+									</combobox>
+								
+									<checkbox label="Cerrado" checked="@load(vm.presupuestoForm.cerrado)" disabled="true"/>							
+										
+									<cell colspan="3">
+										<label value="Convenio"/>
+										<space width="5px"/>
+										<textbox value="@bind(vm.presupuestoForm.convenio)" width="50px" />
+										<textbox value="@bind(vm.presupuestoForm.convenio_det)" width="180px" disabled="true"/>
+										<space width="5px"/>
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('busquedaRapidaConvenio')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+										<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaConvenio')"  visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+										<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>
+									</cell>			
+									
+								</row>
+							</rows>
+						</grid>
+					</div>
+					
+					<!-- 
 					<div width="100%" style="padding :5px 0px 0px 0px">					
 					   <hbox>
 					    <div width="300px">
@@ -59,7 +178,7 @@
 						</hbox>					
 					</div>	
 					
-					<!-- Linea 2 del encabezxado -->
+					
 					<div width="100%" style="padding :5px 0px 0px 0px">
 						<hbox>						
 							<div width="300px">
@@ -95,7 +214,7 @@
 						</hbox>
 					</div>
 
-					<!-- Linea 3 del encabezxado -->
+					
 					<div width="100%"
 						style="padding :5px 0px 0px 0px">
 						<hbox>
@@ -136,7 +255,7 @@
 								<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>	
 							</div>
 						</hbox>
-					</div>									
+					</div>	 -->								
 								
 				</div>
 			</north>
@@ -145,7 +264,7 @@
 			<center >
 				<div width="100%" height="100%">
 				
-					<div width="100%" height="80%">
+					<div width="100%" height="85%">
 					
 						<!-- Encabezado de la grid -->
 						<div width="100%" style="background-color:black;color: white">
@@ -167,7 +286,9 @@
 						</div>
 
 						<grid model="@bind(vm.presupuestoForm.listaProductos)" 
-						width="100%" height="80%"	sclass="MyGridRowHeight" style="overflow: scroll;" emptyMessage="Sin registros cargados">
+								width="100%" height="80%"	
+								sclass="MyGridRowHeight" 
+								style="overflow: scroll;" emptyMessage="Sin registros cargados">
 							<columns>
 								<column width="155px" />
 								<column width="455px" />
@@ -195,7 +316,7 @@
 						</grid>
 					</div>
 					
-					<div width="100%" height="20%" style="padding-left:450px">					
+					<div width="100%" height="15%" style="padding-left:450px">					
 						<div width="370px" style="background-color:black;color: white;">
 							<label value="Graduacion del articulo" />
 						</div>
@@ -215,7 +336,7 @@
 			</center>
 
 			<!-- Parte inferior de la ventana -->
-			<south>
+			<south height="35%">
 				<div>
 					<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>
 					<div>
@@ -235,7 +356,7 @@
 							<rows>
 								<row>
 									<label value="Fecha" />
-									<datebox value = "@load(vm.fecha)" format="dd/MM/yyyy" disabled="true"/>
+									<datebox value = "@load(vm.fecha)" format="dd/MM/yyyy" readonly="true"/>
 									<space/>																	
 									<label value="Esfera" />
 									<label value="Cilindro" />

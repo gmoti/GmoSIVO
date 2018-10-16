@@ -1,8 +1,8 @@
 <?page title="Busca Producto" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<window id="winBuscaProducto" border="none" width="800px" height="600px" closable="false" mode="modal" sizable="false"
-			visible="@bind(vm.winVisibleBusqueda)"		 		
-			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductPres')">
+
+<window id="winBuscaProducto" border="none" width="800px" height="600px" closable="false" mode="modal" sizable="false"
+		visible="@bind(vm.winVisibleBusqueda)"		 		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductPres')">
 		
 <style>    
     .MyGridRowHeight
@@ -273,16 +273,13 @@
 		</borderlayout>
 		
 		
-		
-		
-		<popup id="seleccionGraduaciones" width="800px">
-		
+		<popup id="seleccionGraduaciones" width="800px">		
 			<div width="100%">
 			
 				<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="Lista de graduaciones" />
 						<div style="float: right">					
-							<toolbarbutton image="/image/Remove_32x32.png" onClick="seleccionGraduaciones.close()"/>		
+							<toolbarbutton image="/iconos/cancel2.png" onClick="seleccionGraduaciones.close()"/>		
 						</div>																			
 				</div>
 		
@@ -326,14 +323,12 @@
 								<textbox value="@bind(each.OI.cilindro)"/>
 								<textbox value="@bind(each.OI.eje)"/>
 								<textbox value="@bind(each.OI.adicion)"/>	
-								<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('seleccionaGraduacion',codigo=each.codigo)"/>					
+								<toolbarbutton image="/iconos/cancel2.png" onClick="@command('seleccionaGraduacion',codigo=each.codigo)"/>					
 							</row>							
 						</template>
 					</grid>
 				</div>	
-			</div>
-		
+			</div>		
 		</popup>
 
 	</window>
-</zk>

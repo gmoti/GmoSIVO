@@ -16,10 +16,10 @@
 		<borderlayout>
 			<!-- Parte superior de la ventana -->
 			<north height="28%">
-				<div>
-					<div width="100%" style="background-color:black;color: white">
+				<div width="100%" height="100%">
+					<div width="100%" height="25%" style="background-color:black;color: white">
 						
-						<div width="100%" style="background-color:black;color: white" height="25px">
+						<div width="100%" height="25px" style="background-color:black;color: white" >
 							<label value="ENCARGOS" style="float: left"/>
 							<div style="float: right">					
 								<label value="@load(vm.sucursalDes)"/>
@@ -28,7 +28,7 @@
 							</div>
 						</div>	
 						
-						<div style="text-align: right;" height="40px">
+						<div width="100%" height="40px" style="text-align: right;" >
 							<toolbarbutton image="/iconos/nuevo.png" width="40px" height="40px" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo"/>
 							<toolbarbutton image="/iconos/lista.png" width="40px" height="40px" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos"/>
 							<toolbarbutton image="/iconos/lupa.png" width="40px" height="40px" onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos"/>
@@ -44,8 +44,163 @@
 						</div>					
 					</div>
 					
-					<!-- Linea 1 del encabezxado -->
-					<div width="100%" style="padding :10px 0px 0px 0px">					
+					<div width="100%" height="75%">
+						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px">
+							<columns>
+								<column width="80px"/>
+								<column width="230px"/>
+								<column width="90px"/>
+								<column width="200px"/>
+								<column width="130px"/>
+								<column width="260px"/>
+								<column width="100px"/>
+								<column width="100px"/>								
+							</columns>
+							<rows>
+								<row><!-- fila 1 -->
+									<label value="Codigo" />
+									
+									<cell colspan="1">
+										<textbox value="@bind(vm.ventaPedidoForm.codigo_suc)" width="30px" readonly="true" />
+					    				<textbox value="@bind(vm.ventaPedidoForm.codigo)" 	  width="150px"	readonly="true" />
+					    			</cell>
+					    			
+					    			<label value="Cliente"/>
+					    			
+					    			<cell colspan="1">
+					    				<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="150px"/>
+										<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="30px" readonly="true"/>
+									</cell>
+									
+									<cell colspan="1">
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
+										<toolbarbutton image="/iconos/lupa2.png" width="30px"/>
+										<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px"/>										
+									</cell>									
+									
+									<textbox value="@load(vm.ventaPedidoForm.nombre_cliente)" width="250px" readonly="true"/>		
+						
+									<label value="fecha"/>
+									<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />					    			
+								</row>
+								
+								<row><!-- fila 2 -->
+									<label value="Forma pago" />									
+																		
+									<combobox model="@bind(vm.ventaPedidoForm.listaFormasPago)"
+										      width="180px" placeholder="Seleccione" 
+										      onRightClick="@command('comboSetNull',objetoBean=vm.formaPagoBean)" 					      
+										      selectedItem="@bind(vm.formaPagoBean)"									      
+										      disabled="@bind(vm.beanControlCombos.comboFpagoEnable)">
+										      
+									   <template name="model">
+										<comboitem label="@load(each.descripcion)"/>
+									   </template>	
+									</combobox>									
+											
+									<label value="Divisa" />
+																
+									<combobox model="@bind(vm.ventaPedidoForm.listaDivisas)"  
+											  width="180px" placeholder="Seleccione"
+											  onRightClick="@command('comboSetNull',objetoBean=vm.divisaBean)" 										   
+											  selectedItem="@bind(vm.divisaBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboDivisaEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>	
+									</combobox>
+									
+									<label value="Idioma" />
+									
+									<combobox model="@load(vm.ventaPedidoForm.listaIdiomas)" 
+											  width="180px" placeholder="Seleccione" 
+											  onRightClick="@command('comboSetNull',objetoBean=vm.idiomaBean)"										  
+											  selectedItem="@bind(vm.idiomaBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboIdiomaEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>
+									</combobox>
+								
+									<label value="Hora" />
+									<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true"/>
+								</row>
+								
+								<row><!-- fila 3 -->
+									
+									<label value="Tipo encargo" />
+																											
+									<combobox model="@bind(vm.ventaPedidoForm.listaTiposPedidos)" 
+											  width="180px" placeholder="Seleccione" 
+											  selectedItem="@bind(vm.tipoPedidoBean)"										  
+											  onRightClick="@command('comboSetNull',objetoBean=vm.tipoPedidoBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboTiposEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)"/>
+									  </template>	
+									</combobox>
+								
+									<label value="Agente" />	
+																	
+									<combobox model="@bind(vm.ventaPedidoForm.listaAgentes)" 
+											  width="180px"  placeholder="Seleccione"
+											  selectedItem="@bind(vm.agenteBean)"										  
+											  onRightClick="@command('comboSetNull',objetoBean=vm.agenteBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboAgenteEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.usuario)" />
+									  </template>	
+									</combobox>
+								
+									<label value="Convenio" />
+										
+									<cell colspan="1">	
+										<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="50px" />
+										<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="130px" readonly="true"/>	
+										<space width="5px"/>		
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+										<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" tooltiptext="Busqueda rapida convenio"/>
+										<toolbarbutton image="/iconos/cancel2.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>								
+									</cell>
+									
+									<cell colspan="1">
+										<label value="Cambio" />
+										<space width="5px"/>
+										<textbox value="@bind(vm.ventaPedidoForm.cambio)" width="30px" readonly="true"/>
+									</cell>
+								</row>	
+								
+								<row><!-- fila 4 -->
+									<label value="No Sobre" />					    		
+					    			<textbox/>					
+									<space/>
+									<button label="Entrega de encargos" onClick="@command('pedidoEntrega')"/>							
+									
+									<label value="Promocion" />
+									<combobox model="@load(vm.ventaPedidoForm.listaPromociones)" 
+											  width="180px" placeholder="Seleccione"
+											  selectedItem="@bind(vm.promocionBean)"
+											  onRightClick="@command('comboSetNull',objetoBean=vm.promocionBean)"
+											  readonly="@bind(vm.beanControlCombos.comboPromoEnable)">
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>
+									</combobox>												
+								
+									<button label="Cupon" onClick="@command('validaCupon')"/>								
+								
+								</row>						
+								
+							</rows>
+						</grid>
+					</div>				
+					
+					<!--  
+					<div width="100%" style="padding :10px 0px 0px 0px">									
 					   <hbox>
 					    <div width="300px">
 					    	<label value="Codigo" />
@@ -73,7 +228,7 @@
 						</hbox>					
 					</div>	
 					
-					<!-- Linea 2 del encabezxado -->
+					
 					<div width="100%" style="padding :10px 0px 0px 0px">
 						<hbox>						
 							<div width="305px">
@@ -126,7 +281,7 @@
 						</hbox>
 					</div>
 
-					<!-- Linea 3 del encabezxado -->
+					
 					<div width="100%" style="padding :10px 0px 0px 0px">
 						<hbox>							
 						
@@ -160,7 +315,7 @@
 								</combobox>
 							</div>								
 							
-							<!-- <checkbox label="Cerrado" value="@load(vm.ventaPedidoForm.cerrado)" readonly="true"/>		 -->													
+																				
 							
 							<div width="450px">
 								<label value="Convenio" />	
@@ -176,7 +331,7 @@
 						</hbox>
 					</div>
 					
-					<!-- Linea 4 del encabezxado -->
+					
 					<div width="100%" style="padding :10px 0px 0px 0px">
 						<hbox>
 							<div width="350px">
@@ -207,7 +362,7 @@
 							</div>
 							
 						</hbox>					
-					</div>
+					</div>-->
 														
 								
 				</div>
@@ -217,7 +372,7 @@
 			<center>
 				<div width="100%" height="100%">
 				
-					<div width="100%" height="80%">
+					<div width="100%" height="85%">
 					
 						<!-- Encabezado de la grid -->
 						<div width="100%" style="background-color:black;color:white; font-size: 6px;">
@@ -252,7 +407,9 @@
 						</div>
 
 						<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-								width="100%" height="150px" sclass="MyGridRowHeight" >
+								width="100%" height="250px" 
+								sclass="MyGridRowHeight" 
+								emptyMessage="Sin registros cargados"><!-- overflow: scroll;  -->
 							<columns>
 								<column width="145px" />
 								<column width="315px" />
@@ -311,7 +468,7 @@
 						</grid>
 					</div>
 					
-					<div width="100%" height="10%" style="padding-left:300px">
+					<div width="100%" height="15%" style="padding-left:300px">
 										
 						<div width="815px" style="background-color:black;color: white;">
 							<label value="Graduacion del articulo" />

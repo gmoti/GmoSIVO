@@ -1,42 +1,41 @@
 <?page title="Auto Generated index.zul"?>
 <zk>
-	<window  border="none" width="100%"
-		height="100%"
+	<window  border="none" width="100%" height="100%"		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerIndex')">
 
-		<div visible="@bind(vm.divVisibleLogin)">	
-			<hbox>
-				<div width="30%" height="100%">
-					<vbox>
-						<div height="300px">
-						</div>
-						<div height="300px">
-							<vbox>
-							<label value="LOGIN"/>
-							<label value="Usuario:"/>
-							<textbox value = "@bind(vm.usuarioForm.nombreUsuario)" onBlur="@command('usuarioUpper')"  
-									placeholder="Usuario" width="150px"/>
-							<label value="Contraseña:"/>
-							<textbox value = "@bind(vm.usuarioForm.claveUsuario)"  placeholder="Contraseña" width="150px" type="password"/>						
-							<button label="Enviar" onClick="@command('validar')"/>
-							</vbox>					
-						</div>
-					</vbox>
-				</div>
-				<div width="70%" height="100%">
-					<!-- lado derecho de la ventana -->
-				</div>
-			</hbox>
+		<div width="100%" height="100%" visible="@bind(vm.divVisibleLogin)">
+		
+			<borderlayout>
+				<north height="20%" style="background-color: #001624" border="none"/>
+				<west width="20%" style="background-color: #001624" border="none"> 
+				
+					<vlayout style="padding : 200px 0px 0px 20px">
+						<label value="LOGIN"/>
+						<label value="Usuario:"/>
+						<textbox value = "@bind(vm.usuarioForm.nombreUsuario)" onBlur="@command('usuarioUpper')"  
+								placeholder="Usuario" width="150px"/>
+						<label value="Contraseña:"/>
+						<textbox value = "@bind(vm.usuarioForm.claveUsuario)"  placeholder="Contraseña" width="150px" type="password"/>						
+						<button label="Enviar" onClick="@command('validar')"/>					
+					</vlayout>
+					
+				</west>
+				<center border="none">				    
+					<image src="/iconos/fondo_2014.jpg" width="100%" height="100%"/>
+				</center>
+				<east width="20%" style="background-color: #001624" border="none"/>
+				<south height="20%" style="background-color: #001624" border="none"/>
+			</borderlayout>		
+			
 		</div>
 		
-		<div visible="@bind(vm.divVisibleIndex)">
-			<hbox>
-				<div width="30%" height="100%">
-					<vbox>
-						<div height="300px">
-						</div>
-						<div height="300px">
-							<vbox>
+		<div width="100%" height="100%" visible="@bind(vm.divVisibleIndex)">
+		
+			<borderlayout>
+				<north height="20%" style="background-color: #001624" border="none"/>
+				<west width="20%" style="background-color: #001624" border="none"> 
+				
+					<vlayout style="padding : 200px 0px 0px 20px">
 							<label value="SUCURSALES"/>	
 							
 							<combobox model="@bind(vm.menuForm.colSucursales)" 
@@ -47,16 +46,17 @@
 								</template>
 							</combobox>					
 													
-							<button label="Ingresa Sucursal" onClick="@command('seleccionaSucursal')"/>
-							</vbox>					
-						</div>
-					</vbox>
-				</div>
-				<div width="70%" height="100%">
-					<!-- lado derecho de la ventana -->
-				</div>
-			</hbox>		
-		</div>
+							<button label="Ingresa Sucursal" onClick="@command('seleccionaSucursal')"/>					
+					</vlayout>
+					
+				</west>
+				<center border="none">
+					<image src="/iconos/fondo_2014.jpg" width="100%" height="100%"/>
+				</center>
+				<east width="20%" style="background-color: #001624" border="none"/>
+				<south height="20%" style="background-color: #001624" border="none"/>
+			</borderlayout>
 		
+		</div>		
 	</window>
 </zk>

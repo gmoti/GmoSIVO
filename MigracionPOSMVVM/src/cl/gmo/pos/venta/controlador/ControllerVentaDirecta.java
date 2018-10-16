@@ -340,6 +340,11 @@ public class ControllerVentaDirecta implements Serializable{
 	@Command
 	public void buscarCliente() {
 		
+		if (ventaDirectaForm.getNif().equals("")) {
+			Messagebox.show("Debe ingresar un Nif");
+			return;
+		}
+		
 		try {
 			
 			cliente = clienteImp.traeCliente(ventaDirectaForm.getNif(), "");

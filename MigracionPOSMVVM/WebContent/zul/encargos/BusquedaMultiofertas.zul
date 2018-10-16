@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<zk>
+
 <window id="winBusquedaMultiofertas" border="none" width="65%" 
 		height="80%" position="center" closable="false" mode="modal" sizable="false" 		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaMultiofertas')">
@@ -151,34 +151,35 @@
 												
 							<rows>
 								<row>
-								<cell colspan="1"/>
-								<cell colspan="1"/>	
-								<cell colspan="1"/>							
-								<label value="Esfera" />
-								<label value="Cilindro" />
-								<label value="Diametro" />
-								<cell colspan="1"/>
+									<cell colspan="1"/>
+									<cell colspan="1"/>	
+									<cell colspan="1"/>							
+									<label value="Esfera" />
+									<label value="Cilindro" />
+									<label value="Diametro" />
+									<cell colspan="1"/>
 								</row>
 								
 								<row>								
-								<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" value="derecho" />
-								<cell colspan="1"/>
-								<label value="O.D" />								
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
-								
-								<checkbox label="Cerca" checked="@bind(vm.busquedaProductosForm.chk_cerca)"/>
+									<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" value="derecho" />
+									<cell colspan="1"/>
+									<label value="O.D" />								
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
+									
+									<checkbox label="Cerca" checked="@bind(vm.busquedaProductosForm.chk_cerca)"/>
 								</row>
 								
 								<row>															
-								<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)" value="izquierdo"/>
-								<button label="B" onClick="" width="30px"/>								
-								<label value="O.I" />
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
-								<cell colspan="1"/>
+									<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)" value="izquierdo"/>
+									<button image="/iconos/lupa2.png" label="Graduac." onClick="seleccionGraduaciones.open(self)" width="100px"/>	
+																
+									<label value="O.I" />
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
+									<cell colspan="1"/>
 								</row>
 							</rows>
 						</grid>
@@ -268,5 +269,62 @@
 				</div>					
 			</center>		
 		</borderlayout>
+		
+		<popup id="seleccionGraduaciones" width="800px">		
+			<div width="100%">
+			
+				<div width="100%" style="background-color:black;color: white" height="40px">
+						<label value="Lista de graduaciones" />
+						<div style="float: right">					
+							<toolbarbutton image="/iconos/cancel2.png" onClick="seleccionGraduaciones.close()"/>		
+						</div>																			
+				</div>
+		
+				<div width="100%" style="background-color:black;color: white">				
+					<label value="Fecha"/>
+					<label value="Numero"/>
+					<label value="OD Esfera"/>
+					<label value="OD Cilindro"/>
+					<label value="OD Eje"/>
+					<label value="OD Adicion"/>
+					<label value="OI Esfera"/>
+					<label value="OI Cilindro"/>
+					<label value="OI Eje"/>
+					<label value="OD Adicion"/>															
+				</div>	
+			
+				<div>
+					<grid model="@bind(vm.busquedaProductosForm.listaGraduaciones)" 
+							sclass="MyGridRowHeight" width="100%" height="200px">
+						<columns>
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+							<column label="" />
+						</columns>
+						<template name="model">							
+							<row>
+								<textbox value="@bind(each.fecha)"/>
+								<textbox value="@bind(each.numero)"/>
+								<textbox value="@bind(each.OD_esfera)"/>
+								<textbox value="@bind(each.OD_cilindro)"/>
+								<textbox value="@bind(each.OD_eje)"/>
+								<textbox value="@bind(each.OD_adicion)"/>
+								<textbox value="@bind(each.OI_esfera)"/>
+								<textbox value="@bind(each.OI.cilindro)"/>
+								<textbox value="@bind(each.OI.eje)"/>
+								<textbox value="@bind(each.OI.adicion)"/>	
+								<toolbarbutton image="/iconos/cancel2.png" onClick="@command('seleccionaGraduacion',codigo=each.codigo)"/>					
+							</row>							
+						</template>
+					</grid>
+				</div>	
+			</div>		
+		</popup>		
 </window>
-</zk>
