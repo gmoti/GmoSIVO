@@ -9,7 +9,7 @@
 			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="@bind(vm.title)" />
 				<div style="float: right">					
-					<toolbarbutton image="/image/Remove_32x32.png" onClick="winVisorReporte.detach()"/>		
+					<toolbarbutton image="/iconos/cancel.png" onClick="winVisorReporte.detach()"/>		
 				</div>																			
 			</div>
 		

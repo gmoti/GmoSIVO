@@ -15,7 +15,7 @@
 			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Seleccion de cobro" />
 				<div style="float: right">					
-					<toolbarbutton image="/image/Remove_32x32.png" onClick="winPagoVentaDirecta.detach()"/>		
+					<toolbarbutton image="/iconos/cancel.png" onClick="winPagoVentaDirecta.detach()"/>		
 				</div>																			
 			</div>		
 			
@@ -69,8 +69,8 @@
 			<div width="100%" height="40px" style="background-color:black;color: white">
 				<label value="Cobro" />
 				<div style="float: right">					
-					<toolbarbutton image="/image/Save_32x32.png" onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
-     				<toolbarbutton image="/image/Print_32x32.png" onClick="@command('generaBoleta')"/>	
+					<toolbarbutton image="/iconos/save.png" onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
+     				<toolbarbutton image="/iconos/printer.png" onClick="@command('generaBoleta')"/>	
      					
 				</div>																			
 			</div>
@@ -156,7 +156,7 @@
 	     								<textbox value="@load(each.fecha)" width="100px" readonly="true"/>
 	     								<textbox value="@load(each.detalle_forma_pago)" readonly="true"/>
 	     								<intbox value="@load(each.cantidad)" style="text-align:right" format="#,###,##0" locale="it" width="100px" readonly="true"/>
-	     								<button image="/image/Remove_32x32.png" onClick="@command('deleteItemAutoriza',arg=each)"/>
+	     								<button image="/iconos/cancel2.png" onClick="@command('deleteItemAutoriza',arg=each)"/>
 	     								</row>     							
 	     						</template>
 	     					</grid>

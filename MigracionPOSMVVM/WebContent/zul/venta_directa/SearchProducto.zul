@@ -30,11 +30,14 @@
 						</div>																			
 					</div>	
 					
-					<grid sclass="MyGridRowHeight">
+					<grid sclass="MyGridRowHeight" width="100%">
 						<columns>
-							<column width="180px"/>
+							<!-- <column width="180px"/>
 							<column width="305px"/>
-							<column width="100px"/>
+							<column width="100px"/> -->
+							<column hflex="min"/>
+							<column hflex="min"/>
+							<column hflex="min"/>
 						</columns>
 						<rows>
 							<row>
@@ -98,7 +101,7 @@
 								<textbox
 									value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
 
-								<button image="/iconos/lupa2.png"
+								<button image="/iconos/lupa2.png" width="150px"
 									label="Buscar" onClick="@command('despachador',arg='buscar')" />
 							</row>
 						</rows>

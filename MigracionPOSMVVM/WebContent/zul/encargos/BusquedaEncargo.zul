@@ -19,7 +19,7 @@
 			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Selecciona Encargo" />
 				<div style="float: right">					
-					<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('seleccionaProducto',win=winBusquedaEncargo)"/>		
+					<toolbarbutton image="/iconos/cancel.png" onClick="@command('seleccionaProducto',win=winBusquedaEncargo)"/>		
 				</div>																			
 			</div>
 			

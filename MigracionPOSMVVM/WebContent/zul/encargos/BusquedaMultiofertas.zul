@@ -28,7 +28,7 @@
 					<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="BUSQUEDA PRODUCTOS MULTIOFERTAS" />
 						<div style="float: right">					
-							<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('salir',win=winBusquedaMultiofertas)"/>		
+							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir',win=winBusquedaMultiofertas)"/>		
 						</div>																			
 					</div>
 					
@@ -119,7 +119,7 @@
 								<label value="Codigo Barra Producto" />
 								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
 								
-								<button image="/iconos/lupa.png" label="Buscar" onClick="@command('buscarProducto')"/>								
+								<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('buscarProducto')"/>								
 							</row>
 
 						</rows>

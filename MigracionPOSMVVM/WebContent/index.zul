@@ -4,10 +4,6 @@
 		height="100%"
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerIndex')">
 
-		<!-- <label value="You are using: ${desktop.webApp.version}"/>
-			<a href="zul/MenuPrincipal.zul">Ir a cliente</a> -->
-			
-		
 		<div visible="@bind(vm.divVisibleLogin)">	
 			<hbox>
 				<div width="30%" height="100%">
@@ -18,7 +14,8 @@
 							<vbox>
 							<label value="LOGIN"/>
 							<label value="Usuario:"/>
-							<textbox id="usuario" value = "@bind(vm.usuarioForm.nombreUsuario)"   placeholder="Usuario" width="150px"/>
+							<textbox value = "@bind(vm.usuarioForm.nombreUsuario)" onBlur="@command('usuarioUpper')"  
+									placeholder="Usuario" width="150px"/>
 							<label value="Contraseña:"/>
 							<textbox value = "@bind(vm.usuarioForm.claveUsuario)"  placeholder="Contraseña" width="150px" type="password"/>						
 							<button label="Enviar" onClick="@command('validar')"/>
