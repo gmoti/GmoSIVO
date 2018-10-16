@@ -26,64 +26,83 @@
 					<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="Busqueda Productos" />
 						<div style="float: right">					
-							<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('seleccionaProducto',win=winBuscaProductoVenta)"/>		
+							<toolbarbutton image="/iconos/cancel2.png" onClick="@command('seleccionaProducto',win=winBuscaProductoVenta)"/>		
 						</div>																			
 					</div>	
-							
-					<hbox>
-					<label value="Familia de Productos" />
-					<space width="77px"/>
-					<combobox model="@load(vm.busquedaProductosForm.listaFamilias)" 
-								selectedItem="@bind(vm.familiaBean)" 
-								onSelect="@command('cargaSubFamilias')" 
-								placeholder="Seleccione"
-								onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)" width="300px">						
-						<template name='model'>
-							<comboitem label="@load(each.descripcion)"/>
-						</template>
-					</combobox>					
-					</hbox>	
 					
-					<hbox>
-					<label value="Sub-familia de Productos" />
-					<space width="50px"/>
-					<combobox model="@load(vm.busquedaProductosForm.listaSubFamilias)" 
-								selectedItem="@bind(vm.subFamiliaBean)" 
-								onSelect="@command('cargaGrupoFamilias')" 
-								placeholder="Seleccione"
-								onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)" width="300px">													
-						<template name='model'>
-							<comboitem label="@load(each.descripcion)"/>
-						</template>
-					</combobox>					
-					</hbox>			
-					
-					<hbox>
-					<label value="Grupo de Productos" />
-					<space width="85px"/>
-					<combobox model="@load(vm.busquedaProductosForm.listaGruposFamilias)" 
-								selectedItem="@bind(vm.grupoFamiliaBean)" 
-								placeholder="Seleccione"
-								onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)" width="300px">														
-						<template name='model'>
-							<comboitem label="@load(each.descripcion)"/>
-						</template>
-					</combobox>					
-					</hbox>
-				
-					<hbox>
-					<label value="Código de Producto SAP" />
-					<space width="50px"/>
-					<textbox value = "@bind(vm.busquedaProductosForm.codigoBusqueda)" />					
-					</hbox>
-				
-					<hbox>
-					<label value="Codigo Barra Producto" />
-					<space width="66px"/>
-					<textbox value = "@bind(vm.busquedaProductosForm.codigoBarraBusqueda)"/>
-					
-					<button image="/iconos/lupa.png" label="Buscar" onClick="@command('despachador',arg='buscar')"/>					
-					</hbox>						
+					<grid sclass="MyGridRowHeight">
+						<columns>
+							<column width="180px"/>
+							<column width="305px"/>
+							<column width="100px"/>
+						</columns>
+						<rows>
+							<row>
+								<label value="Familia de Productos" />
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaFamilias)"
+									selectedItem="@bind(vm.familiaBean)"
+									onSelect="@command('cargaSubFamilias')"
+									placeholder="Seleccione"
+									onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
+									width="300px">
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<space />
+							</row>
+
+							<row>
+								<label value="Sub-familia de Productos" />
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
+									selectedItem="@bind(vm.subFamiliaBean)"
+									onSelect="@command('cargaGrupoFamilias')"
+									placeholder="Seleccione"
+									onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
+									width="300px">
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<space />
+							</row>
+
+							<row>
+								<label value="Grupo de Productos" />
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
+									selectedItem="@bind(vm.grupoFamiliaBean)"
+									placeholder="Seleccione"
+									onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
+									width="300px">
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+								<space />
+							</row>
+
+							<row>
+								<label value="Código de Producto SAP" />								
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
+								<space />
+							</row>
+
+							<row>
+								<label value="Codigo Barra Producto" />								
+								<textbox
+									value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
+
+								<button image="/iconos/lupa2.png"
+									label="Buscar" onClick="@command('despachador',arg='buscar')" />
+							</row>
+						</rows>
+					</grid>				
 				</div>			
 				
 			</north>

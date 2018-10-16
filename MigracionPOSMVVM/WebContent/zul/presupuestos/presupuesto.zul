@@ -36,7 +36,7 @@
 					</div>
 					
 					<!-- Linea 1 del encabezxado -->
-					<div width="100%" style="padding :15px 0px 0px 0px">					
+					<div width="100%" style="padding :5px 0px 0px 0px">					
 					   <hbox>
 					    <div width="300px">
 					    	<label value="Codigo" />
@@ -49,8 +49,8 @@
 						    <label value="Cliente"/>						
 							<textbox value="@bind(vm.presupuestoForm.nif)" width="150px"/>
 							<textbox value="@load(vm.presupuestoForm.dvnif)" width="30px" disabled="true"/>								
-							<toolbarbutton image="/iconos/luparapida.jpg" onClick="@command('buscarCliente',arg=vm.presupuestoForm.nif)"  width="30px"/>	
-							<toolbarbutton image="/iconos/lupa.png" width="30px"/>			
+							<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente',arg=vm.presupuestoForm.nif)"  width="30px"/>	
+							<toolbarbutton image="/iconos/lupa2.png" width="30px"/>			
 						</div>
 						
 						<textbox value="@bind(vm.presupuestoForm.nombre_cliente)" width="250px" disabled="true"/>
@@ -60,7 +60,7 @@
 					</div>	
 					
 					<!-- Linea 2 del encabezxado -->
-					<div width="100%" style="padding :15px 0px 0px 0px">
+					<div width="100%" style="padding :5px 0px 0px 0px">
 						<hbox>						
 							<div width="300px">
 								<label value="Forma pago" />
@@ -97,7 +97,7 @@
 
 					<!-- Linea 3 del encabezxado -->
 					<div width="100%"
-						style="padding :15px 0px 0px 0px">
+						style="padding :5px 0px 0px 0px">
 						<hbox>
 							
 							<div width="300px">
@@ -131,8 +131,8 @@
 								<textbox value="@bind(vm.presupuestoForm.convenio)" width="80px" />
 								<textbox value="@bind(vm.presupuestoForm.convenio_det)" width="150px" disabled="true"/>
 								
-								<toolbarbutton image="/iconos/luparapida.jpg" onClick="@command('busquedaRapidaConvenio')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-								<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaConvenio')"  visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+								<toolbarbutton image="/iconos/luparapida.png" onClick="@command('busquedaRapidaConvenio')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+								<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaConvenio')"  visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
 								<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>	
 							</div>
 						</hbox>
@@ -145,7 +145,7 @@
 			<center >
 				<div width="100%" height="100%">
 				
-					<div width="100%" height="90%">
+					<div width="100%" height="80%">
 					
 						<!-- Encabezado de la grid -->
 						<div width="100%" style="background-color:black;color: white">
@@ -153,7 +153,7 @@
 							<label value="Articulo" />
 							<space width="100px"/>
 							<label value="Descripcion" />
-							<space width="360px"/>
+							<space width="380px"/>
 							<label value="Precio IVA" />
 							<space width="30px"/>
 							<label value="Importe" />
@@ -182,31 +182,31 @@
 									<textbox value="@load(each.codigo)" width="150px" tooltiptext="Click para ver detalles" 
 											onClick="@command('actualizaDetalles',arg=each)" 
 											readonly="true"/>
-									<textbox value="@load(each.descripcion)" width="450px" disabled="true"/>
-									<intbox value="@load(each.precio)"  width="100px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
-									<intbox value="@load(each.importe)" width="100px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
+									<textbox value="@load(each.descripcion)" width="450px" readonly="true"/>
+									<intbox value="@load(each.precio)"  width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+									<intbox value="@load(each.importe)" width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
 									<intbox value="@bind(each.descuento)" width="100px" style="text-align:right"/>
 									
-									<toolbarbutton image="/iconos/cancel.png" width="40px" 
+									<toolbarbutton image="/iconos/cancel2.png" width="40px" 
 											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
 								</row>
 							</template>
 						</grid>
 					</div>
 					
-					<div width="100%" height="10%" style="padding-left:450px">					
+					<div width="100%" height="20%" style="padding-left:450px">					
 						<div width="370px" style="background-color:black;color: white;">
 							<label value="Graduacion del articulo" />
 						</div>
 						<div>
 							<hbox>
 								<label value="Esfera" />
-								<doublebox value="@load(vm.productoBean.esfera)" width="60px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.esfera)" width="60px" readonly="true" style="text-align:right"/>
 								<label value="Cilindro" />
-								<doublebox value="@load(vm.productoBean.cilindro)" width="60px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.cilindro)" width="60px" readonly="true" style="text-align:right"/>
 								<label value="Diametro" />
-								<doublebox value="@load(vm.productoBean.diametro)" width="60px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.diametro)" width="60px" readonly="true" style="text-align:right"/>
 							</hbox>
 						</div>						
 					</div>
@@ -249,31 +249,31 @@
 
 								<row>
 									<label value="Orden" />
-									<textbox value="@load(vm.presupuestoForm.graduacion.orden)"  width="60px" disabled="true"/>
+									<textbox value="@load(vm.presupuestoForm.graduacion.orden)"  width="60px" readonly="true"/>
 									<label value="O.D" />
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_esfera)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_cilindro)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_eje)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_adicion)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_esfera_cerca)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_esfera)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_cilindro)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_eje)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_adicion)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_esfera_cerca)" width="60px" readonly="true"/>
 									
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_n)" width="60px" disabled="true" style="float: right;"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_p)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_n)" width="60px" readonly="true" style="float: right;"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OD_p)" width="60px" readonly="true"/>
 									
 								</row>
 
 								<row>
 									<label value="Doctor" />
-									<textbox value="@load(vm.presupuestoForm.graduacion.doctor)" width="280px" disabled="true"/>
+									<textbox value="@load(vm.presupuestoForm.graduacion.doctor)" width="280px" readonly="true"/>
 									<label value="O.I" />
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_esfera)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_cilindro)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_eje)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_adicion)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_esfera_cerca)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_esfera)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_cilindro)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_eje)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_adicion)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_esfera_cerca)" width="60px" readonly="true"/>
 									
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_n)" width="60px" disabled="true" style="float: right;"/>
-									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_p)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_n)" width="60px" readonly="true" style="float: right;"/>
+									<doublebox value="@load(vm.presupuestoForm.graduacion.OI_p)" width="60px" readonly="true"/>
 																
 								</row>
 							</rows>
@@ -302,10 +302,10 @@
 								<row>
 									<label value="Fecha de entrega" />
 									<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy"/>
-									<intbox  value="@bind(vm.presupuestoForm.subTotal)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.presupuestoForm.subTotal)" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
 									<intbox  value="@bind(vm.presupuestoForm.descuento)" onBlur="@command('actualiza_descuento_total_monto')" style="text-align:right"/>
 									<intbox  value="@bind(vm.presupuestoForm.dtcoPorcentaje)" onBlur="@command('actualiza_descuento_total')" style="text-align:right"/>
-									<intbox  value="@bind(vm.presupuestoForm.total)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.presupuestoForm.total)" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
 								</row>
 								<row>
 									<label value="Notas" />

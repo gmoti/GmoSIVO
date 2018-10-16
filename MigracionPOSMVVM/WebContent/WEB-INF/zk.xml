@@ -26,6 +26,10 @@
 		<name>org.zkoss.zul.progressbox.position</name>
 		<value>center</value>
 	</library-property>
+	<library-property>
+    	<name>org.zkoss.theme.preferred</name>
+   		<value>silvertail</value> <!-- or silvertail, atlantic, deepsea, gardensalad etc. -->
+	</library-property>
 	<client-config>
 		<processing-prompt-delay>1</processing-prompt-delay>
 	</client-config>	

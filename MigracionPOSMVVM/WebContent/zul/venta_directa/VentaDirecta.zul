@@ -49,7 +49,7 @@
 						<div width="300px">
 							<textbox value="@bind(vm.ventaDirectaForm.nif)" width="140px"/> <!-- constraint="/^[0-9]{7,12}$/"/> -->
 							<textbox value="@bind(vm.ventaDirectaForm.dv)" width="30px" disabled="true"/>
-							<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.jpg"/>
+							<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.png"/>
 							<toolbarbutton onClick="@command('buscarClienteGenerico')" image="/iconos/cliente_generico.png"/>							
 						</div>
 						<div width="600px">
@@ -129,27 +129,27 @@
 				    <div width="100%" height="45px" style="background-color:black;color: white;">
 				    	<space width="10px"/>
 						<label value="Codigo del articulo"/>
-						<button image="/iconos/add.png" onClick="@command('buscaProductoDirecto')" disabled="@bind(vm.controlBotones.enableGrid)" />
+						<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProductoDirecto')" disabled="@bind(vm.controlBotones.enableGrid)" />
 						<space width="30px"/>
 						<label value="Descripcion"/>
-						<space width="355px"/>
+						<space width="365px"/>
 						<label value="Precio"/>
 						<space width="100px"/>
 						<label value="Importe"/>
 						<space width="100px"/>
 						<label value="Cantidad"/>
 						<space width="90px"/>
-						<button image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.controlBotones.enableGrid)"/>		    
+						<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.controlBotones.enableGrid)"/>		    
 				    </div> 
 				    
 					<div width="100%" height="430px" >	
 						<grid model="@bind(vm.ventaDirectaForm.listaProductos)" selectedItem="@bind(vm.productoBean)" 
-							emptyMessage="Sin datos cargados" sclass="MyGridRowHeight"  width="100%" height="420px" > 
+							emptyMessage="Sin datos cargados" sclass="MyGridRowHeight"  width="100%" height="350px" > 
 											
 							
 							<columns>
 							<column hflex="1" />
-							<column hflex="3" />
+							<column hflex="2" />
 							<column hflex="1" />
 							<column hflex="1" />
 							<column hflex="1" />
@@ -163,7 +163,9 @@
 									<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox value="@bind(each.importe)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox value="@bind(each.cantidad)" onChange="@command('actImporteGrid',arg=each)" style="text-align:right" format="#,###,##0" locale="it"/>								
-									<button label="Del" onClick="@command('deleteItem',arg=each)" />
+									
+									<toolbarbutton image="/iconos/cancel2.png" width="40px" 
+											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
 								</row>					
 							</template>
 						</grid>
@@ -173,12 +175,12 @@
 			</center>
 	
 			<south>
-				<div width="100%" height="40px">
+				<div width="100%" height="50px">
 					<hbox>
 						<space width="800px"/>
 						<label value="Total "/>
 						<!-- <intbox value="@bind(vm.total)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/> -->
-						<intbox value="@bind(vm.ventaDirectaForm.sumaTotal)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+						<intbox value="@bind(vm.ventaDirectaForm.sumaTotal)" readonly="true" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it"/>
 					</hbox>
 				</div>
 			</south>
@@ -190,7 +192,7 @@
 				<label value="DATOS DE CAJA" />
 			</div>
 			
-			<grid sclass="MyGridRowHeight" width="100%" height="300px">
+			<grid sclass="MyGridRowHeight" width="100%" height="200px">
 				<columns>
 					<column width="150px" />
 					<column width="250px" />

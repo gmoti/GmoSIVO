@@ -18,7 +18,7 @@
 							<vbox>
 							<label value="LOGIN"/>
 							<label value="Usuario:"/>
-							<textbox value = "@bind(vm.usuarioForm.nombreUsuario)"   placeholder="Usuario" width="150px"/>
+							<textbox id="usuario" value = "@bind(vm.usuarioForm.nombreUsuario)"   placeholder="Usuario" width="150px"/>
 							<label value="Contraseña:"/>
 							<textbox value = "@bind(vm.usuarioForm.claveUsuario)"  placeholder="Contraseña" width="150px" type="password"/>						
 							<button label="Enviar" onClick="@command('validar')"/>
