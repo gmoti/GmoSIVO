@@ -7,6 +7,20 @@
 			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
 			border:1px solid white; border-right:1px solid transparent;
 			padding:0px; margin:0px; }
+			
+			.shrink24 img {
+	  		vertical-align: middle;
+	  		border-style: none;
+	  		width: 24px;
+	  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			}
 		</style>
 
 
@@ -15,7 +29,8 @@
 			<div width="100%" height="20%" style="background-color:black;color: white">
 				<label value="Seleccion de cobro" />
 				<div style="float: right">					
-					<toolbarbutton image="/iconos/cancel.png" onClick="winPagoVentaDirecta.detach()"/>		
+					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+						onClick="winPagoVentaDirecta.detach()"/>		
 				</div>																			
 			</div>		
 			
@@ -69,8 +84,10 @@
 			<div width="100%" height="15%" style="background-color:black;color: white">
 				<label value="Cobro" />
 				<div style="float: right">					
-					<toolbarbutton image="/iconos/save.png" onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
-     				<toolbarbutton image="/iconos/printer.png" onClick="@command('generaBoleta')"/>	
+					<toolbarbutton image="/iconos/save.png" sclass="shrink24" 
+							onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
+     				<toolbarbutton image="/iconos/printer.png" 
+     						onClick="@command('generaBoleta')" sclass="shrink24"/>	
      					
 				</div>																			
 			</div>

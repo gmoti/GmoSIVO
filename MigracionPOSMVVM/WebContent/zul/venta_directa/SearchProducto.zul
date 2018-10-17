@@ -4,21 +4,16 @@
 		height="550px" position="center" closable="false" mode="modal" sizable="false" 	
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProduct')">
 		
-<style>    
-    .MyGridRowHeight
-        tr.z-row td.z-row-inner div.z-row-content{
-            border:1px solid white;
-            border-right:1px solid transparent;
-            padding:0px;
-            margin:0px;            
-     }
-     
-     .z-combobox-inp
-     { height: 20px; }
-     
-     .z-button-inp
-     { height: 15px; }
-</style>
+		<style>    
+		    .MyGridRowHeight
+		        tr.z-row td.z-row-inner div.z-row-content{
+		            border:1px solid white;
+		            border-right:1px solid transparent;
+		            padding:0px;
+		            margin:0px;            
+		     } 
+		     
+		</style>
 
 		<borderlayout>
 			<north>
@@ -31,10 +26,7 @@
 					</div>	
 					
 					<grid sclass="MyGridRowHeight" width="100%">
-						<columns>
-							<!-- <column width="180px"/>
-							<column width="305px"/>
-							<column width="100px"/> -->
+						<columns>							
 							<column hflex="min"/>
 							<column hflex="min"/>
 							<column hflex="min"/>

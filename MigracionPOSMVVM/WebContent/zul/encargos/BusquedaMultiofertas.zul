@@ -11,13 +11,21 @@
 		            border-right:1px solid transparent;
 		            padding:0px;
 		            margin:0px;            
-		     }
+		     }		     
 		     
-		     .z-combobox-inp
-		     { height: 20px; }
-		     
-		     .z-button-inp
-		     { height: 15px; }
+		     .shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;	  		
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			}
 		</style>
 		
 		
@@ -28,7 +36,8 @@
 					<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="BUSQUEDA PRODUCTOS MULTIOFERTAS" />
 						<div style="float: right">					
-							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir',win=winBusquedaMultiofertas)"/>		
+							<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" 
+								onClick="@command('salir',win=winBusquedaMultiofertas)"/>		
 						</div>																			
 					</div>
 					
@@ -276,7 +285,8 @@
 				<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="Lista de graduaciones" />
 						<div style="float: right">					
-							<toolbarbutton image="/iconos/cancel2.png" onClick="seleccionGraduaciones.close()"/>		
+							<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+								onClick="seleccionGraduaciones.close()"/>		
 						</div>																			
 				</div>
 		

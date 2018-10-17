@@ -1,26 +1,40 @@
 <?page title="Encargos" contentType="text/html;charset=UTF-8"?>
 
-	<window id="winEncargos" border="none" width="100%" height="100%" 
+	<window id="winEncargos" border="none" width="100%" height="100%" vflex="min" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerEncargos')">
 		
 		<style>
-			.MyGridRowHeight
-        	tr.z-row td.z-row-inner div.z-row-content{
-            	border:1px solid white;
-          	  border-right:1px solid transparent;
-          	  padding:0px;
-          	  margin:0px;            
-     		}
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		}
 		</style>
 
-		<borderlayout>
+		<borderlayout vflex="min">
 			<!-- Parte superior de la ventana -->
-			<north height="28%">
-				<div width="100%" height="100%">
-					<div width="100%" height="25%" style="background-color:black;color: white">
+			<north height="28%" vflex="min">
+				<div width="100%" height="100%" vflex="min">
+					<div width="100%" height="25%" style="background-color:black;color: white" vflex="min">
 						
 						<div width="100%" height="25px" style="background-color:black;color: white" >
-							<label value="ENCARGOS" style="float: left"/>
+							<label value="ENCARGOS" style="float: left ; font-weight: bold; font-size: 150%;"/>
 							<div style="float: right">					
 								<label value="@load(vm.sucursalDes)"/>
 								<label value="::"/>
@@ -28,23 +42,23 @@
 							</div>
 						</div>	
 						
-						<div width="100%" height="40px" style="text-align: right;" >
-							<toolbarbutton image="/iconos/nuevo.png" width="40px" height="40px" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo"/>
-							<toolbarbutton image="/iconos/lista.png" width="40px" height="40px" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos"/>
-							<toolbarbutton image="/iconos/lupa.png" width="40px" height="40px" onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos"/>
-							<toolbarbutton image="/iconos/delete.png" width="40px" height="40px" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Encargo"/>
+						<div width="100%" height="40px" style="text-align: right;" vflex="min">
+							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/lupa.png"  onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Encargo" sclass="shrink24"/>
 							
-							<toolbarbutton image="/iconos/boleta.png" width="40px" height="40px" onClick="@command('mostrar_pagos_boletas')"  	disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Mostrar Pagos y Boletas"/>
-							<toolbarbutton image="/iconos/Hoja.png" width="40px" height="40px" onClick="@command('generaFichaTecnica')" 	    disabled="@bind(vm.beanControlBotones.enableTaller)" tooltiptext="Ficha Taller"/>
-							<toolbarbutton image="/iconos/cliente.png" width="40px" height="40px" onClick="@command('generaFichaCliente')"        disabled="@bind(vm.beanControlBotones.enableCliente)" tooltiptext="Ficha Cliente"/>
+							<toolbarbutton image="/iconos/boleta.png" onClick="@command('mostrar_pagos_boletas')"  	disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Mostrar Pagos y Boletas" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/Hoja.png" onClick="@command('generaFichaTecnica')" 	    disabled="@bind(vm.beanControlBotones.enableTaller)" tooltiptext="Ficha Taller" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/cliente.png" onClick="@command('generaFichaCliente')"        disabled="@bind(vm.beanControlBotones.enableCliente)" tooltiptext="Ficha Cliente" sclass="shrink24"/>
 							
-							<toolbarbutton image="/iconos/money2.png" width="40px" height="40px" onClick="@command('validaCantidadProductosMulit')"    disabled="@bind(vm.beanControlBotones.enablePagar)" tooltiptext="Totalizar Encargos"/>
-							<toolbarbutton image="/iconos/check.png" width="40px" height="40px" onClick="@command('ingresa_pedido')"  				  disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Guardar"/>
-							<toolbarbutton image="/iconos/cancel.png" width="40px" height="40px" onClick="@command('salir', win=winEncargos)" tooltiptext="Cerrar"/>										
+							<toolbarbutton image="/iconos/money2.png" onClick="@command('validaCantidadProductosMulit')"    disabled="@bind(vm.beanControlBotones.enablePagar)" tooltiptext="Totalizar Encargos" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/check.png" onClick="@command('ingresa_pedido')"  				  disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Guardar" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', win=winEncargos)" tooltiptext="Cerrar" sclass="shrink24"/>										
 						</div>					
 					</div>
 					
-					<div width="100%" height="75%">
+					<div width="100%" height="75%" vflex="min">
 						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px">
 							<columns>
 								<column width="80px"/>
@@ -369,10 +383,10 @@
 			</north>
 
 			<!-- Centro de la ventana -->
-			<center>
-				<div width="100%" height="100%">
+			<center vflex="min">
+				<div width="100%" height="100%" vflex="min">
 				
-					<div width="100%" height="85%">
+					<div width="100%" height="85%" vflex="min">
 					
 						<!-- Encabezado de la grid -->
 						<div width="100%" style="background-color:black;color:white; font-size: 6px;">
@@ -406,69 +420,71 @@
 							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.beanControlBotones.enableGrid)" width="50px" tooltiptext="Agregar productos"/>												
 						</div>
 
-						<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-								width="100%" height="250px" 
-								sclass="MyGridRowHeight" 
-								emptyMessage="Sin registros cargados"><!-- overflow: scroll;  -->
-							<columns>
-								<column width="145px" />
-								<column width="315px" />
-								<column width="85px" />
-								<column width="85px" />
-								<column width="85px" />
-								<column width="85px" />
-								
-								<column width="65px" />								
-								<column width="105px" />
-								<column width="65px" />
-								
-								<column width="45px" />								
-								<column width="45px" />
-								<column width="45px" />
-								<column width="45px" />
-							</columns>
-							<template name="model">
-								<row>
-									<textbox value="@load(each.codigo)" width="150px" 
-										tooltiptext="Click para ver detalles" 
-										onClick="@command('actualizaDetalles',arg=each)" 
-										readonly="true"/>
-										
-									<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+						<div width="100%" vflex="min">
+							<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
+									width="100%" height="250px" 
+									sclass="MyGridRowHeight" 
+									emptyMessage="Sin registros cargados"><!-- overflow: scroll;  -->
+								<columns>
+									<column width="145px" />
+									<column width="315px" />
+									<column width="85px" />
+									<column width="85px" />
+									<column width="85px" />
+									<column width="85px" />
 									
-									<intbox value="@load(each.precio)"  width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+									<column width="65px" />								
+									<column width="105px" />
+									<column width="65px" />
+									
+									<column width="45px" />								
+									<column width="45px" />
+									<column width="45px" />
+									<column width="45px" />
+								</columns>
+								<template name="model">
+									<row>
+										<textbox value="@load(each.codigo)" width="150px" 
+											tooltiptext="Click para ver detalles" 
+											onClick="@command('actualizaDetalles',arg=each)" 
+											readonly="true"/>
+											
+										<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+										
+										<intbox value="@load(each.precio)"  width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+																			
+										<intbox value="@bind(each.cantidad)" width="80px" readonly="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+																			
+										<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##,###0" locale="it" 
+													onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" />
+																						
+										<intbox value="@load(each.importe)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>	
 																		
-									<intbox value="@bind(each.cantidad)" width="80px" readonly="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+										<textbox value="@load(each.grupo)" width="60px" readonly="false" style="text-align:right"  
+												onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>									
+										
+										<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="100px"/>	
 																		
-									<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##,###0" locale="it" 
-												onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" />
-																					
-									<intbox value="@load(each.importe)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>	
-																	
-									<textbox value="@load(each.grupo)" width="60px" readonly="false" style="text-align:right"  
-											onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>									
-									
-									<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="100px"/>	
-																	
-									<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
-									
-									<toolbarbutton image="/iconos/add.png" width="40px" 
-										onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
-									
-									<toolbarbutton image="/iconos/add.png" width="40px" 
-										onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
+										<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
 										
-									<space width="40px" />
+										<toolbarbutton image="/iconos/add.png" width="40px" 
+											onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
 										
-									<toolbarbutton image="/iconos/cancel2.png" width="40px" 
-											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
-									
-								</row>
-							</template>
-						</grid>
+										<toolbarbutton image="/iconos/add.png" width="40px" 
+											onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
+											
+										<space width="40px" />
+											
+										<toolbarbutton image="/iconos/cancel2.png" width="40px" 
+												onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
+										
+									</row>
+								</template>
+							</grid>
+						</div>
 					</div>
 					
-					<div width="100%" height="15%" style="padding-left:300px">
+					<div width="100%" height="15%" style="padding-left:300px" vflex="min">
 										
 						<div width="815px" style="background-color:black;color: white;">
 							<label value="Graduacion del articulo" />
@@ -497,10 +513,10 @@
 			</center>
 
 			<!-- Parte inferior de la ventana -->
-			<south height="35%">
-				<div>
+			<south height="35%" vflex="min">
+				<div vflex="min">
 					<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>
-					<div>
+					<div width="100%" vflex="min">
 						<grid sclass="MyGridRowHeight">
 							<columns>
 								<column label="" hflex="1"/>
@@ -562,7 +578,7 @@
 						</grid>
 					</div>
 					<div width="100%" style="background-color:black;color: white"><label value="Totales"/></div>
-					<div>
+					<div width="100%" vflex="min">
 						<grid sclass="MyGridRowHeight">
 							<columns>
 								<column label="" />
