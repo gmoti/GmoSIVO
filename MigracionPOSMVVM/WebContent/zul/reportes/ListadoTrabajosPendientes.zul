@@ -24,7 +24,7 @@
 				<label value="LISTADO DE ENCARGOS" />
 				<div style="float: right">					
 					<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')"/>
-					<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte5.detach()"/>		
+					<toolbarbutton image="/iconos/cancel.png" onClick="reporte5.detach()"/>		
 				</div>																			
 			</div>
 		

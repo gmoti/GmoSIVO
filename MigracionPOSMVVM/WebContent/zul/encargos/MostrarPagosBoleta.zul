@@ -17,7 +17,7 @@
 		<div width="100%" style="background-color:black;color: white" height="40px">
 			<label value="Seleccion Pago" />
 			<div style="float: right">					
-				<toolbarbutton image="/image/Remove_32x32.png" onClick="winMostrarPagosBoleta.detach()"/>		
+				<toolbarbutton image="/iconos/cancel.png" onClick="winMostrarPagosBoleta.detach()"/>		
 			</div>																			
 		</div>	
 	

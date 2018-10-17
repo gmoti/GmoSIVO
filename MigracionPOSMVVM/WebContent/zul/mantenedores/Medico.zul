@@ -18,8 +18,8 @@
 		<div width="100%" style="background-color:black;color: white;">
 				<label value="Clientes" />
 				<space width="700px"/>
-				<toolbarbutton image="/image/Check_32x32.png" onClick="@command('grabaVenta')" />
-			   	<toolbarbutton image="/image/Remove_32x32.png" onClick="winCliente.detach()" />
+				<toolbarbutton image="/iconos/check.png" onClick="@command('grabaVenta')" />
+			   	<toolbarbutton image="/iconos/cancel.png" onClick="winCliente.detach()" />
 		</div>	
 	
 		<div  width="100%" height="100%">

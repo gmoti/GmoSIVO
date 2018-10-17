@@ -29,7 +29,7 @@
 				<div width="100%" style="background-color:black;color: white" height="40px">
 					<label value="Busqueda Avanzada de Encargos" />
 					<div style="float: right">					
-						<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)"/>		
+						<toolbarbutton image="/iconos/cancel.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)"/>		
 					</div>																			
 				</div>
 				
@@ -67,7 +67,7 @@
 						
 						<row>
 						<space width="85px"/>						
-						<button image="/iconos/lupa.png" label="Buscar" onClick="@command('buscar')"/>
+						<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('buscar')"/>
 						</row>
 					</rows>
 				</grid>									

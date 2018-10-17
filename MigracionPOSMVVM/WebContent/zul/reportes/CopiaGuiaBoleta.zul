@@ -9,12 +9,15 @@
 			padding:0px; margin:0px; }
 		</style>
 		
-		<div height="100%" width="100%">
-			<div width="100%" style="background-color:black;color: white">
+		<div height="100%" width="100%">		
+			
+			<div width="100%"
+				style="background-color:black;color: white" height="40px">
 				<label value="IMPRIMIR BOLETA - GUIA" />
-				<space width="400px" />
-				<toolbarbutton image="/image/Print_32x32.png"  onClick="@command('reporte')" />
-				<toolbarbutton image="/image/Remove_32x32.png" onClick="winCopiaGuiaBoleta.detach()" />
+				<div style="float: right">
+					<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')" />
+					<toolbarbutton image="/iconos/cancel.png"  onClick="winCopiaGuiaBoleta.detach()" />
+				</div>
 			</div>
 
 			<div width="100%" height="100%" style="padding:15px 0px 0px 0px">
