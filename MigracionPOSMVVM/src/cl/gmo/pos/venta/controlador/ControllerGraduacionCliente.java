@@ -8,7 +8,6 @@ import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Window;
 
-import com.sun.prism.shader.Texture_LinearGradient_PAD_AlphaTest_Loader;
 
 import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.actions.ClienteDispatchActions;

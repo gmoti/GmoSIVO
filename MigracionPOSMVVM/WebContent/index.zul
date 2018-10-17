@@ -1,6 +1,5 @@
 <?page title="Auto Generated index.zul"?>
-<zk>
-	<window  border="none" width="100%" height="100%"		
+<window  border="none" width="100%" height="100%"		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerIndex')">
 
 		<div width="100%" height="100%" visible="@bind(vm.divVisibleLogin)">
@@ -59,4 +58,3 @@
 		
 		</div>		
 	</window>
-</zk>

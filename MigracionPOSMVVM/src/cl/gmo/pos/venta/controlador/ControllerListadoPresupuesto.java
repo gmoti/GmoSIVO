@@ -22,7 +22,7 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.google.protobuf.Message;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.OptimizedAccessorFactory;
+
 
 import cl.gmo.pos.venta.reporte.dispatch.ListadoPresupuestosDispatchActions;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
