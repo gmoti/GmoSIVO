@@ -6,7 +6,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <?script src="js/bootstrap.min.js" ?>
 
-<window border="none" width="100%" height="100%"		
+<window id="winMenuPrincipal" border="none" width="100%" height="100%"		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMenuPrincipal')">
 		
 		
@@ -55,9 +55,15 @@
 					<menuitem label="Listado de presupuestos" onClick="@command('seleccionMenu',arg='M3_4')"/>
 					<menuitem label="Listado de encargos pendientes de entrega" onClick="@command('seleccionMenu',arg='M3_5')"/>
 					<menuitem label="Busqueda general de articulos" onClick="@command('seleccionMenu',arg='M3_6')"/>
-					<menuitem label="Copia de guias y boletas" onClick="@command('seleccionMenu',arg='M3_7')"/>
-					
+					<menuitem label="Copia de guias y boletas" onClick="@command('seleccionMenu',arg='M3_7')"/>					
 				</menupopup>
+			</menu>
+			
+			<menu label="Salir">
+				<menupopup>
+					<menuitem label="Salir login" onClick="@command('seleccionMenuEspecial',arg='M4_1',win=winMenuPrincipal)"/>
+					<menuitem label="Salir y cerrar" onClick="@command('seleccionMenuEspecial',arg='M4_2',win=winMenuPrincipal)"/>
+				</menupopup>	
 			</menu>
 		</menubar>
 	</div>

@@ -23,16 +23,16 @@ import cl.gmo.pos.venta.web.forms.ClienteForm;
 
 public class ControllerCliente extends ClienteForm  implements Serializable{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 6987458990189549075L;
 	ClienteForm clif ;
 	ClienteBean cliente;
 	ClienteDispatchActions clid = new ClienteDispatchActions();
 	Utils util = new Utils();
-	Session sesion = Sessions.getCurrent();
+	Session sess = Sessions.getCurrent();
 
+	private String usuario;	
+	private String sucursalDes;	
 	
 	boolean cpostal = false;
 	boolean cemail =false;
@@ -62,6 +62,9 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 		 this.setListaAgentes(clif.getListaAgentes());
 		 this.setListaProvincia(clif.getListaProvincia());
 		 this.setListaTipoVia(clif.getListaTipoVia());
+		 
+		 usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		 sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 
 	}
 	
@@ -139,7 +142,7 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 		cliform.setFnacimiento(fechaNac);
 		cliform.setAccion("ingresoCliente");
 		
-		clid.ingresoCliente(cliform,sesion);
+		clid.ingresoCliente(cliform,sess);
 		
 		if(cliform.getExito().equals(Constantes.STRING_ACTION_MODIFICADO)) {
 			Messagebox.show("Se modifico exitosamente el Cliente.");
@@ -253,20 +256,33 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 	public Date getFechaNac() {
 		return fechaNac;
 	}
-
+	
 	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
-
 
 	public ClienteForm getClif() {
 		return clif;
 	}
 
-
 	public void setClif(ClienteForm clif) {
 		this.clif = clif;
 	}
-	
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}
 	
 }

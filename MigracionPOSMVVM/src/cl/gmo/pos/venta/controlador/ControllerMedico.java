@@ -14,6 +14,7 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.controlador.general.MedicoDispatchActions;
+import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.OftalmologoBean;
 import cl.gmo.pos.venta.web.forms.MedicoForm;
 
@@ -25,12 +26,18 @@ public class ControllerMedico implements Serializable {
 	private MedicoForm medicoForm;
 	private MedicoDispatchActions medicoDispatchActions;
 	
+	private String usuario;	
+	private String sucursalDes;
+	
 	
 	@Init
 	public void inicial() {
 		
 		medicoForm = new MedicoForm();
 		medicoDispatchActions = new MedicoDispatchActions();
+		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 	}
 
@@ -107,14 +114,24 @@ public class ControllerMedico implements Serializable {
 		return medicoForm;
 	}
 
-
 	public void setMedicoForm(MedicoForm medicoForm) {
 		this.medicoForm = medicoForm;
 	}
 
-	
-	
-	
-	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}
 	
 }

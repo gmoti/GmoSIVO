@@ -1,0 +1,203 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winClientes" border="none" width="100%" height="100%" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')  ">
+
+	<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		}
+	</style>
+	
+	<div width="100%" height="100%">
+	
+		<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+		   	<label value="CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>		
+		
+		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="" />
+	   	</div>
+	
+		<div  width="100%" height="35%">
+			<grid>
+				<columns>
+					<column hflex="min" />
+					<column hflex="min" />
+					<column hflex="min" />
+					<column hflex="min" />
+					<column hflex="min" />
+					<column hflex="min" />
+				</columns>
+				<rows>
+					<row><!-- Linea 1 -->
+						<label value="Codigo"/>
+						<textbox/>
+						<label value="Rut"/>
+						<cell>
+							<textbox width="150px"/>
+							<textbox width="50px"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
+							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
+						</cell>
+						<label value="F.Nacimiento(*)"/>
+						<datebox/>					
+					</row>
+					
+					<row><!-- Linea 2 -->
+						<label value="Apellidos(*)"/>
+						<textbox/>
+						<label value="Edad"/>
+						<intbox/>					
+					</row>
+					
+					<row><!-- Linea 3 -->
+						<label value="Nombres"/>
+						<textbox/>
+						<label value="Agente"/>
+						<combobox>
+							<comboitem></comboitem>
+						</combobox>
+					</row>
+					
+					<row><!-- Linea 4 -->
+						<label value="Tipo via"/>
+						<combobox>
+							<comboitem></comboitem>
+						</combobox>
+						<label value="Direccion(*)"/>
+						<textbox/>
+						<label value="Numero(*)"/>
+						<textbox/>						
+					</row>
+					
+					<row><!-- Linea 5 -->
+						<label value="Localidad"/>
+						<textbox/>
+						<label value="Provincia/comuna(*)"/>
+						<cell>							
+							<combobox>
+								<comboitem></comboitem>
+							</combobox>
+							<checkbox/>
+						</cell>		
+						<label value="Bloque/dpto"/>
+						<textbox/>			
+					</row>
+					
+					<row><!-- Linea 6 -->
+						<label value="Cod.Postal"/>
+						<textbox/>
+						<label value="Persona contacto"/>
+						<textbox/>					
+					</row>
+					
+					<row><!-- Linea 7 -->
+						<label value="Email(*)"/>
+						<textbox/>
+						<label value="Telefono(*)"/>
+						<cell colspan="1">
+							<combobox width="50px">
+								<comboitem></comboitem>
+							</combobox>
+							<textbox/>
+						</cell>
+						<label value="Sexo"/>
+						<radiogroup>
+							<radio label="Hombre"/>
+							<radio label="Mujer"/>
+							<radio label="Institucion"/>
+						</radiogroup>
+					</row>
+					
+					<row><!-- Linea 8 -->
+						<label value="Profesion"/>
+						<textbox/>
+						<label value="Telefono movil(*)"/>
+						<cell>							
+							<textbox/>
+							<checkbox/>
+						</cell>
+					</row>					
+				</rows>				
+			</grid>			
+		</div>	
+		
+		<div width="100%" height="30px" style="background-color:black;color: white;">
+			<label value="Facturacion"/>
+		</div>
+		
+		<div width="100%" height="15%">
+			<grid>
+				<columns>
+					<column hflex="min" />
+					<column hflex="min" />
+				</columns>
+				<rows>
+					<row>
+						<label value="A:" />
+						<cell colspan="1">
+							<textbox width="150px"/>
+							<textbox width="50px"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
+							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
+						</cell>
+					</row>
+					<row>
+						<label value="Giro" />
+						<cell colspan="1">						
+							<textbox width="150px"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
+							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		
+		<div width="100%" height="30px" style="background-color:black;color: white;">
+			<label value="Marketing"/>
+		</div>
+		
+		<div>
+			<label value="Indique por qué medio desea recibir información de productos y promociones."/>			
+		    <hbox>
+		    	<checkbox label="Correo postal" />
+		    	<checkbox label="Correo electronico"/>
+		    	<checkbox label="Mensaje SMS(Celular)"/>
+		    	<checkbox label="Llamada telefonica."/>
+		    	<checkbox label="No quiero ser contactado"/>		    
+		    </hbox>	
+		    
+		    <label value="(*) NOTA: Los campos marcados con asterisco son importantes, trate de ingresarlos correctamente,"/>
+		    <label value="si el cliente no desea brindar la información seleciona el Check ubicado a la derecha." />	
+		</div>
+	
+	</div>
+
+
+</window>

@@ -83,7 +83,7 @@ public class ControllerMenuPrincipal implements Serializable{
 	        //mantenedores
 		case "M2_1":	
 			window = (Window)Executions.createComponents(
-	                "/zul/mantenedores/Cliente.zul", null, null);
+	                "/zul/mantenedores/Clientes.zul", null, null);
 			
 	        window.doModal();
 	        break;
@@ -158,10 +158,32 @@ public class ControllerMenuPrincipal implements Serializable{
 			
 	        window.doModal();			
 			break;	
+			
 
 		default:
 			break;
 		}		
+	}
+	
+	@Command
+	public void seleccionMenuEspecial(@BindingParam("arg")String arg, @BindingParam("win")Window win ) {
+		
+		switch (arg) {
+		
+		case "M4_1":
+			
+			win.detach();	        			
+			break;
+			
+		case "M4_2":
+			
+			win.detach();			
+			break;	
+		
+		default:
+			break;		
+		}
+		
 	}
 
 
