@@ -2,14 +2,9 @@ package cl.gmo.pos.venta.controlador.presupuesto;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Session;
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 import cl.gmo.pos.venta.controlador.BeanGlobal;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.ConvenioBean;

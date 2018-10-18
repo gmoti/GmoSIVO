@@ -6,7 +6,7 @@
 		<div width="100%" style="background-color:black;color: white" height="40px">
 			<label value="Listado de boletas" />
 			<div style="float: right">					
-				<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte3.detach()"/>		
+				<toolbarbutton image="/iconos/cancel.png" onClick="reporte3.detach()"/>		
 			</div>																			
 		</div>			
 		

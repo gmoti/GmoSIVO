@@ -5,9 +5,6 @@
 package cl.gmo.pos.venta.web.forms;
 
 import java.util.ArrayList;
-
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.ContactologiaBean;

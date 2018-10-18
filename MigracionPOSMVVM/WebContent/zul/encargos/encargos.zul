@@ -1,22 +1,40 @@
 <?page title="Encargos" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<window id="winEncargos" border="none" width="100%" height="100%" 
+
+	<window id="winEncargos" border="none" width="100%" height="100%" vflex="min" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerEncargos')">
 		
 		<style>
-			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
-			border:1px solid white; border-right:1px solid transparent;
-			padding:0px; margin:0px; }
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		}
 		</style>
 
-		<borderlayout>
+		<borderlayout vflex="min">
 			<!-- Parte superior de la ventana -->
-			<north height="28%">
-				<div>
-					<div width="100%" style="background-color:black;color: white">
+			<north height="28%" vflex="min">
+				<div width="100%" height="100%" vflex="min">
+					<div width="100%" height="25%" style="background-color:black;color: white" vflex="min">
 						
-						<div width="100%" style="background-color:black;color: white" height="25px">
-							<label value="ENCARGOS" style="float: left"/>
+						<div width="100%" height="25px" style="background-color:black;color: white" >
+							<label value="ENCARGOS" style="float: left ; font-weight: bold; font-size: 150%;"/>
 							<div style="float: right">					
 								<label value="@load(vm.sucursalDes)"/>
 								<label value="::"/>
@@ -24,52 +42,207 @@
 							</div>
 						</div>	
 						
-						<div style="text-align: right;" height="40px">
-							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo"/>
-							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos"/>
-							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos"/>
-							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Encargo"/>
+						<div width="100%" height="40px" style="text-align: right;" vflex="min">
+							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/lupa.png"  onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Encargo" sclass="shrink24"/>
 							
-							<toolbarbutton image="/iconos/boleta.png" onClick="@command('mostrar_pagos_boletas')"  	disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Mostrar Pagos y Boletas"/>
-							<toolbarbutton image="/iconos/Hoja.png" onClick="@command('generaFichaTecnica')" 	    disabled="@bind(vm.beanControlBotones.enableTaller)" tooltiptext="Ficha Taller"/>
-							<toolbarbutton image="/iconos/cliente.gif" onClick="@command('generaFichaCliente')"        disabled="@bind(vm.beanControlBotones.enableCliente)" tooltiptext="Ficha Cliente"/>
+							<toolbarbutton image="/iconos/boleta.png" onClick="@command('mostrar_pagos_boletas')"  	disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Mostrar Pagos y Boletas" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/Hoja.png" onClick="@command('generaFichaTecnica')" 	    disabled="@bind(vm.beanControlBotones.enableTaller)" tooltiptext="Ficha Taller" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/cliente.png" onClick="@command('generaFichaCliente')"        disabled="@bind(vm.beanControlBotones.enableCliente)" tooltiptext="Ficha Cliente" sclass="shrink24"/>
 							
-							<toolbarbutton image="/iconos/money2.png" onClick="@command('validaCantidadProductosMulit')"    disabled="@bind(vm.beanControlBotones.enablePagar)" tooltiptext="Totalizar Encargos"/>
-							<toolbarbutton image="/iconos/check.png" onClick="@command('ingresa_pedido')"  				  disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Guardar"/>
-							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', win=winEncargos)" tooltiptext="Cerrar"/>										
+							<toolbarbutton image="/iconos/money2.png" onClick="@command('validaCantidadProductosMulit')"    disabled="@bind(vm.beanControlBotones.enablePagar)" tooltiptext="Totalizar Encargos" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/check.png" onClick="@command('ingresa_pedido')"  				  disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Guardar" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', win=winEncargos)" tooltiptext="Cerrar" sclass="shrink24"/>										
 						</div>					
 					</div>
 					
-					<!-- Linea 1 del encabezxado -->
-					<div width="100%" style="padding :10px 0px 0px 0px">					
+					<div width="100%" height="75%" vflex="min">
+						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px">
+							<columns>
+								<column width="80px"/>
+								<column width="230px"/>
+								<column width="90px"/>
+								<column width="200px"/>
+								<column width="130px"/>
+								<column width="260px"/>
+								<column width="100px"/>
+								<column width="100px"/>								
+							</columns>
+							<rows>
+								<row><!-- fila 1 -->
+									<label value="Codigo" />
+									
+									<cell colspan="1">
+										<textbox value="@bind(vm.ventaPedidoForm.codigo_suc)" width="30px" readonly="true" />
+					    				<textbox value="@bind(vm.ventaPedidoForm.codigo)" 	  width="150px"	readonly="true" />
+					    			</cell>
+					    			
+					    			<label value="Cliente"/>
+					    			
+					    			<cell colspan="1">
+					    				<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="150px"/>
+										<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="30px" readonly="true"/>
+									</cell>
+									
+									<cell colspan="1">
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
+										<toolbarbutton image="/iconos/lupa2.png" width="30px"/>
+										<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px"/>										
+									</cell>									
+									
+									<textbox value="@load(vm.ventaPedidoForm.nombre_cliente)" width="250px" readonly="true"/>		
+						
+									<label value="fecha"/>
+									<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />					    			
+								</row>
+								
+								<row><!-- fila 2 -->
+									<label value="Forma pago" />									
+																		
+									<combobox model="@bind(vm.ventaPedidoForm.listaFormasPago)"
+										      width="180px" placeholder="Seleccione" 
+										      onRightClick="@command('comboSetNull',objetoBean=vm.formaPagoBean)" 					      
+										      selectedItem="@bind(vm.formaPagoBean)"									      
+										      disabled="@bind(vm.beanControlCombos.comboFpagoEnable)">
+										      
+									   <template name="model">
+										<comboitem label="@load(each.descripcion)"/>
+									   </template>	
+									</combobox>									
+											
+									<label value="Divisa" />
+																
+									<combobox model="@bind(vm.ventaPedidoForm.listaDivisas)"  
+											  width="180px" placeholder="Seleccione"
+											  onRightClick="@command('comboSetNull',objetoBean=vm.divisaBean)" 										   
+											  selectedItem="@bind(vm.divisaBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboDivisaEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>	
+									</combobox>
+									
+									<label value="Idioma" />
+									
+									<combobox model="@load(vm.ventaPedidoForm.listaIdiomas)" 
+											  width="180px" placeholder="Seleccione" 
+											  onRightClick="@command('comboSetNull',objetoBean=vm.idiomaBean)"										  
+											  selectedItem="@bind(vm.idiomaBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboIdiomaEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>
+									</combobox>
+								
+									<label value="Hora" />
+									<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true"/>
+								</row>
+								
+								<row><!-- fila 3 -->
+									
+									<label value="Tipo encargo" />
+																											
+									<combobox model="@bind(vm.ventaPedidoForm.listaTiposPedidos)" 
+											  width="180px" placeholder="Seleccione" 
+											  selectedItem="@bind(vm.tipoPedidoBean)"										  
+											  onRightClick="@command('comboSetNull',objetoBean=vm.tipoPedidoBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboTiposEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)"/>
+									  </template>	
+									</combobox>
+								
+									<label value="Agente" />	
+																	
+									<combobox model="@bind(vm.ventaPedidoForm.listaAgentes)" 
+											  width="180px"  placeholder="Seleccione"
+											  selectedItem="@bind(vm.agenteBean)"										  
+											  onRightClick="@command('comboSetNull',objetoBean=vm.agenteBean)" 
+											  disabled="@bind(vm.beanControlCombos.comboAgenteEnable)">
+											  
+									  <template name="model">
+										<comboitem label="@load(each.usuario)" />
+									  </template>	
+									</combobox>
+								
+									<label value="Convenio" />
+										
+									<cell colspan="1">	
+										<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="50px" />
+										<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="130px" readonly="true"/>	
+										<space width="5px"/>		
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+										<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" tooltiptext="Busqueda rapida convenio"/>
+										<toolbarbutton image="/iconos/cancel2.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>								
+									</cell>
+									
+									<cell colspan="1">
+										<label value="Cambio" />
+										<space width="5px"/>
+										<textbox value="@bind(vm.ventaPedidoForm.cambio)" width="30px" readonly="true"/>
+									</cell>
+								</row>	
+								
+								<row><!-- fila 4 -->
+									<label value="No Sobre" />					    		
+					    			<textbox/>					
+									<space/>
+									<button label="Entrega de encargos" onClick="@command('pedidoEntrega')"/>							
+									
+									<label value="Promocion" />
+									<combobox model="@load(vm.ventaPedidoForm.listaPromociones)" 
+											  width="180px" placeholder="Seleccione"
+											  selectedItem="@bind(vm.promocionBean)"
+											  onRightClick="@command('comboSetNull',objetoBean=vm.promocionBean)"
+											  readonly="@bind(vm.beanControlCombos.comboPromoEnable)">
+									  <template name="model">
+										<comboitem label="@load(each.descripcion)" />
+									  </template>
+									</combobox>												
+								
+									<button label="Cupon" onClick="@command('validaCupon')"/>								
+								
+								</row>						
+								
+							</rows>
+						</grid>
+					</div>				
+					
+					<!--  
+					<div width="100%" style="padding :10px 0px 0px 0px">									
 					   <hbox>
 					    <div width="300px">
 					    	<label value="Codigo" />
 					    	<space width="42px"/>
-					    	<textbox value="@bind(vm.ventaPedidoForm.codigo_suc)" width="30px" disabled="true" />
-					    	<textbox value="@bind(vm.ventaPedidoForm.codigo)" 	  width="150px"	disabled="true" />
+					    	<textbox value="@bind(vm.ventaPedidoForm.codigo_suc)" width="30px" readonly="true" />
+					    	<textbox value="@bind(vm.ventaPedidoForm.codigo)" 	  width="150px"	readonly="true" />
 					    </div>
 
 						<div width="380px">
 						    <label value="Cliente"/>	
 						    <space width="2px"/>					
 							<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="150px"/>
-							<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="30px" disabled="true"/>
+							<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="30px" readonly="true"/>
 							
-							<toolbarbutton image="/iconos/luparapida.jpg" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
-							<toolbarbutton image="/iconos/lupa.png" width="30px"/>
+							<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
+							<toolbarbutton image="/iconos/lupa2.png" width="30px"/>
 							<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px"/>										
 						</div>
 						
-						<textbox value="@load(vm.ventaPedidoForm.nombre_cliente)" width="250px" disabled="true"/>
+						<textbox value="@load(vm.ventaPedidoForm.nombre_cliente)" width="250px" readonly="true"/>
 						
 						<space width="100px"></space>
 						<label value="fecha"/>
-						<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" disabled="true" />
+						<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />
 						</hbox>					
 					</div>	
 					
-					<!-- Linea 2 del encabezxado -->
+					
 					<div width="100%" style="padding :10px 0px 0px 0px">
 						<hbox>						
 							<div width="305px">
@@ -118,11 +291,11 @@
 							
 							<space width="100px"></space>
 							<label value="Hora" />
-							<datebox value="@bind(vm.fecha)" format="hh:mm:ss" disabled="true"/>
+							<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true"/>
 						</hbox>
 					</div>
 
-					<!-- Linea 3 del encabezxado -->
+					
 					<div width="100%" style="padding :10px 0px 0px 0px">
 						<hbox>							
 						
@@ -156,23 +329,23 @@
 								</combobox>
 							</div>								
 							
-							<!-- <checkbox label="Cerrado" value="@load(vm.ventaPedidoForm.cerrado)" disabled="true"/>		 -->													
+																				
 							
 							<div width="450px">
 								<label value="Convenio" />	
 								<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="80px" />
-								<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="150px" disabled="true"/>								
-								<toolbarbutton image="/iconos/luparapida.jpg" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-								<toolbarbutton image="/iconos/lupa.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" tooltiptext="Busqueda rapida convenio"/>
-								<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>
+								<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="150px" readonly="true"/>								
+								<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
+								<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" tooltiptext="Busqueda rapida convenio"/>
+								<toolbarbutton image="/iconos/cancel2.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>
 							</div>
 							
 							<label value="Cambio" />
-							<textbox value="@bind(vm.ventaPedidoForm.cambio)" width="30px" disabled="true"/>
+							<textbox value="@bind(vm.ventaPedidoForm.cambio)" width="30px" readonly="true"/>
 						</hbox>
 					</div>
 					
-					<!-- Linea 4 del encabezxado -->
+					
 					<div width="100%" style="padding :10px 0px 0px 0px">
 						<hbox>
 							<div width="350px">
@@ -191,7 +364,7 @@
 										  width="180px" placeholder="Seleccione"
 										  selectedItem="@bind(vm.promocionBean)"
 										  onRightClick="@command('comboSetNull',objetoBean=vm.promocionBean)"
-										  disabled="@bind(vm.beanControlCombos.comboPromoEnable)">
+										  readonly="@bind(vm.beanControlCombos.comboPromoEnable)">
 								  <template name="model">
 									<comboitem label="@load(each.descripcion)" />
 								  </template>
@@ -203,17 +376,17 @@
 							</div>
 							
 						</hbox>					
-					</div>
+					</div>-->
 														
 								
 				</div>
 			</north>
 
 			<!-- Centro de la ventana -->
-			<center>
-				<div width="100%" height="100%">
+			<center vflex="min">
+				<div width="100%" height="100%" vflex="min">
 				
-					<div width="100%" height="90%">
+					<div width="100%" height="85%" vflex="min">
 					
 						<!-- Encabezado de la grid -->
 						<div width="100%" style="background-color:black;color:white; font-size: 6px;">
@@ -221,7 +394,7 @@
 							<label value="Articulo"/>
 							<space width="90px"/>
 							<label value="Descripcion" />
-							<space width="245px"/>
+							<space width="265px"/>
 							<label value="Precio IVA" />
 							<space width="15px"/>							
 							
@@ -243,71 +416,75 @@
 							<label value="Multi" />
 							<space width="50px"/>
 							
-							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" width="50px" tooltiptext="Busqueda multioferta"/>
-							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" width="50px" tooltiptext="Agregar productos"/>												
+							<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" disabled="@bind(vm.beanControlBotones.enableMulti)" width="50px" tooltiptext="Busqueda multioferta"/>
+							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.beanControlBotones.enableGrid)" width="50px" tooltiptext="Agregar productos"/>												
 						</div>
 
-						<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-								width="100%" sclass="MyGridRowHeight" >
-							<columns>
-								<column width="155px" />
-								<column width="335px" />
-								<column width="85px" />
-								<column width="85px" />
-								<column width="85px" />
-								<column width="85px" />
-								
-								<column width="65px" />								
-								<column width="105px" />
-								<column width="65px" />
-								
-								<column width="45px" />								
-								<column width="45px" />
-								<column width="45px" />
-								<column width="45px" />
-							</columns>
-							<template name="model">
-								<row>
-									<textbox value="@load(each.codigo)" width="150px" 
-										tooltiptext="Click para ver detalles" 
-										onClick="@command('actualizaDetalles',arg=each)" 
-										readonly="true"/>
-										
-									<textbox value="@load(each.descripcion)" width="330px" disabled="true"/>
+						<div width="100%" vflex="min">
+							<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
+									width="100%" height="250px" 
+									sclass="MyGridRowHeight" 
+									emptyMessage="Sin registros cargados"><!-- overflow: scroll;  -->
+								<columns>
+									<column width="145px" />
+									<column width="315px" />
+									<column width="85px" />
+									<column width="85px" />
+									<column width="85px" />
+									<column width="85px" />
 									
-									<intbox value="@load(each.precio)"  width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
+									<column width="65px" />								
+									<column width="105px" />
+									<column width="65px" />
+									
+									<column width="45px" />								
+									<column width="45px" />
+									<column width="45px" />
+									<column width="45px" />
+								</columns>
+								<template name="model">
+									<row>
+										<textbox value="@load(each.codigo)" width="150px" 
+											tooltiptext="Click para ver detalles" 
+											onClick="@command('actualizaDetalles',arg=each)" 
+											readonly="true"/>
+											
+										<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+										
+										<intbox value="@load(each.precio)"  width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+																			
+										<intbox value="@bind(each.cantidad)" width="80px" readonly="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+																			
+										<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##,###0" locale="it" 
+													onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" />
+																						
+										<intbox value="@load(each.importe)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>	
 																		
-									<intbox value="@bind(each.cantidad)" width="80px" disabled="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+										<textbox value="@load(each.grupo)" width="60px" readonly="false" style="text-align:right"  
+												onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>									
+										
+										<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="100px"/>	
 																		
-									<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##,###0" locale="it" 
-												onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" />
-																					
-									<intbox value="@load(each.importe)" width="80px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>	
-																	
-									<textbox value="@load(each.grupo)" width="60px" disabled="false" style="text-align:right"  
-											onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>									
-									
-									<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="100px"/>	
-																	
-									<textbox value="@load(each.tipo)" width="60px" disabled="true"/>
-									
-									<toolbarbutton image="/iconos/add.png" width="40px" 
-										onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
-									
-									<toolbarbutton image="/iconos/add.png" width="40px" 
-										onClick="@command('multiofertaProducto',producto=each)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
+										<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
 										
-									<space width="40px" />
+										<toolbarbutton image="/iconos/add.png" width="40px" 
+											onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
 										
-									<toolbarbutton image="/iconos/cancel.png" width="40px" 
-											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
-									
-								</row>
-							</template>
-						</grid>
+										<toolbarbutton image="/iconos/add.png" width="40px" 
+											onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
+											
+										<space width="40px" />
+											
+										<toolbarbutton image="/iconos/cancel2.png" width="40px" 
+												onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
+										
+									</row>
+								</template>
+							</grid>
+						</div>
 					</div>
 					
-					<div width="100%" height="10%" style="padding-left:300px">
+					<div width="100%" height="15%" style="padding-left:300px" vflex="min">
 										
 						<div width="815px" style="background-color:black;color: white;">
 							<label value="Graduacion del articulo" />
@@ -316,18 +493,18 @@
 						<div>
 							<hbox>
 								<label value="Esfera" />
-								<doublebox value="@load(vm.productoBean.esfera)" width="75px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.esfera)" width="75px" readonly="true" style="text-align:right"/>
 								<label value="Cilindro" />
-								<doublebox value="@load(vm.productoBean.cilindro)" width="75px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.cilindro)" width="75px" readonly="true" style="text-align:right"/>
 								<label value="Diametro" />
-								<doublebox value="@load(vm.productoBean.diametro)" width="75px" disabled="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.diametro)" width="75px" readonly="true" style="text-align:right"/>
 								
 								<label value="F.Grad" />
-								<textbox value="@load(vm.productoBean.fecha_graduacion)" width="75px" disabled="true" style="text-align:right"/>
+								<textbox value="@load(vm.productoBean.fecha_graduacion)" width="75px" readonly="true" style="text-align:right"/>
 								<label value="No.Grad" />
-								<textbox value="@load(vm.productoBean.numero_graduacion)" width="75px" disabled="true" style="text-align:right"/>
+								<textbox value="@load(vm.productoBean.numero_graduacion)" width="75px" readonly="true" style="text-align:right"/>
 								<label value="Ojo" />
-								<textbox value="@load(vm.productoBean.ojo)" width="75px" disabled="true" style="text-align:right"/>								
+								<textbox value="@load(vm.productoBean.ojo)" width="75px" readonly="true" style="text-align:right"/>								
 							</hbox>
 						</div>						
 					</div>
@@ -336,10 +513,10 @@
 			</center>
 
 			<!-- Parte inferior de la ventana -->
-			<south height="35%">
-				<div>
+			<south height="35%" vflex="min">
+				<div vflex="min">
 					<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>
-					<div>
+					<div width="100%" vflex="min">
 						<grid sclass="MyGridRowHeight">
 							<columns>
 								<column label="" hflex="1"/>
@@ -356,7 +533,7 @@
 							<rows>
 								<row>
 									<label value="Fecha" />
-									<textbox value="@load(vm.ventaPedidoForm.graduacion.fecha)" disabled="true"/>									
+									<textbox value="@load(vm.ventaPedidoForm.graduacion.fecha)" readonly="true"/>									
 									<space/>																	
 									<label value="Esfera" />
 									<label value="Cilindro" />
@@ -370,38 +547,38 @@
 
 								<row>
 									<label value="Orden" />
-									<textbox value="@load(vm.ventaPedidoForm.graduacion.orden)"  width="60px" disabled="true"/>
+									<textbox value="@load(vm.ventaPedidoForm.graduacion.orden)"  width="60px" readonly="true"/>
 									<label value="O.D" />
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_esfera)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_cilindro)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_eje)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_adicion)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_esfera_cerca)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_esfera)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_cilindro)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_eje)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_adicion)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_esfera_cerca)" width="60px" readonly="true"/>
 									<!-- <cell colspan="2"> -->
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_n)" width="60px" disabled="true" style="float: right;"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_p)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_n)" width="60px" readonly="true" style="float: right;"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OD_p)" width="60px" readonly="true"/>
 									<!-- </cell> -->
 								</row>
 
 								<row>
 									<label value="Doctor" />
-									<textbox value="@load(vm.ventaPedidoForm.graduacion.doctor)" width="280px" disabled="true"/>
+									<textbox value="@load(vm.ventaPedidoForm.graduacion.doctor)" width="280px" readonly="true"/>
 									<label value="O.I" />
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_esfera)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_cilindro)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_eje)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_adicion)" width="60px" disabled="true"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_esfera_cerca)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_esfera)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_cilindro)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_eje)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_adicion)" width="60px" readonly="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_esfera_cerca)" width="60px" readonly="true"/>
 									<!-- <cell colspan="2"> -->
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_n)" width="60px" disabled="true" style="float: right;"/>
-									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_p)" width="60px" disabled="true"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_n)" width="60px" readonly="true" style="float: right;"/>
+									<doublebox value="@load(vm.ventaPedidoForm.graduacion.OI_p)" width="60px" readonly="true"/>
 									<!-- </cell> -->									
 								</row>
 							</rows>
 						</grid>
 					</div>
 					<div width="100%" style="background-color:black;color: white"><label value="Totales"/></div>
-					<div>
+					<div width="100%" vflex="min">
 						<grid sclass="MyGridRowHeight">
 							<columns>
 								<column label="" />
@@ -429,7 +606,7 @@
 								<row>
 									<label value="Fecha de entrega" />
 									<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy" width="150px"/>
-									<intbox  value="@bind(vm.ventaPedidoForm.subTotal)" style="text-align:right ;background-color: #d5f4e6;" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.subTotal)" style="text-align:right ;background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
 									
 									<intbox  value="@bind(vm.ventaPedidoForm.descuento)" 
 											onBlur="@command('actualiza_descuento_total_monto')"/>
@@ -437,12 +614,12 @@
 									<intbox  value="@bind(vm.ventaPedidoForm.dtcoPorcentaje)" 
 											onBlur="@command('actualiza_descuento_total')"/>
 									
-									<intbox  value="@bind(vm.ventaPedidoForm.total)" style="text-align:right; background-color: #d5f4e6;" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.total)" style="text-align:right; background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
 									
-									<intbox  value="@bind(vm.ventaPedidoForm.anticipo_pagado)" style="text-align:right" format="#,###,##0" locale="it" disabled="true"/>
+									<intbox  value="@bind(vm.ventaPedidoForm.anticipo_pagado)" style="text-align:right" format="#,###,##0" locale="it" readonly="true"/>
 									
 									<intbox  value="@bind(vm.ventaPedidoForm.totalPendiante)" 
-											style="text-align:right; background-color: #d5f4e6;" format="#,###,##0" locale="it" disabled="true"/>
+											style="text-align:right; background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
 								</row>								
 							</rows>
 						</grid>
@@ -457,4 +634,3 @@
 			</south>
 		</borderlayout>
 	</window>
-</zk>

@@ -19,9 +19,9 @@
 			</div>	
 					
 			<div width="100%" style="background-color:black;color: white;" align="right">						
-			    <toolbarbutton image="/image/buscar.png" onClick="@command('buscar_liberacion')" />
-			    <toolbarbutton image="/image/Check_32x32.png" onClick="@command('liberacion_pedido')" />
-			    <toolbarbutton image="/image/Remove_32x32.png" onClick="winLiberacionEncargo.detach()" />				
+			    <toolbarbutton image="/iconos/lupa.png" onClick="@command('buscar_liberacion')" />
+			    <toolbarbutton image="/iconos/check.png" onClick="@command('liberacion_pedido')" />
+			    <toolbarbutton image="/iconos/cancel.png" onClick="winLiberacionEncargo.detach()" />				
 			</div>
 			
 			<div width="100%" style="background-color:gray; color: white;" align="center">

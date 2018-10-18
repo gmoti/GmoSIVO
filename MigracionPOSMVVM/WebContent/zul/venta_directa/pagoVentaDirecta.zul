@@ -1,25 +1,40 @@
 <?page title="Pago Venta Directa" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winPagoVentaDirecta" border="none" height="80%" width="80%" 
+	<window id="winPagoVentaDirecta" border="none" height="50%" width="80%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerPagoVentaDirecta')">	
 		
 		<style>
 			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
 			border:1px solid white; border-right:1px solid transparent;
 			padding:0px; margin:0px; }
+			
+			.shrink24 img {
+	  		vertical-align: middle;
+	  		border-style: none;
+	  		width: 24px;
+	  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			}
 		</style>
 
 
-		<div height="40%" width="100%">
+		<div width="100%" height="40%" vflex="min">
 		
-			<div width="100%" style="background-color:black;color: white" height="40px">
+			<div width="100%" height="20%" style="background-color:black;color: white">
 				<label value="Seleccion de cobro" />
 				<div style="float: right">					
-					<toolbarbutton image="/image/Remove_32x32.png" onClick="winPagoVentaDirecta.detach()"/>		
+					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+						onClick="winPagoVentaDirecta.detach()"/>		
 				</div>																			
 			</div>		
 			
-			<div height="90%" width="100%">
+			<div width="100%" height="80%"> 
 				<grid sclass="MyGridRowHeight" height="100%" width="100%">   
      			
      				<columns>
@@ -64,18 +79,20 @@
 		</div>
 		
 		
-		<div height="60%" width="100%">		
+		<div width="100%" height="60%">		
 			
-			<div width="100%" height="40px" style="background-color:black;color: white">
+			<div width="100%" height="15%" style="background-color:black;color: white">
 				<label value="Cobro" />
 				<div style="float: right">					
-					<toolbarbutton image="/image/Save_32x32.png" onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
-     				<toolbarbutton image="/image/Print_32x32.png" onClick="@command('generaBoleta')"/>	
+					<toolbarbutton image="/iconos/save.png" sclass="shrink24" 
+							onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
+     				<toolbarbutton image="/iconos/printer.png" 
+     						onClick="@command('generaBoleta')" sclass="shrink24"/>	
      					
 				</div>																			
 			</div>
 			
-			<div height="90%" width="100%">
+			<div width="100%" height="85%">
 			
 				<borderlayout height="100%" width="100%">				
      				<west width="50%" >
@@ -138,7 +155,7 @@
      				
      					<div width="100%" height="100%">
      					
-     						<div width="100%" height="10%" style="background-color:black;color: white;">
+     						<div width="100%" height="15%" style="background-color:black;color: white;">
      							<space width="10px"/>
      							<label value="Fecha"/>
      							<space width="70px"/>
@@ -150,13 +167,13 @@
      						</div>     					
      					     				
 	     					<grid model="@bind(vm.seleccionPagoForm.listaPagos)" emptyMessage="Sin datos cargados"   
-									sclass="MyGridRowHeight" width="100%" height="100%">	     						
+									sclass="MyGridRowHeight" width="100%" height="85%">	     						
 	     						<template name="model">     							
 	     								<row>
 	     								<textbox value="@load(each.fecha)" width="100px" readonly="true"/>
 	     								<textbox value="@load(each.detalle_forma_pago)" readonly="true"/>
 	     								<intbox value="@load(each.cantidad)" style="text-align:right" format="#,###,##0" locale="it" width="100px" readonly="true"/>
-	     								<button image="/image/Remove_32x32.png" onClick="@command('deleteItemAutoriza',arg=each)"/>
+	     								<button image="/iconos/cancel2.png" onClick="@command('deleteItemAutoriza',arg=each)"/>
 	     								</row>     							
 	     						</template>
 	     					</grid>

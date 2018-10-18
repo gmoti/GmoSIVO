@@ -51,12 +51,15 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	private String verGraduacion;
 	
 	HashMap<String,Object> objetos;
+	private int indiceGral=0;
+	
 	
 	
 	@Init
 	public void inicial(@ExecutionArgParam("busquedaProductos")BusquedaProductosForm arg,
 						@ExecutionArgParam("origen")String arg1,
-						@ExecutionArgParam("beanProducto")ProductosBean arg2){
+						@ExecutionArgParam("beanProducto")ProductosBean arg2,
+						@ExecutionArgParam("index")int arg3){
 						//@ExecutionArgParam("ventaPedido")VentaPedidoForm arg3) {	
 		
 		busquedaProductosMultiOfertasDispatchActions = new BusquedaProductosMultiOfertasDispatchActions();
@@ -69,13 +72,17 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		
 		busquedaProductosForm = arg;
 		productosBean = arg2;
+		indiceGral = arg3;
 		
 		ojoDerecho = false;
 		ojoIzquierdo= false;
 		cerca = false;
 		verGraduacion="false";	
 		
-		busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);
+		busquedaProductosForm.setCodigoBusqueda("");
+		busquedaProductosForm.setCodigoBarraBusqueda("");
+		
+		busquedaProductosMultiOfertasDispatchActions.cargaBusquedaProductosMultiOfertas(busquedaProductosForm, sess);		
 	}
 	
 	
@@ -124,48 +131,63 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 				return;
 			} 
 			
-		}	
-		
-		
+		}		
 			
-		busquedaProductosForm.setOjo((ojoDerecho?"derecho":"izquierdo"));
-		//busquedaProductosForm.setCodigoBusqueda("");
-		//busquedaProductosForm.setCodigoBarraBusqueda("");
-		//busquedaProductosForm.setDescripcion("");
-			
+		
+		if(isOjoDerecho())
+			busquedaProductosForm.setOjo("derecho");
+		
+		if(isOjoIzquierdo())
+			busquedaProductosForm.setOjo("izquierdo");
 		
 		busquedaProductosForm.setAccion("buscar");
-		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);		
+		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
+		
+		busquedaProductosForm.setCodigoBusqueda("");
+		busquedaProductosForm.setCodigoBarraBusqueda("");	
+		
 	}
 	
 	
-	@NotifyChange({"busquedaProductosForm"})
+	@NotifyChange({"busquedaProductosForm","grupoFamiliaBean","subFamiliaBean","familiaBean"})
 	@Command
-	public void pasarProductoMultioferta(@BindingParam("producto")ProductosBean producto, @BindingParam("index")int index) {
+	public void pasarProductoMultioferta(@BindingParam("producto")ProductosBean producto, @BindingParam("index")int index) {		
 		
-		ArrayList<ProductosBean> prod;
+		if (busquedaProductosForm.isChk_cerca())
+			busquedaProductosForm.setDescripcion(Constantes.STRING_CERCA_OPT);
 		
-		prod = busquedaProductosForm.getListaProductosMultioferta();
+		if (!busquedaProductosForm.isChk_cerca())
+			busquedaProductosForm.setDescripcion(Constantes.STRING_LEJOS_OPT);	
 		
-		Optional<ArrayList<ProductosBean>> p = Optional.ofNullable(prod);
+		if(isOjoDerecho())
+			busquedaProductosForm.setOjo("derecho");
 		
-		if (p.isPresent()) {
-			producto.setCantidad(1);
-			prod.add(producto);
-		}	
-		else {
-			prod = new ArrayList<ProductosBean>();
-			producto.setCantidad(1);
-			prod.add(producto);
-		}		
+		if(isOjoIzquierdo())
+			busquedaProductosForm.setOjo("izquierdo");
+		
+		busquedaProductosForm.setCodigoBusqueda(producto.getCod_barra());		
+		busquedaProductosForm.setProducto(producto.getCodigo());
+		busquedaProductosForm.setCantidad(1);	
 		
 		//antes de pasar el producto debo validar el grupo
 		//
-		actualiza_grupo(producto.getIndexMulti(), index);		
+		actualiza_grupo(producto.getIndexMulti(), index);
 		
-		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);	
-		busquedaProductosForm.setProducto(producto.getCod_barra());		
+		busquedaProductosForm.setAccion(Constantes.STRING_PASAR_MULTIOFERTA);		
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
+		
+		//inicializo
+		busquedaProductosForm.setCodigoBusqueda("");
+		busquedaProductosForm.setCodigoBarraBusqueda("");
+		
+		//busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
+		//grupoFamiliaBean = new GrupoFamiliaBean();
+		
+		//busquedaProductosForm.setListaSubFamilias(new ArrayList<SubFamiliaBean>());
+		//subFamiliaBean = new SubFamiliaBean();
+		
+		//busquedaProductosForm.setListaFamilias(new ArrayList<FamiliaBean>());
+		//familiaBean = new FamiliaBean();
 	}	
 	
 	
@@ -203,7 +225,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			busquedaProductosForm.setAccion(Constantes.STRING_FAMILIA);
 			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());
 			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
-			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);			
+			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 		}
 		
 		if (arg.equals(Constantes.STRING_SUBFAMILIA)) {
@@ -268,7 +290,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		objetos = new HashMap<String,Object>();		
 		objetos.put("productosMulti",busquedaProductosForm.getListaProductosMultioferta());
 		objetos.put("producto",productosBean);
-		objetos.put("index",0);		
+		objetos.put("index",indiceGral);		
 		
 		BindUtils.postGlobalCommand(null, null, "actualizaListaProductosMulti", objetos);
 		
@@ -295,7 +317,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	@Command
 	public void prueba(@BindingParam("grupo")String grupo , @BindingParam("index")int index) {
 		
-		busquedaProductosForm.getListaProductos().get(index).setGrupo("0");
+		//busquedaProductosForm.getListaProductos().get(index).setGrupo("0");
 	}
 	
 	
@@ -303,25 +325,26 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	private void actualiza_grupo(int indexmulti, int index) {
 		
 		ProductosBean pb = busquedaProductosForm.getListaProductos().get(index);
-		String [] grupos;
+		String [] grupos = new String[busquedaProductosForm.getListaProductos().size()];
 		int i = 0;
 		
-		for(ProductosBean pbg : busquedaProductosForm.getListaProductos()) {
-			//grupos[i] = 
-		}
+		for(ProductosBean pbg : busquedaProductosForm.getListaProductos()) {			
+			grupos[i] = pbg.getGrupo();
+			busquedaProductosForm.getListaProductos().get(i).setGrupo("0");
+			grupos[i] = "0";
+			i++;
+		}		
 		
+		busquedaProductosForm.setGrupos(grupos);		 
 		
-		
-		
-		//busquedaProductosForm.setGrupos(     );
-		
-		if (pb.getGrupo().equals("")) 
-			busquedaProductosForm.getListaProductos().get(index).setGrupo("0");
+		/*if (pb.getGrupo().equals("")) 
+			busquedaProductosForm.getListaProductos().get(index).setGrupo("0");*/
 		
 		busquedaProductosForm.setAccion("grupo");
 		busquedaProductosForm.setAddProducto(String.valueOf(indexmulti));
 		busquedaProductosForm.setIndexProductos(index);
 		busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
+		
 	}
 	
 	//======= metodos getter and setter =================

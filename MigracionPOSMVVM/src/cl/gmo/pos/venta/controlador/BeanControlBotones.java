@@ -19,6 +19,7 @@ public class BeanControlBotones implements Serializable {
 	private String enableCliente;
 	private String enableTaller;
 	private String enableListar;	
+	private String enableMulti;
 	
 	private String enableGenerico1;
 	private String enableGenerico2;
@@ -37,6 +38,8 @@ public class BeanControlBotones implements Serializable {
 		enableTaller="false";
 		enableListar="false";
 		enableEliminar="false";
+		enableMulti="false";
+		
 		
 		enableGenerico1="false";
 		enableGenerico2="false";
@@ -134,6 +137,13 @@ public class BeanControlBotones implements Serializable {
 	public void setEnableEliminar(String enableEliminar) {
 		this.enableEliminar = enableEliminar;
 	}
-	
+
+	public String getEnableMulti() {
+		return enableMulti;
+	}
+
+	public void setEnableMulti(String enableMulti) {
+		this.enableMulti = enableMulti;
+	}
 
 }

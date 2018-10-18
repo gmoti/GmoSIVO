@@ -17,7 +17,7 @@
 			<label value="Listado de presupuestos" />
 			<div style="float: right">					
 				<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')"/>
-				<toolbarbutton image="/image/Remove_32x32.png" onClick="reporte4.detach()"/>		
+				<toolbarbutton image="/iconos/cancel.png" onClick="reporte4.detach()"/>		
 			</div>																			
 		</div>
 		

@@ -108,6 +108,15 @@ public class ControllerIndex implements Serializable{
 		
 	}
 	
+	@NotifyChange({"usuarioForm"})
+	@Command
+	public void usuarioUpper(){
+		
+		usuarioForm.setNombreUsuario(usuarioForm.getNombreUsuario().toUpperCase());
+		
+		
+	}
+	
 	
 
 	public UsuarioForm getUsuarioForm() {

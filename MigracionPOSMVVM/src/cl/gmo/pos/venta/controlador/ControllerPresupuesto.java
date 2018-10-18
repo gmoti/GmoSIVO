@@ -216,7 +216,8 @@ public class ControllerPresupuesto implements Serializable{
 		presupuestoForm.setEstado(Constantes.STRING_FORMULARIO);
 		presupuestoForm.setAccion("ingresa_presupuesto");		
 		presupuestoForm.setForma_pago(formaPagoBean.getId());
-		presupuestoForm.setAgente(agenteBean.getUsuario());		
+		presupuestoForm.setAgente(agenteBean.getUsuario());	
+		
 		
 		presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);		
 		Messagebox.show("Grabacion exitosa");	

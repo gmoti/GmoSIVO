@@ -340,6 +340,11 @@ public class ControllerVentaDirecta implements Serializable{
 	@Command
 	public void buscarCliente() {
 		
+		if (ventaDirectaForm.getNif().equals("")) {
+			Messagebox.show("Debe ingresar un Nif");
+			return;
+		}
+		
 		try {
 			
 			cliente = clienteImp.traeCliente(ventaDirectaForm.getNif(), "");
@@ -373,7 +378,7 @@ public class ControllerVentaDirecta implements Serializable{
 									winVentaDirecta.detach();									
 															
 									Window window = (Window)Executions.createComponents(
-							                "/zul/Cliente.zul", null, null);			
+							                "/zul/mantenedores/Cliente.zul", null, null);			
 							        window.doModal();								
 							}						
 						}

@@ -6,14 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 import oracle.jdbc.OracleTypes;
 import cl.gmo.pos.venta.utils.Constantes;
-import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.Integracion.DAO.ClienteDAO;
 import cl.gmo.pos.venta.web.Integracion.Factory.ConexionFactory;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
