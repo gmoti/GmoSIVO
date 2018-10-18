@@ -3,33 +3,39 @@
 	<window id="winEncargos" border="none" width="100%" height="100%" vflex="min" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerEncargos')">
 		
-		<style>
-		.MyGridRowHeight
-		    tr.z-row td.z-row-inner div.z-row-content{
-		        border:1px solid white;
-		        border-right:1px solid transparent;
-		        padding:0px;
-		        margin:0px;
-		}
-		
-		.shrink24 img {
-		  		vertical-align: middle;
-		  		border-style: none;
-		  		width: 24px;
-		  		height: 24px;
-		}
 				
-		.shrink16 img {
-		  		vertical-align: middle;
-		  		border-style: none;
-		  		width: 16px;
-		  		height: 16px;
-		}
+		<style>
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+					
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			 }
+			 tr.z-row td.z-row-inner { border: none; } 		
+			  		
+			 <!-- .MyGridRowHeight 		
+			 	tr.z-row td.z-row-inner { border-right: 0px #CCC; } 	 -->	
+			}
 		</style>
 
 		<borderlayout vflex="min">
 			<!-- Parte superior de la ventana -->
-			<north height="28%" vflex="min">
+			<north height="30%" vflex="min" >
 				<div width="100%" height="100%" vflex="min">
 					<div width="100%" height="25%" style="background-color:black;color: white" vflex="min">
 						
@@ -59,7 +65,8 @@
 					</div>
 					
 					<div width="100%" height="75%" vflex="min">
-						<grid width="100%" height="100%" vflex="min" style="padding:10px 0px 0px 0px">
+						<grid width="100%" height="100%" vflex="min" 
+								style="padding:5px 0px 5px 0px" fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column width="80px"/>
 								<column width="230px"/>
@@ -424,9 +431,9 @@
 
 						<div width="100%" vflex="min">
 							<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-									width="100%" height="250px" 
+									width="100%" height="200px" 
 									sclass="MyGridRowHeight" 
-									emptyMessage="Sin registros cargados"><!-- overflow: scroll; "250px" -->
+									emptyMessage="Sin registros cargados" fixedLayout="true" oddRowSclass="none"><!-- overflow: scroll; "250px" -->
 								<columns>
 									<column width="145px" />
 									<column width="315px" />
@@ -486,13 +493,13 @@
 						</div>
 					</div>
 					
-					<div width="100%" height="15%" style="padding-left:300px" vflex="min">
-										
-						<div width="815px" style="background-color:black;color: white;">
-							<label value="Graduacion del articulo" />
-						</div>
+					<div width="100%" height="15%" vflex="min" align="center">
 						
-						<div>
+						<div width="100%">						
+							<div width="730px" style="background-color:black;color: white;" align="left">
+								<label value="Graduacion del articulo" />
+							</div>
+						
 							<hbox>
 								<label value="Esfera" />
 								<doublebox value="@load(vm.productoBean.esfera)" width="75px" readonly="true" style="text-align:right"/>
@@ -515,11 +522,11 @@
 			</center>
 
 			<!-- Parte inferior de la ventana -->
-			<south height="35%" vflex="min">
-				<div vflex="min">
+			<south height="30%" vflex="min">
+				<div vflex="min" style="padding:0px 0px 10px 0px">
 					<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>
 					<div width="100%" vflex="min">
-						<grid sclass="MyGridRowHeight">
+						<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column label="" hflex="1"/>
 								<column label="" hflex="3"/>
@@ -580,28 +587,26 @@
 						</grid>
 					</div>
 					<div width="100%" style="background-color:black;color: white"><label value="Totales"/></div>
-					<div width="100%" vflex="min">
-						<grid sclass="MyGridRowHeight">
+					<div width="100%" vflex="min" align="center">
+						<grid vflex="min" hflex="min" sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
 							<columns>
-								<column label="" />
-								<column label="" />
-								<column label="" />
-								<column label="" />
-								<column label="" />
-								<column label="" />
-								
-								<column label="" />
-								<column label="" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />								
+								<column hflex="min" />
+								<column hflex="min" />
 							</columns>
 							<rows>
 								<row>
-									<label value="" />
-									<label value="" />
+									<cell/>
+									<cell/>
 									<label value="Sub Total" />
 									<label value="Descuento" />
 									<label value="% Desc" />
-									<label value="Total" />
-									
+									<label value="Total" />									
 									<label value="Anticipo" />
 									<label value="Total Pendiente" />
 								</row>
@@ -622,15 +627,21 @@
 									
 									<intbox  value="@bind(vm.ventaPedidoForm.totalPendiante)" 
 											style="text-align:right; background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
-								</row>								
+								</row>	
+								<row>
+									<label value="Notas" />
+									<cell colspan="7" style="padding: 5px 0px 0px 0px">
+										<textbox value="@bind(vm.ventaPedidoForm.nota)" width="800px" />
+									</cell>
+								</row>							
 							</rows>
 						</grid>
-						
+						<!-- 
 						<div width="100%" style="padding :10px 0px 0px 0px">
 							<label value="Notas" />
 							<textbox value="@bind(vm.ventaPedidoForm.nota)" width="800px" />
 						</div>						
-						
+						 -->
 					</div>
 				</div>
 			</south>

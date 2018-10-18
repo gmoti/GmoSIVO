@@ -1,0 +1,256 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winGraduacionClientes" border="none" width="100%" height="100%" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
+			
+	<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		}
+	</style>		
+			
+	<div width="100%" height="100%">		
+		<borderlayout>
+			<north height="35%">
+				<div width="100%" height="100%">
+					<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+				   		<label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
+						<div style="float: right">					
+							<label value="@load(vm.sucursalDes)"/>
+							<label value="::"/>
+							<label value="@load(vm.usuario)"/>	
+						</div>
+					</div>		
+				
+					<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
+				   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
+				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winGraduacionClientes.detach()" />
+				   	</div>
+				   	
+				   	<div width="100%" vflex="min">
+				   		<div style="float: left ;">
+				   			<label value="Cliente"/>
+				   			<textbox/>
+				   			<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+				   		</div>
+				   		
+				   		<div style="float: right ;">
+				   			<checkbox label="Diferente adiccion"/> 
+				   		</div>				   	
+				   	</div>	
+				   	
+				   	<div width="100%" height="20px" style="background-color:black;color: white;">
+				   		<label value="Graduacion"/>				   		
+				   	</div>			
+				   	
+				   	<div width="100%" height="100%" align="center">
+				   		
+				   		<grid hflex="min" vflex="min">
+				   			<columns>
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   				<column hflex="min" />
+				   			</columns>
+				   			<rows>
+				   				<row>
+				   					<cell/>
+				   					<label value="Esfera"/>
+				   					<label value="Cilindro"/>
+				   					<label value="Eje"/>
+				   					<label value="Cerca"/>
+				   					<label value="Adicion"/>
+				   					<label value="DN/PL"/>
+				   					<label value="DN/PC"/>
+				   					<label value="AVSR"/>
+				   					<label value="AVCC"/>
+				   				</row>
+				   				
+				   				<row>
+				   					<label value="OD"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   				</row>
+				   				
+				   				<row>
+				   					<label value="Obs"/>
+				   					<cell colspan="9">
+				   						<textbox width="450px"/>
+				   					</cell>
+				   				</row>
+				   				
+				   				<row>
+				   					<label value="OI"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   					<textbox width="50px"/>
+				   				</row>
+				   				
+				   				<row>
+				   					<label value="Obs"/>
+				   					<cell colspan="9">
+				   						<textbox width="450px"/>
+				   					</cell>
+				   				</row>
+				   			</rows>
+				   		</grid>
+				   		
+				   	</div>				   	
+				</div>
+			</north>
+			
+			<center >
+							
+				<div width="100%" height="100%">
+				
+					<div width="100%" height="30px" style="background-color:black;color: white;">
+					   		<label value="Historico"/>				   		
+					</div>
+				
+					<div width="100%" height="100%">				
+						<borderlayout>
+							<west width="40%">
+								<div width="100%" height="100%">
+									<grid hflex="min" vflex="1">
+										<columns>
+											<column label="Fecha" />
+											<column label="Nunero" />
+											<column label="Detalle" />
+										</columns>
+										<rows>
+											<row>
+												<textbox width="150px"/>
+												<textbox width="150px"/>
+												<textbox width="150px"/>
+											</row>
+										</rows>
+									</grid>
+								</div>
+							</west>
+							
+							<east width="60%">
+								<div width="100%" height="100%" align="center">
+									<grid hflex="min" vflex="max">
+										<columns>
+											<column hflex="min" />
+											<column hflex="min" />
+											<column hflex="min" />
+											<column hflex="min" />
+											<column hflex="min" />
+										</columns>
+										<rows>
+											<row>
+												<cell/>
+												<label value="Cantidad"/>
+												<label value="Base"/>
+												<label value="Altura"/>
+												<label value="Tipo"/>											
+											</row>
+											
+											<row>
+												<label value="OD"/>
+												<combobox><comboitem label=""/></combobox>
+												<combobox><comboitem label=""/></combobox>
+												<textbox/>
+												<checkbox/>
+											</row>
+											
+											<row>
+												<label value="OI"/>
+												<combobox><comboitem label=""/></combobox>
+												<combobox><comboitem label=""/></combobox>
+												<textbox/>
+												<checkbox/>
+											</row>										
+										</rows>
+									</grid>
+								</div>
+							</east>				
+						</borderlayout>			
+					</div>
+				</div>
+			</center>
+			
+			<south height="40%">
+				<div width="100%" height="100%">
+					<grid>
+						<columns>
+							<column hflex="min" />
+							<column hflex="min" />
+							<column hflex="min" />
+							<column hflex="min" />
+							<column hflex="min" />							
+						</columns>
+						<rows>
+							<row>
+								<label value="Oftalmologo"/>
+								<cell colspan="1">
+									<textbox width="150px"/>								
+									<textbox width="50px"/>
+									<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+									<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="" />
+									<toolbarbutton image="/iconos/nuevo.png" sclass="shrink16" onClick="" />
+								</cell>
+								<cell/>
+								<cell/>
+								<cell/>
+							</row>								
+							
+							<row>
+								<label value="Atendido por:"/>
+								<combobox>
+									<comboitem label=""/>								
+								</combobox>
+								
+								<cell/>
+								
+								<label value="F.Emision:"/>
+								<datebox/>
+								
+								<label value="F.Prox.Revision"/>
+								<datebox/>
+							</row>
+						</rows>
+					</grid>
+				</div>
+			</south>
+		</borderlayout>
+	</div>
+</window>

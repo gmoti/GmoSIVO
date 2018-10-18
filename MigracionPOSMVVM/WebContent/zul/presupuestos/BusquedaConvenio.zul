@@ -1,30 +1,55 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winBusquedaConvenio" border="none" width="60%" height="55%" 
+<window id="winBusquedaConvenio" border="none" width="45%" height="45%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaConvenio')">
 		
 		
 		<style>
-			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
-			border:1px solid white; border-right:1px solid transparent;
-			padding:0px; margin:0px; }
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+					
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			 
+			 tr.z-row td.z-row-inner { border: none; } 		
+			  		
+			 <!-- .MyGridRowHeight 		
+			 	tr.z-row td.z-row-inner { border-right: 0px #CCC; } 	 -->	
+			}
 		</style>
+
 		
-		<borderlayout>
-			<north>
-				<div width="98%" height="30%">				
+		<borderlayout vflex="min" hflex="min">
+			<north hflex="min">
+				<div width="100%" height="30%">				
 					
 					<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="Busqueda Convenios" style="float: left"/>	
 						<div style="float: right">					
-							<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaConvenio.detach()"/>	
+							<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+								onClick="winBusquedaConvenio.detach()"/>	
 						</div>				
 					</div>
 					
 					
 					<div width="100%">
 
-						<grid sclass="MyGridRowHeight" height="150x">
+						<grid sclass="MyGridRowHeight" height="150x" fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column width="250px" />
 								<column width="200px" />
@@ -43,8 +68,10 @@
 									<textbox value="@bind(vm.busquedaConveniosForm.empresa)" width="180px"/>
 								</row>
 								<row>
-									<label />									
-									<toolbarbutton image="/iconos/lupa.png" label="Buscar"  onClick="@command('buscarConvenios')"/>
+									<cell/>								
+									<button image="/iconos/lupa.png" sclass="shrink16" 
+										label="Buscar"   
+										onClick="@command('buscarConvenios')"/>
 								</row>
 							</rows>
 						</grid>
@@ -53,32 +80,33 @@
 				</div>
 			</north>
 			
-			<center> 
-				<div width="98%" height="70%">
+			<center hflex="min"> 
+				<div width="100%" height="70%">
 				
 					<div width="100%" style="background-color:black;color: white">
 						<space width="10px"/>
 						<label value="Codigo" />
 						<space width="50px"/>
 						<label value="Descripcion" />
-						<space width="365px"/>
-						<label value="Seleccion" />						
+						<!-- <space width="300px"/>
+						<label value="Seleccion" />	 -->					
 					</div>
 					<div width="100%">	
 						
 						<grid model="@load(vm.busquedaConveniosForm.lista_convenios)"
-								sclass="MyGridRowHeight" height="200px">
+								sclass="MyGridRowHeight" height="225px" 
+								fixedLayout="true" oddRowSclass="none">
 							<columns>
-								<column width="100px" />
-								<column width="500px" />
-								<column width="50px" />
+								<column width="105px" />
+								<column width="350px" />
+								<column width="55px" />
 							</columns>
 							<template name="model">
 								<row>
-									<textbox value="@load(each.id)" disabled="true"/>
-									<textbox value="@load(each.descripcion)" width="490px" disabled="true"/>
-									
-									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaConvenio',arg=each)"/>
+									<textbox value="@load(each.id)" readonly="true" width="100px"/>
+									<textbox value="@load(each.descripcion)" width="350px" readonly="true"/>									
+									<toolbarbutton image="/iconos/add.png"  width="50px"
+										onClick="@command('seleccionaConvenio',arg=each)"/>
 								</row>
 							</template>
 						</grid>	

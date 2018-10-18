@@ -103,14 +103,6 @@ public class ControllerVentaDirecta implements Serializable{
 		ventaDirectaForm = ventaDirectaAccion.carga(ventaDirectaForm, sess);
 		ventaDirectaForm = ventaDirectaAccion.cargaCaja(ventaDirectaForm, sess);
 		
-		/*ventaDirectaForm.setCajero(sess.getAttribute("glprofile").toString());
-		ventaDirectaForm.setAgente(sess.getAttribute("glprofile").toString());
-		ventaDirectaForm.setNumero_caja((int)sess.getAttribute("caja"));
-		ventaDirectaForm.setNombreCliente("");
-		ventaDirectaForm.setAgente(sess.getAttribute("agente").toString());
-		
-		posicionaCombos();*/
-		
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
 		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);

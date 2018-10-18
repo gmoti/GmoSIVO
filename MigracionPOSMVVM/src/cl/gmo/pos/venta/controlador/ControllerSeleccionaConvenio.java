@@ -64,6 +64,13 @@ public class ControllerSeleccionaConvenio implements Serializable {
 			busquedaConveniosDispatchActions = new BusquedaConveniosDispatchActions();		
 			busquedaConveniosDispatchActions.selecciona_convenio(busquedaConveniosForm, sess);
 		}
+		
+		if (pOrigen.equals("encargo")) {
+			busquedaConveniosDispatchActions = new BusquedaConveniosDispatchActions();		
+			busquedaConveniosDispatchActions.selecciona_convenio(busquedaConveniosForm, sess);
+		}
+		
+		
 	}
 	
 	@NotifyChange({"convenioLnBean","busquedaConveniosForm"})
@@ -95,13 +102,17 @@ public class ControllerSeleccionaConvenio implements Serializable {
 				winSeleccionaConvenio.detach();				
 			}
 			
-		}else if (pVentana.equals("pedido")) {
+		}else if (pVentana.equals("encargo")) {
 			
-			
-			
-			
-		} 	
-		
+			if (pOrigen.equals("encargo")) {
+				BindUtils.postGlobalCommand(null, null, "respVentanaConvenioPedido", objetos);
+				winSeleccionaConvenio.detach();
+				busquedaConvenio.detach();
+			}else {
+				BindUtils.postGlobalCommand(null, null, "respVentanaConvenioPedido", objetos);
+				winSeleccionaConvenio.detach();				
+			}			
+		} 		
 	}
 	
 

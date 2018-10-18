@@ -40,7 +40,7 @@
 		
 		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
 	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
-	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="" />
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winClientes.detach()" />
 	   	</div>
 	
 		<div  width="100%" height="35%">

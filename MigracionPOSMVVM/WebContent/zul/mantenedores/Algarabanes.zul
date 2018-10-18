@@ -1,0 +1,203 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window id="winAlgarabanes" border="none" width="100%" height="100%" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')  ">
+			
+			
+	<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		}
+	</style>			
+
+	<div width="100%" height="100%" >
+	
+		<borderlayout>
+			<north height="50%">
+				<div width="100%" height="100%">
+					<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+				   		<label value="AlGARABAN" style="float: left ; font-weight: bold; font-size: 150%;"/>
+						<div style="float: right">					
+							<label value="@load(vm.sucursalDes)"/>
+							<label value="::"/>
+							<label value="@load(vm.usuario)"/>	
+						</div>
+					</div>		
+				
+					<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
+				   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
+				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winAlgarabanes.detach()" />
+				   	</div>
+
+					<div width="100%">
+						<grid vflex="min" hflex="min">
+							<columns>
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+							</columns>
+							<rows>
+								<row>
+									<label value="Codigo"/>
+									<cell colspan="1">
+										<textbox width="50px"/>
+										<textbox width="150px"/>
+										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+									</cell>
+									<label value="Fecha"/>
+									<datebox/>
+									<label value="Hora"/>
+									<datebox/>
+									
+									<label value="Tipo Albaran"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>
+									
+									<radiogroup>
+										<radio label="Boleta"/>
+										<radio label="Guia"/>
+									</radiogroup>
+									
+									<textbox width="150px"/>
+									<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />									
+								</row>
+								
+								<row>
+									<label value="Cliente"/>
+									<cell colspan="1">
+										<textbox width="150px"/>
+										<textbox width="50px"/>
+									</cell>
+									<checkbox label="Kodak"/>
+									<checkbox label="Entrega"/>
+								</row>
+								
+								<row>
+									<label value="Idioma"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>
+									
+									<label value="Cambio"/>
+									<textbox width="150px"/>
+									
+									<label value="Agente"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>							
+								</row>
+								
+								<row>
+									<label value="Divisa"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>
+									
+									<label value="Montador"/>
+									<textbox width="150px"/>
+									
+									<checkbox label="Facturado"/>
+									<textbox width="150px"/>								
+								</row>
+								
+								<row>
+									<label value="Motivo"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>
+									
+									<label value="Forma Pago"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>
+									
+									<label value="Dcto%"/>
+									<textbox width="150px"/>
+								</row>
+								
+								<row>
+									<label value="Fecha garantia"/>
+									<datebox/>
+									
+									<label value="Convenio"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>
+									
+									<label value="Importe pendiente cobro"/>
+									<textbox width="150px"/>
+								</row>
+								
+								<row>
+									<label value="Direccion cliente"/>
+									<textbox width="150px"/>
+									
+									<label value="Nro. Direc.cliente"/>
+									<textbox width="150px"/>
+									
+									<label value="Comuna cliente"/>
+									<combobox width="150px">										
+										<comboitem label=""/>
+									</combobox>
+								</row>								
+							</rows>
+						</grid>
+					</div>
+				</div>		
+			</north>
+			<south height="50%">
+				<div width="100%" height="100%">
+					<grid vflex="min" hflex="min">
+						<columns style="background-color:black;color: white;">
+							<column label="Articulo" />
+							<column label="Descripcion" />
+							<column label="Subalm" />
+							<column label="Precio IVA" />
+							<column label="Dto%" />
+							<column label="Cantidad" />
+							<column label="Importe" />
+							<column label="Encargo venta" />
+						</columns>
+						<rows>
+							<row>
+								<textbox/>
+								<textbox/>
+								<textbox/>
+								<textbox/>
+								<textbox/>
+								<textbox/>
+								<textbox/>
+								<textbox/>
+							</row>
+						</rows>
+					</grid>
+				</div>
+			</south>	
+		</borderlayout>	
+	</div>
+</window>

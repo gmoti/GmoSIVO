@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<zk>
-<window  id="winSeleccionaConvenio" border="none"  height="40%" width="80%"
+
+<window  id="winSeleccionaConvenio" border="none"  height="30%" width="55%"
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionaConvenio')">
 		
 		<style>
@@ -21,9 +21,11 @@
 			  		width: 16px;
 			  		height: 16px;
 			}
+			
+			tr.z-row td.z-row-inner { border: none; }
 		</style>		
 		
-				
+	<div  height="100%" width="100%" >		
 		<div width="100%" style="background-color:black;color: white" height="40px">
 			<label value="Descuentos del convenio" style="float: left"/>	
 			<div style="float: right">					
@@ -33,7 +35,7 @@
 		
 		<div width="100%" height="100%">
 			<borderlayout width="100%">
-				<west width="50%">
+				<west width="60%">
 					<div>
 						<div width="100%" style="background-color:black;color: white">
 							<space width="10px"/>
@@ -42,25 +44,25 @@
 			                <label value="Descripcion" />
 			                <space width="90px"/>
 			                <label value="% Descuento" />
-			                <space width="5px"/>
-			                <label value="Sel" />
+			                
 						</div>	
-						<div width="100%" height="100%">
+						<div width="100%" height="100%" >
 							<!-- Grid de descuentos por convenio -->
 							
 							<grid model="@load(vm.busquedaConveniosForm.lista_formas_pago)" 
-									 height="220px" emptyMessage="Sin registros seleccionados" sclass="MyGridRowHeight">
+									 height="200px" emptyMessage="Sin registros seleccionados" 
+									 sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
 								<columns>
 									<column width="100px" />
-									<column width="200px" />
-									<column width="100px" />
+									<column width="150px" />
+									<column width="60px" />
 									<column width="50px" />
 								</columns>
 								<template name="model">
 									<row>
-										<textbox value="@load(each.forma_pago)" width="95px" style="text-align:right" disabled="true"/>
-										<textbox value="@load(each.forma_pago_desc)" width="195px" disabled="true"/>
-										<textbox value="@load(each.dto)" width="95%" style="text-align:right" disabled="true"/>
+										<textbox value="@load(each.forma_pago)" width="95px" style="text-align:right" readonly="true"/>
+										<textbox value="@load(each.forma_pago_desc)" width="195px" readonly="true"/>
+										<textbox value="@load(each.dto)" width="95%" style="text-align:right" readonly="true"/>
 										
 										<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaConvenio',arg=each, index=forEachStatus.index)"/>									
 									</row>
@@ -70,7 +72,7 @@
 					</div>
 				</west>
 				
-				<east width="50%">
+				<east width="40%">
 					<div>
 						<div width="100%" style="background-color:black;color: white">
 							<space width="10px"/>
@@ -84,7 +86,8 @@
 						   <!-- Grid de familias -->
 						  
 						   <grid model="@load(vm.busquedaConveniosForm.lista_formas_pago_familias)" 
-						   		height="220px" emptyMessage="Sin registros seleccionados" sclass="MyGridRowHeight">
+						   		height="200px" emptyMessage="Sin registros seleccionados" 
+						   		sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
 								<columns>
 									<column width="105px" />
 									<column width="105px" />
@@ -93,9 +96,9 @@
 								
 								<template name="model">
 									<row>
-										<textbox value="@load(each.familia)" disabled="true" width="100px"/>
-										<textbox value="@load(each.subfamilia)" disabled="true" width="100px"/>
-										<textbox value="@load(each.grupofamilia)" disabled="true" width="100px"/>																			
+										<textbox value="@load(each.familia)" readonly="true" width="100px"/>
+										<textbox value="@load(each.subfamilia)" readonly="true" width="100px"/>
+										<textbox value="@load(each.grupofamilia)" readonly="true" width="100px"/>																			
 									</row>
 								</template>
 						   </grid>	
@@ -104,19 +107,20 @@
 					</div>
 				</east>
 				
-				<south>
-					<div width="100%" height="10%" align="center">
+				<south height="30%">
+					<div width="100%" height="100%" align="center">
 						<label value="Convenio Seleccionado"/>
 						<textbox value="@bind(vm.convenioLnBean.forma_pago)" width="50px" disabled="true"/>
 						<textbox value="@bind(vm.convenioLnBean.dto)" width="50px" disabled="true"/>
 						
-						<toolbarbutton image="/iconos/check.png" onClick="@command('aceptaConvenio')"  width="30px"/>
-						<toolbarbutton image="/iconos/cancel.png" onClick="winSeleccionaConvenio.detach()" width="30px"/>
+						<toolbarbutton image="/iconos/check.png" 
+							onClick="@command('aceptaConvenio')"  width="30px" sclass="shrink16"/>
+						<toolbarbutton image="/iconos/cancel.png" 
+							onClick="winSeleccionaConvenio.detach()" width="30px" sclass="shrink16"/>
 						
 					</div>				
 				</south>				
 			</borderlayout>
 		</div>
-
+	</div>
 </window>
-</zk>

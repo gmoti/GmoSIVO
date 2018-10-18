@@ -90,7 +90,7 @@ public class ControllerMenuPrincipal implements Serializable{
 		
 		case "M2_2":	
 			window = (Window)Executions.createComponents(
-	                "/zul/mantenedores/GraduacionCliente.zul", null, null);
+	                "/zul/mantenedores/GraduacionClientes.zul", null, null);
 			
 	        window.doModal();
 	        break;    
@@ -100,7 +100,14 @@ public class ControllerMenuPrincipal implements Serializable{
 	                "/zul/mantenedores/Medico.zul", null, null);
 			
 	        window.doModal();
-	        break;    
+	        break; 
+	        
+		case "M2_4":	
+			window = (Window)Executions.createComponents(
+	                "/zul/mantenedores/Algarabanes.zul", null, null);
+			
+	        window.doModal();
+	        break;     
 	        
 	        
 	        //reportes

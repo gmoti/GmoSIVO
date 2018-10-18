@@ -8,7 +8,7 @@ import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Window;
 
-
+import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.actions.ClienteDispatchActions;
 import cl.gmo.pos.venta.web.actions.GraduacionesDispatchActions;
@@ -25,6 +25,9 @@ public class ControllerGraduacionCliente extends GraduacionesForm{
 	private boolean prismaExterno= false;
 	private String sagente = "Seleccione Agente";
 	
+	private String usuario;	
+	private String sucursalDes;
+	
 	GraduacionesForm cform ;
 	GraduacionesBean gradb ;
 	GraduacionesDispatchActions grad_dis = new GraduacionesDispatchActions();
@@ -40,6 +43,9 @@ public class ControllerGraduacionCliente extends GraduacionesForm{
 		this.setListaCantidadOI(cform.getListaCantidadOI());
 		this.setListaBaseOD(cform.getListaBaseOD());
 		this.setListaBaseOI(cform.getListaBaseOI());
+		
+		usuario = (String)sesion.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sesion.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 	}
 	@Command
 	@NotifyChange({"*"})
@@ -111,4 +117,18 @@ public class ControllerGraduacionCliente extends GraduacionesForm{
 	public void setSagente(String sagente) {
 		this.sagente = sagente;
 	}
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}
+	
+	
 }

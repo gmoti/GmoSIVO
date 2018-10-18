@@ -133,7 +133,8 @@ public class ControllerEncargos implements Serializable {
 		beanControlBotones = new BeanControlBotones();	
 		beanControlCombos  = new BeanControlCombos();
 		
-		ventaPedidoForm          = new VentaPedidoForm();		
+		ventaPedidoForm          = new VentaPedidoForm();
+		busquedaConveniosForm    = new BusquedaConveniosForm();
 		ventaPedidoDispatchActions = new VentaPedidoDispatchActions();
 		devolucionDispatchActions  = new DevolucionDispatchActions();
 		
@@ -1067,7 +1068,7 @@ public class ControllerEncargos implements Serializable {
 		
 		@NotifyChange({"ventaPedidoForm","selConvenio"})
 		@GlobalCommand
-		public void respVentanaConvenioPres(@BindingParam("busquedaConvenios")BusquedaConveniosForm convenio) {
+		public void respVentanaConvenioPedido(@BindingParam("busquedaConvenios")BusquedaConveniosForm convenio) {
 			
 			selConvenio="false";		
 			ventaPedidoForm.setConvenio(convenio.getSel_convenio());
@@ -1638,9 +1639,14 @@ public class ControllerEncargos implements Serializable {
 			
 			if (!ventaPedidoForm.getBloquea().equals("bloquea")) {
 				
+				objetos = new HashMap<String,Object>();		
+				objetos.put("busquedaConvenios",busquedaConveniosForm);
+				objetos.put("ventana","encargo");
+				objetos.put("origen","encargo");				
+				
 				//ventana convenio
 				Window window = (Window)Executions.createComponents(
-		                "/zul/presupuestos/BusquedaConvenio.zul", null, null);		
+		                "/zul/presupuestos/BusquedaConvenio.zul", null, objetos);		
 		        window.doModal();
 				
 			}else {
@@ -1654,9 +1660,14 @@ public class ControllerEncargos implements Serializable {
 			
 			if (!ventaPedidoForm.getCliente().equals("") && !ventaPedidoForm.getCliente().equals("0")) {
 				
+				objetos = new HashMap<String,Object>();		
+				objetos.put("busquedaConvenios",busquedaConveniosForm);
+				objetos.put("ventana","encargo");
+				objetos.put("origen","encargo");
+				
 				//ventana convenio
 				Window window = (Window)Executions.createComponents(
-		                "/zul/presupuestos/BusquedaConvenio.zul", null, null);		
+		                "/zul/presupuestos/BusquedaConvenio.zul", null, objetos);		
 		        window.doModal();
 				
 			}else {				

@@ -1,7 +1,7 @@
 <?page title="Busqueda Encargo" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winBusquedaEncargo" border="normal" width="900px"
-		height="400px" position="center"  mode="modal" sizable="false" 
+<window id="winBusquedaEncargo" border="normal" width="50%" height="41%"
+		 position="center"  mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaEncargo')">
 		
 		<style>
@@ -9,17 +9,29 @@
 			border:1px solid white; border-right:1px solid transparent;
 			padding:0px; margin:0px; }
 
-			.z-combobox-inp { height: 20px; }
-
-			.z-button-inp { height: 15px; }
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			 }
+			 tr.z-row td.z-row-inner { border: none; } 	
 		</style>
 		
 		
-		<div>			
+		<div width="100%" height="100%">			
 			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Selecciona Encargo" />
 				<div style="float: right">					
-					<toolbarbutton image="/iconos/cancel.png" onClick="@command('seleccionaProducto',win=winBusquedaEncargo)"/>		
+					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+					onClick="@command('seleccionaProducto',win=winBusquedaEncargo)"/>		
 				</div>																			
 			</div>
 			
@@ -28,30 +40,30 @@
 				<label value="Agente"/>
 				<space width="90px"/>
 				<label value="Codigo"/>
+				<space width="45px"/>				
+				<label value="F/Pedido"/>				
 				<space width="40px"/>				
-				<label value="Fecha Pedido"/>				
-				<space width="70px"/>				
 				<label value="Hora"/>
-				<space width="40px"/>
-				<label value="Fecha Entrega"/>				
+				<space width="20px"/>
+				<label value="F/Entrega"/>				
 				<space width="10px"/>							
 				<label value="Anticipo"/>
-				<space width="10px"/>
-				<label value="Accion"/>
+				<!-- <space width="10px"/>
+				<label value="Accion"/> -->
 			</div>
 		
 			<div height="90%">
 				<grid model="@load(vm.lista_pedidos)"  
 						sclass="MyGridRowHeight" 						 
-						height="280px">
+						height="280px" fixedLayout="true" oddRowSclass="none">
 					<columns>
 						<column width="150px" />
 						<column width="100px" />
-						<column width="165px" />
-						<column width="100px" />
-						<column width="100px" />
+						<column width="73px" />
+						<column width="60px" />
+						<column width="73px" />
 						<column width="95px" />
-						<column width="100px" />
+						<column width="50px" />
 					</columns>
 					<template name="model">
 						<row>
@@ -60,7 +72,7 @@
 							<textbox value="@load(each.fechaPedido)" readonly="true"/>
 							<textbox value="@load(each.horaP)" readonly="true"/>							
 							<textbox value="@load(each.fechasEntragas)" readonly="true"/>	
-							<textbox value="@load(each.anticipo)" readonly="true"/>	
+							<textbox value="@load(each.anticipo)" readonly="true" left="false"/>	
 																							
 							<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',win=winBusquedaEncargo) 
 										@global-command('encargoSeleccionado', arg=vm.lista_pedidos, arg2=each)"/>

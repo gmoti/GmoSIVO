@@ -1,7 +1,7 @@
 package cl.gmo.pos.venta.respuesta;
 
 import java.io.Serializable;
-
+import org.zkoss.zul.Messagebox;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.forms.VentaDirectaForm;
 
@@ -26,34 +26,22 @@ public class RespuestaVentaDirecta implements Serializable {
 		estado = formulario.getEstado();		
 		
 		switch (estado) {
-		case Constantes.STRING_PRODUCTOS_NO_ENCONTRADO:
-			
+		case Constantes.STRING_PRODUCTOS_NO_ENCONTRADO:	
+			mensajeBasico("Producto no encontrado");
 			break;
-
-		default:
-			break;
-		}
 		
-		
-		
-		
-		
-		/*
-		if (est == "producto_no_encontrado") {
-			alert("Producto no encontrado");
-		}
-		if (est == "producto_precio_especial") 
-		{
-			boton = confirm("El producto tiene precio especial, ¿desea aplicarlo?");
+		case Constantes.STRING_PRODUCTO_PRECIO_ESPECIAL:
+			/*boton = confirm("El producto tiene precio especial, ¿desea aplicarlo?");
 			if (boton)
 			{
 			  	document.getElementById('accion').value = "aplicaPrecioEspecial";
     			document.ventaDirectaForm.submit();
-			}
-		}
-	 	
-	 	if (est == "fin") {
-	 		estado = est;
+			}*/
+			
+			break;
+			
+		case Constantes.STRING_FIN:
+			/*estado = est;
 	 		alert("Venta almacenada con éxito");
 	 		var cmb_tipo_albaran = document.getElementById('tipo_albaran');
 	 		var cmb_cajero = document.getElementById('cajero');
@@ -63,42 +51,51 @@ public class RespuestaVentaDirecta implements Serializable {
 	 		cmb_cajero.disabled= true;
 	 		cmb_tipo_albaran.disabled= true;
 	 		
-	 		parent.carga_url_padre('<%=request.getContextPath()%>/Menu.do?method=CargaMenu');
-		}
-		if (est== "guardado")
-		{
-			alert("Venta almacenada con éxito");
-		}
-		if (est== "ERROR_GUARDADO")
-		{
-			alert("La venta no se pudo guardar. intentelo nuevamente");
-		}
-		if (est== "ERROR_VALIDACION_MULTIOFERTA")
-		{
-			alert("la multioferta no se guardo correctamente");
-		}
-		if (est == "VALIDACION_MULTIOFERTA_OK")
-		{
-			genera_venta();
-		}
+	 		parent.carga_url_padre('<%=request.getContextPath()%>/Menu.do?method=CargaMenu');*/
+			
+			break;
+
+		case Constantes.STRING_GUARDADO:
+			mensajeBasico("Venta almacenada con éxito");
+			break;
 		
-		if (est=='producto_graduable') {
-			alert("Los Lentes de Contacto con Graduación no se pueden registrar por Venta Directa");
-		}
-		if (est=='carga_multioferta') 
-		{	
-			var codigo = document.getElementById('codigo_mult').value;
+		case "ERROR_GUARDADO":
+			mensajeBasico("La venta no se pudo guardar. intentelo nuevamente");
+			break;	
+		
+		case "ERROR_VALIDACION_MULTIOFERTA":
+			mensajeBasico("la multioferta no se guardo correctamente");
+			break;
+			
+		case "VALIDACION_MULTIOFERTA_OK":
+			//genera_venta();
+			break;
+		
+		case Constantes.STRING_PRODUCTOS_GRADUABLE:
+			mensajeBasico("Los Lentes de Contacto con Graduación no se pueden registrar por Venta Directa");
+			break;
+			
+		case Constantes.STRING_CARGA_MULTIOFERTAS:	
+			/*var codigo = document.getElementById('codigo_mult').value;
 			var index = document.getElementById('index_multi').value;
 	 		showPopWin("<%=request.getContextPath()%>/BusquedaProductosMultiOfertas.do?method=cargaBusquedaProductosMultiOfertas&formulario=DIRECTA&codigoMultioferta="+codigo+"&index_multi="+index+"", 714, 425, null, false);
-	 	}
-		*/
-		
-		
-		
-		
-		
+			*/
+			break;
+			
+		default:
+			mensajeBasico("Mensaje no definido en Venta Directa");
+			break;
+		}
+				
 		return formulario;
 	}
+	
+	
+	private void mensajeBasico(String mensaje) {
+	
+		Messagebox.show(mensaje);
+	}	
+	
 	
 
 }
