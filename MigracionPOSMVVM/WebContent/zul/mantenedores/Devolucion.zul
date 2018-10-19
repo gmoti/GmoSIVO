@@ -2,7 +2,7 @@
 
 <zk>
 <window title="Devolucion" id='albaran' 
-	sclass='container' border="normal"
+	sclass='container-fluid' border="normal"
 	apply="org.zkoss.bind.BindComposer" 
     viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAlbaran')">
 <style>
