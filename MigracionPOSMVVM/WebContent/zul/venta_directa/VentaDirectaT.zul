@@ -1,6 +1,6 @@
 <?page title="Venta Directa" contentType="text/html;charset=UTF-8"?>
 <window id="winVentaDirecta" border="normal" closable="false" sclass="container" 
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVentaDirecta')" visible="@bind(vm.controlBotones.enableGenerico1)">	
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVentaDirecta')">	
 <style>
 	.container-fluid{
 		background: #001624;
