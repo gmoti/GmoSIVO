@@ -101,7 +101,8 @@
      				<west width="60%" >
      					<div width="100%" height="100%">
 	     					<grid sclass="MyGridRowHeight" 
-	     							height="100%" width="100%" fixedLayout="true" oddRowSclass="none">
+	     							height="100%" width="100%" 
+	     							fixedLayout="true" oddRowSclass="none">
 	     						<columns>
 	     							<column hflex="min"/>
 	     							<column hflex="min"/>
