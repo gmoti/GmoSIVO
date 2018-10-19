@@ -1,18 +1,34 @@
 <?page title="Busca Producto" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<window id="winBuscaProductoVenta"  border="none" width="900px" visible="@bind(vm.winVisibleBusqueda)"
-		height="550px" position="center" closable="false" mode="modal" sizable="false" 	
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProduct')">
+
+<window id="winBuscaProductoVenta"  border="none" width="50%" height="55%"  
+	visible="@bind(vm.winVisibleBusqueda)"
+	position="center" closable="false" mode="modal" sizable="false" 	
+	viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProduct')">
 		
-		<style>    
-		    .MyGridRowHeight
-		        tr.z-row td.z-row-inner div.z-row-content{
-		            border:1px solid white;
-		            border-right:1px solid transparent;
-		            padding:0px;
-		            margin:0px;            
-		     } 
-		     
+		<style>
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+			
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			}
+			
+			tr.z-row td.z-row-inner { border: none; }
 		</style>
 
 		<borderlayout>
@@ -25,11 +41,10 @@
 						</div>																			
 					</div>	
 					
-					<grid sclass="MyGridRowHeight" width="100%">
+					<grid sclass="MyGridRowHeight" width="100%" fixedLayout="true" oddRowSclass="none">
 						<columns>							
 							<column hflex="min"/>
-							<column hflex="min"/>
-							<column hflex="min"/>
+							<column hflex="min"/>							
 						</columns>
 						<rows>
 							<row>
@@ -89,12 +104,16 @@
 							</row>
 
 							<row>
-								<label value="Codigo Barra Producto" />								
-								<textbox
-									value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
+								<label value="Codigo Barra Producto" />	
+								<cell colspan="1" style="padding: 0px 0px 0px 0px">							
+									<textbox
+										value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
 
-								<button image="/iconos/lupa2.png" width="150px"
-									label="Buscar" onClick="@command('despachador',arg='buscar')" />
+									<space width="10px"/>	
+	
+									<button image="/iconos/lupa2.png" width="100px"
+										label="Buscar" onClick="@command('despachador',arg='buscar')" />
+								</cell>	
 							</row>
 						</rows>
 					</grid>				
@@ -106,32 +125,31 @@
 				<div height="70%">				
 					
 					<div width="100%" style="background-color:black;color: white">
-						<space width="50px"/>
+						<space width="20px"/>
 						<label value="Articulo" />	
-						<space width="100px"/>
+						<space width="60px"/>
 						<label value="Descripcion" />
-						<space width="270px"/>
+						<space width="250px"/>
 						<label value="Precio iva" />
 						<space width="10px"/>
-						<label value="Grupo" />
-						<space width="10px"/>
-						<label value="Accion" />												
+						<label value="Grupo" />																		
 						</div>	
 						<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
-								sclass="MyGridRowHeight" height="300px"  emptyMessage="Sin registros">						
+								sclass="MyGridRowHeight" height="250px"  
+								emptyMessage="Sin registros" fixedLayout="true" oddRowSclass="none">						
 						<columns>
-							<column width="180px"/>
-							<column width="400px"/>
+							<column width="120px"/>
+							<column width="300px"/>
 							<column width="80px" />
 							<column width="60px" />
 							<column width="60px" /> 
 						</columns>						
 						<template name="model">							
 							<row>
-								<textbox value="@load(each.cod_barra)" width="180px" readonly="true"/>							
-								<textbox value="@load(each.descripcion)" width="400px" readonly="true"/>  
+								<textbox value="@load(each.cod_barra)" width="120px" readonly="true"/>							
+								<textbox value="@load(each.descripcion)" width="300px" readonly="true"/>  
 								<doublebox value="@load(each.precio)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-								<textbox value="@load(each.grupo)" width="60px" readonly="true"/> 								
+								<textbox value="@load(each.grupo)" width="50px" readonly="true"/> 								
 										
 								<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',win=winBuscaProductoVenta) 
 										@global-command('actProdGrid',arg=each)"/>		
@@ -145,5 +163,4 @@
 
 		</borderlayout>
 
-	</window>
-</zk>
+</window>

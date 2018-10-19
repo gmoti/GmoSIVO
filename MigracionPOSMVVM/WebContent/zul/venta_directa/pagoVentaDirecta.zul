@@ -1,6 +1,6 @@
 <?page title="Pago Venta Directa" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winPagoVentaDirecta" border="none" height="50%" width="80%" 
+	<window id="winPagoVentaDirecta" border="none" height="50%" width="65%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerPagoVentaDirecta')">	
 		
 		<style>
@@ -21,6 +21,8 @@
 			  		width: 16px;
 			  		height: 16px;
 			}
+			
+			tr.z-row td.z-row-inner { border: none; } 
 		</style>
 
 
@@ -35,7 +37,8 @@
 			</div>		
 			
 			<div width="100%" height="80%"> 
-				<grid sclass="MyGridRowHeight" height="100%" width="100%">   
+				<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none"  
+					height="100%" width="100%">   
      			
      				<columns>
      					<column width="100px"/>
@@ -95,88 +98,119 @@
 			<div width="100%" height="85%">
 			
 				<borderlayout height="100%" width="100%">				
-     				<west width="50%" >
-     					<grid sclass="MyGridRowHeight" height="100%" width="100%">
-     						<rows>
-     							<row>
-     								<label value="Valor total a pago" />
-     								<intbox value="@bind(vm.seleccionPagoForm.v_total_parcial)" 
-     										width="120px" readonly="true" 
-     										style="text-align:right" format="#,###,##0" locale="it"/>
-     										
-     								<intbox value="@bind(vm.seleccionPagoForm.v_total)" 
-     										width="120px" readonly="true" 
-     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>     								
-     							</row>
-     							<row>
-     								<label value="Valor a pagar" />
-     								<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)" 
-     									width="120px" 
-     									onBlur="@command('validaPago')" 
-     									style="text-align:right" 
-     									instant="true"/>
-     									
-     								<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
-     								<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" format="#,###,##0" locale="it" width="120px" 
-     									visible="@bind(vm.controlBotones.enableGenerico1)" readonly="true" />
-     									
-     							</row>
-     							<row>
-     								<label value="Descuento" />
-     								<textbox value="@bind(vm.seleccionPagoForm.descuento)" 
-     									width="120px" 
-     									readonly="@bind(vm.disableDescuento)" 
-     									onBlur="@command('calculaTotalvtaDirecta')" 
-     									style="text-align:right"/>
-     							</row>
-     							<row>
-     								<label value="Diferencia" />
-     								<intbox id="diferencia" 
-     									value="@bind(vm.seleccionPagoForm.diferencia)" 
-     									width="120px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-     								<!-- <intbox id="diferencia_total" value = "@bind(vm.diferencia_total)" width="120px" readonly="true" visible="false"/> -->
-     							</row>
-     							<row>	     							
-	     							<label value="Forma pago" />
-	     							<cell colspan="2" align="left">	
-	     								<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 
-	     										width="230px" selectedItem="@bind(vm.formaPagoBean)" placeholder="Selecciona forma pago">     								
-		     								<template name='model'>
-		     									<comboitem label="@load(each.descripcion)"/>  
-		     								</template>	   									
-	     								</combobox>
-	     							</cell>	
-     							</row>
-     						</rows>
-     					</grid>
+     				<west width="60%" >
+     					<div width="100%" height="100%">
+	     					<grid sclass="MyGridRowHeight" 
+	     							height="100%" width="100%" fixedLayout="true" oddRowSclass="none">
+	     						<columns>
+	     							<column hflex="min"/>
+	     							<column hflex="min"/>
+	     							<column hflex="min"/>
+	     							<column hflex="min"/>
+	     							<column hflex="min"/>
+	     						</columns>	
+	     							
+	     						<rows>
+	     							<row>
+	     								<label value="Valor total a pago" />
+	     								<intbox value="@bind(vm.seleccionPagoForm.v_total_parcial)" 
+	     										width="100px" readonly="true" 
+	     										style="text-align:right" format="#,###,##0" locale="it"/>
+	     										
+	     								<intbox value="@bind(vm.seleccionPagoForm.v_total)" 
+	     										width="100px" readonly="true" 
+	     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
+	     								<cell/>		
+	     								<cell/>	     								
+	     							</row>
+	     							<row>
+	     								<label value="Valor a pagar" />
+	     								<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)" 
+	     									width="100px" 
+	     									onBlur="@command('validaPago')" 
+	     									style="text-align:right" 
+	     									instant="true"/>
+	     									
+	     								<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
+	     								<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" 
+	     										format="#,###,##0" locale="it" width="100px" 
+	     										visible="@bind(vm.controlBotones.enableGenerico1)" readonly="true" />
+	     								<cell/>		
+	     							</row>
+	     							<row>
+	     								<label value="Descuento" />
+	     								<textbox value="@bind(vm.seleccionPagoForm.descuento)" 
+	     									width="100px" 
+	     									readonly="@bind(vm.disableDescuento)" 
+	     									onBlur="@command('calculaTotalvtaDirecta')" 
+	     									style="text-align:right"/>
+	     								<cell/>	
+	     								<cell/>	
+	     								<cell/>		
+	     							</row>
+	     							<row>
+	     								<label value="Diferencia" />
+	     								<intbox id="diferencia" 
+	     									value="@bind(vm.seleccionPagoForm.diferencia)" 
+	     									width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+	     								<!-- <intbox id="diferencia_total" value = "@bind(vm.diferencia_total)" width="120px" readonly="true" visible="false"/> -->
+	     								<cell/>	
+	     								<cell/>	
+	     								<cell/>	
+	     							</row>
+	     							<row>	     							
+		     							<label value="Forma pago" />
+		     							<cell colspan="2" align="left">	
+		     								<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 
+		     										width="230px" selectedItem="@bind(vm.formaPagoBean)" placeholder="Selecciona forma pago">     								
+			     								<template name='model'>
+			     									<comboitem label="@load(each.descripcion)"/>  
+			     								</template>	   									
+		     								</combobox>
+		     							</cell>	
+		     							<cell/>	
+		     							<cell/>	
+	     							</row>
+	     						</rows>
+	     					</grid>
+     					</div>
      				</west>
      				
-     				<east width="50%" >
+     				<east width="40%" >
      				
      					<div width="100%" height="100%">
      					
      						<div width="100%" height="15%" style="background-color:black;color: white;">
      							<space width="10px"/>
      							<label value="Fecha"/>
-     							<space width="70px"/>
+     							<space width="40px"/>
      							<label value="Forma pago"/>
      							<space width="30px"/>
-     							<label value="Monto"/>
-     							<space width="60px"/>
-     							<label value="Eliminar"/>
+     							<label value="Monto"/>     							
      						</div>     					
      					     				
-	     					<grid model="@bind(vm.seleccionPagoForm.listaPagos)" emptyMessage="Sin datos cargados"   
-									sclass="MyGridRowHeight" width="100%" height="85%">	     						
-	     						<template name="model">     							
+     					    <div width="100%" height="100%"> 				
+		     					<grid model="@bind(vm.seleccionPagoForm.listaPagos)" 
+		     							emptyMessage="Sin datos cargados"   
+										sclass="MyGridRowHeight" width="100%" height="100%" 
+										fixedLayout="true" oddRowSclass="none">	 
+									<columns>
+										<column width="85px"/>
+										<column width="85px"/>
+										<column width="85px"/>
+										<column width="55px"/>
+									</columns>									    						
+		     						<template name="model">     							
 	     								<row>
-	     								<textbox value="@load(each.fecha)" width="100px" readonly="true"/>
-	     								<textbox value="@load(each.detalle_forma_pago)" readonly="true"/>
-	     								<intbox value="@load(each.cantidad)" style="text-align:right" format="#,###,##0" locale="it" width="100px" readonly="true"/>
-	     								<button image="/iconos/cancel2.png" onClick="@command('deleteItemAutoriza',arg=each)"/>
+		     								<textbox value="@load(each.fecha)" width="80px" readonly="true"/>
+		     								<textbox value="@load(each.detalle_forma_pago)" width="80px" readonly="true"/>
+		     								<intbox value="@load(each.cantidad)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+		     								<button image="/iconos/cancel.png" sclass="shrink16" width="50px"
+		     									onClick="@command('deleteItemAutoriza',arg=each)"/>
 	     								</row>     							
-	     						</template>
-	     					</grid>
+		     						</template>
+		     					</grid>
+	     					</div>
      					</div>
      					    					
      				</east>     				

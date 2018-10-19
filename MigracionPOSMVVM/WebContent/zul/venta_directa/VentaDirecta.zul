@@ -24,6 +24,8 @@
 	  		width: 16px;
 	  		height: 16px;
 	}
+	
+	tr.z-row td.z-row-inner { border: none; }
 	</style>		
 
 	<div width="100%" height="70%" visible="@bind(vm.controlBotones.enableGenerico1)">
@@ -49,12 +51,13 @@
 					
 					<div width="100%" height="70%">
 
-						<grid>
+						<grid sclass="MyGridRowHeight" height="100%" width="100%" 
+							fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column width="80px"/>
 								<column width="250px"/>
 								<column width="80px"/>
-								<column width="200px" />
+								<column width="250px" />
 								<column width="80px"/>
 								<column width="250px"/>
 								<column width="80px"/>
@@ -64,16 +67,16 @@
 								<row> <!-- fila 1 -->
 									<label value="Ticket" />
 									
-									<cell colspan="1">
-										<textbox value="@load(vm.ventaDirectaForm.encabezado_ticket)" width="60px" readonly="true"/>
-										<textbox value="@bind(vm.ventaDirectaForm.numero_ticket)" width="140px" readonly="true"/>
+									<cell colspan="1" style="padding:0px 0px 0px 0px">
+										<textbox value="@load(vm.ventaDirectaForm.encabezado_ticket)" width="50px" readonly="true"/>
+										<textbox value="@bind(vm.ventaDirectaForm.numero_ticket)" width="150px" readonly="true"/>
 									</cell>
 									
 									<label value="Cliente"/>
 									
-									<cell colspan="1">
-										<textbox value="@bind(vm.ventaDirectaForm.nif)" width="140px"/> 
-										<textbox value="@bind(vm.ventaDirectaForm.dv)" width="30px" disabled="true"/>
+									<cell colspan="1" style="padding:0px 0px 0px 0px">
+										<textbox value="@bind(vm.ventaDirectaForm.nif)" width="150px"/> 
+										<textbox value="@bind(vm.ventaDirectaForm.dv)" width="50px" disabled="true"/>
 									</cell>
 									
 									<cell colspan="1">
@@ -248,7 +251,7 @@
 						<grid model="@bind(vm.ventaDirectaForm.listaProductos)" selectedItem="@bind(vm.productoBean)" 
 							emptyMessage="Sin datos cargados" 
 							sclass="MyGridRowHeight"  width="100%" height="95%" 
-							style="overflow: scroll;"> 
+							style="overflow: scroll;" fixedLayout="true" oddRowSclass="none"> 
 											
 							
 							<columns>
@@ -301,7 +304,7 @@
     		<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir')" sclass="shrink24"/>			    		    					
 		</div>		
 		
-		<grid sclass="MyGridRowHeight" width="100%" height="200px">
+		<grid sclass="MyGridRowHeight" width="100%" height="200px" fixedLayout="true" oddRowSclass="none">
 			<columns>
 				<column width="150px" />
 				<column width="250px" />

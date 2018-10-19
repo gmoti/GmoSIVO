@@ -1,42 +1,60 @@
 <?page title="Busqueda Presupuesto" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winBusquedaPresupuesto"  border="normal" width="550px"
-		height="400px" position="center"  mode="modal" sizable="false" 
+	<window id="winBusquedaPresupuesto"  border="normal" width="40%" height="40%" 
+		position="center"  mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaPresupuesto')">
 
 		<style>
-			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
-			border:1px solid white; border-right:1px solid transparent;
-			padding:0px; margin:0px; }
-
-			.z-combobox-inp { height: 20px; }
-
-			.z-button-inp { height: 15px; }
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+			
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			}
+			
+			tr.z-row td.z-row-inner { border: none; }
 		</style>
 
 		<div>			
 			<div width="100%" style="background-color:black;color: white" height="25px">
 				<label>Selecciona Presupuesto</label> 	
 				<div style="float: right">			
-					<toolbarbutton image="/iconos/cancel.png" onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto)"/>							
+					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+						onClick="@command('seleccionaProducto',win=winBusquedaPresupuesto)"/>							
 				</div>				
 			</div>			
 			
 			<div width="100%" height="10%" style="background-color:black;color: white">	
 				<space width="5px"/>		
 				<label value="Agente"/>
-				<space width="40px"/>
+				<space width="60px"/>
 				<label value="Fecha"/>
-				<space width="40px"/>
+				<space width="50px"/>
 				<label value="Codigo"/>
-				<space width="40px"/>
+				<space width="45px"/>
 				<label value="Estado"/>
 				<!-- <space width="30px"/>
 				<label value="Accion"/> -->
 			</div>
 		
 			<div height="90%">
-				<grid model="@load(vm.presupuesto.listaPresupuestos)"  sclass="MyGridRowHeight" height="260px">
+				<grid model="@load(vm.presupuesto.listaPresupuestos)"  
+					sclass="MyGridRowHeight" height="290px" fixedLayout="true" oddRowSclass="none">
 					<columns>
 						<column width="100px" />
 						<column width="100px" />

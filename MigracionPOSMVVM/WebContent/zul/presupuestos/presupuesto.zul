@@ -25,6 +25,8 @@
 		  		width: 16px;
 		  		height: 16px;
 		}
+		
+		tr.z-row td.z-row-inner { border: none; }
 		</style>
 
 		<borderlayout>
@@ -55,7 +57,8 @@
 					</div>
 					
 					<div width="100%" height="75%">					
-						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px">
+						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px" 
+							fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column width="80px"/>
 								<column width="200px"/>
@@ -162,9 +165,9 @@
 										<textbox value="@bind(vm.presupuestoForm.convenio)" width="50px" />
 										<textbox value="@bind(vm.presupuestoForm.convenio_det)" width="180px" disabled="true"/>
 										<space width="5px"/>
-										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('busquedaRapidaConvenio')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-										<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaConvenio')"  visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-										<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('busquedaRapidaConvenio')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" sclass="shrink16"/>
+										<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaConvenio')"  visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" sclass="shrink16"/>
+										<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')" sclass="shrink16"/>
 									</cell>			
 									
 								</row>
@@ -299,11 +302,10 @@
 							<space width="30px"/>
 							<label value="Descuento" />
 							<space width="50px"/>							
-							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" />
-							
+							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" />							
 						</div>
 
-						<grid model="@bind(vm.presupuestoForm.listaProductos)" 
+						<grid model="@bind(vm.presupuestoForm.listaProductos)" fixedLayout="true" oddRowSclass="none" 
 								width="100%" height="80%"	
 								sclass="MyGridRowHeight" 
 								style="overflow: scroll;" emptyMessage="Sin registros cargados">
@@ -358,7 +360,7 @@
 				<div>
 					<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>
 					<div>
-						<grid sclass="MyGridRowHeight">
+						<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column label="" hflex="1"/>
 								<column label="" hflex="3"/>
@@ -420,7 +422,7 @@
 					</div>
 					<div width="100%" style="background-color:black;color: white"><label value="Totales"/></div>
 					<div>
-						<grid sclass="MyGridRowHeight">
+						<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column label="" />
 								<column label="" />

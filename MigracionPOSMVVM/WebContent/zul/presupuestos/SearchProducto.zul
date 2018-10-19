@@ -1,17 +1,34 @@
 <?page title="Busca Producto" contentType="text/html;charset=UTF-8"?>
 
-<window id="winBuscaProducto" border="none" width="800px" height="600px" closable="false" mode="modal" sizable="false"
-		visible="@bind(vm.winVisibleBusqueda)"		 		
+<window id="winBuscaProducto" border="none" width="55%" height="60%" 								
+		visible="@bind(vm.winVisibleBusqueda)"		 	
+		closable="false" mode="modal" sizable="false" 	
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductPres')">
 		
-		<style>    
-		    .MyGridRowHeight
-		        tr.z-row td.z-row-inner div.z-row-content{
-		            border:1px solid white;
-		            border-right:1px solid transparent;
-		            padding:0px;
-		            margin:0px;            
-		     }	     
+		<style>
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+			
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			}
+			
+			tr.z-row td.z-row-inner { border: none; }
 		</style>		
 
 		<borderlayout>
@@ -25,7 +42,7 @@
 						</div>																			
 					</div>
 					
-					<grid sclass="MyGridRowHeight">
+					<grid width="100%" sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
 						<columns>
 							<column width="180px"/>
 							<column width="305px"/>
@@ -93,10 +110,14 @@
 							</row>
 
 							<row>
-								<label value="Codigo Barra Producto" />								
-								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
-								<button image="/iconos/lupa2.png"
-									label="Buscar" onClick="@command('despachador',arg='buscar')" />
+								<label value="Codigo Barra Producto" />	
+													
+								<cell colspan="1" style="padding:0px 0px 0px 0px">							
+									<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
+									<space width="10px"/>
+									<button image="/iconos/lupa2.png"
+										label="Buscar" onClick="@command('despachador',arg='buscar')" />
+								</cell>	
 							</row>
 						</rows>
 					</grid>											
@@ -118,22 +139,23 @@
 							<label value="Seleccion por:" />													
 						</div>	
 						
-						<grid sclass="MyGridRowHeight">
+						<grid width="100%" sclass="MyGridRowHeight" 
+								fixedLayout="true" oddRowSclass="none">
 							<columns>
-								<column hflex="2" />
 								<column hflex="1" />
-								<column hflex="1" />
-								<column hflex="1" />
-								<column hflex="1" />
-								<column hflex="1" />
-								<column hflex="1" />
-								<column hflex="1" />
-								<column hflex="1" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
 							</columns>
 							<rows>
 								<row>
-								<cell colspan="1"/>	
-								<cell colspan="1"/>							
+								<cell/>	
+								<cell/>							
 								<label value="Esfera" />
 								<label value="Cilindro" />
 								<label value="Diametro" />
@@ -177,27 +199,28 @@
 							<label value="Seleccion por:" />													
 						</div>
 								
-						<grid sclass="MyGridRowHeight" >	
+						<grid width="100%" sclass="MyGridRowHeight" 
+								fixedLayout="true" oddRowSclass="none">	
 						
 							<columns>
-							<column  hflex="2"/>
-							<column  hflex="1"/>
-							<column  hflex="1"/>
-							<column  hflex="1"/>
-							<column  hflex="1"/>
-							<column  hflex="1"/>
-							<column  hflex="1"/>
+								<column  hflex="min"/>
+								<column  hflex="min"/>
+								<column  hflex="min"/>
+								<column  hflex="min"/>
+								<column  hflex="min"/>
+								<column  hflex="min"/>
+								<column  hflex="min"/>
 							</columns>						
 												
 							<rows>
 								<row>
-								<cell colspan="1"/>
-								<cell colspan="1"/>	
-								<cell colspan="1"/>							
+								<cell/>
+								<cell/>	
+								<cell/>							
 								<label value="Esfera" />
 								<label value="Cilindro" />
 								<label value="Diametro" />
-								<cell colspan="1"/>
+								<cell/>
 								</row>
 								
 								<row>								
@@ -211,116 +234,144 @@
 								</row>
 								
 								<row>															
-								<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)"/>
-								
-								<button image="/iconos/add.png" onClick="seleccionGraduaciones.open(self)" width="150px"/>	
-															
-								<label value="O.I" />
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
-								<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
-								<cell colspan="1"/>
+									<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)"/>
+									
+									<cell width="200px" align="center">
+										<button image="/iconos/lupa.png" label="Graduacion" sclass="shrink16"
+											onClick="seleccionGraduaciones.open(self)" width="100px"/>	
+									</cell>	
+																
+									<label value="O.I" />
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
+									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
+									<cell/>
 								</row>
 							</rows>
 						</grid>
 					</div>
 					
-					<!-- Resultado de la busqueda -->
-					<!-- <div height="70%"> -->
+					<!-- Resultado de la busqueda -->					
 					<div width="100%">					
 						<div width="100%" style="background-color:black;color: white">
-							<space width="50px"/>
+							<space width="20px"/>
 							<label value="Articulo" />	
-							<space width="100px"/>
+							<space width="60px"/>
 							<label value="Descripcion" />
-							<space width="270px"/>
+							<space width="250px"/>
 							<label value="Precio iva" />
 							<space width="10px"/>
-							<label value="Grupo" />
-							<space width="10px"/>
-							<label value="Accion" />												
-						</div>	
-						<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
-								sclass="MyGridRowHeight" emptyMessage="Sin registros" height="200px">						
-						<columns>
-							<column width="180px"/>
-							<column width="400px"/>
-							<column width="80px" />
-							<column width="60px" />
-							<column width="60px" /> 
-						</columns>						
-						<template name="model">							
-							<row>
-								<textbox value="@load(each.cod_barra)" width="180px" readonly="true"/>							
-								<textbox value="@load(each.descripcion)" width="400px" readonly="true"/>  
-								<doublebox value="@load(each.precio)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-								<textbox value="@load(each.grupo)" width="60px" readonly="true"/> 
-								<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',producto=each)" width="50px"/>
-								
-							</row>							
-						</template>
-						</grid>							
-					</div>		
-																		
+							<label value="Grupo" />																			
+						</div> 
+							
+						<div width="100%" >
+											
+							<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
+									sclass="MyGridRowHeight" width="100%" height="250px"
+									emptyMessage="Sin registros" fixedLayout="true" oddRowSclass="none">						
+							<columns>
+								<column width="120px"/>
+								<column width="300px"/>
+								<column width="80px" />
+								<column width="60px" />
+								<column width="60px" /> 
+							</columns>						
+							<template name="model">							
+								<row>
+									<textbox value="@load(each.cod_barra)" width="130px" readonly="true"/>							
+									<textbox value="@load(each.descripcion)" width="300px" readonly="true"/>  
+									<doublebox value="@load(each.precio)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+									<textbox value="@load(each.grupo)" width="60px" readonly="true"/> 
+									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',producto=each)" width="50px"/>									
+								</row>							
+							</template>
+							</grid>	
+						
+						</div>						
+					</div>																		
 				</div>
 			</center>
 		</borderlayout>
 		
 		
-		<popup id="seleccionGraduaciones" width="800px">		
-			<div width="100%">
-			
+		<popup id="seleccionGraduaciones" width="800px">				
+			<div width="100%">			
 				<div width="100%" style="background-color:black;color: white" height="40px">
 						<label value="Lista de graduaciones" />
 						<div style="float: right">					
 							<toolbarbutton image="/iconos/cancel2.png" onClick="seleccionGraduaciones.close()"/>		
 						</div>																			
 				</div>
-		
-				<div width="100%" style="background-color:black;color: white">				
+				
+				<div width="100%" style="background-color:black;color: white">
+					<space width="220px"/>		
+					<label value="OJO DERECHO"/>
+					<space width="130px"/>		
+					<label value="OJO IZQUIERDO"/>
+					
+				</div>
+				<div width="100%" style="background-color:black;color: white">	
+					<hbox>
+					<space width="10px"/>		
 					<label value="Fecha"/>
+					<space width="50px"/>
 					<label value="Numero"/>
-					<label value="OD Esfera"/>
-					<label value="OD Cilindro"/>
-					<label value="OD Eje"/>
-					<label value="OD Adicion"/>
-					<label value="OI Esfera"/>
-					<label value="OI Cilindro"/>
-					<label value="OI Eje"/>
-					<label value="OD Adicion"/>															
+					<space width="30px"/>				
+					
+					<label value="Esfera"/>
+					<space width="15px"/>
+					<label value="Cilindro"/>
+					<space width="15px"/>
+					<label value="Eje"/>
+					<space width="20px"/>
+					<label value="Adicion"/>				
+				
+					<space width="15px"/>
+					<label value="Esfera"/>
+					<space width="15px"/>
+					<label value="Cilindro"/>
+					<space width="15px"/>
+					<label value="Eje"/>
+					<space width="20px"/>
+					<label value="Adicion"/>	
+							
+					</hbox>											
 				</div>	
 			
-				<div>
+				<div width="100%">
 					<grid model="@bind(vm.busquedaProductosForm.listaGraduaciones)" 
-							sclass="MyGridRowHeight" width="100%" height="200px">
+							fixedLayout="true" oddRowSclass="none"
+							width="100%" height="200px">
 						<columns>
-							<column label="" />
-							<column label="" />
-							<column label="" />
-							<column label="" />
-							<column label="" />
-							<column label="" />
-							<column label="" />
-							<column label="" />
-							<column label="" />
-							<column label="" />
+							<column width="110px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
+							<column width="60px" />
 						</columns>
 						<template name="model">							
 							<row>
-								<textbox value="@bind(each.fecha)"/>
-								<textbox value="@bind(each.numero)"/>
-								<textbox value="@bind(each.OD_esfera)"/>
-								<textbox value="@bind(each.OD_cilindro)"/>
-								<textbox value="@bind(each.OD_eje)"/>
-								<textbox value="@bind(each.OD_adicion)"/>
-								<textbox value="@bind(each.OI_esfera)"/>
-								<textbox value="@bind(each.OI.cilindro)"/>
-								<textbox value="@bind(each.OI.eje)"/>
-								<textbox value="@bind(each.OI.adicion)"/>	
-								<toolbarbutton image="/iconos/cancel2.png" onClick="@command('seleccionaGraduacion',codigo=each.codigo)"/>					
+								<textbox value="@bind(each.fecha)" width="100px"/>
+								<textbox value="@bind(each.numero)" width="50px"/>
+								<textbox value="@bind(each.OD_esfera)" width="50px"/>
+								<textbox value="@bind(each.OD_cilindro)" width="50px"/>
+								<textbox value="@bind(each.OD_eje)" width="50px"/>
+								<textbox value="@bind(each.OD_adicion)" width="50px"/>
+								<textbox value="@bind(each.OI_esfera)" width="50px"/>
+								<textbox value="@bind(each.OI_cilindro)" width="50px"/>
+								<textbox value="@bind(each.OI_eje)" width="50px"/>
+								<textbox value="@bind(each.OI_adicion)" width="50px"/>	
+								<toolbarbutton image="/iconos/add.png" sclass="shrink16"
+									onClick="@command('seleccionaGraduacion',codigo=each.codigo)" width="50px"/>					
 							</row>							
 						</template>
-					</grid>
+					</grid> 
 				</div>	
 			</div>		
 		</popup>

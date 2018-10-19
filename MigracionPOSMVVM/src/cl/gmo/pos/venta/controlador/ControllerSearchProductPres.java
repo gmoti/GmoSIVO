@@ -131,7 +131,10 @@ public class ControllerSearchProductPres implements Serializable {
 			
 		busquedaProductosForm = busquedaProductosDispatchActions.cargaBusquedaProductos(busquedaProductosForm, sess);
 		busquedaProductosForm.setChk_cerca(false);
-			
+		
+		//preload de graduaciones
+		busquedaProductosForm.setAccion("buscar_graduacion");	
+		busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
 	}
 	
 	
