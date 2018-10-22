@@ -26,6 +26,8 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 	
 	private static final long serialVersionUID = 6987458990189549075L;
 	ClienteForm clif ;
+	ClienteForm clienteForm;
+	
 	ClienteBean cliente;
 	ClienteDispatchActions clid = new ClienteDispatchActions();
 	Utils util = new Utils();
@@ -56,6 +58,7 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 		
 		
 		 clif = new ClienteForm();  
+		 clienteForm = new ClienteForm();
 		
 		 clif = clid.cargaInicial("T002");
 		 cliente = new ClienteBean();
@@ -284,5 +287,13 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 	public void setSucursalDes(String sucursalDes) {
 		this.sucursalDes = sucursalDes;
 	}
+
+	public ClienteForm getClienteForm() {
+		return clienteForm;
+	}
+
+	public void setClienteForm(ClienteForm clienteForm) {
+		this.clienteForm = clienteForm;
+	}	
 	
 }

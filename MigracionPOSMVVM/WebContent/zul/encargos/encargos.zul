@@ -26,11 +26,12 @@
 			  		width: 16px;
 			  		height: 16px;
 			 }
-			 tr.z-row td.z-row-inner { border: none; } 		
-			  		
-			 <!-- .MyGridRowHeight 		
-			 	tr.z-row td.z-row-inner { border-right: 0px #CCC; } 	 -->	
-			}
+			 
+			 tr.z-row td.z-row-inner { 
+			 		border: none; 
+			 }		
+			 
+			 
 		</style>
 
 	<div width="100%" height="100%">
@@ -636,16 +637,11 @@
 									</cell>
 								</row>							
 							</rows>
-						</grid>
-						<!-- 
-						<div width="100%" style="padding :10px 0px 0px 0px">
-							<label value="Notas" />
-							<textbox value="@bind(vm.ventaPedidoForm.nota)" width="800px" />
-						</div>						
-						 -->
+						</grid>						
 					</div>
 				</div>
 			</south>
 		</borderlayout>
 	</div>	
-	</window>
+	
+</window>

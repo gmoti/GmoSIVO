@@ -46,7 +46,7 @@
 							<column hflex="min"/>
 							<column hflex="min"/>							
 						</columns>
-						<rows>
+						<rows >
 							<row>
 								<label value="Familia de Productos" />
 								<combobox

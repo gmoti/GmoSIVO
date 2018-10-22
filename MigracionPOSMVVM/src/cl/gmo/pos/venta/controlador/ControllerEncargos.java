@@ -1850,9 +1850,9 @@ public class ControllerEncargos implements Serializable {
 				}		        	
 				
 			}else {
-				//autorizador
+				//autorizador				
 				
-				if (!tipo.equals("0")) {
+				if (tipoPedidoBean != null) {
 					
 					sess.setAttribute("tipo", tipo);
 					
@@ -1886,7 +1886,7 @@ public class ControllerEncargos implements Serializable {
 				}else {
 					//autorizador
 					
-					if (!tipo.equals("0")) {
+					if (tipoPedidoBean != null) {
 						
 						sess.setAttribute("tipo", tipo);
 						

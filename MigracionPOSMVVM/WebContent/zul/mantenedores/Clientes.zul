@@ -39,7 +39,8 @@
 		</div>		
 		
 		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
-	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoUsuario')" />
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresarCliente')" />
 	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winClientes.detach()" />
 	   	</div>
 	
@@ -70,77 +71,84 @@
 					
 					<row><!-- Linea 2 -->
 						<label value="Apellidos(*)"/>
-						<textbox/>
+						<textbox value="@bind(vm.apellidos)"/>
 						<label value="Edad"/>
-						<intbox/>					
+						<textbox value="@bind(vm.edad)"/>					
 					</row>
 					
 					<row><!-- Linea 3 -->
 						<label value="Nombres"/>
-						<textbox/>
+						<textbox value="@bind(vm.nombres)"/>
+						
 						<label value="Agente"/>
-						<combobox>
-							<comboitem></comboitem>
+						<combobox model="@bind(vm.listaAgentes)">
+							<template name="model">
+								<comboitem value="@load(each.usuario)"/>
+							</template>
 						</combobox>
 					</row>
 					
 					<row><!-- Linea 4 -->
 						<label value="Tipo via"/>
-						<combobox>
-							<comboitem></comboitem>
+						<combobox model="@bind(vm.listaTipoVia)">
+							<template name="model">
+								<comboitem value="@load(each.codigo)"/>
+							</template>
 						</combobox>
 						<label value="Direccion(*)"/>
-						<textbox/>
+						<textbox value="@bind(vm.via)"/>
 						<label value="Numero(*)"/>
-						<textbox/>						
+						<textbox value="@bind(vm.numero)"/>						
 					</row>
 					
 					<row><!-- Linea 5 -->
 						<label value="Localidad"/>
-						<textbox/>
+						<textbox value="@bind(vm.localidad)"/>
 						<label value="Provincia/comuna(*)"/>
 						<cell>							
-							<combobox>
-								<comboitem></comboitem>
+							<combobox model="@bind(vm.listaProvincia)">
+								<template name="model">
+									<comboitem value="@bind(each.codigo)"/>
+								</template>
 							</combobox>
 							<checkbox/>
 						</cell>		
 						<label value="Bloque/dpto"/>
-						<textbox/>			
+						<textbox value="@bind(vm.bloque)"/>			
 					</row>
 					
 					<row><!-- Linea 6 -->
 						<label value="Cod.Postal"/>
-						<textbox/>
+						<textbox value="@bind(vm.cod_postal)"/>
 						<label value="Persona contacto"/>
-						<textbox/>					
+						<textbox value="@bind(vm.contacto)"/>					
 					</row>
 					
 					<row><!-- Linea 7 -->
 						<label value="Email(*)"/>
-						<textbox/>
+						<textbox value="@bind(vm.email)"/>
 						<label value="Telefono(*)"/>
 						<cell colspan="1">
-							<combobox width="50px">
+							<combobox  width="50px">
 								<comboitem></comboitem>
 							</combobox>
-							<textbox/>
+							<textbox value="@bind(vm.telefono)"/>
 						</cell>
 						<label value="Sexo"/>
-						<radiogroup>
-							<radio label="Hombre"/>
-							<radio label="Mujer"/>
-							<radio label="Institucion"/>
+						<radiogroup selectedItem="@bind(vm.sexo)">
+							<radio label="Hombre" value="H"/>
+							<radio label="Mujer" value="M"/>
+							<radio label="Institucion" value="I"/>
 						</radiogroup>
 					</row>
 					
 					<row><!-- Linea 8 -->
 						<label value="Profesion"/>
-						<textbox/>
+						<textbox value="@bind(vm.profesion)"/>
 						<label value="Telefono movil(*)"/>
 						<cell>							
-							<textbox/>
-							<checkbox/>
+							<textbox value="@bind(vm.telefono_movil)"/>
+							<checkbox checked=""/>
 						</cell>
 					</row>					
 				</rows>				

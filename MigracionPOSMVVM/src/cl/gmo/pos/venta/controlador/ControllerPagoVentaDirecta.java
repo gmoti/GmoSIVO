@@ -55,6 +55,8 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	private SeleccionPagoDispatchActions seleccionPagoDispatchActions;
 	private Integer diferencia_total=0;
 	private Double dto = 0.0;
+	private Integer sumaTotal;
+	private Integer descuentoMaximo=0;
 	
 	private FormaPagoBean formaPagoBean;
 	private String disableDescuento;
@@ -97,7 +99,8 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			controlBotones.setEnableGenerico1("true");
 			controlBotones.setEnableGenerico2("false");
 			this.dto = 0.0;
-			
+			sumaTotal = seleccionPagoForm.getSuma_total_albaranes();
+			descuentoMaximo = ventaPedidoForm.getPorcentaje_descuento_max();
 		}
 		
 		if (arg3 instanceof VentaDirectaForm) { 
@@ -106,6 +109,8 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			controlBotones.setEnableGenerico1("false");
 			controlBotones.setEnableGenerico2("true");
 			this.dto = ventaDirectaForm.getDescuentoTotal();
+			sumaTotal = ventaDirectaForm.getSumaTotal();
+			descuentoMaximo = ventaDirectaForm.getPorcentaje_descuento_max();
 		}
 		
 		
@@ -289,11 +294,18 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	
 	@NotifyChange({"seleccionPagoForm","disableDescuento"})
 	@Command
-	public void calculaTotalvtaDirecta() {		
+	public void calculaTotalvtaDirecta() {	
+		
+		if (seleccionPagoForm.getDescuento() < 0 || seleccionPagoForm.getDescuento() > 100) {
+			Messagebox.show("Porcentaje del descuento esta fuera de rango"); 
+			seleccionPagoForm.setDescuento(dto);			
+			return;
+		}
+		
 		
 		if (seleccionPagoForm.getDescuento() != dto) {
 			
-			Double descuento_max = Double.parseDouble(String.valueOf(ventaDirectaForm.getPorcentaje_descuento_max()));			
+			Double descuento_max = Double.parseDouble(String.valueOf(descuentoMaximo));			
 			
 			if (dto <= descuento_max) {				
 				try {
@@ -489,6 +501,14 @@ public class ControllerPagoVentaDirecta implements Serializable{
 
 	public void setControlBotones(BeanControlBotones controlBotones) {
 		this.controlBotones = controlBotones;
-	}	
+	}
+
+	public Integer getSumaTotal() {
+		return sumaTotal;
+	}
+
+	public void setSumaTotal(Integer sumaTotal) {
+		this.sumaTotal = sumaTotal;
+	}
 	
 }
