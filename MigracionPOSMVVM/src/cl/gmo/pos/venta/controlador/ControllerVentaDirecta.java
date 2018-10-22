@@ -27,6 +27,7 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.controlador.ventaDirecta.VentaDirectaDispatchActions;
+import cl.gmo.pos.venta.respuesta.RespuestaVentaDirecta;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.Integracion.DAO.DAOImpl.ClienteDAOImpl;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
@@ -73,6 +74,8 @@ public class ControllerVentaDirecta implements Serializable{
 	private String sucursal;
 	private String sucursalDes;
 	
+	//Evalua Respuesta
+	RespuestaVentaDirecta respuestaVentaDirecta;
 		
 	
 	@Init
@@ -84,6 +87,7 @@ public class ControllerVentaDirecta implements Serializable{
 		productoBean = new ProductosBean();		
 		familiaBeans = new ArrayList<>();		
 		ventaDirectaAccion = new VentaDirectaDispatchActions();	
+		respuestaVentaDirecta = new RespuestaVentaDirecta();
 		
 		agenteBean = new AgenteBean();
 		cajaBean   = new CajaBean();
@@ -100,8 +104,8 @@ public class ControllerVentaDirecta implements Serializable{
 		//Encabezado venta directa		
 		ventaDirectaForm = new VentaDirectaForm();
 		
-		ventaDirectaForm = ventaDirectaAccion.carga(ventaDirectaForm, sess);
-		ventaDirectaForm = ventaDirectaAccion.cargaCaja(ventaDirectaForm, sess);
+		ventaDirectaAccion.carga(ventaDirectaForm, sess);
+		ventaDirectaAccion.cargaCaja(ventaDirectaForm, sess);
 		
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
 		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
@@ -119,6 +123,8 @@ public class ControllerVentaDirecta implements Serializable{
 	@NotifyChange({"ventaDirectaForm","controlBotones"})
 	@Command	
 	public void nuevaVenta() {		
+		
+		ventaDirectaAccion.carga(ventaDirectaForm, sess);
 		
 		controlBotones.setEnableGrid("true");
 		controlBotones.setEnableGrabar("true");
@@ -162,8 +168,9 @@ public class ControllerVentaDirecta implements Serializable{
 		try {			
 			ventaDirectaForm.setAccion(Constantes.STRING_AGREGAR_VENTA_DIRECTA);
 			//ventaDirectaForm = ventaDirectaAccion.generaVentaDirecta(ventaDirectaForm, sess);			
-			ventaDirectaForm = ventaDirectaAccion.IngresaVentaDirecta(ventaDirectaForm, sess);			
-			Messagebox.show("Venta almacenada");
+			ventaDirectaAccion.IngresaVentaDirecta(ventaDirectaForm, sess);	
+			respuestaVentaDirecta.evaluaEstado(ventaDirectaForm);
+			//Messagebox.show("Venta almacenada");
 			
 			if (controlBotones.getEnableGenerico3().equals("true"))
 				controlBotones.setEnablePagar("true");

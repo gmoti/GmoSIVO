@@ -18,7 +18,7 @@ public class RespuestaVentaDirecta implements Serializable {
 	}
 	
 	
-	private VentaDirectaForm evaluaEstado(VentaDirectaForm form) {
+	public VentaDirectaForm evaluaEstado(VentaDirectaForm form) {
 		
 		VentaDirectaForm formulario=form;
 		String estado="";		
@@ -41,6 +41,7 @@ public class RespuestaVentaDirecta implements Serializable {
 			break;
 			
 		case Constantes.STRING_FIN:
+			mensajeBasico("Venta almacenada con éxito");
 			/*estado = est;
 	 		alert("Venta almacenada con éxito");
 	 		var cmb_tipo_albaran = document.getElementById('tipo_albaran');
@@ -91,8 +92,7 @@ public class RespuestaVentaDirecta implements Serializable {
 	}
 	
 	
-	private void mensajeBasico(String mensaje) {
-	
+	private void mensajeBasico(String mensaje) {	
 		Messagebox.show(mensaje);
 	}	
 	
