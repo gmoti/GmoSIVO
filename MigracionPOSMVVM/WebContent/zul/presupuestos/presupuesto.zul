@@ -295,13 +295,13 @@
 							<label value="Descripcion" />
 							<space width="380px"/>
 							<label value="Precio IVA" />
-							<space width="30px"/>
+							<space width="40px"/>
 							<label value="Importe" />
-							<space width="30px"/>
+							<space width="55px"/>
 							<label value="Cantidad" />
-							<space width="30px"/>
+							<space width="45px"/>
 							<label value="Descuento" />
-							<space width="50px"/>							
+							<space width="80px"/>							
 							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" />							
 						</div>
 

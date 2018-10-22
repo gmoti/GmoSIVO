@@ -9,11 +9,11 @@
 				<west width="20%" style="background-color: #001624" border="none"> 
 				
 					<vlayout style="padding : 200px 0px 0px 20px">
-						<label value="LOGIN"/>
-						<label value="Usuario:"/>
+						<label value="LOGIN" style="color: white"/>
+						<label value="Usuario:" style="color: white"/>
 						<textbox value = "@bind(vm.usuarioForm.nombreUsuario)" onBlur="@command('usuarioUpper')"  
 								placeholder="Usuario" width="150px"/>
-						<label value="Contraseña:"/>
+						<label value="Contraseña:" style="color: white"/>
 						<textbox value = "@bind(vm.usuarioForm.claveUsuario)"  placeholder="Contraseña" width="150px" type="password"/>						
 						<button label="Enviar" onClick="@command('validar')"/>					
 					</vlayout>
@@ -35,7 +35,7 @@
 				<west width="20%" style="background-color: #001624" border="none"> 
 				
 					<vlayout style="padding : 200px 0px 0px 20px">
-							<label value="SUCURSALES"/>	
+							<label value="SUCURSALES" style="color: white"/>	
 							
 							<combobox model="@bind(vm.menuForm.colSucursales)" 
 									placeholder="Seleccione Sucursal" 
@@ -45,7 +45,7 @@
 								</template>
 							</combobox>					
 													
-							<button label="Ingresa Sucursal" onClick="@command('seleccionaSucursal')"/>					
+							<button label="Ingresa Sucursal" onClick="@command('seleccionaSucursal')" style="background-color: #e7e7e7; color: black;"/>					
 					</vlayout>
 					
 				</west>
