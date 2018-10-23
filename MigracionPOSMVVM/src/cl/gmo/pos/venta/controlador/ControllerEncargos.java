@@ -362,6 +362,7 @@ public class ControllerEncargos implements Serializable {
 		seleccionPagoForm.setFecha(ventaPedidoForm.getFecha());
 		seleccionPagoForm.setTipo_doc('G');
 		seleccionPagoForm.setOrigen("PEDIDO");
+		seleccionPagoForm.setSerie(ventaPedidoForm.getCodigo_suc()+"/"+ventaPedidoForm.getCodigo());
 		
 		objetos = new HashMap<String,Object>();		
 		objetos.put("seleccionPago",seleccionPagoForm);
@@ -1814,6 +1815,9 @@ public class ControllerEncargos implements Serializable {
 		long descuento_max = 0;
 		String tipo="";
 		
+		objetos = new HashMap<String,Object>();
+		objetos.put("retorno","devuelveDescuento_totalMonto_Encargo");
+		
 		campo = ventaPedidoForm.getDtcoPorcentaje();
 		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
 		
@@ -1857,7 +1861,7 @@ public class ControllerEncargos implements Serializable {
 					sess.setAttribute("tipo", tipo);
 					
 					Window winAutoriza = (Window)Executions.createComponents(
-			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
 					winAutoriza.doModal();	
 					
 				}else {
@@ -1891,7 +1895,7 @@ public class ControllerEncargos implements Serializable {
 						sess.setAttribute("tipo", tipo);
 						
 						Window winAutoriza = (Window)Executions.createComponents(
-				                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+				                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
 						winAutoriza.doModal();	
 						
 					}else {
@@ -1912,6 +1916,9 @@ public class ControllerEncargos implements Serializable {
 		long campo = 0;
 		long descuento_max = 0;
 		String tipo="";
+		
+		objetos = new HashMap<String,Object>();
+		objetos.put("retorno","devuelveDescuento_totalMonto_Encargo");
 		
 		campo = dcto;
 		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
@@ -1959,7 +1966,7 @@ public class ControllerEncargos implements Serializable {
 			sess.setAttribute("tipo", tipo);
 			
 			Window winAutoriza = (Window)Executions.createComponents(
-	                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+	                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
 			winAutoriza.doModal();		
 			
 		}	
@@ -1970,7 +1977,7 @@ public class ControllerEncargos implements Serializable {
 	//===================================================================
 	@NotifyChange({"ventaPedidoForm"})
 	@GlobalCommand
-	public void devuelve_descuento_total_monto(@BindingParam("valores")BeanGlobal valores) {
+	public void devuelveDescuento_totalMonto_Encargo(@BindingParam("valores")BeanGlobal valores) {
 		
 		String acceso="";
 		BigDecimal descuento_autorizado= BigDecimal.ZERO;
@@ -2010,7 +2017,7 @@ public class ControllerEncargos implements Serializable {
 		}else {			
 			
 			Messagebox.show("Usted no esta autorizado, para realizar este tipo de descuento");
-			//document.ventaPedidoForm.submit();
+			ventaPedidoForm.setDescuento(0);
 			return;
 		}	
 		

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zhtml.Big;
 import org.zkoss.zk.ui.Session;
@@ -23,15 +24,18 @@ public class ControllerAutorizadorDescuento implements Serializable {
 	private static final long serialVersionUID = 977406260932782517L;
 	Session sess = Sessions.getCurrent();
 	
+	private String respuesta;
 	private String user;
 	private String pass;
 	HashMap<String,Object> objetos;
 	
+	
 	@Init
-	public void inicial() {
+	public void inicial(@ExecutionArgParam("retorno")String retorno) {
 		
 		user="";
 		pass="";
+		respuesta = retorno;
 	}
 	
 	
@@ -48,7 +52,7 @@ public class ControllerAutorizadorDescuento implements Serializable {
 		{
 			 descuento = new VentaPedidoHelper().traeDecuento(user, pass, tipo);			 
 			 if(descuento.equals(new BigDecimal(-1))) {
-				 bg.setObj_1("falae");
+				 bg.setObj_1("false");
 				 bg.setObj_2(BigDecimal.ZERO);
 				 bg.setObj_3("");				 
 			 }else {
@@ -62,7 +66,7 @@ public class ControllerAutorizadorDescuento implements Serializable {
 		{
 			descuento = new VentaPedidoHelper().traeDecuento(user, pass, null);
 			if(descuento.equals(new BigDecimal(-1))) {
-				 bg.setObj_1("falae");
+				 bg.setObj_1("false");
 				 bg.setObj_2(BigDecimal.ZERO);
 				 bg.setObj_3("");				 
 			 }else {
@@ -78,7 +82,7 @@ public class ControllerAutorizadorDescuento implements Serializable {
 			
 		sess.setAttribute("Descuento", descuento.toString());
 		
-		BindUtils.postGlobalCommand(null, null, "devuelve_descuento_total_monto", objetos);
+		BindUtils.postGlobalCommand(null, null, respuesta, objetos);
 		win.detach();
 	}
 	

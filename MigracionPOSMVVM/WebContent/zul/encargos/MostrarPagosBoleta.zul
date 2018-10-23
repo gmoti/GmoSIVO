@@ -1,14 +1,38 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winMostrarPagosBoleta" border="none" width="60%" 
-		height="40%" position="center" closable="false" mode="modal" sizable="false" 		
+<window id="winMostrarPagosBoleta" border="none" width="55%" height="40%" 
+		position="center" closable="false" mode="modal" sizable="false" 		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMostrarPagosBoleta')">
 		
 		
 	<style>
-		.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
-		border:1px solid white; border-right:1px solid transparent;
-		padding:0px; margin:0px; }
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+					
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			 }
+			 
+			 tr.z-row td.z-row-inner { 
+			 		border: none; 
+			 }		
+			 
+			 
 	</style>	
 		
 		
@@ -17,36 +41,39 @@
 		<div width="100%" style="background-color:black;color: white" height="40px">
 			<label value="Seleccion Pago" />
 			<div style="float: right">					
-				<toolbarbutton image="/iconos/cancel.png" onClick="winMostrarPagosBoleta.detach()"/>		
+				<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" 
+					onClick="winMostrarPagosBoleta.detach()"/>		
 			</div>																			
 		</div>	
 	
 		<borderlayout>
-			<west width="50%">
+			<west width="45%">
 				<div>
 					<div width="100%" style="background-color:black;color: white">
+						<space width="5px"/>
 						<label value="Fecha"/>
-						<space width="10px"/>
+						<space width="35px"/>
 						<label value="Forma Pago"/>
-						<space width="10px"/>
+						<space width="15px"/>
 						<label value="Monto"/>
-						<space width="10px"/>
+						<space width="30px"/>
 						<label value="Eliminar"/>
 					</div>
 					<div width="100%">
 						<grid model="@bind(vm.seleccionPagoForm.listaPagos)" sclass="MyGridRowHeight" height="90%">
 							<columns>
-								<column width="100px"/>
-								<column width="150px"/>
-								<column width="100px"/>
+								<column width="85px"/>
+								<column width="85px"/>
+								<column width="85px"/>
 								<column width="30px"/>
 							</columns>
 							<template name="model">
 								<row>
-									<textbox value="@bind(each.fecha)"/>
-									<textbox value="@bind(each.forma_pago)"/>
-									<textbox value="@bind(each.v_a_pagar)"/>
-									<toolbarbutton image="/image/Remove_32x32.png"/>
+									<textbox value="@bind(each.fecha)" width="80px" readonly="true"/>
+									<textbox value="@bind(each.detalle_forma_pago)" width="80px" readonly="true"/>
+									<textbox value="@bind(each.v_a_pagar)" width="80px" readonly="true"/>
+									<toolbarbutton onClick="@command('solicitaAutorizacionBorrarPago',pago=each)"
+										image="/iconos/cancel.png" sclass="shrink16" disabled="true"/>
 								</row>
 							</template>
 						</grid>
@@ -54,36 +81,37 @@
 				</div>		
 			</west>
 			 
-			<east width="50%">
+			<east width="55%">
 				<div width="100%">
 					<div width="100%" style="background-color:black;color: white">
-						<label value="Fecha"/>
 						<space width="5px"/>
+						<label value="Fecha"/>
+						<space width="35px"/>
 						<label value="No Boleta"/>
 						<space width="5px"/>
 						<label value="Tipo"/>
-						<space width="5px"/>
+						<space width="30px"/>
 						<label value="Importe"/>
-						<space width="5px"/>
+						<space width="25px"/>
 						<label value="Cod.Venta"/>
 					</div>			
 					<div width="100%">
 						<grid model="@bind(vm.seleccionPagoForm.lista_boletas)" sclass="MyGridRowHeight" height="90%">
 							<columns>
-								<column width="100px" />
-								<column width="150px" />
-								<column width="100px" />
-								<column width="150px" />
-								<column width="100px" />
+								<column width="85px"/>
+								<column width="65px" />
+								<column width="65px" />
+								<column width="65px" />
+								<column width="85px" />
 							</columns>
 							
 							<template name="model">							
 								<row>
-									<textbox value="@bind(each.fecha)"/>
-									<intbox value="@bind(each.numero)"/>
-									<textbox value="@bind(each.tipo)"/>	
-									<intbox value="@bind(each.importe)"/>
-									<textbox value="@bind(each.pedvtcb)"/>							
+									<textbox value="@bind(each.fecha)" width="80px" readonly="true"/>
+									<intbox value="@bind(each.numero)" width="60px" readonly="true"/>
+									<textbox value="@bind(each.tipo)" width="60px" readonly="true"/>	
+									<intbox value="@bind(each.importe)" width="60px" readonly="true"/>
+									<textbox value="@bind(each.pedvtcb)" width="80px" readonly="true"/>							
 								</row>							
 							</template>
 						</grid>

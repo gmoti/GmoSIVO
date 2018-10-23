@@ -222,7 +222,7 @@ public class SeleccionPagoDAOImpl implements SeleccionPagoDAO {
 			
 		} catch (Exception e) {
 	        e.printStackTrace();
-	        throw new Exception("Error en DAO, SP_PAGO_DEL_PAGOS_VTA");
+	        throw new Exception("Error en DAO, SP_PAGO_DEL_FORMA_PAGO");
 		} finally {
 	          try{
 	        	  if (null != rs){

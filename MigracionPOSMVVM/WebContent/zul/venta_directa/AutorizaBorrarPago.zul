@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<window  id="winAutorizaBorrarPago" border="none" height="15%" width="30%" 		
+<window  id="winAutorizaBorrarPago" border="none" height="20%" width="30%" 		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAutorizaBorrarPago')">
 		
 		<style>
@@ -42,35 +42,38 @@
 		
 			<grid sclass="MyGridRowHeight" width="100%" vflex="min">
 				<columns>
-					<column width="200px"  />
+					<column width="155px"  />
 					<column hflex="min"  />
 				</columns>
 				<rows>
 					<row>
-						<label value="Usuario" />
+						<label value="Usuario" width="150px"/>
 						<textbox value = "@bind(vm.user)"/>
 					</row>
 
 					<row>
-						<label value="Contraseña" />
+						<label value="Contraseña" width="150px"/>
 						<textbox value = "@bind(vm.pass)" type = "password"/>
 					</row>
 
 					<row>
-						<label value="Procedimientos" />
-						<combobox value="@bind(vm.procedimiento)">
-							<comboitem label="Selecciona" value="0"/>
-							<comboitem label="Anula cambio" value="1"/>
-							<comboitem label="Modificar forma pago" value="2"/>
+						<label value="Procedimientos" width="150px"/>
+						
+						<combobox selectedItem="@bind(vm.procedimiento)" onCreate="self.setSelectedIndex(0)">
+							<comboitem value="0" label="Selecciona" />
+							<comboitem value="1" label="Anula cambio" />
+							<comboitem value="2" label="Modificar forma pago" />
 						</combobox>
 					</row>
+					
+					<row>
+						<cell/>
+						<button label="Aceptar" image="/iconos/check.png" sclass="shrink16" 
+							onClick="@command('autoriza',win=winAutorizaBorrarPago)" />
+					</row>
 				</rows>
-			</grid>
+			</grid>			
 			
-			<div  width="100%" align="center">
-				<button label="Aceptar" image="/iconos/check.png" sclass="shrink16" onClick="@command('autoriza')" />							
-			</div>
-
 		</div>
 
 </window>

@@ -701,6 +701,9 @@ public class ControllerPresupuesto implements Serializable{
 		Double total;
 		long campo = 0;
 		
+		objetos = new HashMap<String,Object>();
+		objetos.put("retorno","devuelveDescuento_totalMonto_Presupuesto");
+		
 		total = presupuestoForm.getSubTotal();
 		dto   = (presupuestoForm.getDescuento() * 100) / total;	
 		campo = (long)presupuestoForm.getDescuento();
@@ -732,7 +735,7 @@ public class ControllerPresupuesto implements Serializable{
 				
 				//solicito autorizacion				
 				Window wAutoriza = (Window)Executions.createComponents(
-		                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);
+		                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);
 				
 				wAutoriza.doModal();				
 			}   
@@ -758,7 +761,7 @@ public class ControllerPresupuesto implements Serializable{
 				}else {
 					
 					Window wAutoriza = (Window)Executions.createComponents(
-			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);
 					
 					wAutoriza.doModal();					
 				}						
@@ -777,6 +780,9 @@ public class ControllerPresupuesto implements Serializable{
 		long campo = 0;
 		long descuento_max = 0;
 		String tipo="";
+		
+		objetos = new HashMap<String,Object>();
+		objetos.put("retorno","devuelveDescuento_totalMonto_Presupuesto");
 		
 		campo = (long)presupuestoForm.getDtcoPorcentaje();
 		
@@ -811,7 +817,7 @@ public class ControllerPresupuesto implements Serializable{
 				//autorizador				
 				
 				Window winAutoriza = (Window)Executions.createComponents(
-		                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+		                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
 				winAutoriza.doModal();				
 											
 			}			
@@ -837,13 +843,24 @@ public class ControllerPresupuesto implements Serializable{
 					//autorizador					
 						
 					Window winAutoriza = (Window)Executions.createComponents(
-			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
 					winAutoriza.doModal();							
 										
 				}				
 				
 			}			
 		}		
+	}
+	
+	
+	//===================== Retorno del autorizador =====================
+	//===================================================================
+	@NotifyChange({"presupuestoForm"})
+	@GlobalCommand
+	public void devuelveDescuento_totalMonto_Presupuesto(@BindingParam("valores")BeanGlobal valores) {
+		
+		
+		presupuestoForm.setDescuento(0);
 	}
 	
 		
