@@ -39,6 +39,8 @@ public class ControllerMedico implements Serializable {
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
+		medicoDispatchActions.cargaFormulario(medicoForm, sess);
+		
 	}
 
 	

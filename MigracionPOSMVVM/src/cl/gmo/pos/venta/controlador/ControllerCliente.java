@@ -2,8 +2,11 @@ package cl.gmo.pos.venta.controlador;
 
 
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -11,73 +14,101 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import cl.gmo.pos.venta.controlador.general.BusquedaClientesDispatchActions;
 import cl.gmo.pos.venta.controlador.general.ClienteDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
-import cl.gmo.pos.venta.utils.Utils;
+
 
 import cl.gmo.pos.venta.web.beans.ClienteBean;
+import cl.gmo.pos.venta.web.forms.BusquedaClientesForm;
 import cl.gmo.pos.venta.web.forms.ClienteForm;
 
-public class ControllerCliente extends ClienteForm  implements Serializable{
+public class ControllerCliente implements Serializable{
 	
 	
 	private static final long serialVersionUID = 6987458990189549075L;
-	ClienteForm clif ;
-	ClienteForm clienteForm;
 	
+	ClienteForm clienteForm;	
+	BusquedaClientesForm busquedaClientesForm;
 	ClienteBean cliente;
-	ClienteDispatchActions clid = new ClienteDispatchActions();
-	Utils util = new Utils();
+	ClienteDispatchActions clid = new ClienteDispatchActions();	
+	BusquedaClientesDispatchActions busquedaClientes;
+	
 	Session sess = Sessions.getCurrent();
 
 	private String usuario;	
 	private String sucursalDes;	
 	
-	boolean cpostal = false;
-	boolean cemail =false;
-	boolean csms =false;
-	boolean cnodata =false;
-	boolean ctelefonia =false;
-	boolean rhombre=false;
-	boolean rmujer=false;
-	boolean rempresa=false;
-	private Date fechaNac =null;
+	SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat tt = new SimpleDateFormat("hh:mm:ss");	
+	
+	private boolean cpostal = false;
+	private boolean cemail =false;
+	private boolean csms =false;
+	private boolean cnodata =false;
+	private boolean ctelefonia =false;
+	
+	private boolean bfechaNac=false;
+	private boolean bDireccion=false;
+	private boolean bNumero=false;
+	private boolean bProvincia=false;
+	private boolean bEmail=false;
+	private boolean bTelefono=false;
+	private boolean bMovil=false;
+	
+	private Date fechaNac;
+	
 	
 
 	String  sprovincia="Selecciona Provinicia";
 	String  sagente="Seleccione Agente";
-	String  stipovia="Seleccione Tipo Via";
-	
+	String  stipovia="Seleccione Tipo Via";	
 
 	
 	@Init	
-	public void inicial() {
+	public void inicial() {		
 		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
-		 clif = new ClienteForm();  
-		 clienteForm = new ClienteForm();
+		busquedaClientes = new BusquedaClientesDispatchActions();
 		
-		 clif = clid.cargaInicial("T002");
-		 cliente = new ClienteBean();
-		 this.setListaAgentes(clif.getListaAgentes());
-		 this.setListaProvincia(clif.getListaProvincia());
-		 this.setListaTipoVia(clif.getListaTipoVia());
+		fechaNac = new Date(System.currentTimeMillis());
+		
+		//clif = new ClienteForm();  
+		clienteForm = new ClienteForm();	 
+		//cliente = new ClienteBean();	 
 		 
-		 usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
-		 sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
-		 
-		 clid.cargaFormulario(clienteForm, sess);	
+		clienteForm = clid.cargaFormulario(clienteForm, sess);	
 	}
 	
 	
 	@Command
-	@NotifyChange({"dv","apellidos","codigo","nombres","via","numero","localidad","email","telefono","telefono_movil","cpostal","ctelefonia","csms","cemail","cnodata","rhombre","rmujer","rempresa","tipo_via","provincia_cliente","agente","sagente","stipovia","sprovincia"})
-	public void buscar(@BindingParam("arg1")String arg1)  {
+	@NotifyChange({"clienteForm","fechaNac"})
+	public void buscar()  {
 		
-		clif = clid.buscarClienteAjax(arg1);
+		busquedaClientesForm = new BusquedaClientesForm();
+		
+		sess.setAttribute("nif",clienteForm.getRut());
+		sess.setAttribute("pagina","");		
+		
+		try {
+			cliente = busquedaClientes.buscarClienteAjax(busquedaClientesForm, sess);
+			
+			clienteForm.setDv(cliente.getDvnif());
+			clienteForm.setFnacimiento(cliente.getFecha_nac());
+			clienteForm.setNombres(cliente.getNombre());
+			clienteForm.setApellidos(cliente.getApellido());			
+			fechaNac =  dt.parse(cliente.getFecha_nac());
+			
+		} catch (IOException | ParseException e) {			
+			e.printStackTrace();
+		}
+		
+		
+		/*
 		if(clif.getCodigo() != 0) {
 			this.setDv(clif.getDv());
 			this.setApellidos(clif.getApellidos());
@@ -123,14 +154,22 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 			
 			this.setTelefono(clif.getTelefono());
 		}
-			
+			*/
 
 	}
 	
 	@Command
-	@NotifyChange({"*"})
-	public void ingresarCliente(@BindingParam("arg")ClienteForm cliform)  {
+	@NotifyChange({"clienteForm","fechaNac"})
+	public void ingresarCliente()  {
 		
+		clienteForm.setAccion("ingresoCliente");
+		clienteForm.setFnacimiento(dt.format(fechaNac));
+		
+		clid.ingresoCliente(clienteForm, sess);
+		
+		
+		
+		/*
 		String fechaNac = (this.getFechaNac() != null) ? util.formatoFecha(this.getFechaNac()): "";
 		
 		if(this.getCpostal()) { cliform.setMk_correo_postal("1");}else{cliform.setMk_correo_postal("-1");}
@@ -157,7 +196,7 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 		if(cliform.getExito().equals(Constantes.STRING_FALSE)) {
 			Messagebox.show("No se pudo Ingresar el Cliente.");
 		}
-		
+		*/
 	}
 	
 	@Command
@@ -166,113 +205,22 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 	}
 	
 	@Command
-	@NotifyChange({"*"})
-	public void nuevoUsuario(@BindingParam("arg1")String arg1){
-		clif.cleanForm();
+	@NotifyChange({"clienteForm","fechaNac"})
+	public void nuevoCliente(){
+		
+		clienteForm.setAccion("nuevo_cliente");
+		clid.ingresoCliente(clienteForm, sess);
+		fechaNac = new Date(System.currentTimeMillis());		
 	}
 	
-	public boolean getCpostal() {
-		return cpostal;
-	}
-	public void setCpostal(boolean cpostal) {
-		this.cpostal = cpostal;
-	}
-	public boolean isCemail() {
-		return cemail;
-	}
-	public void setCemail(boolean cemail) {
-		this.cemail = cemail;
-	}
-	public boolean isCsms() {
-		return csms;
-	}
-	public void setCsms(boolean csms) {
-		this.csms = csms;
-	}
-	public boolean isCnodata() {
-		return cnodata;
-	}
-	public void setCnodata(boolean cnodata) {
-		this.cnodata = cnodata;
-	}
-	public boolean isCtelefonia() {
-		return ctelefonia;
-	}
-	public void setCtelefonia(boolean ctelefonia) {
-		this.ctelefonia = ctelefonia;
+	@Command
+	@NotifyChange({"clienteForm","fechaNac"})
+	public void modificarCliente() {
+		
 	}
 	
-	public boolean isRhombre() {
-		return rhombre;
-	}
-
-	public void setRhombre(boolean rhombre) {
-		this.rhombre = rhombre;
-	}
-
-	public boolean isRmujer() {
-		return rmujer;
-	}
-
-	public void setRmujer(boolean rmujer) {
-		this.rmujer = rmujer;
-	}
-
-	public boolean isRempresa() {
-		return rempresa;
-	}
-
-	public void setRempresa(boolean rempresa) {
-		this.rempresa = rempresa;
-	}
 	
-	public String getSprovincia() {
-		return sprovincia;
-	}
-
-	public void setSprovincia(String sprovincia) {
-		this.sprovincia = sprovincia;
-	}
-
-	public String getSagente() {
-		return sagente;
-	}
-
-	public void setSagente(String sagente) {
-		this.sagente = sagente;
-	}
-
-	public String getStipovia() {
-		return stipovia;
-	}
-
-	public void setStipovia(String stipovia) {
-		this.stipovia = stipovia;
-	}
 	
-	public ClienteBean getCliente() {
-		return cliente;
-	}
-	public void setCliente(ClienteBean cliente) {
-		this.cliente = cliente;
-	}
-
-	public Date getFechaNac() {
-		return fechaNac;
-	}
-	
-	public void setFechaNac(Date fechaNac) {
-		this.fechaNac = fechaNac;
-	}
-
-	public ClienteForm getClif() {
-		return clif;
-	}
-
-	public void setClif(ClienteForm clif) {
-		this.clif = clif;
-	}
-
 	public String getUsuario() {
 		return usuario;
 	}
@@ -296,5 +244,85 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 	public void setClienteForm(ClienteForm clienteForm) {
 		this.clienteForm = clienteForm;
 	}	
+
+	public Date getFechaNac() {
+		return fechaNac;
+	}
+
+	public void setFechaNac(Date fechaNac) {
+		this.fechaNac = fechaNac;
+	}
+
+
+	public boolean isBfechaNac() {
+		return bfechaNac;
+	}
+
+
+	public void setBfechaNac(boolean bfechaNac) {
+		this.bfechaNac = bfechaNac;
+	}
+
+
+	public boolean isbDireccion() {
+		return bDireccion;
+	}
+
+
+	public void setbDireccion(boolean bDireccion) {
+		this.bDireccion = bDireccion;
+	}
+
+
+	public boolean isbNumero() {
+		return bNumero;
+	}
+
+
+	public void setbNumero(boolean bNumero) {
+		this.bNumero = bNumero;
+	}
+
+
+	public boolean isbProvincia() {
+		return bProvincia;
+	}
+
+
+	public void setbProvincia(boolean bProvincia) {
+		this.bProvincia = bProvincia;
+	}
+
+
+	public boolean isbEmail() {
+		return bEmail;
+	}
+
+
+	public void setbEmail(boolean bEmail) {
+		this.bEmail = bEmail;
+	}
+
+
+	public boolean isbTelefono() {
+		return bTelefono;
+	}
+
+
+	public void setbTelefono(boolean bTelefono) {
+		this.bTelefono = bTelefono;
+	}
+
+
+	public boolean isbMovil() {
+		return bMovil;
+	}
+
+
+	public void setbMovil(boolean bMovil) {
+		this.bMovil = bMovil;
+	}
+	
+	
 	
 }

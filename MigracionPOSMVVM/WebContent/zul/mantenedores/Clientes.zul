@@ -39,7 +39,8 @@
 		</div>		
 		
 		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
-			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoUsuario')" />
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoCliente')" />
+			<toolbarbutton image="/iconos/modificar.png" sclass="shrink24" onClick="@command('modificarCliente')" />
 	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresarCliente')" />
 	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winClientes.detach()" />
 	   	</div>
@@ -57,85 +58,105 @@
 				<rows>
 					<row><!-- Linea 1 -->
 						<label value="Codigo"/>
-						<textbox/>
+						<intbox value="@bind(vm.clienteForm.codigo)" readonly="true"/>
 						<label value="Rut"/>
 						<cell>
-							<textbox width="150px"/>
-							<textbox width="50px"/>
-							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
+							<textbox value="@bind(vm.clienteForm.rut)" width="150px" constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
+							<textbox value="@bind(vm.clienteForm.dv)" width="50px"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="@command('buscar')"/>
 							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
 						</cell>
+						
 						<label value="F.Nacimiento(*)"/>
-						<datebox/>					
+						<cell>
+							<datebox value="@bind(vm.fechaNac)" format="dd/MM/yyyy" disabled="@bind(vm.bfechaNac eq 'true'?'true':'false')"/>
+							<checkbox checked="@bind(vm.bfechaNac)"/>
+						</cell>					
 					</row>
 					
 					<row><!-- Linea 2 -->
 						<label value="Apellidos(*)"/>
-						<textbox value="@bind(vm.apellidos)"/>
+						<textbox value="@bind(vm.clienteForm.apellidos)"/>
 						<label value="Edad"/>
-						<textbox value="@bind(vm.edad)"/>					
+						<textbox value="@bind(vm.clienteForm.edad)"/>					
 					</row>
 					
 					<row><!-- Linea 3 -->
 						<label value="Nombres"/>
-						<textbox value="@bind(vm.nombres)"/>
+						<textbox value="@bind(vm.clienteForm.nombres)"/>
 						
 						<label value="Agente"/>
-						<combobox model="@bind(vm.listaAgentes)">
+						<combobox model="@bind(vm.clienteForm.listaAgentes)">
 							<template name="model">
-								<comboitem value="@load(each.usuario)"/>
+								<comboitem label="@load(each.usuario)"/>
 							</template>
 						</combobox>
 					</row>
 					
 					<row><!-- Linea 4 -->
 						<label value="Tipo via"/>
-						<combobox model="@bind(vm.listaTipoVia)">
+						<combobox model="@bind(vm.clienteForm.listaTipoVia)">
 							<template name="model">
-								<comboitem value="@load(each.codigo)"/>
+								<comboitem label="@load(each.descripcion)"/>
 							</template>
 						</combobox>
+						
 						<label value="Direccion(*)"/>
-						<textbox value="@bind(vm.via)"/>
+						
+						<cell>
+							<textbox value="@bind(vm.clienteForm.via)" disabled="@bind(vm.bDireccion eq 'true'?'true':'false')"/>
+							<checkbox checked="@bind(vm.bDireccion)"/>
+						</cell>
+						
 						<label value="Numero(*)"/>
-						<textbox value="@bind(vm.numero)"/>						
+						
+						<cell>
+							<textbox value="@bind(vm.clienteForm.numero)" disabled="@bind(vm.bNumero eq 'true'?'true':'false')"/>
+							<checkbox checked="@bind(vm.bNumero)"/>
+						</cell>						
 					</row>
 					
 					<row><!-- Linea 5 -->
 						<label value="Localidad"/>
-						<textbox value="@bind(vm.localidad)"/>
+						<textbox value="@bind(vm.clienteForm.localidad)"/>
 						<label value="Provincia/comuna(*)"/>
 						<cell>							
-							<combobox model="@bind(vm.listaProvincia)">
+							<combobox model="@bind(vm.clienteForm.listaProvincia)" disabled="@bind(vm.bProvincia eq 'true'?'true':'false')">
 								<template name="model">
-									<comboitem value="@bind(each.codigo)"/>
+									<comboitem label="@bind(each.descripcion)"/>
 								</template>
 							</combobox>
-							<checkbox/>
+							<checkbox checked="@bind(vm.bProvincia)"/>
 						</cell>		
 						<label value="Bloque/dpto"/>
-						<textbox value="@bind(vm.bloque)"/>			
+						<textbox value="@bind(vm.clienteForm.bloque)"/>			
 					</row>
 					
 					<row><!-- Linea 6 -->
 						<label value="Cod.Postal"/>
-						<textbox value="@bind(vm.cod_postal)"/>
+						<textbox value="@bind(vm.clienteForm.cod_postal)"/>
 						<label value="Persona contacto"/>
-						<textbox value="@bind(vm.contacto)"/>					
+						<textbox value="@bind(vm.clienteForm.contacto)"/>					
 					</row>
 					
 					<row><!-- Linea 7 -->
 						<label value="Email(*)"/>
-						<textbox value="@bind(vm.email)"/>
+						<cell>
+							<textbox value="@bind(vm.clienteForm.email)" disabled="@bind(vm.bEmail eq 'true'?'true':'false')"/>
+							<checkbox checked="@bind(vm.bEmail)"/>
+						</cell>
+						
 						<label value="Telefono(*)"/>
 						<cell colspan="1">
-							<combobox  width="50px">
+							<combobox  width="50px" disabled="@bind(vm.bTelefono eq 'true'?'true':'false')">
 								<comboitem></comboitem>
 							</combobox>
-							<textbox value="@bind(vm.telefono)"/>
+							<textbox value="@bind(vm.clienteForm.telefono)" disabled="@bind(vm.bTelefono eq 'true'?'true':'false')"/>
+							<checkbox checked="@bind(vm.bTelefono)"/>
 						</cell>
+						
 						<label value="Sexo"/>
-						<radiogroup selectedItem="@bind(vm.sexo)">
+						<radiogroup selectedItem="@bind(vm.clienteForm.sexo)">
 							<radio label="Hombre" value="H"/>
 							<radio label="Mujer" value="M"/>
 							<radio label="Institucion" value="I"/>
@@ -144,11 +165,11 @@
 					
 					<row><!-- Linea 8 -->
 						<label value="Profesion"/>
-						<textbox value="@bind(vm.profesion)"/>
+						<textbox value="@bind(vm.clienteForm.profesion)"/>
 						<label value="Telefono movil(*)"/>
 						<cell>							
-							<textbox value="@bind(vm.telefono_movil)"/>
-							<checkbox checked=""/>
+							<textbox value="@bind(vm.clienteForm.telefono_movil)" disabled="@bind(vm.bMovil eq 'true'?'true':'false')"/>
+							<checkbox checked="@bind(vm.bMovil)"/>
 						</cell>
 					</row>					
 				</rows>				
@@ -169,8 +190,8 @@
 					<row>
 						<label value="A:" />
 						<cell colspan="1">
-							<textbox width="150px"/>
-							<textbox width="50px"/>
+							<textbox value="@bind(vm.clienteForm.remitente)" width="150px"/>
+							<textbox value="@bind(vm.clienteForm.dvFactura)" width="50px"/>
 							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
 							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
 						</cell>
@@ -178,7 +199,7 @@
 					<row>
 						<label value="Giro" />
 						<cell colspan="1">						
-							<textbox width="150px"/>
+							<textbox value="@bind(vm.clienteForm.giro)" width="150px"/>
 							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
 							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
 						</cell>

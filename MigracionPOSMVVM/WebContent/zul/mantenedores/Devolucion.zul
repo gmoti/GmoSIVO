@@ -1,0 +1,338 @@
+<?page title="Devolucion" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+<window title="Devolucion" id='albaran' 
+	sclass='container-fluid' border="normal"
+	apply="org.zkoss.bind.BindComposer" 
+    viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAlbaran')">
+<style>
+	.container-fluid{
+		background: #001624;
+	}
+	.row{
+		background-color: #c1c1c1;
+	}
+	.titulo{
+		background: black;
+		
+	}
+	.titulo .msj-titu{
+		color:white;
+		font-size:90	%;
+	}
+	.z-separator-horizontal, .z-separator-horizontal-bar{
+		height:1px;
+	}
+	/*.z-window-content{
+		background-color: #062c3f;
+	}*/
+</style>
+<div sclass="row titulo">
+	<div sclass="col-10">
+			<label sclass="msj-titu">ALBARAN</label>
+	</div>
+	<div sclass="col-">
+ 	
+				<button  sclass="btn-success" tooltiptext="Nuevo Albaran" iconSclass="fa fa-user-plus" onClick="@command('nuevoAlbaran',arg1=vm)"/>
+				<button  sclass="btn-success" iconSclass="fa fa-list-alt" onClick="@command('cobrar',arg1=vm)"  />
+				<button sclass="btn-success" iconSclass="fa fa-check" />
+				<button sclass="btn-success" iconSclass="fa fa-times"  onClick="@command('cerrar',arg1=albaran)"/>
+	</div>	
+</div>
+<div sclass='row'>
+		<div sclass="col-sm-3">
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label  value="Codigo"/>
+					<textbox sclass="col-sm-6" value="@bind(vm.codigo_completo)" maxlength="10"  constraint=""/><!--Nota Mental , al estar una columna dentro de una columna toma su 100% en relacion a la columna padre y se divide en 12 en funcion esa columna  -->
+					<button id="buscar" iconSclass="z-icon-search" onClick="" />
+				</div>
+			</div>
+		</div>	
+
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<datebox  format="dd/MM/yyyy" placeholder="dd/MM/yyyy" sclass="" value="@bind(vm.fecha_alb)" readonly="true"/>
+			    </div>
+			</div>
+		</div>
+		
+		<div sclass='col-sm-1'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<textbox sclass="col-sm-8" placeholder="Hora" readonly="true" value="@bind(vm.hora)"/>
+			    </div>
+			</div>
+		</div>
+		
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					
+					<combobox width="180px" model="@load(vm.listaTipoAlbaranes)" selectedItem="@bind(vm.tipo_albaran)" value="@bind(vm.tipo_albaran)" placeholder='Tipo Albaran' readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.codigo)" label="@load(each.descripcion)"/>
+						</template>
+					</combobox>
+					
+				</div>
+			</div>
+		</div>
+	
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<radiogroup id="boleta_guia" >
+							Boleta<radio  value="B" checked="@bind(vm.rboleta)" />
+							Guia<radio value="O"  checked="@bind(vm.rguia)" />
+					</radiogroup>
+				</div>
+			</div>
+		</div>
+		
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<textbox  sclass="col-sm-7" value="@bind(vm.numero_boleta_guia)"/>
+					<button id="buscar_boleta" iconSclass="z-icon-search" onClick="@command('cargaDatos',dev=vm)" />
+				</div>
+			</div>
+		</div>
+</div>
+<div sclass='row'>
+		<div sclass="col-sm-3">
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label  value="Cliente"/>
+					<textbox sclass="col-sm-4" value="@bind(vm.nif)" maxlength="10" />-<textbox sclass="col-sm-2" value="@bind(vm.dvnif)" maxlength="10"/>
+					<button id="" iconSclass="z-icon-search" onClick="" />
+				</div>
+			</div>
+		</div>	
+		<div sclass='col-sm-3'>
+			<label value="@bind(vm.nombreCliente)"/>
+		</div>
+		<div sclass='col-sm-4'>
+		</div>
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<checkbox  label="Entrega" value="T" checked="@bind(vm.ch_entrega)" />
+				</div>
+			</div>
+		</div>
+</div>
+<div sclass='row'>
+		<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Idioma"/>
+					<combobox width="200px" model="@bind(vm.listaIdiomas)" selectedItem="@bind(vm.idioma)"  value="@bind(vm.idioma)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.id)" label="@load(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<label value="Cambio"/>	
+					<textbox sclass="col-sm-5"  readonly="true" value="@bind(vm.cambio)"/>
+			    </div>
+			</div>
+		</div>
+		<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Agente"/>
+					<combobox width="200px" model="@bind(vm.listaAgentes)" selectedItem="@bind(vm.agente)"  value="@bind(vm.agente)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.nombre_completo)" label="@load(each.usuario)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>
+		<div sclass='col'></div>
+		<div sclass='col'></div>
+		<div sclass='col'></div>
+		</div>
+<div sclass='row'>
+		<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Divisa"/>
+					<combobox width="200px" model="@bind(vm.listaDivisas)" selectedItem="@bind(vm.divisa)"  value="@bind(vm.divisa)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.id)" label="@bind(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-2'></div>
+		<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Montador"/>
+					<textbox value="@bind(vm.montador)" sclass="col-sm-4" />
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<checkbox  label="Facturacion"  checked="@bind(vm.ch_facturado)" />
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<label value="Cambio"/>	
+					<textbox sclass="col-sm-6"  value="@bind(vm.cambio)"/>
+			    </div>
+			</div>
+	   </div>
+</div>
+<div sclass='row'>
+	  <div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Motivo"/>
+					<combobox width="200px" model="@bind(vm.lista_mot_devo)" selectedItem="@bind(vm.motivo)"  value="@bind(vm.motivo)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.codigo)" label="@bind(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-2'></div>
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="F. Pago"/>
+					<combobox width="150px" model="@bind(vm.listaFormasPago)" selectedItem="@bind(vm.formaPago)"  value="@bind(vm.formaPago)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.id)" label="@bind(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-3'>
+			
+		</div>
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<label value="Dto%"/>	
+					<textbox sclass="col-sm-4"  value="@bind(vm.dto)"/>
+			    </div>
+			</div>
+		</div>
+</div>
+<div sclass='row'>
+	<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Fecha Garantia"/>
+					<datebox format="dd/MM/yyyy" placeholder="dd/MM/yyyy" sclass="" value="@bind(vm.fecha_gar)" readonly="true"/>
+				</div>
+			</div>
+	</div>
+	<div sclass='col-sm-2'></div>
+	<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Convenio"/>
+					<combobox width="200px" model="@bind(vm.listaConvenios)" selectedItem="@bind(vm.convenio)"  value="@bind(vm.convenio)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.id)" label="@bind(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+	</div>
+	<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<label value="Importe Pendiente de Cobro"/>	
+			    </div>
+			</div>
+	</div>
+	<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass='form-group'>	
+					<textbox sclass="col-sm-9"  value="@bind(vm.importePend)"/>
+			    </div>
+			</div>
+	</div>
+</div>
+<div sclass='row'>
+		<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Direc. Cliente"/>
+					<textbox sclass="col-sm-6"  value="@bind(vm.direccion_cli)"/>
+				</div>
+			</div>
+		</div>
+		
+		<div sclass='col-sm-2'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="N° Direcc. Cliente"/>
+					<textbox sclass="col-sm-4"  value="@bind(vm.ndireccion_cli)"/>
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-3'>
+			<div sclass='row'>
+				<div sclass="form-group">
+					<label value="Comuna Cliente"/>
+					<combobox width="200px" model="@bind(vm.listaProvincia)" selectedItem="@bind(vm.provincia_cliente)"  value="@bind(vm.provincia_cliente)" readonly="true">
+						<template name="model">
+							<comboitem value="@bind(each.codigo)" label="@bind(each.descripcion)"/>
+						</template>
+					</combobox>
+				</div>
+			</div>
+		</div>
+		<div sclass='col-sm-4'>
+		</div>
+</div>
+<div sclass="row">
+		<div sclass="col">
+			<listbox model="@load(vm.lista_productos)" fixedLayout="true">
+				<listhead>
+					<listheader label="Articulo"/>
+					<listheader label="Descripción"/>
+					<listheader label="Subalm"/>
+					<listheader label="Precio IVA"/>
+					<listheader label="Dto%"/>
+					<listheader label="Cantidad"/>
+					<listheader label="Importe"/>
+					<listheader label="Encargo Venta"/>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell value="@bind(each.articulo)" label="@bind(each.cod_articulo)"/>
+						<listcell value="@bind(each.descripcion)" label="@bind(each.descripcion)"/>
+						<listcell value="@bind(each.subAlm)" label="@bind(each.subAlm)"/>
+						<listcell value="@bind(each.precio)" label="@bind(each.precio)"/>
+						<listcell value="@bind(each.dto)" label="@bind(each.dto)"/>
+						<listcell value="@bind(each.cantidad)" label="@bind(each.cantidad)"/>
+						<listcell value="@bind(each.importe)" label="@bind(each.precio_costo)"/>
+						<listcell value=""/>
+					</listitem>
+				</template>
+			</listbox>
+		</div>
+</div>
+</window>
+</zk>

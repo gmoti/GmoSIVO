@@ -7,7 +7,6 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Window;
-
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.actions.ClienteDispatchActions;

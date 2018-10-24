@@ -4,7 +4,8 @@
  */
 package cl.gmo.pos.venta.controlador.general;
 
-
+import java.util.HashMap;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Session;
 
@@ -26,29 +27,32 @@ public class ClienteDispatchActions {
     
     public ClienteDispatchActions(){}
     
-    public ClienteForm cargaInicial(String local)
+    public void cargaInicial(ClienteForm formulario, String local)
     {    
-    	ClienteForm formulario = new ClienteForm(); 
     	log.info("ClienteDispatchActions:cargaInicial inicio");
     	formulario.setListaAgentes(helper.traeAgentes(local));
     	formulario.setListaTipoVia(helper.traeTipoVias());
     	formulario.setListaProvincia(helper.traeProvincias());
-    	log.info("ClienteDispatchActions:cargaInicial fin");
-    	return formulario;
     	
+    	log.info("ClienteDispatchActions:cargaInicial fin");
     }
     
-    public ClienteForm cargaFormulario(ClienteForm form,Session request)
+    public ClienteForm cargaFormulario(ClienteForm form, Session request
+		)
     {
     	log.info("ClienteDispatchActions:cargaFormulario inicio");
+    	//HttpSession session = request.getSession();
     	Session session = request;
     	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));
-    	
+    	/*int codCliente = Constantes.INT_CERO;
+    	if(null != local){    		
+    		codCliente = helper.traeCodigoLocalCliente(local);    		    		
+    	} */   	
     	
         ClienteForm formulario = (ClienteForm)form;
         formulario.setEstaGrabado(0);
         //formulario.setCodigo(codCliente);
-        cargaInicial(local);
+        cargaInicial(formulario, local);
         String agente_sucursal = (String) session.getAttribute(Constantes.STRING_USUARIO);
     	formulario.setAgente(agente_sucursal);
     	formulario.setAgente_sucursal(agente_sucursal);
@@ -60,30 +64,36 @@ public class ClienteDispatchActions {
     	formulario.setMk_correo_electronico("-1");
     	log.info("ClienteDispatchActions:cargaFormulario fin");
         //return mapping.findForward(Constantes.FORWARD_CLIENTE);
-    	return formulario;
-    }
-    
-    public ClienteForm buscaCliente(ClienteForm form,Session request)
-    {
-    	log.info("ClienteDispatchActions:buscaCliente inicio");
-    	Session session = request;
-    	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));
-    	ClienteForm formulario = (ClienteForm)form;     	
-        cargaInicial(local); 
-        formulario.setEstaGrabado(2);
-        log.info("ClienteDispatchActions:buscaCliente fin");
         return formulario;
     }
     
-    public ClienteForm ingresoCliente(ClienteForm form,Session request){
+    public ClienteForm buscaCliente(ClienteForm form, Session request)
+    {
+    	log.info("ClienteDispatchActions:buscaCliente inicio");
+    	//HttpSession session = request.getSession();
+    	Session session = request;
+    	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));
+    	ClienteForm formulario = (ClienteForm)form;     	
+        cargaInicial(formulario, local); 
+        formulario.setEstaGrabado(2);
+        log.info("ClienteDispatchActions:buscaCliente fin");
+        //return mapping.findForward(Constantes.FORWARD_CLIENTE);
+        return formulario;
+    }
+    
+    public ClienteForm ingresoCliente(ClienteForm form, Session request){
     	log.info("ClienteDispatchActions:ingresoCliente inicio");
+    	
+    	ClienteForm formulario = (ClienteForm)form;
+    	
     	try{
     		
+    		//HttpSession session = request.getSession();
     		Session session = request;
         	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));    		
-    		ClienteForm formulario = (ClienteForm)form;
-    		formulario.setLocal("T002");
-    		formulario.setEstaGrabado(0);
+    		//ClienteForm formulario = (ClienteForm)form;
+    		formulario.setLocal(local);
+    		formulario.setEstaGrabado(2);
     		Utils util = new Utils();
     		
     		if(Constantes.STRING_ACTION_INGRESO_CLIENTE.equals(formulario.getAccion())){
@@ -91,14 +101,14 @@ public class ClienteDispatchActions {
     			//Ingreso de Clientes 20141007   			
     			helper.ingresoCliente(formulario);   
     			
-	    		System.out.println("Cliente postal (1111 )=> "+formulario.getRut()+" "+formulario.getDv()+" "+formulario.getMk_correo_postal()+","+formulario.getMk_correo_electronico()+","+formulario.getMk_telefonia()+","+formulario.getMk_sms()+","+formulario.getMk_nodata());
+	    		System.out.println("Cliente postal (1111 )=> "+formulario.getMk_correo_postal()+","+formulario.getMk_correo_electronico()+","+formulario.getMk_telefonia()+","+formulario.getMk_sms()+","+formulario.getMk_nodata());
 
     			formulario.setCodigo_cliente_agregado(String.valueOf(formulario.getCodigo()));
     			String provincia_cliente = formulario.getProvincia_cliente();
     			formulario.setProvincia(util.isEntero(provincia_cliente));
     			int codigo_provincia = formulario.getProvincia();
     			String codigo_tipo_via = formulario.getTipo_via();
-    			//Informacion cliente factura
+//				Informacion cliente factura
     			
     			
     			if(null != formulario.getRemitente() && !("".equals(formulario.getRemitente().trim()))){
@@ -125,7 +135,7 @@ public class ClienteDispatchActions {
     				
     			}
     			formulario.setPagina_status("");
-        		cargaInicial(local);
+        		cargaInicial(formulario, local);
         		formulario.setProvincia(codigo_provincia);
         		formulario.setTipo_via(codigo_tipo_via);
         		
@@ -219,7 +229,7 @@ public class ClienteDispatchActions {
     			//fin informacion cliente factura
     			
     			formulario.setPagina_status("");
-    			cargaInicial(local);
+    			cargaInicial(formulario, local);
     			formulario.setEstado_pagina(Constantes.STRING_ACTION_TRAE_CLIENTE_SELECCIONADO);
     			
     		}else if(Constantes.STRING_ACTION_NUEVO_CLIENTE.equals(formulario.getAccion())){
@@ -232,7 +242,7 @@ public class ClienteDispatchActions {
     	    		//codCliente = helper.traeCodigoLocalCliente(local);     		    		
     	    	//} 
     	    	formulario.setCodigo(codCliente);    	    	
-    	    	cargaInicial(local);
+    	    	cargaInicial(formulario, local);
     		}else if("traeClienteSeleccionadoFactura".equals(formulario.getAccion())){
     			
     			ClienteBean cliente = helper.traeClienteSeleccionado(null,formulario.getCodigo_cliente_agregado_factura());
@@ -251,35 +261,129 @@ public class ClienteDispatchActions {
 				formulario.setRemitente(cliente.getNif());
 				formulario.setDvFactura(cliente.getDvnif());
     			
-    			cargaInicial(local);
+    			cargaInicial(formulario, local);
     		}
-    		form = formulario;
-    		return form;
+    		
     		
     	}catch(Exception ex){
     		log.error("ClienteDispatchActions:ingresoCliente error catch",ex);
     	}
     	log.info("ClienteDispatchActions:ingresoCliente fin");
     	//return mapping.findForward(Constantes.STRING_SUCCESS);
-		return form;
-    	
+    	return formulario;
     }
     
-   
-    
-    
-    public ClienteForm CargabusquedaGiro(ClienteForm form,Session request){    	
+    public ClienteBean traeClienteSeleccionadoFactura(ClienteForm form, Session request){
+    	
+    	//HttpSession session = request.getSession();
     	Session session = request;
+    	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));    		
+		ClienteForm formulario = (ClienteForm)form;
+		formulario.setLocal(local);
+		formulario.setEstaGrabado(2);
+		
+    	String remitenteId=request.getAttribute("remitenteId").toString();
+    	cargaInicial(formulario, local);
+    	ClienteBean cliente = helper.traeClienteSeleccionado(remitenteId,null);
+    	HashMap hm = new HashMap();
+    	
+    	
+    	if(null != cliente){
+    		formulario.setRemitente(cliente.getCodigo());
+    		formulario.setNombre_cliente_factura(cliente.getNombre() + " " + cliente.getApellido());
+    		formulario.setNombre_cliente_factura("");		
+    				
+    		hm.put("remitenteId", cliente.getNif());
+    		hm.put("nombre_cliente_factura", cliente.getNombre() + " " + cliente.getApellido());
+    		hm.put("tipo_via_factura", cliente.getTipo_via());
+    		hm.put("via_factura", cliente.getDireccion());
+    		hm.put("numero_factura", cliente.getNumero());
+    		hm.put("localidad_factura", cliente.getPoblacion());
+    		hm.put("provincia_factura", cliente.getProvincia_cliente());
+    		hm.put("clienteagregadoId_factura", cliente.getCodigo());
+    		hm.put("nifagregadoId_factura", cliente.getNif());
+    		hm.put("dvFactura", cliente.getDvnif());
+
+    	}else{
+    	   				
+    		hm.put("remitenteId", "");
+    		hm.put("nombre_cliente_factura", "");
+    		hm.put("tipo_via_factura", "");
+    		hm.put("via_factura", "");
+    		hm.put("numero_factura", "");
+    		hm.put("localidad_factura", "");
+    		hm.put("provincia_factura", "");
+    		hm.put("clienteagregadoId_factura", "");
+    		hm.put("nifagregadoId_factura", "");
+    		hm.put("dvFactura", "");
+    	}
+    	
+		 
+		//JSONObject json = JSONObject.fromObject(hm);
+		//response.setHeader("X-JSON", json.toString());
+		
+    	log.info("ClienteDispatchActions:ingresoCliente fin");
+    	//return mapping.findForward(Constantes.STRING_SUCCESS);
+    	return cliente;
+    }
+        
+    public GiroBean traeGiroSeleccionadoFactura(ClienteForm form, Session request){
+    	
+    	//HttpSession session = request.getSession();
+    	Session session = request;
+    	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));    		
+		ClienteForm formulario = (ClienteForm)form;
+		formulario.setLocal(local);
+		Utils utils = new Utils();		
+		cargaInicial(formulario, local);
+		formulario.setEstaGrabado(2);
+		
+    	String giroID=request.getAttribute("giroID").toString();
+    	int idGiro = utils.isEntero(giroID);
+    	
+    	GiroBean giroCliente = PosUtilesFacade.traeDescripGiroCliente(idGiro);
+    	HashMap hm = new HashMap();
+		if(null != giroCliente){
+			hm.put("giroID", giroCliente.getCodigo());
+			formulario.setGiro(giroCliente.getCodigo());
+			hm.put("descripcion",giroCliente.getDescripcion());
+			formulario.setDescripcionGiro(giroCliente.getDescripcion());
+			 
+		}else{
+			hm.put("giroID", "");
+			hm.put("descripcion","");
+			 
+		}
+    	
+		
+		
+		//JSONObject json = JSONObject.fromObject(hm);
+		//response.setHeader("X-JSON", json.toString());
+		
+    	log.info("ClienteDispatchActions:ingresoCliente fin");
+    	//return mapping.findForward(Constantes.STRING_SUCCESS);
+    	return giroCliente;
+    }
+    
+    public ClienteForm CargabusquedaGiro(ClienteForm form, Session request){
+    	
+    	//HttpSession session = request.getSession();
+    	Session session = request;
+    	
     	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));    		
 		ClienteForm formulario = (ClienteForm)form;
 		formulario.setLocal(local);
 		ClienteHelper helper = new ClienteHelper();
 		formulario.setEstaGrabado(2);  	   	
+		//return mapping.findForward(Constantes.FORWARD_BUSQUEDA);
 		return formulario;
     }
     
-    public ClienteForm busquedaGiro(ClienteForm form,Session request){
+    public ClienteForm busquedaGiro(ClienteForm form, Session request){
+    	
+    	//HttpSession session = request.getSession();
     	Session session = request;
+    	
     	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));    		
 		ClienteForm formulario = (ClienteForm)form;
 		formulario.setLocal(local);
@@ -291,34 +395,5 @@ public class ClienteDispatchActions {
 		//return mapping.findForward(Constantes.FORWARD_BUSQUEDA);
 		return formulario;
     }
-    public ClienteForm buscarClienteAjax(String nif) {
-		log.info("BusquedaClientesDispatchActions:buscar inicio");
-		ClienteForm clif = new ClienteForm();
-		ClienteBean cliente = helper.traeClienteSeleccionado(nif,null);
-		int cod  = !cliente.getCodigo().equals("") && cliente.getCodigo() != null ? Integer.valueOf(cliente.getCodigo()):0;
-		clif.setDv(cliente.getDvnif());
-		clif.setApellidos(cliente.getApellido());
-		clif.setCodigo(cod);
-		clif.setNombres(cliente.getNombre());
-		clif.setVia(cliente.getDireccion());
-		clif.setTipo_via(cliente.getTipo_via());
-		clif.setNumero(cliente.getNumero());
-		clif.setEmail(cliente.getEmail());
-		clif.setTelefono(cliente.getFono_casa());
-		clif.setTelefono_movil(cliente.getFono_movil());
-		clif.setProfesion(cliente.getProfesion());
-		clif.setLocalidad(cliente.getPoblacion());
-		clif.setSexo(cliente.getSexo());
-		clif.setMk_correo_electronico(cliente.getMk_correo_electronico());
-		clif.setMk_correo_postal(cliente.getMk_correo_postal());
-		clif.setMk_nodata(cliente.getMk_nodata());
-		clif.setMk_sms(cliente.getMk_sms());
-		clif.setMk_telefonia(cliente.getMk_telefonia());
-		clif.setAgente(cliente.getAgente());
-		clif.setProvincia_cliente(cliente.getProvincia_cliente());
-		log.info("BusquedaClientesDispatchActions:buscar fin");
-		return clif;
-	}
-
     
 }

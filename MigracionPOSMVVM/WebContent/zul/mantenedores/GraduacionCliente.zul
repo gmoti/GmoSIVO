@@ -8,7 +8,7 @@
 	
 <style>
 	.container-fluid{
-		background: black;
+		background: #001624;
 	}
 	.row{
 		background-color: #c1c1c1;
@@ -19,28 +19,22 @@
 	}
 	.titulo .msj-titu{
 		color:white;
-		font-size:larger;
+		font-size:110%;
 	}
 	.z-separator-horizontal, .z-separator-horizontal-bar{
 		height:1px;
 	}
 </style>
-<div sclass="row" >
-	<div sclass="col titulo">
+<div sclass="row titulo" >
+	<div sclass="col">
 		<label sclass="msj-titu" value="Graduación Clientes" />
  	</div>
- 	<div sclass="col ">
- 		<div sclass="row">
-			<div sclass="col-md-4 titulo">
-			</div>
-			<div sclass="col-md-4 titulo"></div>
-			<div sclass="col-md-4 titulo">
-				<button  sclass="btn-success" tooltiptext="Nuevo Usuario" iconSclass="fa fa-user-plus" onClick="@command('nuevoUsuario',arg1=vm)"/>
-				<button  sclass="btn-success" iconSclass="fa fa-file"  />
-				<button sclass="btn-success" iconSclass="fa fa-check" />
-				<button sclass="btn-success" iconSclass="fa fa-times" onClick="@command('cerrar',arg1=win)"/>
-			</div>
-		</div>
+ 	<div sclass="col-">
+		<button  sclass="btn-success" tooltiptext="Nuevo Usuario" iconSclass="fa fa-user-plus" onClick="@command('nuevoUsuario',arg1=vm)"/>
+		<button  sclass="btn-success" iconSclass="fa fa-file"  />
+		<button sclass="btn-success" iconSclass="fa fa-check" onClick="@command('ingresarGraduacion',arg1=vm)"/>
+		<button sclass="btn-success" iconSclass="fa fa-times" onClick="@command('cerrar',arg1=win)"/>
+		
 	</div>	
 </div>	
 <div sclass="row">
@@ -48,7 +42,7 @@
 		<label  value="Cliente"/>
 	</div>
 	<div sclass="col-md-8">
-		<textbox sclass="form-control-sm" value="@bind(vm.nif_cliente_agregado)" /><button sclass="btn-success" onClick="@command('buscarGrad',arg1=vm.nif_cliente_agregado)" iconSclass="z-icon-search" />
+		<textbox sclass="form-control-sm" value="@bind(vm.nif_cliente_agregado)" placeholder="12345678-9" maxlength="10"/><button sclass="btn-success" onClick="@command('buscarGrad',arg1=vm.nif_cliente_agregado)" iconSclass="z-icon-search" />
 		<label sclass="form-control-sm" value="@bind(vm.nombre_cliente)"/>
 	</div>
 	<div sclass="col-md-3">
@@ -175,22 +169,22 @@
 		<label value="OI" />		
 	 </div>
 	 <div sclass="col-md-1">
-			<textbox sclass="form-control input-sm" value="@bind(vm.OI_esfera)" />	
+			<textbox sclass="form-control input-sm" value="@bind(vm.OI_esfera)"  />	
 	 </div>
 	 <div sclass="col-md-1">
-			<textbox sclass="form-control input-sm" value="@bind(vm.OI_cilindro)" />
+			<textbox sclass="form-control input-sm" value="@bind(vm.OI_cilindro)"  />
 	 </div>
 	 <div sclass="col-md-1">
 			<textbox sclass="form-control input-sm" value="@bind(vm.OI_eje)" />
 	 </div>
 	 <div sclass="col-md-1">
-			<textbox sclass="form-control input-sm" value="@bind(vm.OI_cerca)" />
+			<textbox sclass="form-control input-sm" value="@bind(vm.OI_cerca)"  />
 	 </div>
 	 <div sclass="col-md-1">
-			<textbox sclass="form-control input-sm" value="@bind(vm.OI_adicion)" />	
+			<textbox sclass="form-control input-sm" value="@bind(vm.OI_adicion)"  />	
 	 </div>
 	 <div sclass="col-md-1">
-			<textbox sclass="form-control input-sm" value="@bind(vm.OI_dnpl)" />
+			<textbox sclass="form-control input-sm" value="@bind(vm.OI_dnpl)"  />
 	 </div>
 	 <div sclass="col-md-1">
 			<textbox sclass="form-control input-sm" value="@bind(vm.OI_dnpc)" />
@@ -223,13 +217,19 @@
 <separator/>
 <div sclass="row">
 	<div sclass="col-md-3">
-		<listbox >
+		<listbox model="@load(vm.listaGraduaciones)" >
 			<listhead>
-				<listheader label="Fecha"  />
-				<listheader label="Número"  />
-				<listheader label="Detalle"  />
+				<listheader label="Fecha" />
+				<listheader label="Número" />
+				<listheader label="Detalle" />
 			</listhead>
-			
+			<template name="model">
+				<listitem>
+					<listcell value="@bind(each.fecha)" label="@bind(each.fecha)"/>
+					<listcell value="@bind(each.numero)" label="@bind(each.numero)"/>
+					<listcell><a  iconSclass="fa fa-check-circle" onClick="@command('selGraduacion',sel=each)" /></listcell>
+				</listitem>
+			</template>
 		</listbox>
 
 	</div>
@@ -249,7 +249,7 @@
 		<div sclass="row">
 			<div sclass="col-md-1">O.D</div>
 			<div sclass="col-md-1">
-				<combobox width="70px" model="@load(vm.listaCantidadOD)" selectedItem="@bind(vm.OD_cantidad)"  value="@bind(vm.OD_cantidad)" readonly="true">
+				<combobox width="80px" model="@load(vm.listaCantidadOD)" selectedItem="@bind(vm.OD_cantidad)"  value="@bind(vm.OD_cantidad)" readonly="true">
 						<template name="model">
 							<comboitem value="@bind(each.codigo)" label="@load(each.descripcion)"/>
 						</template>
@@ -257,23 +257,25 @@
 			</div>
 			<div sclass="col-md-1"></div>
 			<div sclass="col-md-1">
-				<combobox width="70px" model="@load(vm.listaBaseOD)" selectedItem="@bind(vm.OD_base)"  value="@bind(vm.OD_base)" readonly="true">
+				<combobox width="80px" model="@load(vm.listaBaseOD)" selectedItem="@bind(vm.OD_base)"  value="@bind(vm.OD_base)" readonly="true">
 						<template name="model">
 							<comboitem value="@bind(each.codigo)" label="@load(each.descripcion)"/>
 						</template>
 				</combobox>
 			</div>
 			<div sclass="col-md-1"></div>
-			<div sclass="col-md-1"><intbox sclass="form-control input-sm" value="0"/></div>
+			<div sclass="col-md-1"><textbox sclass="form-control input-sm" value="0"/></div>
 			<div sclass="col-md-1"></div>
-			<div sclass="col-md-2">Interna<radio  value="I" checked="@bind(vm.prismaInterno)" /></div>
-			
+			<div sclass="col-md-2">
+				    <radiogroup id="tipo" />
+					Interna<radio  value="I" checked="@bind(vm.prismaInterno)" radiogroup="tipo"/>
+			</div>
 		</div>
 		<separator/>
 		<div sclass="row">
 			<div sclass="col-md-1">O.I</div>
 			<div sclass="col-md-1">
-				<combobox width="70px" model="@load(vm.listaCantidadOI)" selectedItem="@bind(vm.OI_cantidad)"  value="@bind(vm.OI_cantidad)" readonly="true">
+				<combobox width="80px" model="@load(vm.listaCantidadOI)" selectedItem="@bind(vm.OI_cantidad)"  value="@bind(vm.OI_cantidad)" readonly="true">
 						<template name="model">
 							<comboitem value="@bind(each.codigo)" label="@load(each.descripcion)"/>
 						</template>
@@ -281,17 +283,20 @@
 			</div>
 			<div sclass="col-md-1"></div>
 			<div sclass="col-md-1">
-				<combobox width="70px" model="@load(vm.listaBaseOI)" selectedItem="@bind(vm.OI_base)"  value="@bind(vm.OI_base)" readonly="true">
+				<combobox width="80px" model="@load(vm.listaBaseOI)" selectedItem="@bind(vm.OI_base)"  value="@bind(vm.OI_base)" readonly="true">
 						<template name="model">
 							<comboitem value="@bind(each.codigo)" label="@load(each.descripcion)"/>
 						</template>
 				</combobox>
 			</div>
 			<div sclass="col-md-1"></div>
-			<div sclass="col-md-1"><intbox sclass="form-control input-sm" value="0"/></div>
+			<div sclass="col-md-1">
+				<textbox sclass="form-control input-sm" value="0"/></div>
 			<div sclass="col-md-1"></div>
-			<div sclass="col-md-2">Externa<radio  value="E" checked="@bind(vm.prismaExterno)" /></div>
+			<div sclass="col-md-2">
 			
+					Externa<radio  value="E" checked="@bind(vm.prismaExterno)" radiogroup="tipo"/>
+		    </div>
 		</div>
 	</div>
 </div>
@@ -310,12 +315,12 @@
 		<textbox sclass="form-control input-sm" value="@bind(vm.dvnifdoctor)"/>
 	</div>
 	<div sclass="col-md-2">
-		<button sclass="btn-danger" iconSclass="z-icon-search" /><button sclass="btn-success" iconSclass="z-icon-user-md" />
+		<button sclass="btn-danger" iconSclass="z-icon-search" tooltiptext="Busqueda de Doctor" /><button sclass="btn-success" iconSclass="z-icon-user-md" tooltiptext="Ingreso Nuevo Doctor"/>
 	</div>
 	<div sclass="col-md-1">
 	</div>
 	<div sclass="col-md-4">
-		<label value="Nombre del Doctor" />	
+		<label value="@bind(vm.nombre_doctor)" />	
 	</div>
 </div>
 <div sclass="row">
@@ -338,14 +343,15 @@
 			<div sclass="col-md-">
 				<label value="F. Emisión:" />
 			</div>
-			<div sclass="col-md-2">
-				<textbox sclass="form-control input-sm" value=""/>	
+			<div sclass="col-md-3">
+				<datebox format="dd/MM/yyyy" placeholder="dd/MM/yyyy" sclass="form-control-" value="@bind(vm.fechaEm)" onChange="@command('calculoFechaRev',arg=vm.fechaEm)"/>
+				<!--<textbox sclass="form-control input-sm" value="@bind(vm.fechaEmision)"/>-->	
 			</div>
 			<div sclass="col-md-">
 				<label value="F. Prox. Revisión:" />
 			</div>
 			<div sclass="col-md-2">
-				<textbox sclass="form-control input-sm" value=""/>	
+				<textbox sclass="form-control input-sm" value="@bind(vm.fechaProxRevision)" readonly="true"/>	
 			</div>
 		</div>
 	</div>
