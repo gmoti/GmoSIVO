@@ -360,10 +360,12 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	
 	@NotifyChange({"seleccionPagoForm"})	
 	@Command
-	public void deleteItemAutoriza(@BindingParam("arg")PagoBean b){
+	public void deleteItemAutoriza(@BindingParam("arg")PagoBean b){		
 		
 		objetos = new HashMap<String,Object>();		
-		objetos.put("seleccionPagoForm",seleccionPagoForm);
+		objetos.put("retorno","pagoVentaDirectaRespuesta");
+		objetos.put("seleccionPago",seleccionPagoForm);	
+		
 		pagoBeanAux = new PagoBean();
 		pagoBeanAux = b;
 		
@@ -376,10 +378,81 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	
 	@NotifyChange({"seleccionPagoForm"})	
 	@GlobalCommand
-	public void deleteItem() {
+	public void pagoVentaDirectaRespuesta(@BindingParam("tipoAccion")String tipo, @BindingParam("autorizador")String autorizador) {
 		
-		seleccionPagoForm.getListaPagos().remove(pagoBeanAux);
-		pagoBeanAux=null;
+		//seleccionPagoForm.getListaPagos().remove(pagoBeanAux);
+		//pagoBeanAux=null;
+		
+		if (seleccionPagoForm.getOrigen().equals("ALBARAN_DIRECTA")) {
+			
+			//eliminar_pago_albaran('${forma_pago}','${fech_pago}');
+			/*document.getElementById('accion').value="eliminarFormaPagoSeleccionPago";
+			document.getElementById('f_pago').value=forma_pago;	
+			document.getElementById('fech_pago').value=fecha_pago;
+			var x = document.forms[0];		
+			x.action = "<%=request.getContextPath()%>/SeleccionPago.do?method=eliminaFPagoBoleta";
+			x.submit();	*/			
+			
+			try {
+				seleccionPagoForm.setF_pago(pagoBeanAux.getForma_pago());
+				seleccionPagoForm.setFech_pago(pagoBeanAux.getFecha());			
+				seleccionPagoForm.setAccion("eliminarFormaPagoSeleccionPago");
+				seleccionPagoForm.setTipoaccion(tipo);
+				seleccionPagoForm.setAutorizador(autorizador);				
+				seleccionPagoDispatchActions.eliminaFPagoBoleta(seleccionPagoForm, sess);			
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+		}else {
+			
+			if(seleccionPagoForm.getOrigen().equals("ALBARAN_DEVOLUCION")) {
+				
+				//eliminar_pago_albaran('${forma_pago}','${fech_pago}');
+				try {
+					seleccionPagoForm.setF_pago(pagoBeanAux.getForma_pago());
+					seleccionPagoForm.setFech_pago(pagoBeanAux.getFecha());			
+					seleccionPagoForm.setAccion("eliminarFormaPagoSeleccionPago");
+					seleccionPagoForm.setTipoaccion(tipo);
+					seleccionPagoForm.setAutorizador(autorizador);				
+					seleccionPagoDispatchActions.eliminaFPagoBoleta(seleccionPagoForm, sess);			
+					
+				} catch (Exception e) {				
+					e.printStackTrace();			}
+				
+				
+			}else {
+				
+				//eliminar_pago('${forma_pago}','${fech_pago}','<%=request.getContextPath()%>');
+				
+				/*$j('#accion').val("eliminarFormaPago");
+				$j('#f_pago').val(forma_pago);	
+				$j('#fech_pago').val(fecha_pago);
+				
+				$j.cookie('convenio','0');
+				$j("#sumaPagar").val("").attr("readonly",false);*/
+				try {
+					seleccionPagoForm.setF_pago(pagoBeanAux.getForma_pago());
+					seleccionPagoForm.setFech_pago(pagoBeanAux.getFecha());			
+					seleccionPagoForm.setAccion("eliminarFormaPago");
+					seleccionPagoForm.setTipoaccion(tipo);
+					seleccionPagoForm.setAutorizador(autorizador);					
+					
+					seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);				
+					
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
+				
+			}		
+			
+		}
+		
+		
+		
+		
+		
 	}
 	
 	

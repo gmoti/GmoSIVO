@@ -66,7 +66,7 @@ public class ControllerAutorizaBorrarPago implements Serializable {
 	  objetos.put("retorno","autorizaBorrarPagoRespuesta");
 		
 		try {
-			resp = ventaPedidoDispatchActions.valida_permiso_mod_fpago(sess);
+			resp = ventaPedidoDispatchActions.valida_permiso_mod_fpago(sess);			
 			//resp=1;
 			
 			switch(resp) {

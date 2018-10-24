@@ -77,14 +77,6 @@ public class ControllerMostrarPagosBoleta implements Serializable {
 		
 		try {
 			
-			//String cdg_vta = formulario.getSerie();
-			//String fecha_pedido = formulario.getFecha();
-			//String f_pago = formulario.getF_pago();
-			//String fecha_forma_pago = formulario.getFech_pago();
-			//String tipo_accion = formulario.getTipoaccion();
-			//String autorizador = formulario.getAutorizador();
-			
-			
 			seleccionPagoForm.setF_pago(pagoBean.getForma_pago());
 			seleccionPagoForm.setFech_pago(pagoBean.getFecha());			
 			seleccionPagoForm.setAccion("eliminarFormaPagoBoleta");

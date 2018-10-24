@@ -299,8 +299,22 @@ public class ControllerEncargos implements Serializable {
 	@Command
 	public void eliminarPedido() {
 		
+		float sumdes = 0;
+		int sumimpor = 0;
+		int liberado= 0;
+		int cprod  = 0;
+		int totalencargo = 0; 	
+				
+		totalencargo = Integer.parseInt(String.valueOf(ventaPedidoForm.getTotal()));
 		
-		if (ventaPedidoForm.getTotal()==0) {
+		for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {			
+			sumdes   += pb.getDescuento();	
+			sumimpor +=	pb.getImporte();
+			liberado += Integer.parseInt(pb.getLiberado());	
+			cprod++;			
+		}		
+		
+		if (totalencargo==0 && (sumdes == (100 * cprod)) && (sumimpor == 0) && (cprod >= 3) ) {
 			
 			Messagebox.show("No es posible eliminar el encargo, ya se encuentra Liberado.");
 			
@@ -316,6 +330,8 @@ public class ControllerEncargos implements Serializable {
 							
 							ventaPedidoForm.setAccion("eliminarPedidoSeleccion");
 							ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
+							
+							
 							BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
 							
 							Messagebox.show("Presupuesto eliminado");
@@ -325,20 +341,7 @@ public class ControllerEncargos implements Serializable {
 			
 			
 			
-		}
-		
-		
-		/*if(totalencargo == 0 && sumdes == (100 * cprod) && sumimpor == 0 && cprod >= 3 ){
-       	 
-			   alert("No es posible eliminar el encargo, ya se encuentra Liberado.");
-	         
-		   }else{
-				if (confirm("ALERTA!! va a proceder a eliminar este registro, si desea eliminarlo de click en ACEPTAR\n de lo contrario de click en CANCELAR."))
-				{
-	         		document.getElementById('accion').value = "eliminarPedidoSeleccion";
-					document.ventaPedidoForm.submit();
-				}
-		   }*/
+		}		
 	}
 	
 	
@@ -648,14 +651,7 @@ public class ControllerEncargos implements Serializable {
 		
 		Optional<String> cvn = Optional.ofNullable(ventaPedidoForm.getConvenio());
 		if(!cvn.isPresent())
-			ventaPedidoForm.setConvenio("");
-		
-		ventaPedidoForm.setAgente(agenteBean.getUsuario());
-		ventaPedidoForm.setForma_pago(formaPagoBean.getId());
-		ventaPedidoForm.setIdioma(idiomaBean.getId());
-		ventaPedidoForm.setDivisa(divisaBean.getId());
-		ventaPedidoForm.setTipo_pedido(tipoPedidoBean.getCodigo());	
-		ventaPedidoForm.setFecha_entrega(dt.format(fechaEntrega));		
+			ventaPedidoForm.setConvenio("");	
 		
 		
 		if (ventaPedidoForm.getNombre_cliente().equals("")) {
@@ -666,6 +662,11 @@ public class ControllerEncargos implements Serializable {
 		if (agenteBean == null) {
 			Messagebox.show("Debe seleccionar un agente");
 			return;
+		}else {
+			if(agenteBean.getUsuario().equals("")) {
+				Messagebox.show("Debe seleccionar un agente");
+				return;
+			}			
 		}
 		
 		if (ventaPedidoForm.getFecha().equals("")) {
@@ -677,6 +678,14 @@ public class ControllerEncargos implements Serializable {
 			Messagebox.show("Debe ingresar articulos para generar cobros");
 			return;
 		}
+		
+		
+		ventaPedidoForm.setAgente(agenteBean.getUsuario());			
+		ventaPedidoForm.setForma_pago(formaPagoBean.getId());
+		ventaPedidoForm.setIdioma(idiomaBean.getId());
+		ventaPedidoForm.setDivisa(divisaBean.getId());
+		ventaPedidoForm.setTipo_pedido(tipoPedidoBean.getCodigo());	
+		ventaPedidoForm.setFecha_entrega(dt.format(fechaEntrega));	
 		
 		
 		if (!ventaPedidoForm.getFlujo().equals("formulario")) {	

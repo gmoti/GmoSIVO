@@ -128,7 +128,7 @@
 	     								<label value="Valor a pagar" />
 	     								<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)"
 	     									onOK="@command('validaPago')"
-	     									width="100px" style="text-align:right"/>
+	     									width="100px" style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
 	     									
 	     								<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
 	     								<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" 
@@ -142,7 +142,7 @@
 	     									width="100px" 
 	     									readonly="@bind(vm.disableDescuento)" 
 	     									onOK="@command('calculaTotalvtaDirecta')" 
-	     									style="text-align:right"/>
+	     									style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
 	     								<cell/>	
 	     								<cell/>	
 	     								<cell/>		

@@ -68,7 +68,8 @@ public class ControllerCliente extends ClienteForm  implements Serializable{
 		 
 		 usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		 sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
-
+		 
+		 clid.cargaFormulario(clienteForm, sess);	
 	}
 	
 	
