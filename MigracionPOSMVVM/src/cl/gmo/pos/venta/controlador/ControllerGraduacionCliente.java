@@ -1,5 +1,8 @@
 package cl.gmo.pos.venta.controlador;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -7,75 +10,56 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Window;
+
+import cl.gmo.pos.venta.controlador.general.BusquedaClientesDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
-import cl.gmo.pos.venta.utils.Utils;
-import cl.gmo.pos.venta.web.actions.ClienteDispatchActions;
 import cl.gmo.pos.venta.web.actions.GraduacionesDispatchActions;
-import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.GraduacionesBean;
-import cl.gmo.pos.venta.web.forms.ClienteForm;
+import cl.gmo.pos.venta.web.forms.BusquedaClientesForm;
 import cl.gmo.pos.venta.web.forms.GraduacionesForm;
 
-public class ControllerGraduacionCliente extends GraduacionesForm{
+public class ControllerGraduacionCliente implements Serializable{	
 	
-	
-	private boolean diferenteAdicion = false;
-	private boolean prismaInterno= false;
-	private boolean prismaExterno= false;
-	private String sagente = "Seleccione Agente";
+	private static final long serialVersionUID = 4892447350424455478L;
+	Session sess = Sessions.getCurrent();	
 	
 	private String usuario;	
 	private String sucursalDes;
 	
-	GraduacionesForm cform ;
-	GraduacionesBean gradb ;
-	GraduacionesDispatchActions grad_dis = new GraduacionesDispatchActions();
-	Utils util = new Utils();
-	Session sesion = Sessions.getCurrent();
+	GraduacionesForm graduacionesForm ;
+	GraduacionesBean graduacionesBean ;
+	BusquedaClientesForm busquedaClientesForm;
+	
+	GraduacionesDispatchActions graduacionesDispatch; 	
+	BusquedaClientesDispatchActions busquedaClientesDispatch;
+	
+	private Date fechaEmision;
+	private Date fechaProxRevision;
+	
 
 	@Init	
 	public void inicial() {
-		 //String local = sesion.getAttribute("sucursal").toString();
-		cform = grad_dis.cargaFormulario("0","T002");
-		this.setListaAgentes(cform.getListaAgentes());
-		this.setListaCantidadOD(cform.getListaCantidadOD());
-		this.setListaCantidadOI(cform.getListaCantidadOI());
-		this.setListaBaseOD(cform.getListaBaseOD());
-		this.setListaBaseOI(cform.getListaBaseOI());
 		
-		usuario = (String)sesion.getAttribute(Constantes.STRING_USUARIO);		
-		sucursalDes = (String)sesion.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		
+		graduacionesForm = new GraduacionesForm();
+		graduacionesBean = new GraduacionesBean();
+		busquedaClientesForm = new BusquedaClientesForm();
+		
+		graduacionesDispatch = new GraduacionesDispatchActions();
+		busquedaClientesDispatch = new BusquedaClientesDispatchActions();
+		
+		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
+		
 	}
-	@Command
-	@NotifyChange({"*"})
-	public void buscarGrad(@BindingParam("arg1")  String nif) {
-		
-		cform = grad_dis.cargaFormulario(nif,"T002");
-		this.setNombre_cliente(cform.getNombre_cliente());
-		//OJO DERECHO
 	
-		this.setOD_esfera(cform.getOD_esfera());
-		this.setOD_cilindro(cform.getOD_cilindro());
-		this.setOD_eje(cform.getOD_eje());
-		this.setOD_cerca(cform.getOD_cerca());
-		this.setOD_adicion(cform.getOD_adicion());
-		this.setOD_dnpl(cform.getOD_dnpl());
-		this.setOD_dnpc(cform.getOD_dnpc());
-		this.setOD_avsc(cform.getOD_avsc());
-		this.setOD_avcc(cform.getOD_avcc());
-		this.setOD_observaciones(cform.getOD_observaciones());
-
-		//OJO IZQUIERDO
-		this.setOI_esfera(cform.getOI_esfera());
-		this.setOI_cilindro(cform.getOI_cilindro());
-		this.setOI_eje(cform.getOI_eje());
-		this.setOI_cerca(cform.getOI_cerca());
-		this.setOI_adicion(cform.getOI_adicion());
-		this.setOI_dnpl(cform.getOI_dnpl());
-		this.setOI_dnpc(cform.getOI_dnpc());
-		this.setOI_avsc(cform.getOI_avsc());
-		this.setOI_avcc(cform.getOI_avcc());
-		this.setOI_observaciones(cform.getOI_observaciones());
+	
+	@Command
+	@NotifyChange({"graduacionesForm"})
+	public void buscarClienteGraduacion() {
+		
+		busquedaClientesDispatch.cargaBusquedaClientes(busquedaClientesForm, sess);		
 		
 	
 	}
@@ -84,44 +68,21 @@ public class ControllerGraduacionCliente extends GraduacionesForm{
 	public void cerrar(@BindingParam("arg1")  Window x) {
 	    x.detach();
 	}
+	
+	
+	
+	
+	// Getter and Setter ================================
+	// ==================================================
 
-	public boolean isDiferenteAdicion() {
-		return diferenteAdicion;
-	}
-
-	public void setDiferenteAdicion(boolean diferenteAdicion) {
-		this.diferenteAdicion = diferenteAdicion;
-	}
-
-	public boolean isPrismaInterno() {
-		return prismaInterno;
-	}
-
-	public void setPrismaInterno(boolean prismaInterno) {
-		this.prismaInterno = prismaInterno;
-	}
-
-	public boolean isPrismaExterno() {
-		return prismaExterno;
-	}
-
-	public void setPrismaExterno(boolean prismaExterno) {
-		this.prismaExterno = prismaExterno;
-	}
-
-	public String getSagente() {
-		return sagente;
-	}
-
-	public void setSagente(String sagente) {
-		this.sagente = sagente;
-	}
 	public String getUsuario() {
 		return usuario;
 	}
+	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+	
 	public String getSucursalDes() {
 		return sucursalDes;
 	}
@@ -129,5 +90,28 @@ public class ControllerGraduacionCliente extends GraduacionesForm{
 		this.sucursalDes = sucursalDes;
 	}
 	
+	public GraduacionesForm getGraduacionesForm() {
+		return graduacionesForm;
+	}
+	
+	public void setGraduacionesForm(GraduacionesForm graduacionesForm) {
+		this.graduacionesForm = graduacionesForm;
+	}
+
+	public Date getFechaEmision() {
+		return fechaEmision;
+	}
+
+	public void setFechaEmision(Date fechaEmision) {
+		this.fechaEmision = fechaEmision;
+	}
+
+	public Date getFechaProxRevision() {
+		return fechaProxRevision;
+	}
+
+	public void setFechaProxRevision(Date fechaProxRevision) {
+		this.fechaProxRevision = fechaProxRevision;
+	}
 	
 }

@@ -1,0 +1,264 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window id="winAlbaranes" border="none" width="85%" height="70%" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAlbaran')  ">
+			
+			
+	<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+				
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		 }
+		 
+		 tr.z-row td.z-row-inner { 
+		 		border: none; 
+		 }		 
+	</style>			
+
+	<div width="100%" height="100%" >
+	
+		<borderlayout>
+			<north height="50%">
+				<div width="100%" height="100%">
+					<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+				   		<label value="ALBARAN" style="float: left ; font-weight: bold; font-size: 150%;"/>
+						<div style="float: right">					
+							<label value="@load(vm.sucursalDes)"/>
+							<label value="::"/>
+							<label value="@load(vm.usuario)"/>	
+						</div>
+					</div>		
+				
+					<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
+						<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoAlbaran')" tooltiptext="Nueva Devolución"/>
+						<toolbarbutton image="/iconos/money2.png" sclass="shrink24" onClick="@command('pagarAlbaran')" tooltiptext="Totalizar Venta"/>
+						<toolbarbutton image="/iconos/delete.png" sclass="shrink24" onClick="@command('eliminarAlbaran')" tooltiptext="Eliminar Albaran"/>						
+						<toolbarbutton image="/iconos/boleta.png" sclass="shrink24" onClick="@command('mostrarPagosBoletas')" tooltiptext="Mostrar Pagos y Boletas"/>
+						<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Lista de Albaranes"/>					
+				   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('abrirBuscarAlbaranes')" tooltiptext="Cargar Albaranes"/>
+				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrarVentanas',win=winAlbaranes)" tooltiptext="Cerrar"/>
+				   	</div>
+
+					<div width="100%">
+						<grid vflex="min" hflex="max" sclass="MyGridRowHeight">
+							<columns>
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+								<column hflex="min" />
+							</columns>
+							
+							<rows>
+								<row>
+									<label value="Codigo"/>
+									<cell colspan="1">
+										<textbox value="@bind(vm.devolucionForm.codigo1)" width="30px"/>
+										<textbox value="@bind(vm.devolucionForm.codigo2)" width="100px"/>
+										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+									</cell>
+									<label value="Fecha"/>
+									<datebox value="@bind(vm.fechaActual)" format="dd/MM/yyyy"/>
+									<label value="Hora"/>
+									<datebox value="@bind(vm.horaActual)" format="hh:mm:ss" readonly="true" buttonVisible="false"/>								
+									
+									
+									<radiogroup>
+										<radio label="Boleta"/>
+										<radio label="Guia"/>
+									</radiogroup>									
+																										
+								</row>
+								
+								<row>
+									<label value="Cliente"/>
+									<cell colspan="1">
+										<textbox value="@bind(vm.devolucionForm.nif)" width="100px"/>
+										<textbox value="@bind(vm.devolucionForm.dvnif)" width="30px"/>
+									</cell>
+									
+									<checkbox label="Kodak" checked="@bind(vm.devolucionForm.kodak)"/>
+									<checkbox label="Entrega" checked="@bind(vm.devolucionForm.entrega)"/>
+									
+									<label value="Tipo Albaran"/>
+									<combobox model="@bind(vm.devolucionForm.listaTipoAlbaranes)" width="150px">
+										<template name="model">										
+											<comboitem label="@load(each.descripcion)"/>
+										</template>
+									</combobox>
+									
+									<cell>
+										<textbox value="@bind(vm.devolucionForm.numero_boleta_guia)" width="150px"/>
+										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+									</cell>	
+								</row>
+								
+								<row>
+									<label value="Idioma"/>
+									<combobox model="@bind(vm.devolucionForm.listaIdiomas)" width="150px">	
+										<template name="model">										
+											<comboitem label="@load(each.descripcion)"/>
+										</template>
+									</combobox>
+									
+									<label value="Cambio"/>
+									<textbox value="@bind(vm.devolucionForm.cambio)"  width="150px"/>
+									
+									<label value="Agente"/>
+									<combobox model="@bind(vm.devolucionForm.listaAgentes)" width="150px">	
+										<template name="model">										
+											<comboitem label="@load(each.usuario)"/>
+										</template>
+									</combobox>							
+								</row>
+								
+								<row>
+									<label value="Divisa"/>
+									<combobox model="@bind(vm.devolucionForm.listaDivisas)" width="150px">										
+										<template name="model">										
+											<comboitem label="@load(each.descripcion)"/>
+										</template>
+									</combobox>
+									
+									<label value="Montador"/>
+									<textbox value="@bind(vm.devolucionForm.montador)" width="150px"/>
+									<cell></cell>
+									<checkbox label="Facturado"/>
+									<textbox value="@bind(vm.devolucionForm.facturado_text)" width="150px"/>								
+								</row>
+								
+								<row>
+									<label value="Motivo"/>
+									<combobox model="@bind(vm.devolucionForm.lista_mot_devo)" width="150px">										
+										<template name="model">										
+											<comboitem label="@load(each.descripcion)"/>
+										</template>
+									</combobox>
+									
+									<label value="Forma Pago"/>
+									<combobox model="@bind(vm.devolucionForm.listaFormasPago)" width="150px">										
+										<template name="model">										
+											<comboitem label="@load(each.descripcion)"/>
+										</template>
+									</combobox>
+									
+									<label value="Dcto%"/>
+									<textbox value="@bind(vm.devolucionForm.dto)" width="150px"/>
+								</row>
+								
+								<row>
+									<label value="Fecha garantia"/>
+									<datebox/>
+									
+									<label value="Convenio"/>
+									<combobox model="@bind(vm.devolucionForm.listaConvenios)" width="150px">										
+										<template name="model">										
+											<comboitem label="@load(each.descripcion)"/>
+										</template>
+									</combobox>
+									
+									<label value="Importe pendiente cobro"/>
+									<textbox value="@bind(vm.devolucionForm.importePend)" width="150px"/>
+								</row>
+								
+								<row>
+									<label value="Direccion cliente"/>
+									<cell colspan="2">
+										<textbox value="@bind(vm.devolucionForm.direccion)" width="300px"/>
+									</cell>
+									
+									<label value="Nro. Direc.cliente"/>
+									<textbox value="@bind(vm.devolucionForm.direccion_cli)" width="150px"/>
+									
+									<label value="Comuna cliente"/>
+									<combobox model="@bind(vm.devolucionForm.listaProvincia)" width="150px">										
+										<template name="model">										
+											<comboitem label="@load(each.descripcion)"/>
+										</template>
+									</combobox>
+								</row>								
+							</rows>
+						</grid>
+					</div>
+				</div>		
+			</north>
+			
+			<south height="50%">
+				<div width="100%" height="100%">
+				
+					<div width="100%" style="background-color:black;color:white; font-size: 6px;">							
+						<space width="10px"/>
+						<label value="Articulo"/>
+						<space width="40px"/>
+						<label value="Descripcion" />
+						<space width="100px"/>
+						<label value="Subalm" />
+						
+						<space width="20px"/>					
+						<label value="Precio IVA" />
+						<space width="20px"/>						
+						<label value="Dcto (%)" />
+						<space width="20px"/>
+						<label value="Cantidad" />
+						
+						<space width="20px"/>						
+						<label value="Importe" />
+						<space width="20px"/>
+						<label value="Encargo Venta" />						
+					</div>
+					
+				
+					<grid model="@bind(vm.devolucionForm.lista_productos)" 
+						vflex="min" hflex="min" sclass="MyGridRowHeight">
+						
+						<columns style="background-color:black;color: white;">
+							<column  />
+							<column  />
+							<column  />
+							<column  />
+							<column  />
+							<column  />
+							<column  />
+							<column  />
+						</columns>
+						
+						<template name="model">
+							<row>
+								<textbox value="@bind(each.cod_barra)"/>
+								<textbox value="@bind(each.descripcion)"/>
+								<textbox value="@bind(each.subAlm)"/>
+								<textbox value="@bind(each.precio)"/>
+								<textbox value="@bind(each.descuento)"/>
+								<textbox value="@bind(each.cantidad)"/>
+								<textbox value="@bind(each.precio_costo)"/>
+								<textbox value="@bind(each.identpedalbaran)"/>
+							</row>
+						</template>
+					</grid>
+					
+				</div>
+			</south>	
+		</borderlayout>	
+	</div>
+</window>

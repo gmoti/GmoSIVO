@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winClientes" border="none" width="100%" height="100%" 
+<window id="winClientes" border="none" width="85%" height="85%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')  ">
 
 	<style>
@@ -42,6 +42,7 @@
 			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoCliente')" />
 			<toolbarbutton image="/iconos/modificar.png" sclass="shrink24" onClick="@command('modificarCliente')" />
 	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresarCliente')" />
+	   		<toolbarbutton image="/iconos/optometria.jpg" sclass="shrink24" onClick="@command('clienteGraduacion')" />
 	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winClientes.detach()" />
 	   	</div>
 	
@@ -58,35 +59,43 @@
 				<rows>
 					<row><!-- Linea 1 -->
 						<label value="Codigo"/>
-						<intbox value="@bind(vm.clienteForm.codigo)" readonly="true"/>
+						<intbox value="@bind(vm.clienteForm.codigo)" readonly="true" disabled="@bind(vm.bDisableinicialRut)"/>
 						<label value="Rut"/>
 						<cell>
-							<textbox value="@bind(vm.clienteForm.rut)" width="150px" constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
-							<textbox value="@bind(vm.clienteForm.dv)" width="50px"/>
-							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="@command('buscar')"/>
-							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
+							<textbox value="@bind(vm.clienteForm.rut)" 
+								width="150px" disabled="@bind(vm.bDisableinicialRut)"
+								constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
+							<textbox value="@bind(vm.clienteForm.dv)" 
+								width="50px" disabled="@bind(vm.bDisableinicialRut)"/>
+							<toolbarbutton image="/iconos/luparapida.png" 
+								sclass="shrink16" onClick="@command('buscar')" disabled="@bind(vm.bDisableinicialRut)"/>
+							<toolbarbutton image="/iconos/lupa.png" 
+								sclass="shrink16" disabled="@bind(vm.bDisableinicialRut)"/>
 						</cell>
 						
 						<label value="F.Nacimiento(*)"/>
 						<cell>
-							<datebox value="@bind(vm.fechaNac)" format="dd/MM/yyyy" disabled="@bind(vm.bfechaNac eq 'true'?'true':'false')"/>
-							<checkbox checked="@bind(vm.bfechaNac)"/>
+							<datebox value="@bind(vm.fechaNac)" format="dd/MM/yyyy" 
+									readonly="@bind(vm.bfechaNac eq 'true'?'true':'false')" 
+									buttonVisible="@bind(vm.bfechaNac eq 'true'?'false':'true')" disabled="@bind(vm.bDisableinicial)"/>
+							<checkbox checked="@bind(vm.bfechaNac)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>					
 					</row>
 					
 					<row><!-- Linea 2 -->
 						<label value="Apellidos(*)"/>
-						<textbox value="@bind(vm.clienteForm.apellidos)"/>
+						<textbox value="@bind(vm.clienteForm.apellidos)" disabled="@bind(vm.bDisableinicial)"/>
 						<label value="Edad"/>
-						<textbox value="@bind(vm.clienteForm.edad)"/>					
+						<textbox value="@bind(vm.clienteForm.edad)" disabled="@bind(vm.bDisableinicial)"/>					
 					</row>
 					
 					<row><!-- Linea 3 -->
 						<label value="Nombres"/>
-						<textbox value="@bind(vm.clienteForm.nombres)"/>
+						<textbox value="@bind(vm.clienteForm.nombres)" disabled="@bind(vm.bDisableinicial)"/>
 						
 						<label value="Agente"/>
-						<combobox model="@bind(vm.clienteForm.listaAgentes)">
+						<combobox model="@bind(vm.clienteForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
+							placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)">
 							<template name="model">
 								<comboitem label="@load(each.usuario)"/>
 							</template>
@@ -95,7 +104,8 @@
 					
 					<row><!-- Linea 4 -->
 						<label value="Tipo via"/>
-						<combobox model="@bind(vm.clienteForm.listaTipoVia)">
+						<combobox model="@bind(vm.clienteForm.listaTipoVia)" selectedItem="@bind(vm.tipoViaBean)" 
+								placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)">
 							<template name="model">
 								<comboitem label="@load(each.descripcion)"/>
 							</template>
@@ -104,59 +114,66 @@
 						<label value="Direccion(*)"/>
 						
 						<cell>
-							<textbox value="@bind(vm.clienteForm.via)" disabled="@bind(vm.bDireccion eq 'true'?'true':'false')"/>
-							<checkbox checked="@bind(vm.bDireccion)"/>
+							<textbox value="@bind(vm.clienteForm.via)" readonly="@bind(vm.bDireccion eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+							<checkbox checked="@bind(vm.bDireccion)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
 						
 						<label value="Numero(*)"/>
 						
 						<cell>
-							<textbox value="@bind(vm.clienteForm.numero)" disabled="@bind(vm.bNumero eq 'true'?'true':'false')"/>
-							<checkbox checked="@bind(vm.bNumero)"/>
+							<textbox value="@bind(vm.clienteForm.numero)" 
+								readonly="@bind(vm.bNumero eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+							<checkbox checked="@bind(vm.bNumero)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>						
 					</row>
 					
 					<row><!-- Linea 5 -->
 						<label value="Localidad"/>
-						<textbox value="@bind(vm.clienteForm.localidad)"/>
+						<textbox value="@bind(vm.clienteForm.localidad)" disabled="@bind(vm.bDisableinicial)"/>
+						
 						<label value="Provincia/comuna(*)"/>
 						<cell>							
-							<combobox model="@bind(vm.clienteForm.listaProvincia)" disabled="@bind(vm.bProvincia eq 'true'?'true':'false')">
+							<combobox model="@bind(vm.clienteForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)"
+								readonly="@bind(vm.bProvincia eq 'true'?'true':'false')" 
+								placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)">
 								<template name="model">
 									<comboitem label="@bind(each.descripcion)"/>
 								</template>
 							</combobox>
-							<checkbox checked="@bind(vm.bProvincia)"/>
+							<checkbox checked="@bind(vm.bProvincia)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>		
 						<label value="Bloque/dpto"/>
-						<textbox value="@bind(vm.clienteForm.bloque)"/>			
+						<textbox value="@bind(vm.clienteForm.bloque)" disabled="@bind(vm.bDisableinicial)"/>			
 					</row>
 					
 					<row><!-- Linea 6 -->
 						<label value="Cod.Postal"/>
-						<textbox value="@bind(vm.clienteForm.cod_postal)"/>
+						<textbox value="@bind(vm.clienteForm.cod_postal)" disabled="@bind(vm.bDisableinicial)"/>
 						<label value="Persona contacto"/>
-						<textbox value="@bind(vm.clienteForm.contacto)"/>					
+						<textbox value="@bind(vm.clienteForm.contacto)" disabled="@bind(vm.bDisableinicial)"/>					
 					</row>
 					
 					<row><!-- Linea 7 -->
 						<label value="Email(*)"/>
 						<cell>
-							<textbox value="@bind(vm.clienteForm.email)" disabled="@bind(vm.bEmail eq 'true'?'true':'false')"/>
-							<checkbox checked="@bind(vm.bEmail)"/>
+							<textbox value="@bind(vm.clienteForm.email)" 
+								readonly="@bind(vm.bEmail eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+							<checkbox checked="@bind(vm.bEmail)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
 						
 						<label value="Telefono(*)"/>
 						<cell colspan="1">
-							<combobox  width="50px" disabled="@bind(vm.bTelefono eq 'true'?'true':'false')">
-								<comboitem></comboitem>
-							</combobox>
-							<textbox value="@bind(vm.clienteForm.telefono)" disabled="@bind(vm.bTelefono eq 'true'?'true':'false')"/>
-							<checkbox checked="@bind(vm.bTelefono)"/>
+							<combobox model="@bind(vm.modelo)" width="50px" readonly="@bind(vm.bTelefono eq 'true'?'true':'false')" 
+								disabled="@bind(vm.bDisableinicial)" 
+								selectedItem="@load(vm.clienteForm.cod_telefono)" onAfterRender="self.setSelectedIndex(0)"/>								
+							
+							<textbox value="@bind(vm.clienteForm.telefono)" 
+								readonly="@bind(vm.bTelefono eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+							<checkbox checked="@bind(vm.bTelefono)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
 						
 						<label value="Sexo"/>
-						<radiogroup selectedItem="@bind(vm.clienteForm.sexo)">
+						<radiogroup selectedItem="@bind(vm.clienteForm.sexo)" disabled="@bind(vm.bDisableinicial)">
 							<radio label="Hombre" value="H"/>
 							<radio label="Mujer" value="M"/>
 							<radio label="Institucion" value="I"/>
@@ -165,11 +182,12 @@
 					
 					<row><!-- Linea 8 -->
 						<label value="Profesion"/>
-						<textbox value="@bind(vm.clienteForm.profesion)"/>
+						<textbox value="@bind(vm.clienteForm.profesion)" disabled="@bind(vm.bDisableinicial)"/>
 						<label value="Telefono movil(*)"/>
 						<cell>							
-							<textbox value="@bind(vm.clienteForm.telefono_movil)" disabled="@bind(vm.bMovil eq 'true'?'true':'false')"/>
-							<checkbox checked="@bind(vm.bMovil)"/>
+							<textbox value="@bind(vm.clienteForm.telefono_movil)" 
+									readonly="@bind(vm.bMovil eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+							<checkbox checked="@bind(vm.bMovil)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
 					</row>					
 				</rows>				
@@ -181,7 +199,7 @@
 		</div>
 		
 		<div width="100%" height="15%">
-			<grid>
+			<grid width="100%" height="100%">
 				<columns>
 					<column hflex="min" />
 					<column hflex="min" />
@@ -190,18 +208,18 @@
 					<row>
 						<label value="A:" />
 						<cell colspan="1">
-							<textbox value="@bind(vm.clienteForm.remitente)" width="150px"/>
-							<textbox value="@bind(vm.clienteForm.dvFactura)" width="50px"/>
-							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
-							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
+							<textbox value="@bind(vm.clienteForm.remitente)" width="150px" disabled="@bind(vm.bDisableinicial)"/>
+							<textbox value="@bind(vm.clienteForm.dvFactura)" width="50px" disabled="@bind(vm.bDisableinicial)"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
+							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
 					</row>
 					<row>
 						<label value="Giro" />
 						<cell colspan="1">						
-							<textbox value="@bind(vm.clienteForm.giro)" width="150px"/>
-							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16"/>
-							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16"/>
+							<textbox value="@bind(vm.clienteForm.giro)" width="150px" disabled="@bind(vm.bDisableinicial)"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
+							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
 					</row>
 				</rows>
@@ -212,14 +230,16 @@
 			<label value="Marketing"/>
 		</div>
 		
-		<div>
+		<div width="100%" height="10%">
 			<label value="Indique por qué medio desea recibir información de productos y promociones."/>			
 		    <hbox>
-		    	<checkbox label="Correo postal" />
-		    	<checkbox label="Correo electronico"/>
-		    	<checkbox label="Mensaje SMS(Celular)"/>
-		    	<checkbox label="Llamada telefonica."/>
-		    	<checkbox label="No quiero ser contactado"/>		    
+		       <radiogroup>	
+		    	<checkbox label="Correo postal" checked="@bind(vm.clienteForm.mk_correo_postal)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="Correo electronico" checked="@bind(vm.clienteForm.mk_correo_electronico)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="Mensaje SMS(Celular)" checked="@bind(vm.clienteForm.mk_sms)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="Llamada telefonica." checked="@bind(vm.clienteForm.mk_telefonia)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="No quiero ser contactado" checked="@bind(vm.clienteForm.mk_nodata)" disabled="@bind(vm.bDisableinicial)"/>
+		    	</radiogroup>		    
 		    </hbox>	
 		    
 		    <label value="(*) NOTA: Los campos marcados con asterisco son importantes, trate de ingresarlos correctamente,"/>

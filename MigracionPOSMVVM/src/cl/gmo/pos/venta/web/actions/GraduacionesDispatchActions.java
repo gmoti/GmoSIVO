@@ -2,41 +2,29 @@ package cl.gmo.pos.venta.web.actions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
-
+//import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.zkoss.zk.ui.Session;
-
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.utils.Utils;
-import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.GraduacionesBean;
 import cl.gmo.pos.venta.web.beans.OftalmologoBean;
-import cl.gmo.pos.venta.web.forms.ClienteForm;
 import cl.gmo.pos.venta.web.forms.GraduacionesForm;
 import cl.gmo.pos.venta.web.helper.BusquedaMedicosHelper;
 import cl.gmo.pos.venta.web.helper.GraduacionesHelper;
 
-public class GraduacionesDispatchActions {
+public class GraduacionesDispatchActions{
 	Logger log = Logger.getLogger( this.getClass() );
 	public GraduacionesDispatchActions(){}
 	
-	public GraduacionesForm cargaFormulario(String nif,String tienda)
+	public GraduacionesForm cargaFormulario(GraduacionesForm form,	Session request)
 	{
 		log.info("GraduacionesDispatchActions:cargaFormulario  inicio");	
-		//Session session = request;
-		
 		GraduacionesHelper helper = new GraduacionesHelper();
-		GraduacionesForm formulario = new GraduacionesForm();
-		
-		String local = tienda;
-		if(!nif.equals("0") && nif != null ) {
-				ClienteBean cliente = helper.traeClienteSeleccionado(nif,null);
-				formulario.setCliente(Integer.valueOf(cliente.getCodigo()));
-				formulario.setNombre(cliente.getNombre());
-				formulario.setApellido(cliente.getApellido());
-		}
+		GraduacionesForm formulario = (GraduacionesForm)form;
+		//HttpSession session = request.getSession();
+		Session session = request;//.getSession();
+		String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));
 		formulario.setEstaGrabado(0);		
 		try
 		{
@@ -88,15 +76,17 @@ public class GraduacionesDispatchActions {
 			log.error("GraduacionesDispatchActions:cargaFormulario  error catch",ex);
 		}
 		log.info("GraduacionesDispatchActions:cargaFormulario  fin");
+		//return mapping.findForward(Constantes.FORWARD_GRADUACION);
 		return formulario;
 	}
 
-	public GraduacionesForm IngresaGraduacion(GraduacionesForm form,Session request)
+	public GraduacionesForm IngresaGraduacion(GraduacionesForm form, Session request)
 	{
 		log.info("GraduacionesDispatchActions:IngresaGraduacion  inicio");
 		GraduacionesHelper helper = new GraduacionesHelper();
 		GraduacionesForm formulario = (GraduacionesForm)form;
-		Session session = request;
+		//HttpSession session = request.getSession();
+		Session session = request;//.getSession();
 		String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));
 		formulario.setEstaGrabado(0);
 		try
@@ -149,7 +139,8 @@ public class GraduacionesDispatchActions {
 				
 			}else if(Constantes.FORWARD_CONTACTOLOGIA.equals(formulario.getAccion())){
 				
-				//retorno a contactología
+				//return mapping.findForward(Constantes.FORWARD_CONTACTOLOGIA);
+				return formulario;
 				
 			}else if("modificarGraduacion".equals(formulario.getAccion())){
 				
@@ -182,25 +173,29 @@ public class GraduacionesDispatchActions {
 			log.error("GraduacionesDispatchActions:IngresaGraduacion  error catch",ex);
 		}
 		
+		//return mapping.findForward(Constantes.FORWARD_GRADUACION);
 		return formulario;
 	}
 
 	
-	public GraduacionesForm buscarDoctorAjax(GraduacionesForm form,Session request)
+	public GraduacionesForm buscarDoctorAjax(GraduacionesForm form,	Session request)
 	{
 		log.info("GraduacionesDispatchActions:cargaFormulario  inicio");	
 		GraduacionesForm formulario = (GraduacionesForm)form;
 		formulario.setEstaGrabado(2);
-		Session session = request;
+		//HttpSession session = request.getSession();
+		Session session = request;//.getSession();
+		
     	String local = String.valueOf(session.getAttribute(Constantes.STRING_SUCURSAL));   
-    	String nifdoctor= formulario.getNifdoctor();
+    	//String nifdoctor=request.getParameter("nifdoctor");
+    	String nifdoctor=request.getAttribute("nifdoctor").toString();
     	Utils helper = new Utils();
     	ArrayList<OftalmologoBean> listaMedicos = null;
     	
     	listaMedicos = helper.traeMedicos(nifdoctor);
     	HashMap hm = new HashMap();
     	
-    	/*if(null != listaMedicos && listaMedicos.size()>0 ){
+    	if(null != listaMedicos && listaMedicos.size()>0 ){
     		for(OftalmologoBean bean: listaMedicos){
     			hm.put("nifdoctor", bean.getNif());
     			formulario.setNifdoctor(bean.getNif());
@@ -228,10 +223,11 @@ public class GraduacionesDispatchActions {
     		ex.printStackTrace();
     	}
     	
-    	JSONObject json = JSONObject.fromObject(hm);
-		response.setHeader("X-JSON", json.toString());*/
+    	//JSONObject json = JSONObject.fromObject(hm);
+		//response.setHeader("X-JSON", json.toString());
 		
 		log.info("GraduacionesDispatchActions:cargaFormulario  fin");
+		//return mapping.findForward(Constantes.FORWARD_GRADUACION);
 		return formulario;
 	}
 }

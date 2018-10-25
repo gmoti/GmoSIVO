@@ -29,9 +29,7 @@
 			 
 			 tr.z-row td.z-row-inner { 
 			 		border: none; 
-			 }		
-			 
-			 
+			 }		 
 		</style>
 
 	<div width="100%" height="100%">

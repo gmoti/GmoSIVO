@@ -1,5 +1,7 @@
 package cl.gmo.pos.venta.controlador;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,123 +30,112 @@ import cl.gmo.pos.venta.web.forms.DevolucionForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
-public class ControllerAlbaran extends DevolucionForm{
+public class ControllerAlbaran implements Serializable{
 	
-	DevolucionForm dform_in;
-	DevolucionForm dform_out ;
-
-	DevolucionBean devbean ;
-	DevolucionDispatchActions dev_dis = new DevolucionDispatchActions();
-	Utils util = new Utils();
-	Session sesion = Sessions.getCurrent();
+	
+	private static final long serialVersionUID = 3102390269320411220L;
+	Session sess = Sessions.getCurrent();
 	HashMap<String,Object> objetos;
-	private SeleccionPagoForm 		seleccionPagoForm;
-	private VentaPedidoForm 		ventaPedidoForm;
 	
-	private String codigo_completo;
-	private Date fecha_alb;
-	private Date fecha_gar;
-	private boolean rboleta;
-	private boolean rguia;
-	private boolean ch_entrega;
-	private boolean ch_facturado;
+	private DevolucionForm devolucionForm;
+	private DevolucionBean devolucionBean ;
+	private SeleccionPagoForm seleccionPagoForm;
+	private VentaPedidoForm ventaPedidoForm;
+	private DevolucionDispatchActions devolucionDispatch;	
+	
+	private String usuario;	
+	private String sucursalDes;	
+	
+	SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat tt = new SimpleDateFormat("hh:mm:ss");	
+	
+	private Date fechaActual;
+	private Date horaActual;
 	
 	@Init	
 	public void inicial() {
 		
-		//String local = sesion.getAttribute("sucursal").toString();
-		dform_in = dev_dis.cargaInicial(sesion);
-		this.setListaFormasPago(dform_in.getListaFormasPago());
-		this.setLista_mot_devo(dform_in.getLista_mot_devo());
-		this.setLista_productos(dform_in.getLista_productos());
-		this.setLista_albaranes(dform_in.getLista_albaranes());
-		this.setListaAgentes(dform_in.getListaAgentes());
-		this.setListaConvenios(dform_in.getListaConvenios());
-		this.setListaIdiomas(dform_in.getListaIdiomas());
-		this.setListaDivisas(dform_in.getListaDivisas());
-		this.setListaProvincia(dform_in.getListaProvincia());
-		this.setListaTipoAlbaranes(dform_in.getListaTipoAlbaranes());
-		this.setRboleta(true);
-		this.setUsuario((String)sesion.getAttribute(Constantes.STRING_USUARIO));
-		this.setEstado_boleta("-1");
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		
+		devolucionForm = new DevolucionForm();
+		devolucionBean = new DevolucionBean();
+		seleccionPagoForm = new SeleccionPagoForm();
+		ventaPedidoForm = new VentaPedidoForm();
+		devolucionDispatch = new DevolucionDispatchActions();
+		
+		fechaActual = new Date(System.currentTimeMillis());
+		horaActual  = new Date(System.currentTimeMillis());
+		
+		devolucionDispatch.cargaFormulario(devolucionForm, sess);		
 	}
-	@Command
-	@NotifyChange({"*"})
-	public void cargaDatos(@BindingParam("dev") DevolucionForm form) {
-		dform_in = new DevolucionForm();
-		
-		//DEFINO CONTSANTES POR DEFECTO
-		form.setTipoAlbaran("D");
-		form.setAccion("cargarDatos");
-		
-		if(this.isRboleta() == true) {
-			form.setBoleta_guia("B");
-		}else {
-			form.setBoleta_guia("G");
-		}
-		
-		System.out.println("BOLETA_GUIA ==>"+form.getBoleta_guia()+" "+form.getNumero_boleta_guia());
-		dform_in =	dev_dis.cargaAlbaran(form,sesion);
-		System.out.println("EXISTE BOLETA ==>"+dform_in.getExisteBoleta());
-		if(dform_in.getExisteBoleta().trim().toUpperCase().equals("FALSE")) {
-				this.setNif(dform_in.getNif());
-				this.setDvnif(dform_in.getDvnif());
-				this.setHora(util.traeHoraString());
-				this.setFecha_alb(util.traeFecha());
-				this.setFormaPago("CONTADO");
-				this.setIdioma("CASTELLANO");
-				this.setTipo_albaran("DEVOLUCION");
-				this.setDireccion_cli(dform_in.getDireccion_cli());
-				this.setNdireccion_cli(dform_in.getNdireccion_cli());
-				System.out.println("ALBARAN CONTROLLER ==>"+dform_in.getProvincia()+"<==>"+dform_in.getComu_cli()+"<==>"+dform_in.getProvincia_cliente()+"<==>"+dform_in.getCiudad());
-				this.setProvincia_cliente(dform_in.getCiudad());
-				
-				this.getListaDivisas().forEach(t->{
-					if(t.getId().equals(dform_in.getDivisa())) {
-						this.setDivisa(t.getDescripcion());
-					}
-				 }
-				);
-		}else{
-			Messagebox.show("La boleta ya fue anulada \n,No es posible generar otra \n Nota de Crédito a la \n misma Boleta.");
-		}
-	   
-		
 	
-	}
+	
+	//==================================================================
+	//=============Procesos principales de la toolbar ==================
+	//==================================================================
+	
+	
 	@Command
-	@NotifyChange({"*"})
-	public void nuevoAlbaran(@BindingParam("arg1") DevolucionForm form){
-		this.setFecha_gar(null);
+	@NotifyChange({"devolucionForm"})
+	public void nuevoAlbaran(){
 		
+		devolucionForm.setAccion("nuevo");
+		devolucionDispatch.cargaFormulario(devolucionForm, sess);
 	}
+	
 	@Command
-	@NotifyChange({"*"})
-	public void cobrar(@BindingParam("arg1") DevolucionForm form){
-		dform_in = new DevolucionForm();
-		seleccionPagoForm =  new SeleccionPagoForm();
-	    dform_in = form;
-	    ClienteBean cliente = util.traeCliente(dform_in.getNif(), "");
-		//dform_in = dev_dis.cargaAlbaran(dform_in,sesion);		
-		seleccionPagoForm.setOrigen(sesion.getAttribute(Constantes.STRING_ORIGEN).toString());
-		seleccionPagoForm.setFecha(util.traeFechaHoyFormateadaString());
-
-		objetos = new HashMap<String,Object>();
-		objetos.put("cliente",cliente);
-		objetos.put("pagoForm",seleccionPagoForm);
-		objetos.put("ventaOrigenForm",dform_in);
-		objetos.put("origen","ALBARAN_DEVOLUCION");
+	@NotifyChange({"devolucionForm"})
+	public void pagarAlbaran(){
 		
-		Window windowPagoVentaDirecta = (Window)Executions.createComponents(
-                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
-		
-		windowPagoVentaDirecta.doModal();			
 		
 	}
 	
+	@Command
+	@NotifyChange({"devolucionForm"})
+	public void eliminarAlbaran(){
+		
+		
+	}
+	
+	@Command
+	@NotifyChange({"devolucionForm"})
+	public void mostrarPagosBoletas(){
+		
+		
+	}
+	
+	@Command
+	@NotifyChange({"devolucionForm"})
+	public void mostrarListaAlbaranes(){
+		
+		
+	}
+	
+	@Command
+	@NotifyChange({"devolucionForm"})
+	public void abrirBuscarAlbaranes(){
+		
+		
+	}
+	
+	@Command
+	public void cerrarVentanas(@BindingParam("win")  Window win) {
+	    win.detach();
+	}
+	
+	
+	
+	//===============================================================
+	//========= Prcesos adicionales de la clase =====================
+	//===============================================================
+	
+		
 	@NotifyChange({"*","controlBotones"})
 	@GlobalCommand	
     public void creaPagoExitosoDevolucion(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {		
+		
+		/*
 		dform_in = new DevolucionForm();
 		dform_out = new DevolucionForm();
 		dform_in.setAccion(Constantes.FORWARD_DEVOLUCION);			
@@ -212,76 +203,58 @@ public class ControllerAlbaran extends DevolucionForm{
 			
 			e.printStackTrace();
 		}			
-		
+		*/
 	}
 	
 	@NotifyChange({"DevolucionForm"})
 	public void postCobro() {	
 		Messagebox.show("Devolución realizada con exito");
-	}
+	}	
 	
 	
 	
-	@Command
-	public void cerrar(@BindingParam("arg1")  Window x) {
-	    x.detach();
-	}
 	
-	public String getCodigo_completo() {
-		return codigo_completo;
+	// Getter and Setter =============================
+	//================================================
+
+	public DevolucionForm getDevolucionForm() {
+		return devolucionForm;
 	}
 
-	public void setCodigo_completo(String codigo_completo) {
-		this.codigo_completo = codigo_completo;
+	public void setDevolucionForm(DevolucionForm devolucionForm) {
+		this.devolucionForm = devolucionForm;
 	}
 
-	public Date getFecha_alb() {
-		return fecha_alb;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setFecha_alb(Date fecha_alb) {
-		this.fecha_alb = fecha_alb;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
-	public boolean isRboleta() {
-		return rboleta;
+	public String getSucursalDes() {
+		return sucursalDes;
 	}
 
-	public void setRboleta(boolean rboleta) {
-		this.rboleta = rboleta;
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
 	}
 
-	public boolean isRguia() {
-		return rguia;
+	public Date getFechaActual() {
+		return fechaActual;
 	}
 
-	public void setRguia(boolean rguia) {
-		this.rguia = rguia;
+	public void setFechaActual(Date fechaActual) {
+		this.fechaActual = fechaActual;
 	}
 
-	public boolean isCh_entrega() {
-		return ch_entrega;
+	public Date getHoraActual() {
+		return horaActual;
 	}
 
-	public void setCh_entrega(boolean ch_entrega) {
-		this.ch_entrega = ch_entrega;
-	}
-
-	public boolean isCh_facturado() {
-		return ch_facturado;
-	}
-
-	public void setCh_facturado(boolean ch_facturado) {
-		this.ch_facturado = ch_facturado;
-	}
-
-	public Date getFecha_gar() {
-		return fecha_gar;
-	}
-
-	public void setFecha_gar(Date fecha_gar) {
-		this.fecha_gar = fecha_gar;
-	}
-
+	public void setHoraActual(Date horaActual) {
+		this.horaActual = horaActual;
+	}	
 	
 }

@@ -7,7 +7,7 @@ import cl.gmo.pos.venta.web.beans.ContactologiaBean;
 import cl.gmo.pos.venta.web.beans.GraduacionesBean;
 import cl.gmo.pos.venta.web.beans.OftalmologoBean;
 
-public class ContactologiaForm{
+public class ContactologiaForm extends GenericForm{
 
 	/**
 	 * doct

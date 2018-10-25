@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winGraduacionClientes" border="none" width="100%" height="100%" 
+<window id="winGraduacionClientes" border="none" width="65%" height="60%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
 			
 	<style>
@@ -27,9 +27,11 @@
 		}
 	</style>		
 			
-	<div width="100%" height="100%">		
+	<div width="100%" height="100%" align="center">		
 		<borderlayout>
-			<north height="35%">
+		
+			<north height="50%">
+			
 				<div width="100%" height="100%">
 					<div width="100%" height="30px" style="background-color:black;color: white;">			   	
 				   		<label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
@@ -48,12 +50,12 @@
 				   	<div width="100%" vflex="min">
 				   		<div style="float: left ;">
 				   			<label value="Cliente"/>
-				   			<textbox/>
+				   			<textbox value="@bind(vm.graduacionesForm.nombre_cliente)"/>
 				   			<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
 				   		</div>
 				   		
 				   		<div style="float: right ;">
-				   			<checkbox label="Diferente adiccion"/> 
+				   			<checkbox label="Diferente adiccion" checked="@bind(vm.graduacionesForm.diferenteAdd)"/> 
 				   		</div>				   	
 				   	</div>	
 				   	
@@ -92,41 +94,41 @@
 				   				
 				   				<row>
 				   					<label value="OD"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_esfera)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_cilindro)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_eje)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_cerca)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_adicion)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_dnpl)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_dnpc)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_avsc)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"/>
 				   				</row>
 				   				
 				   				<row>
 				   					<label value="Obs"/>
 				   					<cell colspan="9">
-				   						<textbox width="450px"/>
+				   						<textbox value="@bind(vm.graduacionesForm.OD_observaciones)" width="450px"/>
 				   					</cell>
 				   				</row>
 				   				
 				   				<row>
 				   					<label value="OI"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
-				   					<textbox width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_esfera)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_cilindro)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_eje)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_cerca)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_adicion)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_dnpl)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_dnpc)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_avsc)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_avcc)" width="50px"/>
 				   				</row>
 				   				
 				   				<row>
 				   					<label value="Obs"/>
 				   					<cell colspan="9">
-				   						<textbox width="450px"/>
+				   						<textbox value="@bind(vm.graduacionesForm.OI_observaciones)" width="450px"/>
 				   					</cell>
 				   				</row>
 				   			</rows>
@@ -146,28 +148,28 @@
 				
 					<div width="100%" height="100%">				
 						<borderlayout>
-							<west width="40%">
+							<west width="25%">
 								<div width="100%" height="100%">
-									<grid hflex="min" vflex="1">
+									<grid model="@bind(vm.graduacionesForm.listaGraduaciones)">
 										<columns>
 											<column label="Fecha" />
 											<column label="Nunero" />
 											<column label="Detalle" />
 										</columns>
-										<rows>
+										<template name="model">
 											<row>
-												<textbox width="150px"/>
-												<textbox width="150px"/>
-												<textbox width="150px"/>
+												<textbox value="@load(each.fecha)" width="150px"/>
+												<textbox value="@load(each.numero)" width="150px"/>
+												<button label="ver"/>
 											</row>
-										</rows>
+										</template>
 									</grid>
 								</div>
 							</west>
 							
-							<east width="60%">
+							<east width="75%">
 								<div width="100%" height="100%" align="center">
-									<grid hflex="min" vflex="max">
+									<grid>
 										<columns>
 											<column hflex="min" />
 											<column hflex="min" />
@@ -186,18 +188,38 @@
 											
 											<row>
 												<label value="OD"/>
-												<combobox><comboitem label=""/></combobox>
-												<combobox><comboitem label=""/></combobox>
-												<textbox/>
-												<checkbox/>
+												<combobox model="@bind(vm.graduacionesForm.listaCantidadOD)" width="100px">
+													<template name="model">
+														<comboitem label="@load(each.descripcion)"/>
+													</template>
+												</combobox>
+												
+												<combobox model="@bind(vm.graduacionesForm.listaBaseOD)" width="100px">
+													<template name="model">
+														<comboitem label="@load(each.descripcion)"/>
+													</template>
+												</combobox>
+												
+												<textbox value="@bind(vm.graduacionesForm.OD_altura)" width="100px"/>
+												<checkbox checked="@bind(vm.graduacionesForm.interna)"/>
 											</row>
 											
 											<row>
 												<label value="OI"/>
-												<combobox><comboitem label=""/></combobox>
-												<combobox><comboitem label=""/></combobox>
-												<textbox/>
-												<checkbox/>
+												<combobox model="@bind(vm.graduacionesForm.listaCantidadOI)" width="100px">
+													<template name="model">
+														<comboitem label="@load(each.descripcion)"/>
+													</template>
+												</combobox>
+												
+												<combobox model="@bind(vm.graduacionesForm.listaBaseOI)" width="100px">
+													<template name="model">
+														<comboitem label="@load(each.descripcion)"/>
+													</template>
+												</combobox>
+												
+												<textbox value="@bind(vm.graduacionesForm.OI_altura)" width="100px"/>
+												<checkbox checked="@bind(vm.graduacionesForm.externa)"/>
 											</row>										
 										</rows>
 									</grid>
@@ -208,9 +230,9 @@
 				</div>
 			</center>
 			
-			<south height="40%">
+			<south height="20%">
 				<div width="100%" height="100%">
-					<grid>
+					<grid width="100%" height="100%">
 						<columns>
 							<column hflex="min" />
 							<column hflex="min" />
@@ -222,8 +244,8 @@
 							<row>
 								<label value="Oftalmologo"/>
 								<cell colspan="1">
-									<textbox width="150px"/>								
-									<textbox width="50px"/>
+									<textbox value="@bind(vm.graduacionesForm.nifdoctor)" width="150px"/>								
+									<textbox value="@bind(vm.graduacionesForm.dvnifdoctor)" width="50px"/>
 									<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
 									<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="" />
 									<toolbarbutton image="/iconos/nuevo.png" sclass="shrink16" onClick="" />
@@ -235,17 +257,19 @@
 							
 							<row>
 								<label value="Atendido por:"/>
-								<combobox>
-									<comboitem label=""/>								
+								<combobox model="@bind(vm.graduacionesForm.listaAgentes)">
+									<template name="model">
+										<comboitem label="@load(each.usuario)"/>
+									</template>								
 								</combobox>
 								
 								<cell/>
 								
 								<label value="F.Emision:"/>
-								<datebox/>
+								<datebox value="@bind(vm.fechaEmision)" format="dd/MM/yyyy"/>
 								
 								<label value="F.Prox.Revision"/>
-								<datebox/>
+								<datebox value="@bind(vm.fechaProxRevision)" format="dd/MM/yyyy"/>
 							</row>
 						</rows>
 					</grid>
