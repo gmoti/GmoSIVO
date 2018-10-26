@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -88,33 +89,9 @@ public class ControllerCliente implements Serializable{
 	}
 	
 	
-	@Command
-	@NotifyChange({"clienteForm","fechaNac","bDisableinicial","bDisableinicialRut"})
-	public void buscar()  {
-		
-		busquedaClientesForm = new BusquedaClientesForm();
-		
-		sess.setAttribute("nif",clienteForm.getRut());
-		sess.setAttribute("pagina","");		
-		
-		try {
-			cliente = busquedaClientes.buscarClienteAjax(busquedaClientesForm, sess);
-			
-			clienteForm.setDv(cliente.getDvnif());
-			clienteForm.setFnacimiento(cliente.getFecha_nac());
-			clienteForm.setNombres(cliente.getNombre());
-			clienteForm.setApellidos(cliente.getApellido());			
-			fechaNac =  dt.parse(cliente.getFecha_nac());
-			
-			bDisableinicial = true;
-			bDisableinicialRut = true;
-			
-		} catch (IOException | ParseException e) {			
-			e.printStackTrace();
-		}
-		
-		
-	}
+	//====================================================
+	//========= Funciones principales tool bar============
+	//====================================================		
 	
 	@Command
 	@NotifyChange({"clienteForm","fechaNac"})
@@ -124,7 +101,7 @@ public class ControllerCliente implements Serializable{
 		clienteForm.setFnacimiento(dt.format(fechaNac));
 		clienteForm.setAgente(agenteBean.getUsuario());
 		clienteForm.setVia(tipoViaBean.getCodigo());
-		clienteForm.setProvincia(Integer.parseInt(provinciaBean.getCodigo()));	
+		clienteForm.setProvincia_cliente(provinciaBean.getCodigo());		
 		
 		clid.ingresoCliente(clienteForm, sess);		
 		
@@ -170,6 +147,98 @@ public class ControllerCliente implements Serializable{
 		
 		winGraduacion.doModal();
 		
+	}
+	
+	
+	//========================================
+	//======== Funciones secundarias =========
+	//========================================
+	@Command
+	@NotifyChange({"clienteForm","fechaNac","bDisableinicial","bDisableinicialRut","agenteBean","tipoViaBean","provinciaBean"})
+	public void buscar()  {
+		
+		busquedaClientesForm = new BusquedaClientesForm();
+		
+		sess.setAttribute("nif",clienteForm.getRut());
+		sess.setAttribute("pagina","");		
+		
+		try {
+			cliente = busquedaClientes.buscarClienteAjax(busquedaClientesForm, sess);
+			
+			clienteForm.setCodigo(Integer.parseInt(cliente.getCodigo()));
+			clienteForm.setDv(cliente.getDvnif());
+			clienteForm.setFnacimiento(cliente.getFecha_nac());
+			clienteForm.setNombres(cliente.getNombre());
+			clienteForm.setApellidos(cliente.getApellido());			
+			fechaNac =  dt.parse(cliente.getFecha_nac());
+			
+			//validaciones pendientes
+			
+			clienteForm.setAccion("traeClienteSeleccionado");
+			clienteForm.setNif_cliente_agregado(cliente.getNif());
+			clienteForm.setCodigo_cliente_agregado(cliente.getCodigo());
+			
+			clid.ingresoCliente(clienteForm, sess);
+			
+			posicionaCombos();
+			
+			bDisableinicial = true;
+			bDisableinicialRut = true;
+			
+		} catch (IOException | ParseException e) {			
+			e.printStackTrace();
+		}
+		
+		
+	}	
+	
+	private void posicionaCombos() {
+		
+		Optional<AgenteBean> a = clienteForm.getListaAgentes().stream().filter(s -> clienteForm.getAgente().equals(s.getUsuario())).findFirst();		
+		agenteBean = a.get();	
+		
+		Optional<TipoViaBean> b = clienteForm.getListaTipoVia().stream().filter(s -> clienteForm.getTipo_via().equals(s.getCodigo())).findFirst();		
+		tipoViaBean = b.get();
+		
+		Optional<ProvinciaBean> c = clienteForm.getListaProvincia().stream().filter(s -> clienteForm.getProvincia_cliente().equals(s.getCodigo())).findFirst();		
+		provinciaBean = c.get();
+		
+	}
+	
+	@NotifyChange({"clienteForm"})
+	@Command
+	public boolean validarRut() {
+		
+		int rutAux,m,s = 0;
+		char dv;
+		String rut = clienteForm.getRut();
+		 
+		boolean validacion = false;
+		try {
+			rut =  rut.toUpperCase();
+			rut = rut.replace(".", "");
+			rut = rut.replace("-", "");
+			rutAux = Integer.parseInt(rut);
+			 
+			dv = rut.charAt(rut.length() - 1);
+			 
+			m = 0; s = 1;
+			
+			for (; rutAux != 0; rutAux /= 10) {
+				s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
+			}
+			
+			clienteForm.setDv(String.valueOf((char) (s != 0 ? s + 47 : 75)));
+			
+			/*if (dv == (char) (s != 0 ? s + 47 : 75)) {
+				validacion = true;
+				clienteForm.setDv(String.valueOf(dv));
+			}*/
+		 
+		} catch (java.lang.NumberFormatException e) {
+		} catch (Exception e) {
+		}
+		return validacion;
 	}
 	
 	

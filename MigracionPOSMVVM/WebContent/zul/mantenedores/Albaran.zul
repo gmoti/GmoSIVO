@@ -56,7 +56,7 @@
 				   	</div>
 
 					<div width="100%">
-						<grid vflex="min" hflex="max" sclass="MyGridRowHeight">
+						<grid vflex="min" hflex="max" oddRowSclass="none">
 							<columns>
 								<column hflex="min" />
 								<column hflex="min" />
@@ -230,7 +230,7 @@
 					
 				
 					<grid model="@bind(vm.devolucionForm.lista_productos)" 
-						vflex="min" hflex="min" sclass="MyGridRowHeight">
+						vflex="min" hflex="min" oddRowSclass="none">
 						
 						<columns style="background-color:black;color: white;">
 							<column  />

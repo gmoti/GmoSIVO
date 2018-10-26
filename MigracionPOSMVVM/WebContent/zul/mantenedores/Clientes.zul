@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winClientes" border="none" width="85%" height="85%" 
+<window id="winClientes" border="none" width="75%" vflex="min" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')  ">
 
 	<style>
@@ -24,6 +24,9 @@
 		  		border-style: none;
 		  		width: 16px;
 		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
 		}
 	</style>
 	
@@ -40,14 +43,14 @@
 		
 		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
 			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoCliente')" />
-			<toolbarbutton image="/iconos/modificar.png" sclass="shrink24" onClick="@command('modificarCliente')" />
-	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresarCliente')" />
+			<toolbarbutton image="/iconos/modificar.png" sclass="shrink24" onClick="@command('modificarCliente')" />	   		
 	   		<toolbarbutton image="/iconos/optometria.jpg" sclass="shrink24" onClick="@command('clienteGraduacion')" />
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresarCliente')" />
 	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winClientes.detach()" />
 	   	</div>
 	
-		<div  width="100%" height="35%">
-			<grid>
+		<div  width="100%" vflex="min">
+			<grid width="100%" height="300px" oddRowSclass="none" >
 				<columns>
 					<column hflex="min" />
 					<column hflex="min" />
@@ -65,11 +68,14 @@
 							<textbox value="@bind(vm.clienteForm.rut)" 
 								width="150px" disabled="@bind(vm.bDisableinicialRut)"
 								constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
+								
 							<textbox value="@bind(vm.clienteForm.dv)" 
-								width="50px" disabled="@bind(vm.bDisableinicialRut)"/>
+								width="50px" readonly="true" onBlur="@command('validarRut')"/>
+								
 							<toolbarbutton image="/iconos/luparapida.png" 
 								sclass="shrink16" onClick="@command('buscar')" disabled="@bind(vm.bDisableinicialRut)"/>
-							<toolbarbutton image="/iconos/lupa.png" 
+								
+							<toolbarbutton image="/iconos/lupa.png" onClick=""
 								sclass="shrink16" disabled="@bind(vm.bDisableinicialRut)"/>
 						</cell>
 						
@@ -194,12 +200,12 @@
 			</grid>			
 		</div>	
 		
-		<div width="100%" height="30px" style="background-color:black;color: white;">
+		<div width="100%" vflex="min" style="background-color:black;color: white;">
 			<label value="Facturacion"/>
 		</div>
 		
-		<div width="100%" height="15%">
-			<grid width="100%" height="100%">
+		<div width="100%" vflex="min">
+			<grid width="100%" vflex="min">
 				<columns>
 					<column hflex="min" />
 					<column hflex="min" />
@@ -226,11 +232,11 @@
 			</grid>
 		</div>
 		
-		<div width="100%" height="30px" style="background-color:black;color: white;">
+		<div width="100%" vflex="min" style="background-color:black;color: white;">
 			<label value="Marketing"/>
 		</div>
 		
-		<div width="100%" height="10%">
+		<div width="100%" vflex="min">
 			<label value="Indique por qué medio desea recibir información de productos y promociones."/>			
 		    <hbox>
 		       <radiogroup>	

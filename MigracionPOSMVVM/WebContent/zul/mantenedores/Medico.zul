@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winMedico" border="none" width="100%" height="100%" 
+<window id="winMedico" border="none" width="65%" height="45%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMedico')  ">
 			
 	<style>
@@ -11,7 +11,7 @@
 		        padding:0px;
 		        margin:0px;
 		}
-		
+				
 		.shrink24 img {
 		  		vertical-align: middle;
 		  		border-style: none;
@@ -24,7 +24,11 @@
 		  		border-style: none;
 		  		width: 16px;
 		  		height: 16px;
-		}
+		 }
+		 
+		 tr.z-row td.z-row-inner { 
+		 		border: none; 
+		 }		 
 	</style>	
 	
 	<div width="100%" height="100%">	
@@ -46,7 +50,7 @@
 	   		
 	
 		<div  width="100%" height="75%">
-			<grid sclass="MyGridRowHeight">
+			<grid width="100%" height="350px" sclass="MyGridRowHeight" oddRowSclass="none">
 				<columns>
 					<column width="200px" />
 					<column width="550px" />					
@@ -61,7 +65,7 @@
 							<space width="20px"/>
 							<textbox value="@bind(vm.medicoForm.rut)" width="150px" onBlur="@command('retornaDv')"/>
 							<textbox value="@bind(vm.medicoForm.dv)" width="50px" disabled="true"/>
-							<button width="50px" onClick="@command('buscarMedico')"/>
+							<toolbarbutton image="/iconos/lupa.png" width="50px" onClick="@command('buscarMedico')" sclass="shrink16"/>
 						</cell>
 					</row>
 					
@@ -87,9 +91,9 @@
 					
 					<row>				
 						<label value="Provincia"/>
-						<combobox model="@bind(vm.medicoForm.listaProvincia)">
+						<combobox model="@bind(vm.medicoForm.listaProvincia)" placeholder="Seleccione">
 							<template name="model">
-								<comboitem label="each.descripcion"/>
+								<comboitem label="@bind(each.descripcion)"/>
 							</template>						
 						</combobox>
 					</row>

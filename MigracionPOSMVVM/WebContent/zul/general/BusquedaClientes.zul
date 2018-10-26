@@ -1,0 +1,113 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winBusquedaClientes" border="none" width="40%" height="45%" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaClientes')">
+			
+		<style>
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+			
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			  		
+			tr.z-row td.z-row-inner { 
+			 		border: none;  		
+			}
+		</style>	
+		
+		
+		<div width="100%" height="100%">
+		
+			<div width="100%" style="background-color:black;color: white" height="40px">
+				<label value="Busqueda Clientes" />
+				<div style="float: right">					
+					<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaClientes.detach()" sclass="shrink24"/>		
+				</div>																			
+			</div>
+			
+			<div width="100%" vflex="min">
+				<grid width="100%" vflex="min" oddRowSclass="none">
+					<columns>
+						<column width="150px" />
+						<column hflex="min" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Nif"/>
+							<textbox value="@bind(vm.busquedaClientesForm.nif)" width="200px"/>
+						</row>
+						
+						<row>
+							<label value="Apellido"/>
+							<textbox value="@bind(vm.busquedaClientesForm.apellido)" width="200px"/>
+						</row>
+						
+						<row>
+							<label value="Nombre"/>
+							<textbox value="@bind(vm.busquedaClientesForm.nombre)" width="200px"/>
+						</row>
+						
+						<row>
+							<cell/>
+							<button label="Buscar" onClick="@command('buscarCliente')" 
+									image="/iconos/lupa.png" width="100px" sclass="shrink16"/>
+						</row>
+					</rows>
+				</grid>
+			</div>
+
+			<div width="100%" vflex="min" style="background-color:black;color: white">
+				<space width="20px"/>
+				<label value="Nif" />	
+				<space width="60px"/>
+				<label value="Apellido" />
+				<space width="120px"/>
+				<label value="Nombre" />
+				<space width="75px"/>
+				<label value="Agregar" />																		
+			</div>
+			
+			<div width="100%" vflex="min">
+
+				<grid model="@bind(vm.busquedaClientesForm.listaClientes)" 
+					width="100%" height="200px" oddRowSclass="none">
+					<columns>
+						<column width="85px" />
+						<column width="165px" />
+						<column width="165px" />
+						<column width="30px" />
+					</columns>
+					<template name="model">
+						<row>
+							<textbox value="@load(each.nif)" width="80px" readonly="true"/>
+							<textbox value="@load(each.apellido)" width="160px" readonly="true"/>
+							<textbox value="@load(each.nombre)" width="160px" readonly="true"/>
+							<toolbarbutton image="/iconos/add.png" 
+								onClick="@command('retornoSeleccion',cliente=each,win=winBusquedaClientes)" sclass="shrink16"/>
+						</row>
+					</template>
+				</grid>
+
+			</div>
+
+
+
+		</div>
+			
+
+</window>

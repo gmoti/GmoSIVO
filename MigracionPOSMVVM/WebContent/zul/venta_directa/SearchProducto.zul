@@ -133,7 +133,8 @@
 						<label value="Precio iva" />
 						<space width="10px"/>
 						<label value="Grupo" />																		
-						</div>	
+					</div>
+						
 						<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
 								sclass="MyGridRowHeight" height="250px"  
 								emptyMessage="Sin registros" fixedLayout="true" oddRowSclass="none">						

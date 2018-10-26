@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winGraduacionClientes" border="none" width="65%" height="60%" 
+<window id="winGraduacionClientes" border="none" width="65%" height="60%"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
 			
 	<style>
@@ -24,10 +24,13 @@
 		  		border-style: none;
 		  		width: 16px;
 		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
 		}
 	</style>		
 			
-	<div width="100%" height="100%" align="center">		
+	<div width="100%" height="100%">		
 		<borderlayout>
 		
 			<north height="50%">
@@ -43,7 +46,12 @@
 					</div>		
 				
 					<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
-				   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
+					
+						<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevaGraduacion')"/>
+						<toolbarbutton image="/iconos/presupuestos.jpg" sclass="shrink24" onClick="@command('ingresoPresupuesto')"/>
+						<toolbarbutton image="/iconos/foto.jpg" sclass="shrink24" onClick="@command('ingresoEncargo')"/>						
+						<toolbarbutton image="/iconos/contactologia.jpg" sclass="shrink24" onClick="@command('ingresoContactologia')"/>					
+				   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('insertarGraduacion')" />
 				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winGraduacionClientes.detach()" />
 				   	</div>
 				   	
@@ -51,7 +59,7 @@
 				   		<div style="float: left ;">
 				   			<label value="Cliente"/>
 				   			<textbox value="@bind(vm.graduacionesForm.nombre_cliente)"/>
-				   			<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+				   			<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('busquedaCliente')" />
 				   		</div>
 				   		
 				   		<div style="float: right ;">
@@ -59,13 +67,13 @@
 				   		</div>				   	
 				   	</div>	
 				   	
-				   	<div width="100%" height="20px" style="background-color:black;color: white;">
+				   	<div width="100%" vflex="min" style="background-color:black;color: white;">
 				   		<label value="Graduacion"/>				   		
 				   	</div>			
 				   	
 				   	<div width="100%" height="100%" align="center">
 				   		
-				   		<grid hflex="min" vflex="min">
+				   		<grid width="100%" height="200px" oddRowSclass="none">
 				   			<columns>
 				   				<column hflex="min" />
 				   				<column hflex="min" />
@@ -142,25 +150,35 @@
 							
 				<div width="100%" height="100%">
 				
-					<div width="100%" height="30px" style="background-color:black;color: white;">
+					<div width="100%" vflex="min" style="background-color:black;color: white;">
 					   		<label value="Historico"/>				   		
 					</div>
 				
 					<div width="100%" height="100%">				
 						<borderlayout>
 							<west width="25%">
-								<div width="100%" height="100%">
-									<grid model="@bind(vm.graduacionesForm.listaGraduaciones)">
+								<div width="100%" height="100%" >
+								
+								    <div width="100%" vflex="min" style="background-color:black;color: white">
+										<space width="5px"/>
+										<label value="Fecha"/>	
+										<space width="25px"/>
+										<label value="Nunero"/>	
+										<space width="35px"/>	
+										<label value="Detalle"/>																														
+									</div>							
+								
+									<grid model="@bind(vm.graduacionesForm.listaGraduaciones)" oddRowSclass="none">
 										<columns>
-											<column label="Fecha" />
-											<column label="Nunero" />
-											<column label="Detalle" />
+											<column width="85px" />
+											<column width="50px" />
+											<column width="58px" />
 										</columns>
 										<template name="model">
 											<row>
-												<textbox value="@load(each.fecha)" width="150px"/>
-												<textbox value="@load(each.numero)" width="150px"/>
-												<button label="ver"/>
+												<textbox value="@load(each.fecha)" width="80px" readonly="true"/>
+												<textbox value="@load(each.numero)" width="45px" readonly="true"/>
+												<button label="ver" width="50px"/>
 											</row>
 										</template>
 									</grid>
@@ -169,7 +187,7 @@
 							
 							<east width="75%">
 								<div width="100%" height="100%" align="center">
-									<grid>
+									<grid width="100%" height="150px" oddRowSclass="none">
 										<columns>
 											<column hflex="min" />
 											<column hflex="min" />
@@ -188,7 +206,8 @@
 											
 											<row>
 												<label value="OD"/>
-												<combobox model="@bind(vm.graduacionesForm.listaCantidadOD)" width="100px">
+												<combobox model="@bind(vm.graduacionesForm.listaCantidadOD)" 
+														 width="100px">
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
@@ -232,20 +251,23 @@
 			
 			<south height="20%">
 				<div width="100%" height="100%">
-					<grid width="100%" height="100%">
+					<grid width="100%" height="100%" oddRowSclass="none">
 						<columns>
 							<column hflex="min" />
 							<column hflex="min" />
 							<column hflex="min" />
 							<column hflex="min" />
-							<column hflex="min" />							
+							<column hflex="min" />	
+							<column hflex="min" />
+							
+												
 						</columns>
 						<rows>
 							<row>
 								<label value="Oftalmologo"/>
 								<cell colspan="1">
 									<textbox value="@bind(vm.graduacionesForm.nifdoctor)" width="150px"/>								
-									<textbox value="@bind(vm.graduacionesForm.dvnifdoctor)" width="50px"/>
+									<textbox value="@bind(vm.graduacionesForm.dvnifdoctor)" width="50px" readonly="true"/>
 									<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
 									<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="" />
 									<toolbarbutton image="/iconos/nuevo.png" sclass="shrink16" onClick="" />
@@ -253,6 +275,8 @@
 								<cell/>
 								<cell/>
 								<cell/>
+								<cell/>
+								
 							</row>								
 							
 							<row>
@@ -261,9 +285,8 @@
 									<template name="model">
 										<comboitem label="@load(each.usuario)"/>
 									</template>								
-								</combobox>
+								</combobox>								
 								
-								<cell/>
 								
 								<label value="F.Emision:"/>
 								<datebox value="@bind(vm.fechaEmision)" format="dd/MM/yyyy"/>

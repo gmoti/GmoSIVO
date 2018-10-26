@@ -21,6 +21,13 @@ public class BusquedaClientesForm {
 	private String pagina = Constantes.STRING_BLANCO;
 	private String error = Constantes.STRING_ERROR;
 	
+	public BusquedaClientesForm() {
+		this.nif="";
+		this.nombre="";
+		this.apellido="";
+	}
+	
+	
 	
 	public String getDvnif() {
 		return dvnif;
