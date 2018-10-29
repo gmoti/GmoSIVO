@@ -47,12 +47,12 @@
 				
 					<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
 					
-						<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevaGraduacion')"/>
-						<toolbarbutton image="/iconos/presupuestos.jpg" sclass="shrink24" onClick="@command('ingresoPresupuesto')"/>
-						<toolbarbutton image="/iconos/foto.jpg" sclass="shrink24" onClick="@command('ingresoEncargo')"/>						
-						<toolbarbutton image="/iconos/contactologia.jpg" sclass="shrink24" onClick="@command('ingresoContactologia')"/>					
-				   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('insertarGraduacion')" />
-				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winGraduacionClientes.detach()" />
+						<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevaGraduacion')" tooltiptext="Nueva Graduación"/>
+						<toolbarbutton image="/iconos/presupuestos.jpg" sclass="shrink24" onClick="@command('ingresoPresupuesto',win=winGraduacionClientes)" tooltiptext="Ingreso de Presupuesto"/>
+						<toolbarbutton image="/iconos/foto.jpg" sclass="shrink24" onClick="@command('ingresoEncargo',win=winGraduacionClientes)" tooltiptext="Ingreso de Encargo"/>						
+						<toolbarbutton image="/iconos/contactologia.jpg" sclass="shrink24" onClick="@command('ingresoContactologia')" tooltiptext="Ingreso de Contactología"/>					
+				   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('insertarGraduacion')" tooltiptext="Ingreso de Graduación"/>
+				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrar',win=winGraduacionClientes)" tooltiptext="Salir de Graduación"/>
 				   	</div>
 				   	
 				   	<div width="100%" vflex="min">

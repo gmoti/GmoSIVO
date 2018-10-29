@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-oracle">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_181">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/francisco/Software/javax.jar"/>
+	<classpathentry kind="lib" path="C:/Software/Librerias/javax.jar"/>
 	<classpathentry excluding="cl/gmo/pos/venta/controlador/ventaDirecta/_SeleccionPagoDispatchActions.java|cl/gmo/pos/venta/web/helper/DevolucionHelper.java" kind="src" path="src"/>
 	<classpathentry kind="src" path=".apt_generated"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>

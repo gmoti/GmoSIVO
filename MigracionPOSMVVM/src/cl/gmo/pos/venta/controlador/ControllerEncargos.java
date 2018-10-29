@@ -126,9 +126,12 @@ public class ControllerEncargos implements Serializable {
 	
 	
 	@Init
-	public void inicial(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("origen")String arg) {	
+	public void inicial(@ExecutionArgParam("origen")String arg) {		
 
-		Selectors.wireComponents(view, this, false);
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		sucursal = sess.getAttribute(Constantes.STRING_SUCURSAL).toString();	
+		sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
 			
 		beanControlBotones = new BeanControlBotones();	
 		beanControlCombos  = new BeanControlCombos();
@@ -151,24 +154,18 @@ public class ControllerEncargos implements Serializable {
 		fpagoDisable ="True";
 		agenteDisable="True";	
 		selConvenio = "true";
+		ventaPedidoForm.setPromocion("0");
+		ventaPedidoForm.setConvenio("");
 		
 		fecha= new Date(System.currentTimeMillis());
 		fechaEntrega= new Date(System.currentTimeMillis());		
 		ventaPedidoForm.setFecha(dt.format(new Date(System.currentTimeMillis())));
-		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));
-		
-		sucursal = sess.getAttribute(Constantes.STRING_SUCURSAL).toString();	
-		sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
-		
-		ventaPedidoDispatchActions.CargaFormulario(ventaPedidoForm, sess);	
-		ventaPedidoForm.setPromocion("0");
-		ventaPedidoForm.setConvenio("");
-		
+		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));				
 		
 		//Si el encargo es invocado desde presupuesto, debe pasar por aqui
 		if(arg.equals("presupuesto")) {			
 			ventaPedidoForm.setDesde_presupuesto(Constantes.STRING_TRUE);
-			ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedidoDesdePresupuesto(ventaPedidoForm, sess);	
+			ventaPedidoDispatchActions.IngresaVentaPedidoDesdePresupuesto(ventaPedidoForm, sess);	
 			
 			beanControlBotones.setEnableNew("false");
 			beanControlBotones.setEnableListar("false");
@@ -186,7 +183,9 @@ public class ControllerEncargos implements Serializable {
 			beanControlCombos.setComboPromoEnable("false");
 			beanControlCombos.setComboTiposEnable("false");				
 			
-		}else {		
+		}else if( arg.equals("menu")){	
+			
+			ventaPedidoDispatchActions.CargaFormulario(ventaPedidoForm, sess);	
 		
 			beanControlBotones.setEnableNew("false");
 			beanControlBotones.setEnableListar("true");	
@@ -199,12 +198,17 @@ public class ControllerEncargos implements Serializable {
 			beanControlCombos.setComboIdiomaEnable("true");
 			beanControlCombos.setComboPromoEnable("true");
 			beanControlCombos.setComboTiposEnable("true");	
+			
+		}else if( arg.equals("contactologia") || arg.equals("graduacion")){
+			
+			ventaPedidoForm.setCliente(sess.getAttribute("cliente").toString());
+			ventaPedidoForm.setNombre_cliente(sess.getAttribute("nombre_cliente").toString());
+			
+			ventaPedidoDispatchActions.IngresaVentaPedidoGraduacion(ventaPedidoForm, sess);
+			
 		}
 				
-		posicionCombo();
-		
-		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
-		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		posicionCombo();		
 		
 		//inicializo descuento
 		dto_total_monto = ventaPedidoForm.getDescuento();

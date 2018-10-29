@@ -50,7 +50,7 @@
 							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminar_Presupuesto')" disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Presupuesto" sclass="shrink24" />
 							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaPresupuesto')" disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avanzada Presupuesto" sclass="shrink24"/>
 							<toolbarbutton image="/iconos/lista.png" onClick="@command('listar_detalles')" disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Presupuestos" sclass="shrink24"/>
-							<toolbarbutton image="/iconos/transfer.png" onClick="@command('crearEncargo')" disabled="@bind(vm.beanControlBotones.enableGenerico1)" tooltiptext="Traspasar a Encargo" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/transfer.png" onClick="@command('crearEncargo',win=winPresupuesto)" disabled="@bind(vm.beanControlBotones.enableGenerico1)" tooltiptext="Traspasar a Encargo" sclass="shrink24"/>
 							<toolbarbutton image="/iconos/check.png" onClick="@command('grabarPresupuesto')" disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Grabar Presupuesto" sclass="shrink24"/>
 							<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', arg=winPresupuesto)" tooltiptext="Cerrar" sclass="shrink24"/>									
 						</div>						

@@ -12,6 +12,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -71,8 +72,6 @@ public class ControllerPresupuesto implements Serializable{
 	HashMap<String,Object> objetos;
 	private Window wBusqueda;
 	private boolean bWin=true;
-	
-	@Wire
 	private Window winPresupuesto;
 	
 	private BeanControlBotones 	beanControlBotones;
@@ -91,19 +90,15 @@ public class ControllerPresupuesto implements Serializable{
 	private String sucursalDes;
 	
 	@Init
-	public void inicial(@ContextParam(ContextType.VIEW) Component view) {
+	public void inicial(@ExecutionArgParam("origen")String arg) {   
 		
-        Selectors.wireComponents(view, this, false);
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
+		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		sess.setAttribute(Constantes.STRING_PRESUPUESTO, 0);
         
         beanControlBotones = new BeanControlBotones();	
 		beanControlCombos  = new BeanControlCombos();
-		
-		fecha 		 = new Date(System.currentTimeMillis());
-		fechaEntrega = new Date(System.currentTimeMillis());
-		
-		fpagoDisable="True";
-		agenteDisable="True";
-		selConvenio = "true";
 		
 		agenteBean = new AgenteBean(); 
 		formaPagoBean = new FormaPagoBean();
@@ -116,15 +111,19 @@ public class ControllerPresupuesto implements Serializable{
 		
 		presupuestoDispatchActions = new PresupuestoDispatchActions();
 		busquedaConveniosDispatchActions = new BusquedaConveniosDispatchActions();
+		
 		presupuestoForm = new PresupuestoForm();
 		busquedaConveniosForm = new BusquedaConveniosForm();		
 		
-		sess.setAttribute(Constantes.STRING_PRESUPUESTO, 0);
-		presupuestoDispatchActions.cargaFormulario(presupuestoForm, sess);
+		fecha 		 = new Date(System.currentTimeMillis());
+		fechaEntrega = new Date(System.currentTimeMillis());
 		
-		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
-		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
-		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		fpagoDisable="True";
+		agenteDisable="True";
+		selConvenio = "true";	
+		
+		if (arg.equals("menu"))
+			presupuestoDispatchActions.cargaFormulario(presupuestoForm, sess);		
 		
 		//Posicion incial
 		
@@ -135,6 +134,17 @@ public class ControllerPresupuesto implements Serializable{
 		beanControlBotones.setEnableListar("true");
 		beanControlBotones.setEnableGenerico1("true");
 		beanControlBotones.setEnableGrabar("true");		
+		
+		//el presupuesto proviene de contactologia
+		
+		if(arg.equals("contactologia") || arg.equals("graduacion")) {
+			
+			presupuestoForm.setCliente(sess.getAttribute("cliente").toString());
+			presupuestoForm.setNombre_cliente(sess.getAttribute("nombre_cliente").toString());
+			
+			presupuestoDispatchActions.IngresaPresupuestoGraduacion(presupuestoForm, sess);
+		} 		
+				
 		
 	}
 
@@ -274,9 +284,10 @@ public class ControllerPresupuesto implements Serializable{
 	
 	@NotifyChange({"presupuestoForm"})
 	@Command
-	public void crearEncargo() {
+	public void crearEncargo(@BindingParam("win")Window win) {
 		
-		HashMap<String,Object> objetos = new HashMap<String,Object>();			
+		HashMap<String,Object> objetos = new HashMap<String,Object>();	
+		winPresupuesto = win;
 		
 		if (!presupuestoForm.getEstado().equals("cerrado")){		
 		

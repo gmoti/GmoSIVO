@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winContactologia" border="none" width="65%" height="60%"
+<window id="winContactologia" border="none" width="80%" height="60%"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerContactologia')">
 			
 			
@@ -34,7 +34,7 @@
 	
 	<div width="100%" height="100%">
 	
-		<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 	   		<label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
 				<label value="@load(vm.sucursalDes)"/>
@@ -43,15 +43,18 @@
 			</div>
 		</div>	
 		
-		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">								
-	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
-	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="" />
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">	
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoGraduacion')" tooltiptext="Nueva Graduación"/>
+			<toolbarbutton image="/iconos/presupuestos.jpg" sclass="shrink24" onClick="@command('ingresoPresupuesto',win=winContactologia)" tooltiptext="Ingreso de Presupuesto"/>
+			<toolbarbutton image="/iconos/foto.jpg" sclass="shrink24" onClick="@command('ingresoEncargo',win=winContactologia)" tooltiptext="Ingreso de Encargo"/>									
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('insertarContactologia')" tooltiptext="Ingreso de Contactología"/>
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrarContactologia',win=winContactologia)" tooltiptext="Salir"/>
 	   	</div>
 	   	
 	   	<div width="100%" vflex="min">
 	   		<div style="float: left ;">
 	   			<label value="Cliente"/>
-	   			<textbox />	   			
+	   			<textbox value="@bind(vm.contactologiaForm.nombre_cliente)"/>	   			
 	   		</div>	   					   	
 	   	</div>
 	   	
@@ -59,51 +62,213 @@
 	   		<label value="Graduacion"/>				   		
 	   	</div>
 	   	
-	   	<div width="100%" height="100%" align="center">
-	   		<grid>
+	   	<div width="100%" vflex="min">
+	   	
+	   		<div width="100%" vflex="min" style="background-color:grey;color: white">
+				<space width="105px"/>
+   				<label value="Radio 1" />
+   				<space width="10px"/>
+   				<label value="Radio 2" />
+   				<space width="10px"/>
+   				<label value="Esfera" />
+   				<space width="10px"/>
+   				<label value="Cilindro" />
+   				<space width="15px"/>
+   				<label value="Eje" />
+   				<space width="35px"/>
+   				<label value="Diam T" />
+   				<space width="15px"/>
+   				<label value="Dia Z0" />
+   				<space width="15px"/>
+   				<label value="Bandas Perifer" />
+   				<space width="10px"/>
+   				<label value="Radio 3" />
+   				<space width="10px"/>
+   				<label value="Diam P" />
+   				<space width="10px"/>
+   				<label value="Color" />
+   				<space width="10px"/>
+   				<label value="Adic" />																															
+			</div>	   	
+	   	
+	   		<grid oddRowSclass="none">
 	   			<columns>
-	   				<column label="" />
-	   				<column label="" />
+	   				<column width="100px"/>
+	   				<column width="60px" />
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="110px" />
+	   				<column width="60px" />	   					   				
+	   				<column width="60px" />
+	   				<column width="60px" />
+	   				<column width="60px" />	   					   					   				
 	   			</columns>
 	   			<rows>
-	   				<row></row>
+	   			
+	   				<row>
+	   					<label value="OD"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_radio1)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_radio2)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_esfera)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_cilindro)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_eje)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_diamt)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_diaz)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_bandas)" width="100px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_radio3)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_diamp)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_colo)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_adic)" width="50px"/>	   				
+	   				</row>
+	   				
+	   				<row>
+	   					<label value="OI"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_radio1)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_radio2)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_esfera)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_cilindro)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_eje)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_diamt)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_diaz)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_bandas)" width="100px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_radio3)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_diamp)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_colo)" width="50px"/>
+	   					<textbox value="@bind(vm.contactologiaForm.i_adic)" width="50px"/>	
+	   				</row>	   				
+	   				
 	   			</rows>
 	   		</grid>
 	   	</div>
 	   	
-	   	<hlayout>
-	   		<div width="100%" height="100%">
-	   		
-	   			<grid>
-	   				<columns>
-	   					<column label="" />
-	   					<column label="" />
-	   				</columns>
-	   				<rows>
-	   					<row></row>
-	   				</rows>
-	   			</grid>
-
-	   		</div>
-	   		
-	   		<div width="100%" height="100%">
-	   		
-	   			<grid>
-	   				<columns>
-	   					<column label="" />
-	   					<column label="" />
-	   				</columns>
-	   				<rows>
-	   					<row></row>
-	   				</rows>
-	   			</grid>
+	   	<div width="100%" vflex="min" style="background-color:black;color: white;">
+	   		<label value="Historico"/>				   		
+	   	</div>
 	   	
-	   		</div>	   	
-	   	</hlayout>
+	   	<borderlayout width="100%" vflex="min">
+	   		<west width="30%" vflex="min">
+	   			<div width="100%" height="100%">	   		
+		   			<div width="100%" vflex="max" style="background-color:black;color: white">
+						<space width="5px"/>
+						<label value="Fecha"/>	
+						<space width="35px"/>
+						<label value="Nunero"/>	
+						<space width="35px"/>	
+						<label value="Detalle"/>																														
+					</div>
+		   		
+		   			<grid width="100%" vflex="max"
+		   				model="@bind(vm.contactologiaForm.listaContactologia)" oddRowSclass="none">
+		   				<columns>
+		   					<column width="85px" />
+							<column width="55px" />
+							<column width="58px" />
+		   				</columns>
+		   				
+		   				<template name="model">
+		   					<row>
+		   						<textbox value="@bind(each.fecha)" width="80px"/>
+		   						<textbox value="@bind(each.numero)" width="45px"/>	
+		   						<button label="ver" width="50px" onClick="@command('verGraduacion',contactologia=each)"/>   						
+		   					</row>
+		   				</template>
+		   			</grid>
+	   			</div>	   		
+	   		</west>
+	   		
+	   		<east width="70%" vflex="min">
+	   			<div width="100%" vflex="min">	   		
+		   			<grid width="100%" height="400px" oddRowSclass="none">
+		   				<columns>
+		   					<column hflex="min" />
+		   					<column hflex="min" />
+		   					<column hflex="min" />
+		   					<column hflex="min" />
+		   					<column hflex="min" />	   					
+		   				</columns>
+		   				<rows>
+		   					<row>
+		   						<label value="Optometria"/>
+		   						<cell colspan="1">
+		   							<textbox value="@bind(vm.contactologiaForm.nifdoctor)" width="100px"/>
+		   							<textbox value="@bind(vm.contactologiaForm.dvnifdoctor)" width="30px"/>
+		   							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="" />
+		   							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />	   							
+		   						</cell>	  
+		   						<cell/>
+		   						<cell/>
+		   						<cell/> 					
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Nombre Optometria"/>
+		   						<textbox value="@load(vm.contactologiaForm.nombre_doctor)" readonly="true" width="200px"/>
+		   						<cell/>
+		   						<cell/>
+		   						<cell/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Otros Datos"/>
+		   						<textbox value="@bind(vm.contactologiaForm.otros)" width="200px"/>
+		   						<cell/>
+		   						<cell/>
+		   						<cell/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Laboratorio"/>
+		   						<textbox value="@bind(vm.contactologiaForm.laboratorio)" width="200px"/>
+		   						<cell/>
+		   						<cell/>
+		   						<cell/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="1ra. Revision"/>
+		   						<textbox value="@bind(vm.contactologiaForm.revision1)"/>
+		   						<cell/>
+		   						<label value="Cálculo Optom"/>
+		   						<textbox value="@bind(vm.contactologiaForm.calculo_opt)"/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Fecha Encargo"/>
+		   						<datebox value="@bind(vm.fechaEncargo)" format="dd/MM/yyyy"/>		   						
+		   						<cell/>
+		   						<label value="Fecha Recepción "/>
+		   						<datebox value="@bind(vm.fechaRecepcion)" format="dd/MM/yyyy"/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Fecha Entrega"/>
+		   						<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy"/>
+		   						<checkbox label="Seguro" checked="@bind(vm.contactologiaForm.seguro)"/>
+		   						
+		   						<label value="Fecha Caducidad"/>
+		   						<datebox value="@bind(vm.fechaCaducidad)" format="dd/MM/yyyy"/>
+		   					</row>   	
+		   					
+		   					<row>
+		   						<label value="Recomendaciones"/>
+		   						<cell colspan="2">
+		   						<textbox value="@load(vm.contactologiaForm.recomendaciones)" width="300px"/>
+		   						</cell>
+		   						<cell/>
+		   						<cell/>
+		   					</row>	   					
+		   				</rows>
+		   			</grid>	   	
+	   			</div>	   		
+	   		</east>	   	
+	   	</borderlayout>
 	   	
-
-
-
+	   	
+	   	
 	</div>		
 
 </window>
