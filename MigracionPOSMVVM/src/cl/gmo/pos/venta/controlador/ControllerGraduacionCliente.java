@@ -70,7 +70,19 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
 		
 		graduacionesForm.setNombre_cliente(cliente.getNombre()+ " " + cliente.getApellido());
+	}	
+	
+	
+	@Command
+	public void ingresoContactologia(){
+		
+		Window winContactologia = (Window)Executions.createComponents(
+                "/zul/mantenedores/Contactologia.zul", null, null);
+		
+		winContactologia.doModal();	
+		
 	}
+	
 		
 	@Command
 	public void cerrar(@BindingParam("arg1")  Window x) {

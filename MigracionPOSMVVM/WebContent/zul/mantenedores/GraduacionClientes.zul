@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winGraduacionClientes" border="none" width="65%" height="60%"
+<window id="winGraduacionClientes" border="none"  width="65%" height="60%"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
 			
 	<style>

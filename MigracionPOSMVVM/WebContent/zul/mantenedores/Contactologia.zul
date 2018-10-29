@@ -1,0 +1,109 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winContactologia" border="none" width="65%" height="60%"
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerContactologia')">
+			
+			
+	<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
+		}
+	</style>
+	
+	
+	<div width="100%" height="100%">
+	
+		<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+	   		<label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>	
+		
+		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">								
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="" />
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="" />
+	   	</div>
+	   	
+	   	<div width="100%" vflex="min">
+	   		<div style="float: left ;">
+	   			<label value="Cliente"/>
+	   			<textbox />	   			
+	   		</div>	   					   	
+	   	</div>
+	   	
+	   	<div width="100%" vflex="min" style="background-color:black;color: white;">
+	   		<label value="Graduacion"/>				   		
+	   	</div>
+	   	
+	   	<div width="100%" height="100%" align="center">
+	   		<grid>
+	   			<columns>
+	   				<column label="" />
+	   				<column label="" />
+	   			</columns>
+	   			<rows>
+	   				<row></row>
+	   			</rows>
+	   		</grid>
+	   	</div>
+	   	
+	   	<hlayout>
+	   		<div width="100%" height="100%">
+	   		
+	   			<grid>
+	   				<columns>
+	   					<column label="" />
+	   					<column label="" />
+	   				</columns>
+	   				<rows>
+	   					<row></row>
+	   				</rows>
+	   			</grid>
+
+	   		</div>
+	   		
+	   		<div width="100%" height="100%">
+	   		
+	   			<grid>
+	   				<columns>
+	   					<column label="" />
+	   					<column label="" />
+	   				</columns>
+	   				<rows>
+	   					<row></row>
+	   				</rows>
+	   			</grid>
+	   	
+	   		</div>	   	
+	   	</hlayout>
+	   	
+
+
+
+	</div>		
+
+</window>
