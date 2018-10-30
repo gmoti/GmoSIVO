@@ -157,13 +157,13 @@ public class ControllerContactologia implements Serializable {
 			}else {
 				
 				Messagebox.show("Desea modificar la receta ?", "Modificar",
-						Messagebox.OK | 
+						Messagebox.YES | 
 						Messagebox.CANCEL, 
 						Messagebox.QUESTION, new EventListener<Event>() {			
 					@Override
 					public void onEvent(Event e) throws Exception {	
 						
-							if( ((Integer) e.getData()).intValue() == Messagebox.OK ) {								
+							if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {								
 								
 								contactologiaForm.setAccion("modificarContactologia");
 								contactologiaDispatch.ingresaContactologia(contactologiaForm, sess);

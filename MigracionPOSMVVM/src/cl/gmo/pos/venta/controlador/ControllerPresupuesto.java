@@ -661,7 +661,7 @@ public class ControllerPresupuesto implements Serializable{
 	
 	public void posicionaCombos() {
 			
-		Optional<AgenteBean> a = presupuestoForm.getListaAgentes().stream().filter(s -> presupuestoForm.getAgente().equals(s.getClass())).findFirst();		
+		Optional<AgenteBean> a = presupuestoForm.getListaAgentes().stream().filter(s -> presupuestoForm.getAgente().equals(s.getUsuario())).findFirst();		
 		if (a.isPresent()) agenteBean = a.get(); else agenteBean=null;		
 		
 		Optional<DivisaBean> b = presupuestoForm.getListaDivisas().stream().filter(s -> presupuestoForm.getDivisa().equals(s.getId())).findFirst();

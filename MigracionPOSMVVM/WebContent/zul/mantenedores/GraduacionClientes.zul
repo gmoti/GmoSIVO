@@ -207,13 +207,16 @@
 											<row>
 												<label value="OD"/>
 												<combobox model="@bind(vm.graduacionesForm.listaCantidadOD)" 
-														 width="100px">
+															selectedItem="@bind(vm.prismaCantidadOD)" 
+														 	width="100px">
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
 												</combobox>
 												
-												<combobox model="@bind(vm.graduacionesForm.listaBaseOD)" width="100px">
+												<combobox model="@bind(vm.graduacionesForm.listaBaseOD)" 
+															selectedItem="@bind(vm.prismaBaseOD)" 
+															width="100px">
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
@@ -225,13 +228,17 @@
 											
 											<row>
 												<label value="OI"/>
-												<combobox model="@bind(vm.graduacionesForm.listaCantidadOI)" width="100px">
+												<combobox model="@bind(vm.graduacionesForm.listaCantidadOI)" 
+															selectedItem="@bind(vm.prismaCantidadOI)"
+															width="100px">
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
 												</combobox>
 												
-												<combobox model="@bind(vm.graduacionesForm.listaBaseOI)" width="100px">
+												<combobox model="@bind(vm.graduacionesForm.listaBaseOI)" 
+															selectedItem="@bind(vm.prismaBaseOI)" 
+															width="100px">
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
