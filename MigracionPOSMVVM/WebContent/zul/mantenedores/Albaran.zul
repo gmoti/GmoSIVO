@@ -50,8 +50,8 @@
 						<toolbarbutton image="/iconos/money2.png" sclass="shrink24" onClick="@command('pagarAlbaran')" tooltiptext="Totalizar Venta"/>
 						<toolbarbutton image="/iconos/delete.png" sclass="shrink24" onClick="@command('eliminarAlbaran')" tooltiptext="Eliminar Albaran"/>						
 						<toolbarbutton image="/iconos/boleta.png" sclass="shrink24" onClick="@command('mostrarPagosBoletas')" tooltiptext="Mostrar Pagos y Boletas"/>
-						<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Lista de Albaranes"/>					
-				   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('abrirBuscarAlbaranes')" tooltiptext="Cargar Albaranes"/>
+						<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('abrirBuscarAlbaranes')" tooltiptext="Lista de Albaranes"/>					
+				   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Cargar Albaranes"/>
 				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrarVentanas',win=winAlbaranes)" tooltiptext="Cerrar"/>
 				   	</div>
 
@@ -76,12 +76,13 @@
 									<cell colspan="1">
 										<textbox value="@bind(vm.devolucionForm.codigo1)" width="30px"/>
 										<textbox value="@bind(vm.devolucionForm.codigo2)" width="100px"/>
-										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarAlbaranesDevo')" />
 									</cell>
 									<label value="Fecha"/>
-									<datebox value="@bind(vm.fechaActual)" format="dd/MM/yyyy"/>
+									<datebox value="@bind(vm.fechaActual)" format="dd/MM/yyyy" disabled="@bind(vm.disabledCampo)"/>
+									
 									<label value="Hora"/>
-									<datebox value="@bind(vm.horaActual)" format="hh:mm:ss" readonly="true" buttonVisible="false"/>								
+									<datebox value="@bind(vm.horaActual)" format="hh:mm:ss" readonly="true" buttonVisible="false" disabled="@bind(vm.disabledCampo)"/>								
 									
 									
 									<radiogroup>
@@ -94,39 +95,39 @@
 								<row>
 									<label value="Cliente"/>
 									<cell colspan="1">
-										<textbox value="@bind(vm.devolucionForm.nif)" width="100px"/>
-										<textbox value="@bind(vm.devolucionForm.dvnif)" width="30px"/>
+										<textbox value="@bind(vm.devolucionForm.nif)" width="100px" disabled="@bind(vm.disabledCampo)"/>
+										<textbox value="@bind(vm.devolucionForm.dvnif)" width="30px" disabled="@bind(vm.disabledCampo)"/>
 									</cell>
 									
-									<checkbox label="Kodak" checked="@bind(vm.devolucionForm.kodak)"/>
-									<checkbox label="Entrega" checked="@bind(vm.devolucionForm.entrega)"/>
+									<checkbox label="Kodak" checked="@bind(vm.devolucionForm.kodak)" disabled="true"/>
+									<checkbox label="Entrega" checked="@bind(vm.devolucionForm.entrega)" disabled="true"/>
 									
 									<label value="Tipo Albaran"/>
-									<combobox model="@bind(vm.devolucionForm.listaTipoAlbaranes)" width="150px">
+									<combobox model="@bind(vm.devolucionForm.listaTipoAlbaranes)" width="150px" disabled="@bind(vm.disabledCampo)">
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
 									</combobox>
 									
 									<cell>
-										<textbox value="@bind(vm.devolucionForm.numero_boleta_guia)" width="150px"/>
-										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
+										<textbox value="@bind(vm.devolucionForm.numero_boleta_guia)" width="150px" />
+										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick=""/>
 									</cell>	
 								</row>
 								
 								<row>
 									<label value="Idioma"/>
-									<combobox model="@bind(vm.devolucionForm.listaIdiomas)" width="150px">	
+									<combobox model="@bind(vm.devolucionForm.listaIdiomas)" width="150px" disabled="@bind(vm.disabledCampo)">	
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
 									</combobox>
 									
 									<label value="Cambio"/>
-									<textbox value="@bind(vm.devolucionForm.cambio)"  width="150px"/>
+									<textbox value="@bind(vm.devolucionForm.cambio)"  width="150px" disabled="@bind(vm.disabledCampo)"/>
 									
 									<label value="Agente"/>
-									<combobox model="@bind(vm.devolucionForm.listaAgentes)" width="150px">	
+									<combobox model="@bind(vm.devolucionForm.listaAgentes)" width="150px" disabled="@bind(vm.disabledCampo)">	
 										<template name="model">										
 											<comboitem label="@load(each.usuario)"/>
 										</template>
@@ -135,64 +136,64 @@
 								
 								<row>
 									<label value="Divisa"/>
-									<combobox model="@bind(vm.devolucionForm.listaDivisas)" width="150px">										
+									<combobox model="@bind(vm.devolucionForm.listaDivisas)" width="150px" disabled="@bind(vm.disabledCampo)">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
 									</combobox>
 									
 									<label value="Montador"/>
-									<textbox value="@bind(vm.devolucionForm.montador)" width="150px"/>
+									<textbox value="@bind(vm.devolucionForm.montador)" width="150px" disabled="@bind(vm.disabledCampo)"/>
 									<cell></cell>
 									<checkbox label="Facturado"/>
-									<textbox value="@bind(vm.devolucionForm.facturado_text)" width="150px"/>								
+									<textbox value="@bind(vm.devolucionForm.facturado_text)" width="150px" disabled="@bind(vm.disabledCampo)"/>								
 								</row>
 								
 								<row>
 									<label value="Motivo"/>
-									<combobox model="@bind(vm.devolucionForm.lista_mot_devo)" width="150px">										
+									<combobox model="@bind(vm.devolucionForm.lista_mot_devo)" width="150px" disabled="@bind(vm.disabledCampo)">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
 									</combobox>
 									
 									<label value="Forma Pago"/>
-									<combobox model="@bind(vm.devolucionForm.listaFormasPago)" width="150px">										
+									<combobox model="@bind(vm.devolucionForm.listaFormasPago)" width="150px" disabled="@bind(vm.disabledCampo)">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
 									</combobox>
 									
 									<label value="Dcto%"/>
-									<textbox value="@bind(vm.devolucionForm.dto)" width="150px"/>
+									<textbox value="@bind(vm.devolucionForm.dto)" width="150px" disabled="@bind(vm.disabledCampo)"/>
 								</row>
 								
 								<row>
 									<label value="Fecha garantia"/>
-									<datebox/>
+									<datebox value="@bind(vm.fechaGarantia)" disabled="@bind(vm.disabledCampo)"/>
 									
 									<label value="Convenio"/>
-									<combobox model="@bind(vm.devolucionForm.listaConvenios)" width="150px">										
+									<combobox model="@bind(vm.devolucionForm.listaConvenios)" width="150px" disabled="@bind(vm.disabledCampo)">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
 									</combobox>
 									
 									<label value="Importe pendiente cobro"/>
-									<textbox value="@bind(vm.devolucionForm.importePend)" width="150px"/>
+									<textbox value="@bind(vm.devolucionForm.importePend)" width="150px" disabled="@bind(vm.disabledCampo)"/>
 								</row>
 								
 								<row>
 									<label value="Direccion cliente"/>
 									<cell colspan="2">
-										<textbox value="@bind(vm.devolucionForm.direccion)" width="300px"/>
+										<textbox value="@bind(vm.devolucionForm.direccion)" width="300px" disabled="@bind(vm.disabledCampo)"/>
 									</cell>
 									
 									<label value="Nro. Direc.cliente"/>
-									<textbox value="@bind(vm.devolucionForm.direccion_cli)" width="150px"/>
+									<textbox value="@bind(vm.devolucionForm.direccion_cli)" width="150px" disabled="@bind(vm.disabledCampo)"/>
 									
 									<label value="Comuna cliente"/>
-									<combobox model="@bind(vm.devolucionForm.listaProvincia)" width="150px">										
+									<combobox model="@bind(vm.devolucionForm.listaProvincia)" width="150px" disabled="@bind(vm.disabledCampo)">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
@@ -245,14 +246,14 @@
 						
 						<template name="model">
 							<row>
-								<textbox value="@bind(each.cod_barra)"/>
-								<textbox value="@bind(each.descripcion)"/>
-								<textbox value="@bind(each.subAlm)"/>
-								<textbox value="@bind(each.precio)"/>
-								<textbox value="@bind(each.descuento)"/>
-								<textbox value="@bind(each.cantidad)"/>
-								<textbox value="@bind(each.precio_costo)"/>
-								<textbox value="@bind(each.identpedalbaran)"/>
+								<textbox value="@bind(each.cod_barra)" readonly="true"/>
+								<textbox value="@bind(each.descripcion)" readonly="true"/>
+								<textbox value="@bind(each.subAlm)" readonly="true"/>
+								<textbox value="@bind(each.precio)" readonly="true"/>
+								<textbox value="@bind(each.descuento)" readonly="true"/>
+								<textbox value="@bind(each.cantidad)" readonly="true"/>
+								<textbox value="@bind(each.precio_costo)" readonly="true"/>
+								<textbox value="@bind(each.identpedalbaran)" readonly="true"/>
 							</row>
 						</template>
 					</grid>

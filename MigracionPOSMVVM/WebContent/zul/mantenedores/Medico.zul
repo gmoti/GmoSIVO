@@ -59,12 +59,12 @@
 					<row>				
 						<label value="Codigo"/>
 						<cell style="padding: 0px 0px 0px 0px">
-							<textbox value="@bind(vm.medicoForm.codigo)" width="150px" disabled="true"/>	
+							<textbox value="@bind(vm.medicoForm.codigo)" width="150px" readonly="true"/>	
 							<space width="20px"/>					
 							<label value="Rut" />
 							<space width="20px"/>
 							<textbox value="@bind(vm.medicoForm.rut)" width="150px" onBlur="@command('retornaDv')"/>
-							<textbox value="@bind(vm.medicoForm.dv)" width="50px" disabled="true"/>
+							<textbox value="@bind(vm.medicoForm.dv)" width="50px" readonly="true"/>
 							<toolbarbutton image="/iconos/lupa.png" width="50px" onClick="@command('buscarMedico')" sclass="shrink16"/>
 						</cell>
 					</row>

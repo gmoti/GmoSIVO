@@ -1,10 +1,10 @@
 <?page title="Busca Producto" contentType="text/html;charset=UTF-8"?>
 
-<window id="winBuscaProducto" border="none" width="55%" height="60%" 								
+<window id="winBuscaProducto" border="none"  width="55%" height="65%"  								
 		visible="@bind(vm.winVisibleBusqueda)"		 	
 		closable="false" mode="modal" sizable="false" 	
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductPres')">
-		
+		<!--    -->
 		<style>
 			.MyGridRowHeight
 			    tr.z-row td.z-row-inner div.z-row-content{
@@ -42,7 +42,7 @@
 						</div>																			
 					</div>
 					
-					<grid width="100%" sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none">
+					<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none" width="100%">
 						<columns>
 							<column width="180px"/>
 							<column width="305px"/>
@@ -139,7 +139,7 @@
 							<label value="Seleccion por:" />													
 						</div>	
 						
-						<grid width="100%" sclass="MyGridRowHeight" 
+						<grid sclass="MyGridRowHeight" width="100%"
 								fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column hflex="1" />
@@ -199,7 +199,7 @@
 							<label value="Seleccion por:" />													
 						</div>
 								
-						<grid width="100%" sclass="MyGridRowHeight" 
+						<grid sclass="MyGridRowHeight" width="100%"
 								fixedLayout="true" oddRowSclass="none">	
 						
 							<columns>
@@ -265,7 +265,7 @@
 						</div> 
 							
 						<div width="100%" >
-											
+										<!--  -->	
 							<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
 									sclass="MyGridRowHeight" width="100%" height="250px"
 									emptyMessage="Sin registros" fixedLayout="true" oddRowSclass="none">						

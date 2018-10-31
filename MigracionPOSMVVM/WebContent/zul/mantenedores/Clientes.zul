@@ -42,11 +42,11 @@
 		</div>		
 		
 		<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
-			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoCliente')" />
-			<toolbarbutton image="/iconos/modificar.png" sclass="shrink24" onClick="@command('modificarCliente')" />	   		
-	   		<toolbarbutton image="/iconos/optometria.jpg" sclass="shrink24" onClick="@command('clienteGraduacion')" />
-	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresarCliente')" />
-	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winClientes.detach()" />
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoCliente')" tooltiptext="Limpiar Pantalla, Nuevo Cliente"/>
+			<toolbarbutton image="/iconos/modificar.png" sclass="shrink24" onClick="@command('modificarCliente')" tooltiptext="Habilitar Campos a modificar cliente"/>	   		
+	   		<toolbarbutton image="/iconos/optometria.jpg" sclass="shrink24" onClick="@command('clienteGraduacion')" tooltiptext="Graduación Optometría"/>
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresarCliente')" tooltiptext="Guardar Cliente"/>
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winClientes.detach()" tooltiptext="Cerrar Mantenedor de Clientes"/>
 	   	</div>
 	
 		<div  width="100%" vflex="min">
@@ -75,7 +75,7 @@
 							<toolbarbutton image="/iconos/luparapida.png" 
 								sclass="shrink16" onClick="@command('buscar')" disabled="@bind(vm.bDisableinicialRut)"/>
 								
-							<toolbarbutton image="/iconos/lupa.png" onClick=""
+							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaCliente')"
 								sclass="shrink16" disabled="@bind(vm.bDisableinicialRut)"/>
 						</cell>
 						

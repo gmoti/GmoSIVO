@@ -8,10 +8,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
@@ -42,7 +44,7 @@ public class ControllerCliente implements Serializable{
 	ClienteDispatchActions clid = new ClienteDispatchActions();	
 	BusquedaClientesDispatchActions busquedaClientes;
 	
-	Session sess = Sessions.getCurrent();
+	Session sess = Sessions.getCurrent();	
 
 	private String usuario;	
 	private String sucursalDes;	
@@ -240,6 +242,37 @@ public class ControllerCliente implements Serializable{
 		}
 		return validacion;
 	}
+	
+	
+	@Command
+	public void busquedaCliente() {
+		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();		
+		objetos.put("retorno","buscarClienteCliente");		
+		
+		Window winBusquedaClientes = (Window)Executions.createComponents(
+                "/zul/general/BusquedaClientes.zul", null, objetos);
+		
+		winBusquedaClientes.doModal();		
+	}	
+	
+	
+	@NotifyChange({"clienteForm","bDisableinicial","bDisableinicialRut"})
+	@GlobalCommand
+	public void buscarClienteCliente(@BindingParam("cliente")ClienteBean cliente) {
+		
+		clienteForm.setAccion("traeClienteSeleccionado");
+		clienteForm.setNif_cliente_agregado(cliente.getNif());
+		clienteForm.setCodigo_cliente_agregado(cliente.getCodigo());
+		
+		clid.ingresoCliente(clienteForm, sess);
+		
+		posicionaCombos();
+		
+		bDisableinicial = true;
+		bDisableinicialRut = true;
+		
+	}	
 	
 	
 	//Getter and Setter ======================

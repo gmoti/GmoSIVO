@@ -22,6 +22,7 @@ import com.ibm.icu.util.Calendar;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.actions.DevolucionDispatchActions;
+import cl.gmo.pos.venta.web.beans.AlbaranBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.DevolucionBean;
 import cl.gmo.pos.venta.web.beans.IdiomaBean;
@@ -51,6 +52,8 @@ public class ControllerAlbaran implements Serializable{
 	
 	private Date fechaActual;
 	private Date horaActual;
+	private Date fechaGarantia;
+	private boolean disabledCampo=false;
 	
 	@Init	
 	public void inicial() {
@@ -66,6 +69,8 @@ public class ControllerAlbaran implements Serializable{
 		
 		fechaActual = new Date(System.currentTimeMillis());
 		horaActual  = new Date(System.currentTimeMillis());
+		fechaGarantia= new Date(System.currentTimeMillis());
+		disabledCampo=true;
 		
 		devolucionDispatch.cargaFormulario(devolucionForm, sess);		
 	}
@@ -77,11 +82,13 @@ public class ControllerAlbaran implements Serializable{
 	
 	
 	@Command
-	@NotifyChange({"devolucionForm"})
+	@NotifyChange({"devolucionForm","disabledCampo"})
 	public void nuevoAlbaran(){
 		
 		devolucionForm.setAccion("nuevo");
 		devolucionDispatch.cargaFormulario(devolucionForm, sess);
+		
+		disabledCampo=false;
 	}
 	
 	@Command
@@ -109,7 +116,10 @@ public class ControllerAlbaran implements Serializable{
 	@NotifyChange({"devolucionForm"})
 	public void mostrarListaAlbaranes(){
 		
+		Window winBuscarAlbaran = (Window)Executions.createComponents(
+                "/zul/mantenedores/BusquedaAlbaran.zul", null, null);
 		
+		winBuscarAlbaran.doModal();			
 	}
 	
 	@Command
@@ -206,12 +216,52 @@ public class ControllerAlbaran implements Serializable{
 		*/
 	}
 	
-	@NotifyChange({"DevolucionForm"})
+	@NotifyChange({"devolucionForm"})
 	public void postCobro() {	
 		Messagebox.show("DevoluciÃ³n realizada con exito");
 	}	
 	
+	@NotifyChange({"devolucionForm"})
+	@Command
+	public void buscarAlbaranesDevo(){
+		
+		boolean respuesta = false;
+		String codigo1="";
+		String codigo2="";
+		String cdg="";
+		
+		codigo1 = devolucionForm.getCodigo1();
+		codigo2 = devolucionForm.getCodigo2();		
+		
+		if(!codigo1.equals("") && !codigo2.equals("")){
+			cdg = codigo1 +"/"+codigo2;
+		}
+		
+		if(cdg.equals("")){
+			Messagebox.show("Debe ingresar un código de albaran válido");
+			respuesta = true;
+		}else{
+			devolucionForm.setCdg_venta(cdg);						
+			respuesta = false;
+		}
+		
+		if(!respuesta){			
+			devolucionForm.setAccion("traeAlbaranBuscado");
+			devolucionForm.setInicio_pagina("busqueda_rapida");
+			
+			devolucionDispatch.cargaAlbaran(devolucionForm, sess);			
+		}
+	}
 	
+	@NotifyChange({"devolucionForm"})
+	@GlobalCommand
+	public void albaranSeleccionado(@BindingParam("albaran")AlbaranBean albaran) {
+		
+		devolucionForm.setAccion("traeAlbaranBuscado");
+		devolucionForm.setCdg_venta(albaran.getCodigo_albaran());
+		
+		devolucionDispatch.cargaAlbaran(devolucionForm, sess);
+	}
 	
 	
 	// Getter and Setter =============================
@@ -255,6 +305,22 @@ public class ControllerAlbaran implements Serializable{
 
 	public void setHoraActual(Date horaActual) {
 		this.horaActual = horaActual;
-	}	
+	}
+
+	public boolean isDisabledCampo() {
+		return disabledCampo;
+	}
+
+	public void setDisabledCampo(boolean disabledCampo) {
+		this.disabledCampo = disabledCampo;
+	}
+
+	public Date getFechaGarantia() {
+		return fechaGarantia;
+	}
+
+	public void setFechaGarantia(Date fechaGarantia) {
+		this.fechaGarantia = fechaGarantia;
+	}
 	
 }

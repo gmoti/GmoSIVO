@@ -1,32 +1,51 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winBusquedaMedico" width="50%" height="60%" border="none" 
+<window id="winBusquedaMedico" width="40%" height="50%" border="none" 
 		position="center" closable="false" mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaMedico')">
 		
 		
-		<style>   
-	    .MyGridRowHeight
-	        tr.z-row td.z-row-inner div.z-row-content{
-	            border:1px solid white;
-	            border-right:1px solid transparent;
-	            padding:0px;
-	            margin:0px;
-	     }
+		<style>
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+			
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			  		
+			tr.z-row td.z-row-inner { 
+			 		border: none;  		
+			}
 		</style>		
 		
 		
 		<div width="100%" height="100%">
 			<borderlayout>
 				<north>
-					<div>
-						<div width="100%" style="background-color:black;color: white;">
-							<label value="BUSQUEDA DE MEDICOS" />
-							<space width="200px"/>							
-						   	<toolbarbutton image="/image/Remove_32x32.png" onClick="winBusquedaMedico.detach()" />
-						</div>					
+					<div>						
+						<div width="100%" style="background-color:black;color: white" height="40px">
+							<label value="Busqueda de Medicos" />
+							<div style="float: right">					
+								<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaMedico.detach()" sclass="shrink24"/>		
+							</div>																			
+						</div>
+										
 					
-						<grid sclass="MyGridRowHeight">
+						<grid sclass="MyGridRowHeight" oddRowSclass="none">
 							<columns>
 								<column width="100px" />
 								<column width="200px" />
@@ -50,7 +69,7 @@
 								</row>
 								<row>
 									<label/>
-									<button label="Buscar" onClick="@command('buscar')" />							
+									<button image="/iconos/lupa.png" label="Buscar" onClick="@command('buscar')" sclass="shrink16"/>							
 								</row>
 							</rows>
 						</grid>
@@ -63,25 +82,28 @@
 							<label value="Nif" />
 							<space width="80px"/>
 							<label value="Apellido" />
-							<space width="130px"/>
+							<space width="110px"/>
 							<label value="Nombre" />
-							<space width="120px"/>
+							<space width="105px"/>
 							<label value="Agregar" />														   	
 						</div>
 						
-						<grid model="@bind(vm.busquedaMedicoForm.listaOftalmologos)"   sclass="MyGridRowHeight" height="250px">
+						<grid model="@bind(vm.busquedaMedicoForm.listaOftalmologos)" oddRowSclass="none"  
+								sclass="MyGridRowHeight" height="250px">
 							<columns>
 								<column width="100px" />
-								<column width="200px" />
-								<column width="200px" />
+								<column width="155px" />
+								<column width="155px" />
 								<column width="50px" />								
 							</columns>
 							<template name="model">							
 								<row>
-									<textbox value="@load(each.nif)" disabled="true" width="95px"/>
-									<textbox value="@load(each.apelli)" disabled="true" width="195px"/>
-									<textbox value="@load(each.nombre)" disabled="true" width="195px"/>
-									<button width="40px" onClick="@command('medicoSeleccionado',medico=each,win=winBusquedaMedico)"/>
+									<textbox value="@load(each.nif)" readonly="true" width="95px"/>
+									<textbox value="@load(each.apelli)" readonly="true" width="150px"/>
+									<textbox value="@load(each.nombre)" readonly="true" width="150px"/>								
+									<toolbarbutton image="/iconos/add.png" 
+											onClick="@command('medicoSeleccionado',medico=each,win=winBusquedaMedico)" 
+											sclass="shrink16"/>
 								</row>							
 							</template>
 						</grid>
