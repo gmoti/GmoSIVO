@@ -1,9 +1,11 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -51,10 +53,10 @@ public class ControllerContactologia implements Serializable {
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
-		fechaEncargo = new Date(System.currentTimeMillis());
+		/*fechaEncargo = new Date(System.currentTimeMillis());
 		fechaRecepcion = new Date(System.currentTimeMillis());
 		fechaEntrega = new Date(System.currentTimeMillis());
-		fechaCaducidad = new Date(System.currentTimeMillis());
+		fechaCaducidad = new Date(System.currentTimeMillis());*/
 		
 		contactologiaForm = new ContactologiaForm();
 		contactologiaDispatch = new ContactologiaDispatchActions();			
@@ -183,14 +185,50 @@ public class ControllerContactologia implements Serializable {
 	
 	//======Funcionalidades varias=================
 	//=============================================
-	@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm","fechaEncargo","fechaRecepcion","fechaEntrega","fechaCaducidad"})
 	@Command
 	public void verGraduacion(@BindingParam("contactologia")ContactologiaBean contactologia) {
 		
 		contactologiaForm.setAccion("verGraduacion");
 		contactologiaForm.setFecha_graduacion(contactologia.getFecha());
 		contactologiaForm.setNumero_graduacion(String.valueOf(contactologia.getNumero()));
-		contactologiaDispatch.ingresaContactologia(contactologiaForm, sess);
+		contactologiaDispatch.ingresaContactologia(contactologiaForm, sess);	
+		
+		Optional<String> a =  Optional.ofNullable(contactologiaForm.getFecha_pedido());
+		if (!a.isPresent()) contactologiaForm.setFecha_pedido("");
+		
+		Optional<String> b =  Optional.ofNullable(contactologiaForm.getFecha_recepcion());
+		if (!b.isPresent()) contactologiaForm.setFecha_recepcion("");
+		
+		Optional<String> c =  Optional.ofNullable(contactologiaForm.getFecha_entrega());
+		if (!c.isPresent()) contactologiaForm.setFecha_entrega("");
+		
+		Optional<String> d =  Optional.ofNullable(contactologiaForm.getFecha_caducidad());
+		if (!d.isPresent()) contactologiaForm.setFecha_caducidad("");
+		
+		
+		try {
+			fechaEncargo = dt.parse(contactologiaForm.getFecha_pedido());						
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}		
+		try {
+			fechaRecepcion = dt.parse(contactologiaForm.getFecha_recepcion());
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		try {
+			fechaEntrega = dt.parse(contactologiaForm.getFecha_entrega());
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		try {
+			fechaCaducidad = dt.parse(contactologiaForm.getFecha_caducidad());
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	public boolean validaInfoContactologia(){

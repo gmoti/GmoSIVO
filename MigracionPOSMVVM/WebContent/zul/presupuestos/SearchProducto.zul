@@ -1,6 +1,6 @@
 <?page title="Busca Producto" contentType="text/html;charset=UTF-8"?>
 
-<window id="winBuscaProducto" border="none"  width="55%" height="65%"  								
+<window id="winBuscaProducto" border="none"  width="50%" height="75%"  								
 		visible="@bind(vm.winVisibleBusqueda)"		 	
 		closable="false" mode="modal" sizable="false" 	
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductPres')">
@@ -28,14 +28,14 @@
 			  		height: 16px;
 			}
 			
-			tr.z-row td.z-row-inner { border: none; }
+			
 		</style>		
-
+<!-- tr.z-row td.z-row-inner { border: none; } -->
 		<borderlayout>
 			<north >			
 				<div width="100%" height="30%">					
 						
-					<div width="100%" style="background-color:black;color: white" height="40px">
+					<div width="100%" vflex="min"  style="background-color:black;color: white">
 						<label value="Busqueda Productos" />
 						<div style="float: right">					
 							<toolbarbutton image="/iconos/cancel2.png" onClick="@command('cierraVentana')"/>		
@@ -110,14 +110,13 @@
 							</row>
 
 							<row>
-								<label value="Codigo Barra Producto" />	
-													
+								<label value="Codigo Barra Producto" />														
 								<cell colspan="1" style="padding:0px 0px 0px 0px">							
 									<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
 									<space width="10px"/>
 									<button image="/iconos/lupa2.png"
 										label="Buscar" onClick="@command('despachador',arg='buscar')" />
-								</cell>	
+								</cell> 
 							</row>
 						</rows>
 					</grid>											
@@ -264,10 +263,10 @@
 							<label value="Grupo" />																			
 						</div> 
 							
-						<div width="100%" >
+						<div width="100%" vflex="max">
 										<!--  -->	
 							<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
-									sclass="MyGridRowHeight" width="100%" height="250px"
+									sclass="MyGridRowHeight" width="100%" height="500px"
 									emptyMessage="Sin registros" fixedLayout="true" oddRowSclass="none">						
 							<columns>
 								<column width="120px"/>
@@ -285,8 +284,7 @@
 									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',producto=each)" width="50px"/>									
 								</row>							
 							</template>
-							</grid>	
-						
+							</grid>						
 						</div>						
 					</div>																		
 				</div>

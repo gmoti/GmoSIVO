@@ -74,24 +74,24 @@
 									<label value="Codigo" />
 									
 									<cell colspan="1">					    	
-							    		<textbox value="@bind(vm.presupuestoForm.codigo_suc)" width="30px" disabled="true" />
-							    		<textbox value="@bind(vm.presupuestoForm.codigo)" width="150px"	disabled="true" />	
+							    		<textbox value="@bind(vm.presupuestoForm.codigo_suc)" width="30px" readonly="true" />
+							    		<textbox value="@bind(vm.presupuestoForm.codigo)" width="150px"	readonly="true" />	
 									</cell> 
 									
 								    <label value="Cliente"/>
 								    
 								    <cell colspan="1">						
 										<textbox value="@bind(vm.presupuestoForm.nif)" width="150px"/>
-										<textbox value="@load(vm.presupuestoForm.dvnif)" width="30px" disabled="true"/>	
+										<textbox value="@load(vm.presupuestoForm.dvnif)" width="30px" readonly="true"/>	
 									</cell>
 									
 									<cell colspan="1">							
-										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente',arg=vm.presupuestoForm.nif)"  width="30px"/>	
-										<toolbarbutton image="/iconos/lupa2.png" width="30px"/>							
+										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px"/>	
+										<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaCliente')" width="30px"/>							
 									</cell>
 									
 									<cell colspan="3">
-										<textbox value="@bind(vm.presupuestoForm.nombre_cliente)" width="350px" disabled="true"/>
+										<textbox value="@bind(vm.presupuestoForm.nombre_cliente)" width="350px" readonly="true"/>
 									</cell>						
 									
 								</row>
@@ -120,19 +120,19 @@
 									<cell colspan="1">
 										<label value="Cambio" />
 										<space width="5px"/>
-										<textbox value="@bind(vm.presupuestoForm.cambio)" width="30px" disabled="true"/>							
+										<textbox value="@bind(vm.presupuestoForm.cambio)" width="30px" readonly="true"/>							
 									</cell>
 									
 									<cell colspan="1">									
 										<label value="fecha"/>
 										<space width="5px"/>
-										<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" disabled="true" />
+										<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />
 									</cell>
 									
 									<cell colspan="1">	
 										<label value="Hora" />
 										<space width="5px"/>
-										<datebox value="@bind(vm.fecha)" format="hh:mm:ss" disabled="true"/>
+										<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true"/>
 									</cell>								
 								</row>
 								

@@ -476,13 +476,13 @@ public class ControllerPresupuesto implements Serializable{
 	
 	@NotifyChange({"presupuestoForm","beanControlBotones"})
 	@Command
-	public void buscarCliente(@BindingParam("arg")String arg) {
+	public void buscarCliente() {
 		
 		try {
 			
 			
 			presupuestoForm.setEstaGrabado(2);
-			cliente = helper.traeClienteSeleccionado(arg,null);
+			cliente = helper.traeClienteSeleccionado(presupuestoForm.getNif(),null);
 			
 			if (!cliente.getNif().equals("")) {
 			
@@ -672,6 +672,28 @@ public class ControllerPresupuesto implements Serializable{
 		
 		Optional<IdiomaBean> d = presupuestoForm.getListaIdiomas().stream().filter(s -> presupuestoForm.getIdioma().equals(s.getId())).findFirst();
 		if (d.isPresent()) idiomaBean = d.get(); else idiomaBean=null;
+		
+	}
+	
+	@Command
+	public void busquedaCliente() {
+		
+		objetos = new HashMap<String,Object>();		
+		objetos.put("retorno","buscarClientePresupuesto");		
+		
+		Window winBusquedaClientes = (Window)Executions.createComponents(
+                "/zul/general/BusquedaClientes.zul", null, objetos);
+		
+		winBusquedaClientes.doModal();		
+	}	
+	
+	
+	@NotifyChange({"presupuestoForm"})
+	@GlobalCommand
+	public void buscarClientePresupuesto(@BindingParam("cliente")ClienteBean cliente) {
+		
+		presupuestoForm.setNif(cliente.getNif());
+		this.buscarCliente();
 		
 	}
 	

@@ -1,6 +1,8 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
@@ -46,6 +48,9 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	GraduacionesDispatchActions graduacionesDispatch; 	
 	BusquedaClientesDispatchActions busquedaClientesDispatch;
+	
+	SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat tt = new SimpleDateFormat("hh:mm:ss");	
 	
 	private Date fechaEmision;
 	private Date fechaProxRevision;
@@ -407,14 +412,40 @@ public class ControllerGraduacionCliente implements Serializable{
 	}	
 	
 	
-	@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI"})
+	@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI","fechaEmision","fechaProxRevision"})
 	@GlobalCommand
 	public void buscarClienteGraduacion(@BindingParam("cliente")ClienteBean cliente) {
 		
 		graduacionesForm.setCliente(Integer.parseInt(cliente.getCodigo()));
-		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
-		
+		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);		
 		graduacionesForm.setNombre_cliente(cliente.getNombre()+ " " + cliente.getApellido());
+		
+		try {
+			fechaEmision = dt.parse(graduacionesForm.getFechaEmision());
+			fechaProxRevision = dt.parse(graduacionesForm.getFechaProxRevision());
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		
+		posicionaCombo();
+	}
+	
+	@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI","fechaEmision","fechaProxRevision"})
+	@Command
+	public void verGraduacion(@BindingParam("graduacion")GraduacionesBean graduacion)
+	{
+		graduacionesForm.setAccion("verGraduacion");
+		graduacionesForm.setFecha_graduacion(graduacion.getFecha());
+		graduacionesForm.setNumero_graduacion(graduacion.getNumero());		
+		graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);		
+		
+		try {
+			fechaEmision = dt.parse(graduacionesForm.getFechaEmision());
+			fechaProxRevision = dt.parse(graduacionesForm.getFechaProxRevision());
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		
 		
 		posicionaCombo();
 	}
@@ -809,7 +840,25 @@ public class ControllerGraduacionCliente implements Serializable{
 		return true;
 	}
 	
-	private void posicionaCombo() {		
+	@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI"})
+	public void posicionaCombo() {	
+		
+		Optional<String> CantidadOD = Optional.ofNullable(graduacionesForm.getOD_cantidad());
+		if(!CantidadOD.isPresent()) 
+			graduacionesForm.setOD_cantidad("");
+		
+		Optional<String> CantidadOI = Optional.ofNullable(graduacionesForm.getOI_cantidad());
+		if(!CantidadOI.isPresent()) 
+			graduacionesForm.setOI_cantidad("");
+		
+		Optional<String> BaseOD = Optional.ofNullable(graduacionesForm.getOD_base());
+		if(!BaseOD.isPresent()) 
+			graduacionesForm.setOD_base("");
+		
+		Optional<String> BaseOI = Optional.ofNullable(graduacionesForm.getOI_base());
+		if(!BaseOI.isPresent()) 
+			graduacionesForm.setOI_base("");
+		
 		
 		Optional<PrismaCantidadBean> a = graduacionesForm.getListaCantidadOD()
 				.stream().filter(s ->graduacionesForm.getOD_cantidad().equals(String.valueOf(s.getCodigo()))).findFirst();		

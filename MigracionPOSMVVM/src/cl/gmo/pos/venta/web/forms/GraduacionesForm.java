@@ -90,6 +90,55 @@ public class GraduacionesForm{
 	private boolean diferenteAdd;
 	private int estaGrabado;
 	
+	public GraduacionesForm() {
+		this.agente = Constantes.STRING_BLANCO;
+		this.doctor = Constantes.STRING_BLANCO;
+		this.cod_doctor = Constantes.STRING_BLANCO;
+		this.OD_esfera = Constantes.STRING_BLANCO;
+		this.OD_cilindro = Constantes.STRING_BLANCO;
+		this.OD_eje = Constantes.STRING_BLANCO;
+		this.OD_cerca = Constantes.STRING_BLANCO;
+		this.OD_adicion = Constantes.STRING_BLANCO;
+		this.OD_dnpl = Constantes.STRING_BLANCO;
+		this.OD_dnpc = Constantes.STRING_BLANCO;
+		this.OD_avsc = Constantes.STRING_BLANCO;
+		this.OD_avcc = Constantes.STRING_BLANCO;
+		this.OD_observaciones = Constantes.STRING_BLANCO;
+		this.OI_esfera = Constantes.STRING_BLANCO;
+		this.OI_cilindro = Constantes.STRING_BLANCO;
+		this.OI_eje = Constantes.STRING_BLANCO;
+		this.OI_cerca = Constantes.STRING_BLANCO;
+		this.OI_adicion = Constantes.STRING_BLANCO;
+		this.OI_dnpl = Constantes.STRING_BLANCO;
+		this.OI_dnpc = Constantes.STRING_BLANCO;
+		this.OI_avsc = Constantes.STRING_BLANCO;
+		this.OI_avcc = Constantes.STRING_BLANCO;
+		this.OI_observaciones = Constantes.STRING_BLANCO;
+		this.Interna = Constantes.INT_CERO;
+		this.Externa = Constantes.INT_CERO;
+		this.listaGraduaciones = new ArrayList<GraduacionesBean> () ;
+		this.listaOftalmologos = new ArrayList<OftalmologoBean>();
+		this.listaAgentes = new ArrayList<AgenteBean>();
+		this.listaPrismaBase = new ArrayList<PrismaBaseBean>();
+		this.OD_base = Constantes.STRING_BLANCO;
+		this.OD_altura = Constantes.STRING_BLANCO;
+		this.OD_cantidad = Constantes.STRING_BLANCO;
+		this.OI_base = Constantes.STRING_BLANCO;
+		this.OI_altura = Constantes.STRING_BLANCO;
+		this.OI_cantidad = Constantes.STRING_BLANCO;
+		this.fechaEmision = Constantes.STRING_BLANCO;
+		this.fechaProxRevision = Constantes.STRING_BLANCO;		
+		this.exito = "inicio_pagina";
+		this.tipo=Constantes.STRING_BLANCO;
+		this.codigo_cliente_agregado=Constantes.STRING_BLANCO;
+		this.nif_cliente_agregado=Constantes.STRING_BLANCO;
+		this.existe_graduacion=Constantes.STRING_BLANCO;
+		this.diferenteAdd = false;
+		this.estaGrabado = 0;
+
+		
+	}
+	
 	public void  cleanForm(){
 		
 		this.agente = Constantes.STRING_BLANCO;

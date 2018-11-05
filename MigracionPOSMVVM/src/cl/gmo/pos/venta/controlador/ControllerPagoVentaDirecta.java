@@ -33,6 +33,7 @@ import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
 import cl.gmo.pos.venta.web.beans.PagoBean;
 import cl.gmo.pos.venta.web.beans.PedidosPendientesBean;
+import cl.gmo.pos.venta.web.forms.DevolucionForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaDirectaForm;
 import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
@@ -50,6 +51,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	private SeleccionPagoForm seleccionPagoForm;
 	private VentaPedidoForm  ventaPedidoForm;
 	private VentaDirectaForm ventaDirectaForm;
+	private DevolucionForm devolucionForm;
 	
 	private ClienteBean cliente;	
 	private SeleccionPagoDispatchActions seleccionPagoDispatchActions;
@@ -68,25 +70,23 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	private Window ventanaActual= new Window();
 	
 	@Init
-	public void inicio(@ContextParam(ContextType.VIEW) Component view, 
-					   @ExecutionArgParam("cliente")ClienteBean arg,
+	public void inicio(@ExecutionArgParam("cliente")ClienteBean arg,
 					   @ExecutionArgParam("pagoForm")SeleccionPagoForm arg2,
 					   @ExecutionArgParam("ventaOrigenForm")Object arg3,
-					   @ExecutionArgParam("origen")String arg4) {
+					   @ExecutionArgParam("origen")String arg4) {	
 		
-		
-		Selectors.wireComponents(view, this, false);
 		
 		cliente             = null;		
 		seleccionPagoForm 	= null;
 		ventaPedidoForm		= null;
 		ventaDirectaForm	= null;
+		devolucionForm      = null;	
 		
-		controlBotones 		= new BeanControlBotones();
 		controlBotones.setEnableGenerico1("false");
 		
-		formaPagoBean = new FormaPagoBean();
-		pagoBeanAux   = new PagoBean();	
+		controlBotones 	= new BeanControlBotones();
+		formaPagoBean   = new FormaPagoBean();
+		pagoBeanAux     = new PagoBean();	
 		seleccionPagoDispatchActions = new SeleccionPagoDispatchActions();		
 		
 		cliente           = (ClienteBean)arg;		
@@ -98,6 +98,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			fecha = ventaPedidoForm.getFecha();
 			controlBotones.setEnableGenerico1("true");
 			controlBotones.setEnableGenerico2("false");
+			
 			this.dto = 0.0;
 			sumaTotal = seleccionPagoForm.getSuma_total_albaranes();
 			descuentoMaximo = ventaPedidoForm.getPorcentaje_descuento_max();
@@ -108,11 +109,19 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			fecha = ventaDirectaForm.getFecha();
 			controlBotones.setEnableGenerico1("false");
 			controlBotones.setEnableGenerico2("true");
+			
 			this.dto = ventaDirectaForm.getDescuentoTotal();
 			sumaTotal = ventaDirectaForm.getSumaTotal();
 			descuentoMaximo = ventaDirectaForm.getPorcentaje_descuento_max();
 		}
 		
+		if (arg3 instanceof DevolucionForm) { 
+			devolucionForm= (DevolucionForm)arg3; 
+			fecha = devolucionForm.getFecha();
+			controlBotones.setEnableGenerico1("false");
+			controlBotones.setEnableGenerico2("true");
+			
+		}		
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
 		

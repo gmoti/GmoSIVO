@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<window id="winBusquedaAlbaran" border="none" width="50%" height="55%" 
+<window id="winBusquedaAlbaran" border="none" width="45%" height="65%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaAlbaran')">
 			
 	<style>
@@ -98,11 +98,11 @@
 			<div width="100%" vflex="min">
 
 				<grid model="@bind(vm.devolucionForm.lista_albaranes)" 
-					width="100%" height="220px" oddRowSclass="none" sclass="MyGridRowHeight">
+					width="100%" height="200px" oddRowSclass="none" sclass="MyGridRowHeight">
 					<columns>
 						<column width="150px" />
 						<column width="105px" />
-						<column width="105px" />
+						<column width="85px" />
 						<column width="65px" />
 						<column width="105px" />
 						<column width="50px" />
@@ -111,7 +111,7 @@
 						<row>
 							<textbox value="@load(each.agente_albaran)" width="155px" readonly="true"/>
 							<textbox value="@load(each.codigo_albaran)" width="100px" readonly="true"/>
-							<textbox value="@load(each.fecha_albaran)" width="100px" readonly="true"/>
+							<textbox value="@load(each.fecha_albaran)" width="80px" readonly="true"/>
 							<textbox value="@load(each.hora_albaran)" width="60px" readonly="true"/>
 							<textbox value="@load(each.nif_cliente)" width="100px" readonly="true"/>
 							<toolbarbutton image="/iconos/add.png" onClick="@command('selecAlbaran',albaran=each,win=winBusquedaAlbaran)" sclass="shrink16"/>

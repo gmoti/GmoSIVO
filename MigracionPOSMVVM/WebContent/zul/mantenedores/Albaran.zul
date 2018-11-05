@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<window id="winAlbaranes" border="none" width="85%" height="70%" 
+<window id="winAlbaranes" border="none" width="85%" height="80%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAlbaran')  ">
 			
 			
@@ -33,10 +33,11 @@
 
 	<div width="100%" height="100%" >
 	
-		<borderlayout>
-			<north height="50%">
-				<div width="100%" height="100%">
-					<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+		<borderlayout vflex="min">
+			<north vflex="min">
+				<div width="100%" vflex="min">
+				
+					<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 				   		<label value="ALBARAN" style="float: left ; font-weight: bold; font-size: 150%;"/>
 						<div style="float: right">					
 							<label value="@load(vm.sucursalDes)"/>
@@ -45,18 +46,18 @@
 						</div>
 					</div>		
 				
-					<div width="100%" height="30px" style="background-color:black;color: white;" align="right">
+					<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
 						<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoAlbaran')" tooltiptext="Nueva Devolución"/>
 						<toolbarbutton image="/iconos/money2.png" sclass="shrink24" onClick="@command('pagarAlbaran')" tooltiptext="Totalizar Venta"/>
 						<toolbarbutton image="/iconos/delete.png" sclass="shrink24" onClick="@command('eliminarAlbaran')" tooltiptext="Eliminar Albaran"/>						
 						<toolbarbutton image="/iconos/boleta.png" sclass="shrink24" onClick="@command('mostrarPagosBoletas')" tooltiptext="Mostrar Pagos y Boletas"/>
-						<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('abrirBuscarAlbaranes')" tooltiptext="Lista de Albaranes"/>					
+						<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Lista de Albaranes"/>					
 				   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Cargar Albaranes"/>
 				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrarVentanas',win=winAlbaranes)" tooltiptext="Cerrar"/>
 				   	</div>
 
-					<div width="100%">
-						<grid vflex="min" hflex="max" oddRowSclass="none">
+					<div width="100%" height="100%">
+						<grid hflex="min" height="100%" oddRowSclass="none">
 							<columns>
 								<column hflex="min" />
 								<column hflex="min" />
@@ -205,10 +206,10 @@
 				</div>		
 			</north>
 			
-			<south height="50%">
+			<south vflex="min">
 				<div width="100%" height="100%">
 				
-					<div width="100%" style="background-color:black;color:white; font-size: 6px;">							
+					<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
 						<space width="10px"/>
 						<label value="Articulo"/>
 						<space width="40px"/>
@@ -229,35 +230,35 @@
 						<label value="Encargo Venta" />						
 					</div>
 					
-				
-					<grid model="@bind(vm.devolucionForm.lista_productos)" 
-						vflex="min" hflex="min" oddRowSclass="none">
-						
-						<columns style="background-color:black;color: white;">
-							<column  />
-							<column  />
-							<column  />
-							<column  />
-							<column  />
-							<column  />
-							<column  />
-							<column  />
-						</columns>
-						
-						<template name="model">
-							<row>
-								<textbox value="@bind(each.cod_barra)" readonly="true"/>
-								<textbox value="@bind(each.descripcion)" readonly="true"/>
-								<textbox value="@bind(each.subAlm)" readonly="true"/>
-								<textbox value="@bind(each.precio)" readonly="true"/>
-								<textbox value="@bind(each.descuento)" readonly="true"/>
-								<textbox value="@bind(each.cantidad)" readonly="true"/>
-								<textbox value="@bind(each.precio_costo)" readonly="true"/>
-								<textbox value="@bind(each.identpedalbaran)" readonly="true"/>
-							</row>
-						</template>
-					</grid>
-					
+					<div width="100%" height="100%">
+						<grid model="@bind(vm.devolucionForm.lista_productos)" 
+							width="100%" height="400px" oddRowSclass="none">
+							
+							<columns style="background-color:black;color: white;">
+								<column  />
+								<column  />
+								<column  />
+								<column  />
+								<column  />
+								<column  />
+								<column  />
+								<column  />
+							</columns>
+							
+							<template name="model">
+								<row>
+									<textbox value="@bind(each.cod_barra)" readonly="true"/>
+									<textbox value="@bind(each.descripcion)" readonly="true"/>
+									<textbox value="@bind(each.subAlm)" readonly="true"/>
+									<textbox value="@bind(each.precio)" readonly="true"/>
+									<textbox value="@bind(each.descuento)" readonly="true"/>
+									<textbox value="@bind(each.cantidad)" readonly="true"/>
+									<textbox value="@bind(each.precio_costo)" readonly="true"/>
+									<textbox value="@bind(each.identpedalbaran)" readonly="true"/>
+								</row>
+							</template>
+						</grid>
+					</div>
 				</div>
 			</south>	
 		</borderlayout>	

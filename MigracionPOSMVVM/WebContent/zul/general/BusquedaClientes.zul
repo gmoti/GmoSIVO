@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winBusquedaClientes" border="none" width="40%" height="45%" 
+<window id="winBusquedaClientes" border="none" width="40%" height="55%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaClientes')">
 			
 		<style>
@@ -33,7 +33,7 @@
 		
 		<div width="100%" height="100%">
 		
-			<div width="100%" style="background-color:black;color: white" height="40px">
+			<div width="100%" vflex="min" style="background-color:black;color: white" >
 				<label value="Busqueda Clientes" />
 				<div style="float: right">					
 					<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaClientes.detach()" sclass="shrink24"/>		

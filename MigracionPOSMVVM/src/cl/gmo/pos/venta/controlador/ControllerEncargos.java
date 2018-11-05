@@ -1693,6 +1693,31 @@ public class ControllerEncargos implements Serializable {
 		
 	}	
 	
+	//==============Busqueda Cliente desde Venta =====================
+	//================================================================
+	@Command
+	public void busquedaCliente() {
+		
+		objetos = new HashMap<String,Object>();		
+		objetos.put("retorno","buscarClienteEncargo");		
+		
+		Window winBusquedaClientes = (Window)Executions.createComponents(
+                "/zul/general/BusquedaClientes.zul", null, objetos);
+		
+		winBusquedaClientes.doModal();		
+	}	
+	
+	
+	@NotifyChange({"ventaPedidoForm","beanControlBotones"})
+	@GlobalCommand
+	public void buscarClienteEncargo(@BindingParam("cliente")ClienteBean cliente) {
+		
+		ventaPedidoForm.setNif(cliente.getNif());
+		this.buscarCliente();
+	}
+	
+	
+	
 	
 	//=========== Mantengo la persistencia de lista de splementos=======
 	//==================================================================

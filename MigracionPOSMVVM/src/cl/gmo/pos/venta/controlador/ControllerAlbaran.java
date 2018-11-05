@@ -95,6 +95,16 @@ public class ControllerAlbaran implements Serializable{
 	@NotifyChange({"devolucionForm"})
 	public void pagarAlbaran(){
 		
+		/*objetos = new HashMap<String,Object>();
+		objetos.put("cliente",cliente);
+		objetos.put("pagoForm",seleccionPagoForm);
+		objetos.put("ventaOrigenForm",devolucionForm);
+		objetos.put("origen","PEDIDO");*/
+		
+		Window windowPagoVentaDirecta = (Window)Executions.createComponents(
+                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
+		
+		windowPagoVentaDirecta.doModal();
 		
 	}
 	
@@ -116,17 +126,21 @@ public class ControllerAlbaran implements Serializable{
 	@NotifyChange({"devolucionForm"})
 	public void mostrarListaAlbaranes(){
 		
-		Window winBuscarAlbaran = (Window)Executions.createComponents(
-                "/zul/mantenedores/BusquedaAlbaran.zul", null, null);
+		/*function mostrarListaAlbaranes(){
+			showPopWin("<%=request.getContextPath()%>/Devolucion.do?method=mostrarListaAlbaranes", 714, 425,cargaAlbaran, false);
+		}*/
 		
-		winBuscarAlbaran.doModal();			
+				
 	}
 	
 	@Command
 	@NotifyChange({"devolucionForm"})
 	public void abrirBuscarAlbaranes(){
 		
+		Window winBuscarAlbaran = (Window)Executions.createComponents(
+                "/zul/mantenedores/BusquedaAlbaran.zul", null, null);
 		
+		winBuscarAlbaran.doModal();	
 	}
 	
 	@Command

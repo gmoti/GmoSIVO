@@ -204,7 +204,7 @@
 		     								<textbox value="@load(each.detalle_forma_pago)" width="80px" readonly="true"/>
 		     								<intbox value="@load(each.cantidad)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 		     								<button image="/iconos/cancel.png" sclass="shrink16" width="50px"
-		     									onClick="@command('deleteItemAutoriza',arg=each)"/>
+		     									onClick="@command('deleteItemAutoriza',arg=each)" disabled="true"/>
 	     								</row>     							
 		     						</template>
 		     					</grid>

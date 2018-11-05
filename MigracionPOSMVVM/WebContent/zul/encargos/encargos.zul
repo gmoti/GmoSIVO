@@ -37,9 +37,9 @@
 			<!-- Parte superior de la ventana -->
 			<north height="32%" vflex="min" >
 				<div width="100%" height="100%" vflex="min">
-					<div width="100%" height="25%" style="background-color:black;color: white" vflex="min">
+					<div width="100%" vflex="min" style="background-color:black;color: white" >
 						
-						<div width="100%" height="25px" style="background-color:black;color: white" >
+						<div width="100%" vflex="min" style="background-color:black;color: white" >
 							<label value="ENCARGOS" style="float: left ; font-weight: bold; font-size: 150%;"/>
 							<div style="float: right">					
 								<label value="@load(vm.sucursalDes)"/>
@@ -48,7 +48,7 @@
 							</div>
 						</div>	
 						
-						<div width="100%" height="40px" style="text-align: right;" vflex="min">
+						<div width="100%" vflex="min" style="text-align: right;" >
 							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo" sclass="shrink24"/>
 							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos" sclass="shrink24"/>
 							<toolbarbutton image="/iconos/lupa.png"  onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos" sclass="shrink24"/>
@@ -66,7 +66,7 @@
 					
 					<div width="100%" height="75%" vflex="min">
 						<grid width="100%" height="100%" vflex="min" 
-								style="padding:5px 0px 5px 0px" fixedLayout="true" oddRowSclass="none">
+								fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column width="80px"/>
 								<column width="230px"/>
@@ -95,8 +95,8 @@
 									
 									<cell colspan="1">
 										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
-										<toolbarbutton image="/iconos/lupa2.png" width="30px"/>
-										<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px"/>										
+										<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaCliente')" width="30px" tooltiptext="Busqueda cliente"/>
+										<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px" tooltiptext="Cliente generico"/>										
 									</cell>									
 									
 									<textbox value="@load(vm.ventaPedidoForm.nombre_cliente)" width="250px" readonly="true"/>		
@@ -431,7 +431,7 @@
 
 						<div width="100%" vflex="min">
 							<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-									width="100%" height="200px" 
+									width="100%" height="150px" 
 									sclass="MyGridRowHeight" 
 									emptyMessage="Sin registros cargados" fixedLayout="true" oddRowSclass="none"><!-- overflow: scroll; "250px" -->
 								<columns>
@@ -522,7 +522,7 @@
 			</center>
 
 			<!-- Parte inferior de la ventana -->
-			<south height="30%" vflex="min">
+			<south height="35%" vflex="min">
 				<div vflex="min" style="padding:0px 0px 10px 0px">
 					<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>
 					<div width="100%" vflex="min">
