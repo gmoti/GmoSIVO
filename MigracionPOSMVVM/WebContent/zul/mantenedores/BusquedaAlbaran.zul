@@ -61,7 +61,7 @@
 						
 						<row>
 							<label value="Fecha Albaran"/>
-							<textbox value="" width="200px"/>
+							<datebox value="@bind(vm.fechaAlbaran)" width="200px" format="dd/MM/yyyy"/>
 						</row>
 						
 						<row>

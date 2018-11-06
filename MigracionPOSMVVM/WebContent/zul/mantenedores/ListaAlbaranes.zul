@@ -1,0 +1,88 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winListaAlbaranes" border="none" width="45%" height="65%" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListaAlbaranes')">
+			
+			
+	<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
+		}
+	</style>
+		
+		
+	<div width="100%" height="100%">	
+		
+		<div width="100%" style="background-color:black;color: white" height="40px">
+			<label value="Busqueda de Albaram"/>
+			<div style="float: right">					
+				<toolbarbutton image="/iconos/cancel.png" onClick="winListaAlbaranes.detach()" sclass="shrink24"/>		
+			</div>																			
+		</div>
+	
+		<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
+			<space width="10px"/>
+			<label value="Agente"/>
+			<space width="50px"/>
+			<label value="Codigo" />
+			<space width="60px"/>
+			<label value="Fecha Albaran" />			
+			<space width="20px"/>					
+			<label value="Hora" />
+			<space width="60px"/>						
+			<label value="NIF" />									
+		</div>
+		
+		<div width="100%" height="100%">
+			<grid model="@bind(vm.devolucionForm.lista_albaranes)" 
+					sclass="MyGridRowHeight" width="100%" height="300px" oddRowSclass="none">
+			<columns>
+				<column label=""/>
+				<column label=""/>
+				<column label=""/>
+				<column label=""/>
+				<column label=""/>
+				<column label=""/>
+			</columns>
+				<template name="model">
+					<row>	
+						<textbox value="@load(each.agente_albaran)" readonly="true"/>
+						<textbox value="@load(each.codigo_albaran)" readonly="true"/>
+						<textbox value="@load(each.fecha_albaran)" readonly="true"/>
+						<textbox value="@load(each.hora_albaran)" readonly="true"/>
+						<textbox value="@load(each.nif_cliente)" readonly="true"/>
+						<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaAlbaran',albaran=each,win=winListaAlbaranes)" width="50px"/>
+					</row>
+				</template>
+			</grid>	
+		</div>
+		
+	
+	
+	
+	</div>	
+			
+			
+
+</window>

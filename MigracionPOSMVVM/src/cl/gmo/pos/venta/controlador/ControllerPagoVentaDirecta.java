@@ -82,7 +82,6 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		ventaDirectaForm	= null;
 		devolucionForm      = null;	
 		
-		controlBotones.setEnableGenerico1("false");
 		
 		controlBotones 	= new BeanControlBotones();
 		formaPagoBean   = new FormaPagoBean();
@@ -92,6 +91,8 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		cliente           = (ClienteBean)arg;		
 		seleccionPagoForm = (SeleccionPagoForm)arg2;
 		origen            = (String)arg4;
+		
+		controlBotones.setEnableGenerico1("false");
 		
 		if (arg3 instanceof VentaPedidoForm) { 
 			ventaPedidoForm = (VentaPedidoForm)arg3;

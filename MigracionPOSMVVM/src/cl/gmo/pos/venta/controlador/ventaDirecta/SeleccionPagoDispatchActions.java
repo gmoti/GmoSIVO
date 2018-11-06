@@ -536,7 +536,7 @@ public class SeleccionPagoDispatchActions{
 		if("ALBARAN_DIRECTA".equalsIgnoreCase(origen_form)){
 			formulario.setFecha(fecha_alb);
 		}
-
+		
 		log.info("SeleccionPagoDispatchActions:cargaFormulario  fin");
 		//return mapping.findForward(Constantes.FORWARD_PAGO);
 		return formulario;

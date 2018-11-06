@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -47,7 +48,7 @@ public class ControllerBusquedaAlbaran implements Serializable {
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);	
 		
-		fechaAlbaran = new Date(System.currentTimeMillis());
+		//fechaAlbaran = new Date(System.currentTimeMillis());
 		agenteBean = new AgenteBean();
 		
 		devolucionForm = new DevolucionForm();
@@ -74,9 +75,17 @@ public class ControllerBusquedaAlbaran implements Serializable {
 		
 		codigo1 = devolucionForm.getCodigo1();
 		codigo2 = devolucionForm.getCodigo2();
-		nif = devolucionForm.getNif();
-		fecha = devolucionForm.getFecha();
-		agente = devolucionForm.getAgente();		
+		nif = devolucionForm.getNif();		
+		agente = devolucionForm.getAgente();
+		
+		Optional<Date> f = Optional.ofNullable(fechaAlbaran);
+		if(f.isPresent()) {
+			fecha = dt.format(fechaAlbaran);
+			devolucionForm.setFecha(dt.format(fechaAlbaran));			
+		}else {
+			fecha="";
+			devolucionForm.setFecha(fecha);
+		}				
 		
 		if(!codigo1.equals("") && !codigo2.equals("")){
 			cdg = codigo1 +"/"+codigo2;

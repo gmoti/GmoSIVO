@@ -52,7 +52,7 @@
 						<toolbarbutton image="/iconos/delete.png" sclass="shrink24" onClick="@command('eliminarAlbaran')" tooltiptext="Eliminar Albaran"/>						
 						<toolbarbutton image="/iconos/boleta.png" sclass="shrink24" onClick="@command('mostrarPagosBoletas')" tooltiptext="Mostrar Pagos y Boletas"/>
 						<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Lista de Albaranes"/>					
-				   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Cargar Albaranes"/>
+				   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('abrirBuscarAlbaranes')" tooltiptext="Cargar Albaranes"/>
 				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrarVentanas',win=winAlbaranes)" tooltiptext="Cerrar"/>
 				   	</div>
 
@@ -87,7 +87,7 @@
 									
 									
 									<radiogroup>
-										<radio label="Boleta"/>
+										<radio label="Boleta" selected="true"/>
 										<radio label="Guia"/>
 									</radiogroup>									
 																										
@@ -104,7 +104,8 @@
 									<checkbox label="Entrega" checked="@bind(vm.devolucionForm.entrega)" disabled="true"/>
 									
 									<label value="Tipo Albaran"/>
-									<combobox model="@bind(vm.devolucionForm.listaTipoAlbaranes)" width="150px" disabled="@bind(vm.disabledCampo)">
+									<combobox model="@bind(vm.devolucionForm.listaTipoAlbaranes)" selectedItem="@bind(vm.tipoAlbaranBean)"
+												width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
@@ -112,13 +113,14 @@
 									
 									<cell>
 										<textbox value="@bind(vm.devolucionForm.numero_boleta_guia)" width="150px" />
-										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick=""/>
+										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('cargarDatos')"/>
 									</cell>	
 								</row>
 								
 								<row>
 									<label value="Idioma"/>
-									<combobox model="@bind(vm.devolucionForm.listaIdiomas)" width="150px" disabled="@bind(vm.disabledCampo)">	
+									<combobox model="@bind(vm.devolucionForm.listaIdiomas)" selectedItem="@bind(vm.idiomaBean)"
+												width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione"> 	
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
@@ -128,7 +130,8 @@
 									<textbox value="@bind(vm.devolucionForm.cambio)"  width="150px" disabled="@bind(vm.disabledCampo)"/>
 									
 									<label value="Agente"/>
-									<combobox model="@bind(vm.devolucionForm.listaAgentes)" width="150px" disabled="@bind(vm.disabledCampo)">	
+									<combobox model="@bind(vm.devolucionForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)"
+												width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">	
 										<template name="model">										
 											<comboitem label="@load(each.usuario)"/>
 										</template>
@@ -137,7 +140,8 @@
 								
 								<row>
 									<label value="Divisa"/>
-									<combobox model="@bind(vm.devolucionForm.listaDivisas)" width="150px" disabled="@bind(vm.disabledCampo)">										
+									<combobox model="@bind(vm.devolucionForm.listaDivisas)" selectedItem="@bind(vm.divisaBean)"
+												width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
@@ -152,14 +156,16 @@
 								
 								<row>
 									<label value="Motivo"/>
-									<combobox model="@bind(vm.devolucionForm.lista_mot_devo)" width="150px" disabled="@bind(vm.disabledCampo)">										
+									<combobox model="@bind(vm.devolucionForm.lista_mot_devo)" selectedItem="@bind(vm.tipoMotivoDevolucionBean)"
+											width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
 									</combobox>
 									
 									<label value="Forma Pago"/>
-									<combobox model="@bind(vm.devolucionForm.listaFormasPago)" width="150px" disabled="@bind(vm.disabledCampo)">										
+									<combobox model="@bind(vm.devolucionForm.listaFormasPago)" selectedItem="@bind(vm.formaPagoBean)"
+											width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
@@ -171,10 +177,11 @@
 								
 								<row>
 									<label value="Fecha garantia"/>
-									<datebox value="@bind(vm.fechaGarantia)" disabled="@bind(vm.disabledCampo)"/>
+									<datebox value="@bind(vm.fechaGarantia)" disabled="@bind(vm.disabledCampo)" format="dd/MM/yyyy"/>
 									
 									<label value="Convenio"/>
-									<combobox model="@bind(vm.devolucionForm.listaConvenios)" width="150px" disabled="@bind(vm.disabledCampo)">										
+									<combobox model="@bind(vm.devolucionForm.listaConvenios)" selectedItem="@bind(vm.convenioBean)"
+											width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
@@ -194,7 +201,8 @@
 									<textbox value="@bind(vm.devolucionForm.direccion_cli)" width="150px" disabled="@bind(vm.disabledCampo)"/>
 									
 									<label value="Comuna cliente"/>
-									<combobox model="@bind(vm.devolucionForm.listaProvincia)" width="150px" disabled="@bind(vm.disabledCampo)">										
+									<combobox model="@bind(vm.devolucionForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)"
+											width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
 										<template name="model">										
 											<comboitem label="@load(each.descripcion)"/>
 										</template>
@@ -212,21 +220,21 @@
 					<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
 						<space width="10px"/>
 						<label value="Articulo"/>
-						<space width="40px"/>
-						<label value="Descripcion" />
 						<space width="100px"/>
+						<label value="Descripcion" />
+						<space width="175px"/>
 						<label value="Subalm" />
 						
-						<space width="20px"/>					
+						<space width="50px"/>					
 						<label value="Precio IVA" />
-						<space width="20px"/>						
+						<space width="70px"/>						
 						<label value="Dcto (%)" />
-						<space width="20px"/>
+						<space width="30px"/>
 						<label value="Cantidad" />
 						
-						<space width="20px"/>						
+						<space width="60px"/>						
 						<label value="Importe" />
-						<space width="20px"/>
+						<space width="70px"/>
 						<label value="Encargo Venta" />						
 					</div>
 					
@@ -235,26 +243,26 @@
 							width="100%" height="400px" oddRowSclass="none">
 							
 							<columns style="background-color:black;color: white;">
-								<column  />
-								<column  />
-								<column  />
-								<column  />
-								<column  />
-								<column  />
-								<column  />
-								<column  />
+								<column  width="105px" />
+								<column  width="275px"/>
+								<column  width="105px"/>
+								<column  width="105px"/>
+								<column  width="105px"/>
+								<column  width="105px"/>
+								<column  width="105px"/>
+								<column  width="105px"/>
 							</columns>
 							
 							<template name="model">
 								<row>
-									<textbox value="@bind(each.cod_barra)" readonly="true"/>
-									<textbox value="@bind(each.descripcion)" readonly="true"/>
-									<textbox value="@bind(each.subAlm)" readonly="true"/>
-									<textbox value="@bind(each.precio)" readonly="true"/>
-									<textbox value="@bind(each.descuento)" readonly="true"/>
-									<textbox value="@bind(each.cantidad)" readonly="true"/>
-									<textbox value="@bind(each.precio_costo)" readonly="true"/>
-									<textbox value="@bind(each.identpedalbaran)" readonly="true"/>
+									<textbox value="@bind(each.cod_barra)" readonly="true" width="100px"/>
+									<textbox value="@bind(each.descripcion)" readonly="true" width="270px"/>
+									<textbox value="@bind(each.subAlm)" readonly="true" width="100px"/>
+									<textbox value="@bind(each.precio)" readonly="true" width="100px"/>
+									<textbox value="@bind(each.descuento)" readonly="true" width="100px"/>
+									<textbox value="@bind(each.cantidad)" readonly="true" width="100px"/>
+									<textbox value="@bind(each.precio_costo)" readonly="true" width="100px"/>
+									<textbox value="@bind(each.identpedalbaran)" readonly="true" width="100px"/>
 								</row>
 							</template>
 						</grid>
@@ -263,4 +271,45 @@
 			</south>	
 		</borderlayout>	
 	</div>
+	
+	<popup id="ListaAlbaranes" width="45%" height="65%">	
+		<div width="100%" height="100%">
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="Busqueda de Albaram" style="float: left"/>
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="ListaAlbaranes.clone()" style="float: right"/>			
+		</div>	
+	
+		<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
+			<space width="10px"/>
+			<label value="Agente"/>
+			<space width="40px"/>
+			<label value="Codigo" />
+			<space width="100px"/>
+			<label value="Fecha Albaran" />			
+			<space width="20px"/>					
+			<label value="Hora" />
+			<space width="20px"/>						
+			<label value="NIF" />									
+		</div>
+		
+		<div width="100%" height="100%">
+			<grid >
+				<columns>
+					<column label=""/>
+					<column label=""/>
+				</columns>
+				<rows>
+					<row>	
+					</row>
+				</rows>
+			</grid>	
+		</div>
+	</div>
+	
+	
+	
+	</popup>
+	
+	
 </window>
