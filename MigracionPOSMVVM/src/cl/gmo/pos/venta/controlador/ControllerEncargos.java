@@ -1189,11 +1189,25 @@ public class ControllerEncargos implements Serializable {
 	@NotifyChange({"ventaPedidoForm"})
     @GlobalCommand
 	public void actProdGridVentaPedido(@BindingParam("producto")ProductosBean arg,
-										@BindingParam("tipo")String tipo) {	
+										@BindingParam("tipo")String tipo,										
+										@BindingParam("seg_arm")String seg_arm,
+										@BindingParam("cris_esp")String cris_esp,
+										@BindingParam("cris_esp_seg")String cris_esp_seg,
+										@BindingParam("seg_cristal")boolean seg_cristal) {	
+		
+		String segundoOjo="";
+		double eje = 0;
+		double esfera = 0;
+		double cilindro= 0;
+		
 		
 		//no viene la graduaciion
 		arg.setImporte(arg.getPrecio());
 		arg.setCantidad(1);		//arg cantidad seleccionada
+		
+		Optional<String> cvn = Optional.ofNullable(ventaPedidoForm.getConvenio());
+		if(!cvn.isPresent())
+			ventaPedidoForm.setConvenio("");
 		
 		sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());		
 		ventaPedidoForm.setAccion(Constantes.STRING_AGREGAR_PRODUCTOS);
@@ -1204,14 +1218,77 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm.setAddProducto(arg.getCod_barra());
 			//ventaPedidoForm.setGraduacion(arg.getg);
 			ventaPedidoForm.setOjo(arg.getOjo());
-			ventaPedidoForm.setDescripcion(tipo);
+			ventaPedidoForm.setDescripcion(tipo);			
 			
-			Optional<String> cvn = Optional.ofNullable(ventaPedidoForm.getConvenio());
-			if(!cvn.isPresent())
-				ventaPedidoForm.setConvenio("");
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			
+			//valida segundo cristal
+			 if(seg_cristal && seg_arm.equals("2")){
+				 
+				 if (arg.getOjo().equals("derecho")) {
+					segundoOjo="izquierdo";			 
+					
+		 			cilindro  = ventaPedidoForm.getGraduacion().getOI_cilindro();
+		 			esfera = ventaPedidoForm.getGraduacion().getOI_esfera();
+		 			eje =  ventaPedidoForm.getGraduacion().getOI_eje();					 
+				 }else { 
+					segundoOjo="derecho";
+					
+					cilindro  = ventaPedidoForm.getGraduacion().getOD_cilindro();
+		 			esfera = ventaPedidoForm.getGraduacion().getOD_esfera();
+		 			eje =  ventaPedidoForm.getGraduacion().getOD_eje();						 
+				 }
+				 
+				 if(cilindro < 0){
+					 
+			 			esfera = esfera + cilindro;
+			 			cilindro = Math.abs(cilindro);
+			 			
+			 			if (eje >= 0 && eje <=90) {
+			 				eje = eje + 90;
+			 			}
+			 			else if(eje >= 91 && eje <=180)
+			 			{
+			 				eje = eje - 90;
+			 			}
+			 	 }				 
+				 
+				 String cilidroParse="";
+				 String esferaParse="";
+				 String ejeParse="";
+				 
+				 if (cilindro==0) cilidroParse = "0"; else cilidroParse=String.valueOf(cilindro);
+				 if (esfera==0) esferaParse = "0"; else esferaParse=String.valueOf(esfera);
+				 if (eje==0) ejeParse = "0"; else ejeParse=String.valueOf(eje);
+				 
+				 String res= arg.getCod_barra() + "," + 
+						 segundoOjo + "," + tipo + "," + 
+						 cilidroParse + "," + esferaParse + "," + ejeParse;
+				 
+				 ventaPedidoForm.setSegCris(res);		 
+				 String codigo = ventaPedidoDispatchActions.valida_seg_cris(ventaPedidoForm, sess);	
+				 
+				 if (!codigo.equals("0")) {
+
+					 if(cris_esp.equals("1")) {				
+		                
+		                ventaPedidoForm.setAccion("agregarProducto");
+		                ventaPedidoForm.setAddProducto(codigo);
+		                ventaPedidoForm.setCantidad(1);
+		                ventaPedidoForm.setOjo(segundoOjo);
+		                ventaPedidoForm.setDescripcion(tipo); 
+		                ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess); 
+					 }					 
+					 
+				 }else {
+					 Messagebox.show("No hay cristales de la misma familia para la dioptria del ojo "+segundoOjo+".");
+					 return;
+				 }
+			
+			 } 	
 			
 			
-			ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			
 			
 		} catch (Exception e) {			
 			e.printStackTrace();

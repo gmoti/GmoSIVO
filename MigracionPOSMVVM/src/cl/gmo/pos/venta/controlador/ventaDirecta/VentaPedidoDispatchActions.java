@@ -1475,7 +1475,7 @@ public class VentaPedidoDispatchActions {
 			  
 			  ArrayList<ProductosBean> prod = new ArrayList<ProductosBean>();
 			  
-			  System.out.println("formulario.getValor_comodin()==>)"+formulario.getSegCris().trim());
+			  //System.out.println("formulario.getValor_comodin()==>)"+formulario.getSegCris().trim());
 			  //2629000210002,izquierdo,lejos,4.75,-2.5,75
 			  String [] res  = formulario.getSegCris().trim().split(",");
 			  /*String ojo, String tipo_fam, String familia, String subfamilia, String grupo,

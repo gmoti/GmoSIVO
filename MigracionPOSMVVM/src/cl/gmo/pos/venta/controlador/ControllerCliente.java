@@ -156,7 +156,7 @@ public class ControllerCliente implements Serializable{
 	//======== Funciones secundarias =========
 	//========================================
 	@Command
-	@NotifyChange({"clienteForm","fechaNac","bDisableinicial","bDisableinicialRut","agenteBean","tipoViaBean","provinciaBean"})
+	@NotifyChange({"*"})
 	public void buscar()  {
 		
 		busquedaClientesForm = new BusquedaClientesForm();
@@ -182,6 +182,15 @@ public class ControllerCliente implements Serializable{
 			
 			clid.ingresoCliente(clienteForm, sess);
 			
+			Optional<String> a = Optional.ofNullable(clienteForm.getAgente());			
+			if(!a.isPresent()) clienteForm.setAgente("");
+			
+			Optional<String> b = Optional.ofNullable(clienteForm.getTipo_via());			
+			if(!b.isPresent()) clienteForm.setTipo_via("");
+			
+			Optional<String> c = Optional.ofNullable(clienteForm.getProvincia_cliente());			
+			if(!c.isPresent()) clienteForm.setProvincia_cliente("");			
+			
 			posicionaCombos();
 			
 			bDisableinicial = true;
@@ -194,16 +203,25 @@ public class ControllerCliente implements Serializable{
 		
 	}	
 	
-	private void posicionaCombos() {
+	private void posicionaCombos() {		
 		
 		Optional<AgenteBean> a = clienteForm.getListaAgentes().stream().filter(s -> clienteForm.getAgente().equals(s.getUsuario())).findFirst();		
-		agenteBean = a.get();	
+		if (a.isPresent()) 
+			agenteBean = a.get();
+		else
+			agenteBean = null;
 		
 		Optional<TipoViaBean> b = clienteForm.getListaTipoVia().stream().filter(s -> clienteForm.getTipo_via().equals(s.getCodigo())).findFirst();		
-		tipoViaBean = b.get();
+		if (b.isPresent())
+			tipoViaBean = b.get();
+		else
+			tipoViaBean = null;
 		
 		Optional<ProvinciaBean> c = clienteForm.getListaProvincia().stream().filter(s -> clienteForm.getProvincia_cliente().equals(s.getCodigo())).findFirst();		
-		provinciaBean = c.get();
+		if (c.isPresent())
+			provinciaBean = c.get();
+		else
+			provinciaBean = null;
 		
 	}
 	

@@ -42,9 +42,6 @@ public class ControllerSearchProductPres implements Serializable {
 	private static final long serialVersionUID = -7360268478883882968L;
 	
 	Session sess = Sessions.getCurrent();
-
-	@Wire("#winBuscaProducto")
-	private Window win;
 	
 	
 	private FamiliaBean familiaBean;
@@ -77,11 +74,7 @@ public class ControllerSearchProductPres implements Serializable {
 	
 	
 	@Init
-	public void inicial(@ContextParam(ContextType.VIEW) Component view, 
-			//@ExecutionArgParam("presupuestoForm")PresupuestoForm arg) {
-			@ExecutionArgParam("objetoForm")Object arg) {
-		
-		Selectors.wireComponents(view, this, false);
+	public void inicial(@ExecutionArgParam("objetoForm")Object arg) {		
 		
 		if (arg instanceof PresupuestoForm) {
 			presupuesto = new PresupuestoForm();
@@ -129,22 +122,40 @@ public class ControllerSearchProductPres implements Serializable {
 		else
 			sess.setAttribute(Constantes.STRING_FORMULARIO, Constantes.STRING_PEDIDO);	
 			
-		busquedaProductosForm = busquedaProductosDispatchActions.cargaBusquedaProductos(busquedaProductosForm, sess);
+		busquedaProductosDispatchActions.cargaBusquedaProductos(busquedaProductosForm, sess);
 		busquedaProductosForm.setChk_cerca(false);
 		
 		//preload de graduaciones
-		busquedaProductosForm.setAccion("buscar_graduacion");	
-		busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
+		//busquedaProductosForm.setAccion("buscar_graduacion");	
+		//busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
+		
 	}
 	
 	
 	@NotifyChange({"winVisibleBusqueda","busquedaProductosForm"})
 	@Command
-	public void seleccionaProducto(@BindingParam("producto")ProductosBean producto) {	
-		
+	public void seleccionaProducto(@BindingParam("producto")ProductosBean producto) throws Exception {			
 		
 		String tipo="";
-		objetos = new HashMap<String,Object>();
+		objetos = new HashMap<String,Object>();		
+		String cod="";		
+		
+		String familia="";
+		String seg_arm=""; 
+		String cris_esp="";
+		String cris_esp_seg="";	
+		boolean seg_cristal=false;
+		
+		cod = producto.getCod_barra();	
+		familia = busquedaProductosForm.getFamilia();
+		
+		if (cod.equals("")) {
+			Messagebox.show("El codigo no es valido");
+			return;
+		}		
+		
+		busquedaProductosForm.setCodigo_barras(cod);		
+		boolean tieneSuple = busquedaProductosDispatchActions.tiene_suple(busquedaProductosForm, sess);
 		
 		if (busquedaAvanzadaLentilla.equals("true")) {
 			
@@ -165,39 +176,52 @@ public class ControllerSearchProductPres implements Serializable {
 			else
 				tipo="Lejos";
 			
-		}
+		}		
 		
+		if (tieneSuple) {		
+			seg_arm  = "2";
+		    cris_esp = "1";
+		    cris_esp_seg = "0";	
+		    seg_cristal = true;
+		}else {
+			
+			if(familia.indexOf("8") !=-1 ){	   			
+		    	seg_arm = "2";
+		    	cris_esp= "2";
+		    	cris_esp_seg = "0";
+		    	seg_cristal = true;
+		    }else{				    	 
+		    	 //$q("#seg_cristal",window.parent.document).val("");
+		    	 seg_arm="0";
+		    	 cris_esp="0";
+		    	 cris_esp_seg="0";
+		    	 seg_cristal = false;
+		    }
+			
+		}			
 		
 		objetos.put("producto",producto);
-		objetos.put("tipo",tipo);	
+		objetos.put("tipo",tipo);			
 		
-		try {
-			busquedaProductosForm.setTipofamilia(familiaBean.getTipo_fam());			
-			busquedaProductosForm.setCodigo_barras(producto.getCod_barra());
+		busquedaProductosForm.setTipofamilia(familiaBean.getTipo_fam());			
+		busquedaProductosForm.setCodigo_barras(producto.getCod_barra());			
+		
+		producto.setTipoFamilia(familiaBean.getTipo_fam());
+		producto.setGrupo("0");			
+		
+		winVisibleBusqueda="FALSE";			
+		
+		if (instancia==1)
+			BindUtils.postGlobalCommand(null, null, "actProdGridPresupuesto", objetos);
 			
-			
-			producto.setTipoFamilia(familiaBean.getTipo_fam());
-			producto.setGrupo("0");		
-			
-			boolean tieneSuple = busquedaProductosDispatchActions.tiene_suple(busquedaProductosForm, sess);
-			
-			//abriri ventana de suplementos
-			
-			
-			winVisibleBusqueda="FALSE";	
-			
-			
-			if (instancia==1)
-				BindUtils.postGlobalCommand(null, null, "actProdGridPresupuesto", objetos);
+		if (instancia==2) {
+			objetos.put("seg_arm",seg_arm);
+			objetos.put("cris_esp",cris_esp);
+			objetos.put("cris_esp_seg",cris_esp_seg);
+			objetos.put("seg_cristal",seg_cristal); 
+			BindUtils.postGlobalCommand(null, null, "actProdGridVentaPedido", objetos);
+		}
 				
-			if (instancia==2)
-				BindUtils.postGlobalCommand(null, null, "actProdGridVentaPedido", objetos);				
-			
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}		
 		
 	}
 	
@@ -212,53 +236,61 @@ public class ControllerSearchProductPres implements Serializable {
 	
 	@NotifyChange("busquedaProductosForm")
 	@Command
-	public void despachador(@BindingParam("arg")String arg) {	
+	public void despachador() {	
 		
-		Optional<FamiliaBean> fam    = Optional.ofNullable(familiaBean);
-		Optional<SubFamiliaBean> subfam = Optional.ofNullable(subFamiliaBean);
-		Optional<GrupoFamiliaBean> grufam = Optional.ofNullable(grupoFamiliaBean);
+		Optional<String> fam    = Optional.ofNullable(familiaBean.getCodigo());
+		Optional<String> subfam = Optional.ofNullable(subFamiliaBean.getCodigo());
+		Optional<String> grufam = Optional.ofNullable(grupoFamiliaBean.getCodigo());
+		
+		Optional<String> codbus = Optional.ofNullable(busquedaProductosForm.getCodigoBusqueda());
+		Optional<String> codbusbar = Optional.ofNullable(busquedaProductosForm.getCodigoBarraBusqueda());
+		
 		
 		if (fam.isPresent())		
-			busquedaProductosForm.setFamilia(fam.get().getCodigo());
+			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
 		else
-			busquedaProductosForm.setFamilia("");
+			busquedaProductosForm.setFamilia("0");
 		
 		if(subfam.isPresent())
-			busquedaProductosForm.setSubFamilia(subfam.get().getCodigo());
+			busquedaProductosForm.setSubFamilia(subFamiliaBean.getCodigo());
 		else	
-			busquedaProductosForm.setSubFamilia("");
+			busquedaProductosForm.setSubFamilia("0");
 		
 		if(grufam.isPresent())		
-			busquedaProductosForm.setGrupo (grufam.get().getCodigo());		    	
+			busquedaProductosForm.setGrupo (grupoFamiliaBean.getCodigo());		    	
 		else
 			busquedaProductosForm.setGrupo("0");
 		
-	    busquedaProductosForm.setAccion(arg);     	
-     	
-     	if (arg.equals("buscar")) { 
+		
+		if(!codbus.isPresent()) busquedaProductosForm.setCodigoBusqueda("");
+		if(!codbusbar.isPresent()) busquedaProductosForm.setCodigoBarraBusqueda("");
+		
+		
+	    busquedaProductosForm.setAccion("buscar");      	
      		
-     		if (busquedaAvanzada.equals("true")) {
-	     		if (!isOjoDerecho() && !isOjoIzquierdo()) {
-	     			
-	     			Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
-	     			busquedaProductosForm.setAccion("error");
-	     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);					
-	     		}
-	     		else {	     			
-	     			
-	     			busquedaProductosForm.setAccion("busqueda_graduada");
-	     			busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	     			
-	     		}
-     		}    		
-			
-			if (busquedaAvanzadaLentilla.equals("true")) {
-				if (!isOjoDerecho() && !isOjoIzquierdo()) {
-					Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
-					busquedaProductosForm.setAccion("error");
-	     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
-				}
-			}			
-		}
+ 		if (busquedaAvanzada.equals("true")) {
+     		if (!isOjoDerecho() && !isOjoIzquierdo()) {
+     			
+     			Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
+     			busquedaProductosForm.setAccion("error");
+     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);					
+     		}
+     		else {	     			
+     			
+     			busquedaProductosForm.setAccion("busqueda_graduada");
+     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	     			
+     		}
+ 		}    		
+		
+		if (busquedaAvanzadaLentilla.equals("true")) {
+			if (!isOjoDerecho() && !isOjoIzquierdo()) {
+				Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
+				busquedaProductosForm.setAccion("error");
+     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
+				return;
+			}
+		}			
+		
      	
      	//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	
      	//inicializo la busqueda
@@ -276,7 +308,7 @@ public class ControllerSearchProductPres implements Serializable {
 	
 	
 	
-	@NotifyChange({"busquedaProductosForm","busquedaAvanzada","busquedaAvanzadaLentilla","subFamiliaBeans","subFamiliaBean","grupoFamiliaBean"})
+	@NotifyChange({"busquedaProductosForm","subFamiliaBean","grupoFamiliaBean","busquedaAvanzada","busquedaAvanzadaLentilla"})
 	@Command
 	public void cargaSubFamilias() {	
 		try {
@@ -285,8 +317,8 @@ public class ControllerSearchProductPres implements Serializable {
 			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 			
 			//Inicializo los combos inferiores
-			subFamiliaBean  = null;
-			grupoFamiliaBean= null;
+			//subFamiliaBean  = null;
+			//grupoFamiliaBean= null;
 			// --->
 			
 			subFamiliaBeans = utilesDaoImpl.traeSubfamilias(familiaBean.getCodigo());
@@ -321,7 +353,7 @@ public class ControllerSearchProductPres implements Serializable {
 		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 		
 		//Inicializo los combos inferiores		
-		grupoFamiliaBean= null;
+		//grupoFamiliaBean= null;
 		// --->
 		
 		try {

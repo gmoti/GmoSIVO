@@ -320,7 +320,7 @@
 							</columns>
 							<template name="model" >
 								<row>
-									<textbox value="@load(each.codigo)" width="150px" tooltiptext="Click para ver detalles" 
+									<textbox value="@load(each.cod_barra)" width="150px" tooltiptext="Click para ver detalles" 
 											onClick="@command('actualizaDetalles',arg=each)" 
 											readonly="true"/>
 									<textbox value="@load(each.descripcion)" width="450px" readonly="true"/>

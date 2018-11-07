@@ -92,7 +92,7 @@
 						<label value="Apellidos(*)"/>
 						<textbox value="@bind(vm.clienteForm.apellidos)" disabled="@bind(vm.bDisableinicial)"/>
 						<label value="Edad"/>
-						<textbox value="@bind(vm.clienteForm.edad)" disabled="@bind(vm.bDisableinicial)"/>					
+						<textbox value="@bind(vm.clienteForm.edad)" width="60px" disabled="@bind(vm.bDisableinicial)"/>					
 					</row>
 					
 					<row><!-- Linea 3 -->

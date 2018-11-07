@@ -55,7 +55,7 @@
 									model="@load(vm.busquedaProductosForm.listaFamilias)"
 									selectedItem="@bind(vm.familiaBean)"
 									onSelect="@command('cargaSubFamilias')"
-									placeholder="Seleccione"
+									placeholder="SELECCIONAR"
 									onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
 									width="300px">
 
@@ -73,7 +73,7 @@
 									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
 									selectedItem="@bind(vm.subFamiliaBean)"
 									onSelect="@command('cargaGrupoFamilias')"
-									placeholder="Seleccione"
+									placeholder="SELECCIONAR"
 									onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
 									width="300px">
 
@@ -91,7 +91,7 @@
 									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
 									selectedItem="@bind(vm.grupoFamiliaBean)"
 									onSelect="@command('cambiaGrupoFamilias')"
-									placeholder="Seleccione"
+									placeholder="SELECCIONAR"
 									onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
 									width="300px">
 
@@ -115,7 +115,7 @@
 									<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
 									<space width="10px"/>
 									<button image="/iconos/lupa2.png"
-										label="Buscar" onClick="@command('despachador',arg='buscar')" />
+										label="Buscar" onClick="@command('despachador')" />
 								</cell> 
 							</row>
 						</rows>

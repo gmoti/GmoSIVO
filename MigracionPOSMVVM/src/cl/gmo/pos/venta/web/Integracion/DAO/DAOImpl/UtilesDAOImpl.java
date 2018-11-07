@@ -833,6 +833,14 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             rs = (ResultSet)st.getObject(2);
            
             FamiliaBean familia;
+            
+            //fquiroz 
+            //Incorporo nodo valor 0
+            familia = new FamiliaBean();
+            familia.setCodigo("0");
+            familia.setDescripcion("SELECCIONAR");
+            familia.setTipo_fam("");
+            lista_Familias.add(familia);
            
             while (rs.next())
             {
@@ -1006,6 +1014,14 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             rs = (ResultSet)st.getObject(2);
            
             SubFamiliaBean subfamilia;
+            
+            //FQUIROZ
+            //Agrego nodo igual 0
+            subfamilia = new SubFamiliaBean();
+            subfamilia.setCodigo("0");
+            subfamilia.setDescripcion("SELECCIONAR");
+            lista_SubFamilias.add(subfamilia);
+            
            
             while (rs.next())
             {
@@ -1121,6 +1137,12 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             rs = (ResultSet)st.getObject(3);
            
             GrupoFamiliaBean subgrupofamilia;
+            
+            subgrupofamilia = new GrupoFamiliaBean();
+            subgrupofamilia.setCodigo("0");
+            subgrupofamilia.setDescripcion("SELECCIONAR");           
+            lista_GrupoFamilias.add(subgrupofamilia);     
+            
            
             while (rs.next())
             {
