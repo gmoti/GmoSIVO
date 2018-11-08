@@ -146,7 +146,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		
         if(seleccionPagoForm.getOrigen().equals("ALBARAN_DEVOLUCION")) {
 			
-        	//guarda_PagoAlbaran()
+        	guarda_PagoAlbaran();
         	
         	//si es impresion 
         	//generaBoleta()
@@ -240,10 +240,65 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}				
+		}			
+	}
+	
+	
+	public void guarda_PagoAlbaran()
+	{
+		int correcto = 1;
+		
+		
+		if (seleccionPagoForm.getEstado().equals("PAGADO_TOTAL")) {
+			Messagebox.show("No hay saldos pendientes por pagar");
+			correcto = 0;
+		}
+		else
+		{
+			
+			if (seleccionPagoForm.getV_a_pagar() == 0) {
+				if(seleccionPagoForm.getDescuento() != 100)
+				{
+					correcto = 0;
+					Messagebox.show("No hay saldos pendientes por pagar");
+				}
+			
+			}
+			else
+			{
+				if (seleccionPagoForm.getForma_pago().equals("0")) {
+					Messagebox.show("Debe ingresar una forma de pago");
+					correcto = 0;
+				}
+				else
+				{
+					if(seleccionPagoForm.getDiferencia() == 0)
+					{
+						Messagebox.show("No hay saldos pendientes por pagar");
+						correcto = 0;
+					}
+				} 
+			}
 		}
 		
 		
-				
+		if(seleccionPagoForm.getDiferencia() < 0){
+			Messagebox.show("El pago de la devolucion no puede ser mayor al valor total");
+			correcto = 0;
+		}
+		
+		if (correcto == 1) {
+			
+			try {
+				seleccionPagoForm.setAccion("pagar");
+				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			//load();
+		}
+		
 	}
 	
 	

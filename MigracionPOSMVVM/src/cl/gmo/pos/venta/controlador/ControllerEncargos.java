@@ -1269,15 +1269,19 @@ public class ControllerEncargos implements Serializable {
 				 String codigo = ventaPedidoDispatchActions.valida_seg_cris(ventaPedidoForm, sess);	
 				 
 				 if (!codigo.equals("0")) {
+					 
+					ventaPedidoForm.setAccion("agregarProducto");
+	                ventaPedidoForm.setAddProducto(codigo);
+	                ventaPedidoForm.setCantidad(1);
+	                ventaPedidoForm.setOjo(segundoOjo);
+	                ventaPedidoForm.setDescripcion(tipo); 					 
 
-					 if(cris_esp.equals("1")) {				
-		                
-		                ventaPedidoForm.setAccion("agregarProducto");
-		                ventaPedidoForm.setAddProducto(codigo);
-		                ventaPedidoForm.setCantidad(1);
-		                ventaPedidoForm.setOjo(segundoOjo);
-		                ventaPedidoForm.setDescripcion(tipo); 
-		                ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess); 
+					 if(cris_esp.equals("1")) {						 
+						 if(cris_esp_seg.equals("1")){
+							 ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+						 }
+					 }else {						 
+						 ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess); 
 					 }					 
 					 
 				 }else {
@@ -1285,9 +1289,7 @@ public class ControllerEncargos implements Serializable {
 					 return;
 				 }
 			
-			 } 	
-			
-			
+			 } 		
 			
 			
 		} catch (Exception e) {			

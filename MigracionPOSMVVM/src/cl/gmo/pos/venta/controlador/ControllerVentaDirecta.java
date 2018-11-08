@@ -430,7 +430,7 @@ public class ControllerVentaDirecta implements Serializable{
 	
 	@NotifyChange({"ventaDirectaForm"})
     @GlobalCommand
-	public void actProdGrid(@BindingParam("arg")ProductosBean arg) {		
+	public void actProdGrid(@BindingParam("producto")ProductosBean arg) {		
 		
 		arg.setImporte(arg.getPrecio());
 		arg.setCantidad(1);

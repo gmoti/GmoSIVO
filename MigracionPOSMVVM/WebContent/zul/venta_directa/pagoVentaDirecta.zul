@@ -90,7 +90,8 @@
 					<toolbarbutton image="/iconos/save.png" sclass="shrink24" 
 							onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
      				<toolbarbutton image="/iconos/printer.png" 
-     						onClick="@command('generaBoleta')" sclass="shrink24"/>	
+     						onClick="@command('generaBoleta')" sclass="shrink24" 
+     						disabled="@bind(vm.seleccionPagoForm.origen eq 'ALBARAN_DEVOLUCION'?'true':'false')"/>	
      					
 				</div>																			
 			</div>

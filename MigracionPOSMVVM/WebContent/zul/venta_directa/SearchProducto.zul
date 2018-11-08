@@ -37,7 +37,7 @@
 					<div width="100%" vflex="min" style="background-color:black;color: white">
 						<label value="Busqueda Productos" />
 						<div style="float: right">					
-							<toolbarbutton image="/iconos/cancel2.png" onClick="@command('seleccionaProducto',win=winBuscaProductoVenta)"/>		
+							<toolbarbutton image="/iconos/cancel2.png" onClick="@command('cierraVentana')"/>		
 						</div>																			
 					</div>	
 					
@@ -53,7 +53,7 @@
 									model="@load(vm.busquedaProductosForm.listaFamilias)"
 									selectedItem="@bind(vm.familiaBean)"
 									onSelect="@command('cargaSubFamilias')"
-									placeholder="Seleccione"
+									placeholder="SELECCIONAR"
 									onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
 									width="300px">
 									<template name='model'>
@@ -70,7 +70,7 @@
 									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
 									selectedItem="@bind(vm.subFamiliaBean)"
 									onSelect="@command('cargaGrupoFamilias')"
-									placeholder="Seleccione"
+									placeholder="SELECCIONAR"
 									onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
 									width="300px">
 									<template name='model'>
@@ -86,7 +86,7 @@
 								<combobox
 									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
 									selectedItem="@bind(vm.grupoFamiliaBean)"
-									placeholder="Seleccione"
+									placeholder="SELECCIONAR"
 									onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
 									width="300px">
 									<template name='model'>
@@ -112,7 +112,7 @@
 									<space width="10px"/>	
 	
 									<button image="/iconos/lupa2.png" width="100px"
-										label="Buscar" onClick="@command('despachador',arg='buscar')" />
+										label="Buscar" onClick="@command('despachador')" />
 								</cell>	
 							</row>
 						</rows>
@@ -153,8 +153,7 @@
 									<doublebox value="@load(each.precio)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<textbox value="@load(each.grupo)" width="50px" readonly="true"/> 								
 											
-									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',win=winBuscaProductoVenta) 
-											@global-command('actProdGrid',arg=each)"/>		
+									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',producto=each)"/>		
 										
 								</row>							
 							</template>

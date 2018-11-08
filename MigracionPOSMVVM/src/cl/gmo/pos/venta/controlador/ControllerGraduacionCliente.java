@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.ExecutionParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -64,7 +66,8 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 
 	@Init	
-	public void inicial() {
+	public void inicial(@ExecutionArgParam("origen")String origen,
+						@ExecutionArgParam("cliente")ClienteBean cliente) {
 		
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
@@ -81,13 +84,30 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesDispatch = new GraduacionesDispatchActions();
 		busquedaClientesDispatch = new BusquedaClientesDispatchActions();	
 		
-		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
+		Optional<String> o = Optional.ofNullable(origen);
+		if(!o.isPresent()) {
+			origen="menu";
+			cliente = new ClienteBean();
+		} 
 		
-		graduacionesForm.setOD_cantidad("-1");
-		graduacionesForm.setOI_cantidad("-1");
 		
-		graduacionesForm.setOD_base("Seleccione");
-		graduacionesForm.setOI_base("Seleccione");
+		if (origen.equals("cliente")) {			
+			graduacionesForm.setCliente(Integer.parseInt(cliente.getCodigo()));
+			graduacionesForm.setNombre(cliente.getNombre());
+			graduacionesForm.setApellido(cliente.getApellido());
+			
+			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
+		}else {
+			graduacionesForm.setCliente(0);
+			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
+			
+			graduacionesForm.setOD_cantidad("-1");
+			graduacionesForm.setOI_cantidad("-1");
+			
+			graduacionesForm.setOD_base("Seleccione");
+			graduacionesForm.setOI_base("Seleccione");		
+			
+		}	
 		
 		posicionaCombo();
 		

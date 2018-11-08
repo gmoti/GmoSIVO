@@ -25,6 +25,7 @@ import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.controlador.ventaDirecta.BusquedaProductosDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.Integracion.DAO.DAOImpl.UtilesDAOImpl;
+import cl.gmo.pos.venta.web.beans.DivisaBean;
 import cl.gmo.pos.venta.web.beans.FamiliaBean;
 import cl.gmo.pos.venta.web.beans.GrupoFamiliaBean;
 import cl.gmo.pos.venta.web.beans.ProductosBean;
@@ -311,6 +312,9 @@ public class ControllerSearchProductPres implements Serializable {
 	@NotifyChange({"busquedaProductosForm","subFamiliaBean","grupoFamiliaBean","busquedaAvanzada","busquedaAvanzadaLentilla"})
 	@Command
 	public void cargaSubFamilias() {	
+		
+		String codInicial="0";
+		
 		try {
 			
 			//al cambiar el padre se limpia la busqueda previamente ejecutada			
@@ -318,7 +322,9 @@ public class ControllerSearchProductPres implements Serializable {
 			
 			//Inicializo los combos inferiores
 			//subFamiliaBean  = null;
-			//grupoFamiliaBean= null;
+			//grupoFamiliaBean= null;			
+			busquedaProductosForm.setCodigoBarraBusqueda("");
+			busquedaProductosForm.setCodigoBusqueda("");
 			// --->
 			
 			subFamiliaBeans = utilesDaoImpl.traeSubfamilias(familiaBean.getCodigo());
@@ -337,8 +343,21 @@ public class ControllerSearchProductPres implements Serializable {
 				cleanProducts();
 			}
 			else
-				setBusquedaAvanzadaLentilla("false");
+				setBusquedaAvanzadaLentilla("false");			
+						
+			Optional<SubFamiliaBean> a = busquedaProductosForm.getListaSubFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+			subFamiliaBean = a.get();
 			
+			GrupoFamiliaBean gfb = new GrupoFamiliaBean();
+			gfb.setCodigo("0");
+			gfb.setDescripcion("SELECCIONAR");
+			gfb.setFamilia("");
+			gfb.setSubfamilia("");
+			
+			busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
+			busquedaProductosForm.getListaGruposFamilias().add(gfb);
+			Optional<GrupoFamiliaBean> b = busquedaProductosForm.getListaGruposFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+			grupoFamiliaBean = b.get();	
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
@@ -349,16 +368,24 @@ public class ControllerSearchProductPres implements Serializable {
 	@Command
 	public void cargaGrupoFamilias() {	
 		
+		String codInicial="0";
+		
 		//al cambiar el padre se limpia la busqueda previamente ejecutada			
 		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 		
 		//Inicializo los combos inferiores		
-		//grupoFamiliaBean= null;
+		//grupoFamiliaBean= null;		
+		busquedaProductosForm.setCodigoBarraBusqueda("");
+		busquedaProductosForm.setCodigoBusqueda("");
 		// --->
 		
 		try {
 			grupoFamiliaBeans = utilesDaoImpl.traeGruposFamilias(familiaBean.getCodigo(), subFamiliaBean.getCodigo());
-			busquedaProductosForm.setListaGruposFamilias(grupoFamiliaBeans);					
+			busquedaProductosForm.setListaGruposFamilias(grupoFamiliaBeans);			
+						
+			Optional<GrupoFamiliaBean> b = busquedaProductosForm.getListaGruposFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+			grupoFamiliaBean = b.get();
+			
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
@@ -370,7 +397,9 @@ public class ControllerSearchProductPres implements Serializable {
 	@Command
 	public void cambiaGrupoFamilias() {
 		//al cambiar el padre se limpia la busqueda previamente ejecutada			
-		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());		
+		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+		busquedaProductosForm.setCodigoBarraBusqueda("");
+		busquedaProductosForm.setCodigoBusqueda("");
 	}	
 		
 	
@@ -394,6 +423,20 @@ public class ControllerSearchProductPres implements Serializable {
         busquedaProductosForm.setIndex_graduacion(codigo);
         busquedaProductosForm.setAccion("selecciona_graduacion");
         busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	
+		
+	}
+	
+		
+	@Command
+	public void inicioCombo() {
+		
+		String codInicial="0";		
+		
+		Optional<SubFamiliaBean> a = busquedaProductosForm.getListaSubFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+		subFamiliaBean = a.get();
+		
+		Optional<GrupoFamiliaBean> b = busquedaProductosForm.getListaGruposFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+		grupoFamiliaBean = b.get();		
 		
 	}
 

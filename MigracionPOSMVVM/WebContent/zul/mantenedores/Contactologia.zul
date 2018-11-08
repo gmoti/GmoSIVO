@@ -54,7 +54,7 @@
 	   	<div width="100%" vflex="min">
 	   		<div style="float: left ;">
 	   			<label value="Cliente"/>
-	   			<textbox value="@bind(vm.contactologiaForm.nombre_cliente)"/>	   			
+	   			<textbox value="@bind(vm.contactologiaForm.nombre_cliente)" readonly="true"/>	   			
 	   		</div>	   					   	
 	   	</div>
 	   	

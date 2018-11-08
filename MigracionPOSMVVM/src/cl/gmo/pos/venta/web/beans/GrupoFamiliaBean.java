@@ -12,7 +12,7 @@ public class GrupoFamiliaBean {
     private String codigo;
     private String descripcion;
     private String familia;
-    private String subfamilia;
+    private String subfamilia;    
 
     public String getFamilia() {
         return familia;

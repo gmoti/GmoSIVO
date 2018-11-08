@@ -57,7 +57,7 @@
 				   	<div width="100%" vflex="min">
 				   		<div style="float: left ;">
 				   			<label value="Cliente"/>
-				   			<textbox value="@bind(vm.graduacionesForm.nombre_cliente)"/>
+				   			<textbox value="@bind(vm.graduacionesForm.nombre_cliente)" readonly="true"/>
 				   			<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('busquedaCliente')" />
 				   		</div>
 				   		

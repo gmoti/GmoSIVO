@@ -45,6 +45,7 @@ public class ControllerCliente implements Serializable{
 	BusquedaClientesDispatchActions busquedaClientes;
 	
 	Session sess = Sessions.getCurrent();	
+	HashMap<String,Object> objetos;
 
 	private String usuario;	
 	private String sucursalDes;	
@@ -144,8 +145,12 @@ public class ControllerCliente implements Serializable{
 	@Command
 	public void clienteGraduacion() {
 		
+		objetos = new HashMap<String,Object>();		
+		objetos.put("origen","cliente");
+		objetos.put("cliente",cliente);
+		
 		Window winGraduacion = (Window)Executions.createComponents(
-                "/zul/mantenedores/GraduacionClientes.zul", null, null);
+                "/zul/mantenedores/GraduacionClientes.zul", null, objetos);
 		
 		winGraduacion.doModal();
 		
@@ -203,7 +208,7 @@ public class ControllerCliente implements Serializable{
 		
 	}	
 	
-	private void posicionaCombos() {		
+	public void posicionaCombos() {		
 		
 		Optional<AgenteBean> a = clienteForm.getListaAgentes().stream().filter(s -> clienteForm.getAgente().equals(s.getUsuario())).findFirst();		
 		if (a.isPresent()) 
@@ -275,7 +280,7 @@ public class ControllerCliente implements Serializable{
 	}	
 	
 	
-	@NotifyChange({"clienteForm","bDisableinicial","bDisableinicialRut"})
+	@NotifyChange({"clienteForm","bDisableinicial","bDisableinicialRut","agenteBean","tipoViaBean","provinciaBean"})
 	@GlobalCommand
 	public void buscarClienteCliente(@BindingParam("cliente")ClienteBean cliente) {
 		

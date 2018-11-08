@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
@@ -19,24 +18,18 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zul.Popup;
 import org.zkoss.zul.Window;
-
-import com.ibm.icu.util.Calendar;
-
 import cl.gmo.pos.venta.controlador.ventaDirecta.SeleccionPagoDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
-import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.actions.DevolucionDispatchActions;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.AlbaranBean;
-import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.ConvenioBean;
 import cl.gmo.pos.venta.web.beans.DevolucionBean;
 import cl.gmo.pos.venta.web.beans.DivisaBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
 import cl.gmo.pos.venta.web.beans.IdiomaBean;
-import cl.gmo.pos.venta.web.beans.ProductosBean;
+
 import cl.gmo.pos.venta.web.beans.ProvinciaBean;
 import cl.gmo.pos.venta.web.beans.TipoAlbaranBean;
 import cl.gmo.pos.venta.web.beans.TipoMotivoDevolucionBean;
@@ -147,7 +140,7 @@ public class ControllerAlbaran implements Serializable{
 		}		
 		
 		String val_letras = "/^[A-Z a-zÑñ. ]{3,50}$/";	
-		
+		/*
 		if(!Pattern.matches(val_letras, devolucionForm.getDireccion())) {
 			Messagebox.show("Debe Ingresar una dirección de cliente válida.");
 			return;
@@ -162,19 +155,8 @@ public class ControllerAlbaran implements Serializable{
 			Messagebox.show("Debes ingresar la provincia del cliente.");
 			return;
 		}
-		
-		cobrar_albaran_validaCaja();	
-		
-		/*objetos = new HashMap<String,Object>();
-		objetos.put("cliente",cliente);
-		objetos.put("pagoForm",seleccionPagoForm);
-		objetos.put("ventaOrigenForm",devolucionForm);
-		objetos.put("origen","PEDIDO");
-		
-		Window windowPagoVentaDirecta = (Window)Executions.createComponents(
-                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
-		
-		windowPagoVentaDirecta.doModal();*/
+		*/
+		cobrar_albaran_validaCaja();
 		
 	}
 	
@@ -597,6 +579,7 @@ public class ControllerAlbaran implements Serializable{
 						fechaGarantia = dt.parse(devolucionForm.getFecha_garantia());
 					else
 						fechaGarantia = null;
+					
 					horaActual = tt.parse(devolucionForm.getFecha());
 				} catch (ParseException e) {			
 					e.printStackTrace();

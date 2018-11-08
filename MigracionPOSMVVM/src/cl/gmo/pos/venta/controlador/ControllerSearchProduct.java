@@ -2,9 +2,11 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -36,10 +38,7 @@ public class ControllerSearchProduct implements Serializable{
 	 */
 	private static final long serialVersionUID = -3072799490102569407L;
 	
-	Session sess = Sessions.getCurrent();
-
-	@Wire("#winBuscaProducto")
-	private Window win;	
+	Session sess = Sessions.getCurrent();	
 	
 	//constantes
 	private final String SUCURSAL="T002";
@@ -58,12 +57,10 @@ public class ControllerSearchProduct implements Serializable{
 	private BusquedaProductosDispatchActions busquedaProductosDispatchActions;
 	
 	private String winVisibleBusqueda;
+	HashMap<String,Object> objetos;
 	
 	@Init
-	public void inicial(@ContextParam(ContextType.VIEW) Component view, 
-						@ExecutionArgParam("familiaBeans")List<FamiliaBean> arg) {	
-		
-		Selectors.wireComponents(view, this, false);
+	public void inicial(@ExecutionArgParam("familiaBeans")List<FamiliaBean> arg) {		
 		
 		winVisibleBusqueda = "TRUE";
 		busquedaProductosForm = new BusquedaProductosForm(); 
@@ -82,32 +79,56 @@ public class ControllerSearchProduct implements Serializable{
 		//cargaFamilias();	
 	}
 	
-	/*@NotifyChange("busquedaProductosForm")
-	public void cargaFamilias() {		
-		try {			
-			busquedaProductosForm.setListaFamilias(utilesDaoImpl.traeFamilias(TIPO_BUSQUEDA));
-		} catch (Exception e) {			
-			e.printStackTrace();
-		}		
-	}*/
 	
-	@NotifyChange("busquedaProductosForm")
+	@NotifyChange({"busquedaProductosForm","subFamiliaBean","grupoFamiliaBean"})
 	@Command
-	public void cargaSubFamilias() {	
+	public void cargaSubFamilias() {
+		
+		String codInicial="0";
+		
 		try {					
+			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+			busquedaProductosForm.setCodigoBarraBusqueda("");
+			busquedaProductosForm.setCodigoBusqueda("");			
+			
 			busquedaProductosForm.setListaSubFamilias(utilesDaoImpl.traeSubfamilias(familiaBean.getCodigo()));
-			cleanProducts();
+			
+			Optional<SubFamiliaBean> a = busquedaProductosForm.getListaSubFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+			subFamiliaBean = a.get();
+			
+			GrupoFamiliaBean gfb = new GrupoFamiliaBean();
+			gfb.setCodigo("0");
+			gfb.setDescripcion("SELECCIONAR");
+			gfb.setFamilia("");
+			gfb.setSubfamilia("");
+			
+			busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
+			busquedaProductosForm.getListaGruposFamilias().add(gfb);
+			Optional<GrupoFamiliaBean> b = busquedaProductosForm.getListaGruposFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+			grupoFamiliaBean = b.get();	
+			
+			//cleanProducts();
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 	}	
 	
-	@NotifyChange("busquedaProductosForm")
+	@NotifyChange({"busquedaProductosForm","grupoFamiliaBean"})
 	@Command
 	public void cargaGrupoFamilias() {	
+		
+		String codInicial="0";
+		
+		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+		busquedaProductosForm.setCodigoBarraBusqueda("");
+		busquedaProductosForm.setCodigoBusqueda("");
+		
 		try {			
 			busquedaProductosForm.setListaGruposFamilias(utilesDaoImpl.traeGruposFamilias(familiaBean.getCodigo(), subFamiliaBean.getCodigo() ));
-			cleanProducts();
+			
+			Optional<GrupoFamiliaBean> b = busquedaProductosForm.getListaGruposFamilias().stream().filter(s -> codInicial.equals(s.getCodigo())).findFirst();
+			grupoFamiliaBean = b.get();
+			//cleanProducts();
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}
@@ -116,34 +137,40 @@ public class ControllerSearchProduct implements Serializable{
 	
 	@NotifyChange("busquedaProductosForm")
 	@Command
-	public void despachador(@BindingParam("arg")String arg) {	
+	public void despachador() {	
 		
-		Optional<FamiliaBean> fam    = Optional.ofNullable(familiaBean);
-		Optional<SubFamiliaBean> subfam = Optional.ofNullable(subFamiliaBean);
-		Optional<GrupoFamiliaBean> grufam = Optional.ofNullable(grupoFamiliaBean);
+		Optional<String> fam    = Optional.ofNullable(familiaBean.getCodigo());
+		Optional<String> subfam = Optional.ofNullable(subFamiliaBean.getCodigo());
+		Optional<String> grufam = Optional.ofNullable(grupoFamiliaBean.getCodigo());
+		
+		Optional<String> codbus = Optional.ofNullable(busquedaProductosForm.getCodigoBusqueda());
+		Optional<String> codbusbar = Optional.ofNullable(busquedaProductosForm.getCodigoBarraBusqueda());
 		
 		if (fam.isPresent())		
-			busquedaProductosForm.setFamilia(fam.get().getCodigo());
+			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
 		else
 			busquedaProductosForm.setFamilia("");
 		
 		if(subfam.isPresent())
-			busquedaProductosForm.setSubFamilia(subfam.get().getCodigo());
+			busquedaProductosForm.setSubFamilia(subFamiliaBean.getCodigo());
 		else	
 			busquedaProductosForm.setSubFamilia("");
 		
 		if(grufam.isPresent())		
-			busquedaProductosForm.setGrupo(grufam.get().getCodigo());
+			busquedaProductosForm.setGrupo(grupoFamiliaBean.getCodigo());
 		else
 			busquedaProductosForm.setGrupo("");
 		
-		busquedaProductosForm.setAccion(arg); 
+		if(!codbus.isPresent()) busquedaProductosForm.setCodigoBusqueda("");
+		if(!codbusbar.isPresent()) busquedaProductosForm.setCodigoBarraBusqueda("");
+		
+		busquedaProductosForm.setAccion("buscar"); 
 		busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
 		
 	}
 	
 	
-	@NotifyChange("busquedaProductosForm")
+	/*@NotifyChange("busquedaProductosForm")
 	@Command
 	public void buscarProducto(@BindingParam("arg")FamiliaBean arg,
 			@BindingParam("arg2")SubFamiliaBean arg2,
@@ -154,14 +181,19 @@ public class ControllerSearchProduct implements Serializable{
 			
 		busquedaProductosForm.setListaProductos(busquedaProdhelper.traeProductos(arg.getCodigo(), arg2.getCodigo(), 
 					arg3.getCodigo(), "", "", "", arg4, arg5, SUCURSAL, TIPO_BUSQUEDA));		
-	}
+	}*/
 	
 	
 	@NotifyChange("winVisibleBusqueda")
 	@Command
-	public void seleccionaProducto(@BindingParam("win")Window win) {		
-		//win.detach();
+	public void seleccionaProducto(@BindingParam("producto")ProductosBean producto) {	
+		
+		objetos = new HashMap<String,Object>();
+		objetos.put("producto",producto);
+		
 		winVisibleBusqueda="FALSE";
+		
+		BindUtils.postGlobalCommand(null, null, "actProdGrid", objetos);		
 	}
 
 	
@@ -185,6 +217,13 @@ public class ControllerSearchProduct implements Serializable{
 	public void cleanProducts() {
 		
 		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+	}
+	
+	@NotifyChange("winVisibleBusqueda")
+	@Command
+	public void cierraVentana() {	
+		
+		winVisibleBusqueda="FALSE";
 	}
 
 	//---------getter and setter-----------
