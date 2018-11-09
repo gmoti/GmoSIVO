@@ -126,12 +126,13 @@ public class ControllerCliente implements Serializable{
 	}
 	
 	@Command
-	@NotifyChange({"clienteForm","fechaNac"})
+	@NotifyChange({"clienteForm","fechaNac","bDisableinicialRut"})
 	public void nuevoCliente(){
 		
 		clienteForm.setAccion("nuevo_cliente");
 		clid.ingresoCliente(clienteForm, sess);
-		fechaNac = new Date(System.currentTimeMillis());		
+		fechaNac = new Date(System.currentTimeMillis());
+		bDisableinicialRut = false;
 	}
 	
 	@Command

@@ -1,6 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-
-<window id="winGraduacionClientes" border="none"  width="65%" height="75%" vflex="min"
+ <window id="winGraduacionClientes" border="none"  width="65%" height="75%" vflex="min"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
 			
 	<style>
@@ -28,7 +27,8 @@
 		tr.z-row td.z-row-inner { 
 		 		border: none;  		
 		}
-	</style>		
+	</style>	
+		
 			
 	<div width="100%" height="100%">	
 		
@@ -101,7 +101,7 @@
 				   				
 				   				<row>
 				   					<label value="OD"/>
-				   					<textbox value="@bind(vm.graduacionesForm.OD_esfera)" width="50px"/>
+				   					<textbox id="ODEsfera" value="@bind(vm.graduacionesForm.OD_esfera)" width="50px" />
 				   					<textbox value="@bind(vm.graduacionesForm.OD_cilindro)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_eje)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_cerca)" width="50px"/>
@@ -330,5 +330,12 @@
 				</div>
 			 </south>
 		</borderlayout> -->
-	</div>
+	</div>	
+	
+	<script type="text/javascript" defer="true">	
+	function validaEsfera()
+	{
+     alert("native script"+this.$f("ODEsfera").getValue());
+    }		   
+	</script>
 </window>

@@ -899,9 +899,13 @@ public class ControllerGraduacionCliente implements Serializable{
 		Optional<PrismaBaseBean> d = graduacionesForm.getListaBaseOI()				
 				.stream().filter(s ->graduacionesForm.getOI_base().equals(s.getDescripcion())).findFirst();		
 						
-			if (d.isPresent()) prismaBaseOI = d.get(); else prismaBaseOI=null;	
-		
+			if (d.isPresent()) prismaBaseOI = d.get(); else prismaBaseOI=null;		
 	}
+	
+	
+	
+	
+	
 	
 	
 	
