@@ -1,6 +1,8 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +27,7 @@ import org.zkoss.zul.Window;
 import com.google.javascript.jscomp.Var;
 import com.google.protobuf.Message;
 
+import cl.gmo.pos.validador.BeanGraduaciones;
 import cl.gmo.pos.venta.controlador.general.BusquedaClientesDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.actions.GraduacionesDispatchActions;
@@ -47,6 +50,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	GraduacionesForm graduacionesForm ;
 	GraduacionesBean graduacionesBean ;
 	BusquedaClientesForm busquedaClientesForm;
+	BeanGraduaciones beanGraduaciones;
 	
 	GraduacionesDispatchActions graduacionesDispatch; 	
 	BusquedaClientesDispatchActions busquedaClientesDispatch;
@@ -80,6 +84,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm = new GraduacionesForm();
 		graduacionesBean = new GraduacionesBean();
 		busquedaClientesForm = new BusquedaClientesForm();	
+		beanGraduaciones = new BeanGraduaciones();
 		
 		graduacionesDispatch = new GraduacionesDispatchActions();
 		busquedaClientesDispatch = new BusquedaClientesDispatchActions();	
@@ -208,11 +213,11 @@ public class ControllerGraduacionCliente implements Serializable{
 		pagina = graduacionesForm.getPagina();
 		existe_graduacion = graduacionesForm.getExiste_graduacion();		
 		
-		respuesta1 = validaInformacion();
-		respuesta  = true;
+		//respuesta1 = validaInformacion();
+		//respuesta  = true;
 		
 		if(respuesta1){
-			respuesta  = validaGraduacion();
+			//respuesta  = validaGraduacion();
 		}
 		
 		//valida diferente adicion
@@ -471,395 +476,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	}
 	
 	
-	private boolean validaInformacion() {
 		
-		String nombre_cliente="";	
-		String codigo_cliente="";
-		String doctor="";
-		String agente="";
-		
-		String OD_cantidad="";
-		String OI_cantidad="";
-		String OD_base="";
-		String OI_base="";
-		String fechaEmision="";
-	
-		nombre_cliente = graduacionesForm.getNombre_cliente().trim();	
-		
-		if(nombre_cliente.equals("")){
-			Messagebox.show("Debe ingresar cliente");
-			return false;
-		}
-		
-		codigo_cliente = graduacionesForm.getNombre_cliente().trim();	
-		
-		if(codigo_cliente.equals("") || codigo_cliente.equals("0")){
-			
-			if(codigo_cliente.equals("0")){
-				Messagebox.show("Debe buscar un cliente");
-			}else{
-				Messagebox.show("Debe ingresar un cliente");
-			}
-			
-			return false;
-		}
-		
-		doctor = graduacionesForm.getDoctor();
-		if(doctor.equals("")){
-			Messagebox.show("Debe ingresar un doctor");
-			return false;		
-		}
-		
-		agente = graduacionesForm.getAgente();
-		if(graduacionesForm.getAgente().equals("-1")){
-			Messagebox.show("Debe Seleccionar agente");
-			return false;		
-		}
-		
-		fechaEmision = graduacionesForm.getFechaEmision().trim();		
-		
-		if(fechaEmision.equals("")){
-			Messagebox.show("Debe ingresar fecha emision");
-			return false;
-		}
-		
-		OD_cantidad = graduacionesForm.getOD_cantidad().trim();		
-		
-		if(!OD_cantidad.equals("")  && !OD_cantidad.equals("-1") ){
-			
-			OD_base = graduacionesForm.getOD_base().trim();
-			
-			if(OD_base.equals("")  || OD_base.equals("Seleccione")){				
-				Messagebox.show("Debe seleccionar Base de Prisma Derecho");
-				return false;
-			}
-			
-		}
-		
-		OI_cantidad = graduacionesForm.getOI_cantidad().trim();
-		
-		if(!OI_cantidad.equals("")  && !OI_cantidad.equals("-1") ){
-			
-			OI_base = graduacionesForm.getOI_base().trim();
-			
-			if(OI_base.equals("")  || OI_base.equals("Seleccione")){
-				Messagebox.show("Debe seleccionar Base de Prisma Izquierdo");
-				return false;
-			}
-			
-		}
-		
-		OD_base = graduacionesForm.getOD_base().trim();
-		
-		if(!OD_base.equals("")  &&  !OD_base.equals("Seleccione")){
-			
-			OD_cantidad = graduacionesForm.getOD_cantidad().trim();	
-			
-			if(OD_cantidad.equals("")  || OD_cantidad.equals("-1") ){
-				
-				Messagebox.show("Debe seleccionar Cantidad de Prisma Derecho");
-				return false;
-			}
-		}
-		
-		OI_base = graduacionesForm.getOI_base().trim();
-		
-		if(!OI_base.equals("") && !OI_base.equals("Seleccione")){
-			
-			OI_cantidad = graduacionesForm.getOI_cantidad().trim();
-			
-			if(OI_cantidad.equals("") || OI_cantidad.equals("-1") ){
-				
-				Messagebox.show("Debe seleccionar Cantidad de Prisma Izquierdo");
-				return false;
-			}
-		}	
-		
-		return true;
-	}
-	
-	
-	private boolean validaGraduacion(){
-		
-		String esferaD="";
-		String cilindroD="";
-		String ejeD="";
-		String adicionD="";
-		String OD_dnpl="";
-		
-		String esferaI = "";				
-		String cilindroI = "";			
-		String ejeI = "";		
-		String adicionI = "";		
-		String OI_dnpl = "";	
-		
-		boolean respuesta=false;
-		boolean respuestadnpc=false;		
-		
-		/********* VALIDACIONES OJO DERECHO ********/
-		esferaD = graduacionesForm.getOD_esfera().trim();		
-		cilindroD = graduacionesForm.getOD_cilindro().trim();		
-		ejeD = graduacionesForm.getOD_eje().trim();			
-		adicionD = graduacionesForm.getOD_adicion().trim();		
-		OD_dnpl = graduacionesForm.getOD_dnpl().trim();		
-		
-		if(!esferaD.equals("") && !esferaD.equals(null)){
-			
-			int esfera_D = Integer.parseInt(esferaD);
-			
-			if(Integer.parseInt(esferaD) < -30 || Integer.parseInt(esferaD) >30){
-				Messagebox.show("El valor esfera derecha esta fuera del rango permitido -30 y 30");
-				return false;
-			}		
-		}else{
-			Messagebox.show("Debe ingresar esfera derecha.");
-			return false;
-		}	
-		
-		
-		if(!cilindroD.equals("") && !cilindroD.equals(null)){		
-			
-			if(Integer.parseInt(cilindroD) < -8  || Integer.parseInt(cilindroD) > 8){
-				Messagebox.show("El valor cilindro derecho esta fuera de rango");
-				return false;
-			}		
-		}else{
-			Messagebox.show("Debe ingresar valor del cilindro derecho");
-			return false;
-		}
-		
-		
-		int intCilindro = Integer.parseInt(cilindroD);
-		
-		if((!cilindroD.equals("") && !cilindroD.equals(null)) && (intCilindro != 0)){
-			if(ejeD.equals("") || ejeD.equals(null)){
-				Messagebox.show("Debe ingresar eje derecho");
-				return false;
-			}
-		}		
-		
-		if(!ejeD.equals("") && !ejeD.equals(null)){
-			if(cilindroD.equals("") || cilindroD.equals(null)){
-				Messagebox.show("Debe ingresar cilindro derecho");
-				return false;
-			}
-		}	
-		
-		if(!ejeD.equals("") && !ejeD.equals(null)){
-			if(Integer.parseInt(ejeD) < 0 || Integer.parseInt(ejeD) >180){
-				Messagebox.show("El valor del eje derecho esta fuera de rango");
-				return false;
-			}
-		}
-		
-		
-		if(!adicionD.equals("") && !adicionD.equals(null)){
-			if(Float.valueOf(adicionD) < 0.50 || Float.valueOf(adicionD) > 4){
-				Messagebox.show("El valor de la adicion derecha esta fuera de rango");
-				return false;
-			}
-		}
-		
-		if(OD_dnpl.equals("") || OD_dnpl.equals(null)){
-			Messagebox.show("Debe ingresar distancia naso pupilar derecha.");
-			return false;
-		}else{
-			
-			respuesta = validaDNPL(graduacionesForm.getOD_dnpl(), "derecha");
-			if(respuesta == false){
-				return false;
-			}
-		}
-		
-		/********* FIN VALIDACIONES OJO DERECHO ********/
-		
-		
-		
-		/********* VALIDACIONES OJO IZQUIERDO ********/
-		
-		esferaI = graduacionesForm.getOI_esfera().trim();		
-		cilindroI = graduacionesForm.getOI_cilindro().trim();		
-		ejeI = graduacionesForm.getOI_eje().trim();			
-		adicionI = graduacionesForm.getOI_adicion().trim();		
-		OI_dnpl = graduacionesForm.getOI_dnpl().trim();		
-		
-		if(!esferaI.equals("") && !esferaI.equals(null)){
-			if(Integer.parseInt(esferaI) < -30 || Integer.parseInt(esferaI) >30){
-				Messagebox.show("El valor esfera izquierda esta fuera de rango");
-				return false;
-			}	
-		}else{
-			Messagebox.show("Debe ingresar esfera izquierda.");
-			return false;
-		}
-		
-		if(!cilindroI.equals("") && !cilindroI.equals(null)){		
-			if(Integer.parseInt(cilindroI) < -8  || Integer.parseInt(cilindroI) > 8){
-				Messagebox.show("El valor cilindro izquierdo esta fuera de rango");
-				return false;
-			}		
-		}else{
-			Messagebox.show("Debe ingresar valor del cilindro izquierdo");
-			return false;
-		}
-		
-		if(!cilindroI.equals("") && !cilindroI.equals(null) && (Integer.parseInt(cilindroI)!=0)){
-			if(ejeI.equals("") || ejeI.equals(null)){
-				Messagebox.show("Debe ingresar eje izquierdo");
-				return false;
-			}
-		}	
-		
-		if(!ejeI.equals("") && !ejeI.equals(null)){
-			if(cilindroI.equals("") || cilindroI.equals(null)){
-				Messagebox.show("Debe ingresar cilindro izquierdo");
-				return false;
-			}
-		}
-		
-		if(!ejeI.equals("") && !ejeI.equals(null)){
-			if(Integer.parseInt(ejeI) < 0 || Integer.parseInt(ejeI) >180){
-				Messagebox.show("El valor del eje izquierdo esta fuera de rango");
-				return false;
-			}
-		}
-		
-		
-		if(!adicionI.equals("") && !adicionI.equals(null)){
-			if(Integer.parseInt(adicionI) <= 0 || Integer.parseInt(adicionI) > 4){
-				Messagebox.show("El valor de la adicion izquierda esta fuera de rango");
-				return false;
-			}
-		}
-		
-		if(OI_dnpl.equals("") || OI_dnpl.equals(null)){
-			Messagebox.show("Debe ingresar distancia naso pupilar izquierda.");
-			return false;
-		}else{
-			 respuesta = validaDNPL(graduacionesForm.getOI_dnpl(), "izquierda");
-			if(respuesta == false){
-				return false;
-			}
-		}
-		
-		respuestadnpc = validaDNPC(graduacionesForm.getOD_dnpl(), "derecha");
-		
-		if(false){
-			return false;
-		}
-		
-		/********* FIN VALIDACIONES OJO IZQUIERDO ********/		
-		
-		String fechaProxRevision = graduacionesForm.getFechaProxRevision().trim();
-		String fechaEmision = graduacionesForm.getFechaEmision().trim();			
-		
-		if(fechaEmision.equals("")){
-			Messagebox.show("Debe ingresar fecha de emision");
-			return false;
-		}		
-		
-		if(fechaProxRevision.equals("")){
-			Messagebox.show("Debe ingresar fecha de revision");
-			return false;
-		}
-		
-		return true;
-}
-	
-	private boolean validaDNPL(String elemento, String lado){
-		
-		String dnpl = elemento.trim();
-		String adicion="";
-		Float res = Float.valueOf("0.00");
-		
-		if(!dnpl.equals("")){
-			
-			if(Integer.parseInt(dnpl) >= 20 && Integer.parseInt(dnpl) <= 40){
-				
-				dnpl = elemento;
-				
-				if(lado.equals("derecha")){	
-					
-					res = Float.valueOf(dnpl) - 1;					
-					adicion = graduacionesForm.getOD_adicion();
-					
-					if(!adicion.equals("")){						
-						graduacionesForm.setOD_dnpc(res.toString());
-					}else{
-						graduacionesForm.setOD_dnpc("");
-					}
-					
-					elemento = dnpl;
-					return true;
-					
-				}else if(lado.equals("izquierda")){
-					
-					res = Float.valueOf(dnpl) - 1;					
-					adicion = graduacionesForm.getOI_adicion();
-					
-					if(!adicion.equals("")){						
-						graduacionesForm.setOI_dnpc(res.toString());
-					}else{
-						graduacionesForm.setOI_dnpc("");
-					}			
-					
-					elemento = dnpl;
-					return true;	
-				}
-			}else{			
-				Messagebox.show("Distancia Naso pupilar, valor esta fuera de rango");
-				return false;	
-			}
-		}else{		
-			if(lado.equals("derecha")){				
-				graduacionesForm.setOD_dnpc("");
-				
-			}else if(lado.equals("izquierda")){
-				graduacionesForm.setOI_dnpc("");
-			}
-			
-			return false;
-		}	
-		
-		return false;
-			
-	}
-
-	private boolean validaDNPC(String elemento, String lado){
-		
-		String dnpc = elemento.trim();	
-		String adicion="";
-		
-		if(!dnpc.equals("")){
-			if(Integer.parseInt(dnpc) >= 20 && Integer.parseInt(dnpc) <= 40){
-			
-				if(lado.equals("derecha")){			
-					adicion = graduacionesForm.getOD_adicion().trim();					
-					
-					if(adicion.equals("")){
-						Messagebox.show("Debe ingresar receta de cerca");						
-						graduacionesForm.setOD_dnpc("");
-						return false;
-					}
-					
-				}else if(lado.equals("izquierda")){
-					adicion = graduacionesForm.getOI_adicion().trim();					
-					
-					if(adicion.equals("")){
-						Messagebox.show("Debe ingresar receta de cerca");
-						graduacionesForm.setOD_dnpc("");
-						return false;
-					}
-				}		
-			
-			}else{
-				Messagebox.show("Distancia Naso pupilar cerca, valor esta fuera de rango");
-				return false;	
-			}
-		}	
-		return true;
-	}
-	
 	@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI"})
 	public void posicionaCombo() {	
 		
@@ -903,7 +520,426 @@ public class ControllerGraduacionCliente implements Serializable{
 	}
 	
 	
+
+	//===================================================
+	//=======Validaciones varias ========================
+	//===================================================
 	
+	@Command
+	public void validaEsfera(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+		
+		
+		Double mult = 0.25;
+		Double cont = 0.00;		
+		Double esfera= 0.00;	
+		Double elementoadicion=0.00;
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		df.setRoundingMode(RoundingMode.CEILING);
+			
+		if(elemento != 0){
+			
+			esfera = elemento;
+			
+			if(esfera >= -30 && esfera <= 30){
+				
+				//esfera = parseFloat(elemento.value).toFixed(2);
+				
+				if (esfera%mult != 0){
+					
+					 while((esfera%mult !=0 ) && (cont < 55)){
+						 
+						 if(esfera > 0){				 
+							 esfera =  (esfera + 0.01);
+						 }else{
+							 esfera =  (esfera + -0.01);
+						 }
+						 //esfera = parseFloat(esfera.toFixed(2));
+						 cont++;
+					 }				
+					 
+					 //elemento.value=esfera.toFixed(2);
+					 
+					 if(lado.equals("derecha")){
+						 elementoadicion = beanGraduaciones.getOD_adicion();
+						 validaAdicion(elementoadicion, lado);
+						 
+					 }else if(lado.equals("izquierda")){
+						 elementoadicion = beanGraduaciones.getOI_adicion();
+						 validaAdicion(elementoadicion, lado);
+					 }
+				}else{	
+					
+					 //elemento = esfera;	
+					 
+					 if(lado.equals("derecha")){
+						 elementoadicion = beanGraduaciones.getOD_adicion();
+						 validaAdicion(elementoadicion, lado);
+						 
+					 }else if(lado.equals("izquierda")){
+						 elementoadicion = beanGraduaciones.getOI_adicion();
+						 validaAdicion(elementoadicion, lado);
+					 }
+				}
+			}else{
+				Messagebox.show("El valor esfera "+lado+" esta fuera del rango permitido -30 y 30");
+				elemento=0.00;
+				//elemento.focus();
+			}
+		}else{
+			esfera = 0.00;
+			Messagebox.show("Debe ingresar valores entre -30 y 30");
+			elemento=0.00;
+			//elemento.value = parseFloat(esfera).toFixed(2);
+			//elemento.focus();
+		}		
+	}
+	
+	
+	@Command
+	public void validaAdicion(Double elemento, String lado){
+		
+		Double esfera = 0.0;
+		Double dnpl = 0.0;
+		Double adicion =0.0;
+		
+		
+		adicion = elemento;		
+		
+		
+		if(lado.equals("derecha")){	
+			esfera = beanGraduaciones.getOD_esfera();			
+			dnpl = beanGraduaciones.getOD_dnpl();
+			
+		}else if(lado.equals("izquierda")){
+			esfera = beanGraduaciones.getOI_esfera();			
+			dnpl = beanGraduaciones.getOI_dnpl();			
+		}		
+		
+		if(esfera != 0){	
+			
+			if(lado.equals("derecha")){
+				
+				//esfera = parseFloat(document.getElementById('OD_esfera').value).toFixed(2);
+				
+				if(adicion != 0){
+					
+					if(adicion >0 && adicion <=4){
+						
+						double cerca = adicion + esfera;
+						
+						//document.getElementById('OD_cerca').value = cerca.toFixed(2);						
+						elemento = adicion;//.toFixed(2);
+						dnpl = beanGraduaciones.getOD_dnpl();
+						validaDNPL(dnpl, lado);
+						
+					}else{
+						if(adicion <= 0 ){						
+							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
+						}else{
+							Messagebox.show("El valor de la adicion no puede ser mayor a 4");
+						}
+					}	
+					
+				}else{
+					beanGraduaciones.setOD_cerca(0.00);				
+					beanGraduaciones.setOD_dnpl(0.00);
+					beanGraduaciones.setOD_dnpc(0.00);			
+				}		
+				
+			}else if(lado.equals("izquierda")){
+				
+				//esfera = parseFloat(document.getElementById('OI_esfera').value).toFixed(2);
+				
+				if(adicion != 0){
+					
+					if(adicion >0 && adicion <=4){
+						
+						double cerca = adicion + esfera;
+						//document.getElementById('OI_cerca').value = cerca.toFixed(2);
+						elemento = adicion; //.toFixed(2);
+						dnpl = beanGraduaciones.getOI_dnpl();
+						validaDNPL(dnpl, lado);
+					}else{
+						if(adicion <= 0 ){						
+							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
+						}else{
+							Messagebox.show("El valor de la adicion no puede ser mayor a 4");
+						}
+						
+					}					
+				}else{
+					beanGraduaciones.setOI_cerca(0.00);
+					beanGraduaciones.setOI_dnpl(0.00);
+					beanGraduaciones.setOI_dnpc(0.00);
+				}			
+			}	
+		}else{
+			Messagebox.show("Debe ingresar esfera "+lado+"");		
+		}
+	}
+	
+	
+	@Command
+	public boolean validaDNPL(Double elemento, String lado){
+		
+		Double dnpl = elemento;	
+		Double adicion = 0.00;
+		Double res=0.00;
+		
+		if(dnpl != 0){
+			
+			if(dnpl >= 20 && dnpl <= 40){
+				
+				//dnpl = parseFloat(elemento.value).toFixed(2);	
+				
+				if(lado.equals("derecha")){		
+					
+					res = dnpl - 1;
+					adicion = beanGraduaciones.getOD_adicion();
+			
+					if(adicion != 0){
+						beanGraduaciones.setOD_dnpc(res);
+						//document.getElementById('OD_dnpc').value = parseFloat(res).toFixed(2);
+					}else{
+						beanGraduaciones.setOD_dnpc(0.00);
+					}
+					
+					//elemento = parseFloat(dnpl).toFixed(2);
+					elemento = dnpl;
+					return true;
+					
+				}else if(lado.equals("izquierda")){
+					
+					res = dnpl - 1;				
+					adicion = beanGraduaciones.getOI_adicion();
+					
+					if(adicion != 0){
+						beanGraduaciones.setOI_dnpc(res);
+						//document.getElementById('OI_dnpc').value = parseFloat(res).toFixed(2);
+					}else{
+						//document.getElementById('OI_dnpc').value="";
+						beanGraduaciones.setOI_dnpc(0.00);
+					}				
+					
+					//elemento.value = parseFloat(dnpl).toFixed(2);
+					elemento = dnpl;
+					return true;	
+				}
+			}else{			
+				Messagebox.show("Distancia Naso pupilar, valor esta fuera de rango");
+				return false;	
+			}
+		}else{		
+			if(lado.equals("derecha")){					
+				beanGraduaciones.setOD_dnpc(0.00);
+				
+			}else if(lado.equals("izquierda")){
+				beanGraduaciones.setOI_dnpc(0.00);
+				
+			}
+			return false;	
+		}	
+		
+		
+		return false;	
+	}
+
+
+	@Command
+	public void validaCilindro(Double elemento, String lado){
+		
+		Double cilindro=0.0; 	
+		Double mult = 0.25;
+		Double cont = 0.0;
+		Double intCilindro=0.0;
+			
+		if(cilindro != 0){
+				
+				cilindro = elemento;
+				
+				if(cilindro >= -8 && cilindro <= 8){
+					
+					//cilindro = parseFloat(elemento.value).toFixed(2);
+					
+					if (cilindro%mult != 0){	
+						
+						 while((cilindro%mult != 0) && (cont < 55)){				 
+							 
+							 if(cilindro > 0){
+								 cilindro = cilindro + 0.01F;
+							 }else{
+								 cilindro = cilindro + (-0.01F);
+							 }
+							 //cilindro = parseFloat(cilindro.toFixed(2));
+							 cont++;
+						 }				 
+						 //elemento.value=cilindro.toFixed(2);
+					}else{			
+						 elemento = cilindro;			
+					}
+				}else{
+					Messagebox.show("El valor cilindro "+lado+" esta fuera del rango permitido -8 y 8");
+					elemento=0.00;
+					//elemento.focus();
+				}
+			}else{
+				cilindro = 0.00;
+				Messagebox.show("Debe ingresar valores entre -8 y 8");
+				elemento = 0.00;
+				//elemento.value = parseFloat(cilindro).toFixed(2);
+				//elemento.focus();
+			}
+			
+			intCilindro = cilindro;
+			
+			if(((intCilindro >= -8 && intCilindro < 0) || (intCilindro > 0 && intCilindro <= 8)) || (intCilindro >= -8.00 && intCilindro < 0.00) || (intCilindro > 0.00 && intCilindro <= 8.00) ){
+				
+				if(lado.equals("derecho")){				
+					// document.getElementById('OD_eje').disabled =false;	
+					
+				}else if(lado.equals("izquierda")){
+					//document.getElementById('OI_eje').disabled =false;
+				}			
+			}else{
+				
+				if(lado.equals("derecho")){	
+					beanGraduaciones.setOD_eje(0.00);					
+					//document.getElementById('OD_eje').disabled =true;		
+					
+				}else if(lado.equals("izquierda")){				
+					beanGraduaciones.setOI_eje(0.00);
+					//document.getElementById('OI_eje').disabled =true;
+				}
+			}			
+	}
+	
+	
+	@Command
+	public void validaEje(Double elemento, String lado){
+		
+		Double eje = elemento;
+		boolean esnumero=false;
+		
+		if(eje != 0){		
+			
+			//esnumero = validarSiNumero(eje);
+			
+			//if(true == esnumero){
+				if(eje < 0 || eje >180){
+					Messagebox.show("El valor del eje "+lado+" esta fuera de rango [0..100]");
+					eje = 0.00;
+					elemento = 0.00;
+				}
+			/*}else{
+				Messagebox.show("Debe ingresar solo numeros entre 0 y 180");
+			}	*/	
+		}	
+	}
+	
+	
+	@Command
+	public void validacionCerca(Double elemento, String lado){
+		
+		Double esfera = 0.0;
+		Double cerca = elemento;	
+		Double adicion = 0.0;
+		Double dnpl = 0.0;
+		
+		if(lado.equals("derecha")){	
+			esfera = beanGraduaciones.getOD_esfera();			
+			
+		}else if(lado.equals("izquierda")){
+			esfera = beanGraduaciones.getOI_esfera();
+			
+		}		
+		
+		if(esfera != 0){		
+			if(lado.equals("derecha")){	
+				
+				//esfera = parseFloat(document.getElementById('OD_esfera').value).toFixed(2);
+				
+				if(cerca !=0){
+					
+					if(cerca > esfera){
+						
+						adicion = cerca - esfera;
+						beanGraduaciones.setOD_adicion(adicion);
+						//document.getElementById('OD_adicion').value = adicion.toFixed(2);
+						//elemento.value = parseFloat(cerca).toFixed(2);
+						elemento=cerca;
+						dnpl = beanGraduaciones.getOD_dnpl();
+						validaDNPL(dnpl, lado);
+						
+					}else{
+						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
+					}	
+					
+				}		
+				
+			}else if(lado.equals("izquierda")){
+				//esfera = parseFloat(document.getElementById('OI_esfera').value).toFixed(2);
+				
+				if(cerca != 0){
+					if(cerca > esfera){
+						adicion = cerca - esfera;
+						beanGraduaciones.setOI_adicion(adicion);
+						//document.getElementById('OI_adicion').value = adicion.toFixed(2);
+						//elemento.value = parseFloat(cerca).toFixed(2); 
+						elemento=cerca;
+						dnpl = beanGraduaciones.getOI_dnpl();
+						validaDNPL(dnpl, lado);
+					}else{
+						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
+					}				
+				}	
+				
+			}	
+		}else{
+			Messagebox.show("Debe ingresar esfera "+lado+"");
+		}
+		
+	}
+
+	
+	@Command
+	public boolean validaDNPC(Double elemento, String lado){
+		
+		Double dnpc = elemento;	
+		Double adicion = 0.0;
+		
+		if(dnpc != 0){
+			
+			if(dnpc >= 20 && dnpc <= 40){
+			
+				if(lado.equals("derecha")){			
+					adicion = beanGraduaciones.getOD_adicion();
+					
+					if(adicion == 0){
+						Messagebox.show("Debe ingresar receta de cerca");
+						beanGraduaciones.setOD_dnpc(0.0);						
+						return false;
+					}
+					
+				}else if("izquierda" == lado){
+					
+					adicion = beanGraduaciones.getOI_adicion();
+					
+					if(adicion == 0){
+						Messagebox.show("Debe ingresar receta de cerca");
+						beanGraduaciones.setOI_dnpc(0.0);						
+						return false;
+					}
+				}		
+			
+			}else{
+				Messagebox.show("Distancia Naso pupilar cerca, valor esta fuera de rango");
+				return false;	
+			}
+		}	
+		return true;
+	}
+
 	
 	
 	
@@ -982,6 +1018,16 @@ public class ControllerGraduacionCliente implements Serializable{
 	public void setPrismaBaseOI(PrismaBaseBean prismaBaseOI) {
 		this.prismaBaseOI = prismaBaseOI;
 	}
+
+	public BeanGraduaciones getBeanGraduaciones() {
+		return beanGraduaciones;
+	}
+
+	public void setBeanGraduaciones(BeanGraduaciones beanGraduaciones) {
+		this.beanGraduaciones = beanGraduaciones;
+	}
+
+	
 	
 	
 	

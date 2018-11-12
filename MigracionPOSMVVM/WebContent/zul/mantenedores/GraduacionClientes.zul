@@ -1,4 +1,4 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+   <?page title="new page title" contentType="text/html;charset=UTF-8"?>
  <window id="winGraduacionClientes" border="none"  width="65%" height="75%" vflex="min"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
 			
@@ -101,7 +101,7 @@
 				   				
 				   				<row>
 				   					<label value="OD"/>
-				   					<textbox id="ODEsfera" value="@bind(vm.graduacionesForm.OD_esfera)" width="50px" />
+				   					<!--  <textbox value="@bind(vm.graduacionesForm.OD_esfera)" width="50px" />
 				   					<textbox value="@bind(vm.graduacionesForm.OD_cilindro)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_eje)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_cerca)" width="50px"/>
@@ -109,7 +109,18 @@
 				   					<textbox value="@bind(vm.graduacionesForm.OD_dnpl)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_dnpc)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_avsc)" width="50px"/>
-				   					<textbox value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"/>-->
+				   					
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" format="##,##" locale="it" onBlur="@command('validaEsfera',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_eje)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" format="##.##"/>
+				   					
 				   				</row>
 				   				
 				   				<row>
@@ -121,7 +132,7 @@
 				   				
 				   				<row>
 				   					<label value="OI"/>
-				   					<textbox value="@bind(vm.graduacionesForm.OI_esfera)" width="50px"/>
+				   					<!--  <textbox value="@bind(vm.graduacionesForm.OI_esfera)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OI_cilindro)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OI_eje)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OI_cerca)" width="50px"/>
@@ -129,7 +140,17 @@
 				   					<textbox value="@bind(vm.graduacionesForm.OI_dnpl)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OI_dnpc)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OI_avsc)" width="50px"/>
-				   					<textbox value="@bind(vm.graduacionesForm.OI_avcc)" width="50px"/>
+				   					<textbox value="@bind(vm.graduacionesForm.OI_avcc)" width="50px"/>-->
+				   					
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" format="##,##" locale="it" onblur="@command('validaEsfera',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_eje)" format="##.##"/> 
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avcc)" format="##.##"/>
 				   				</row>
 				   				
 				   				<row>
@@ -332,10 +353,5 @@
 		</borderlayout> -->
 	</div>	
 	
-	<script type="text/javascript" defer="true">	
-	function validaEsfera()
-	{
-     alert("native script"+this.$f("ODEsfera").getValue());
-    }		   
-	</script>
+	
 </window>
