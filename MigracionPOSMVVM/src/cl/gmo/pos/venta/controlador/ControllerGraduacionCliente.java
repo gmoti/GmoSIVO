@@ -34,6 +34,7 @@ import cl.gmo.pos.venta.web.actions.GraduacionesDispatchActions;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.GraduacionesBean;
+import cl.gmo.pos.venta.web.beans.OftalmologoBean;
 import cl.gmo.pos.venta.web.beans.PrismaBaseBean;
 import cl.gmo.pos.venta.web.beans.PrismaCantidadBean;
 import cl.gmo.pos.venta.web.forms.BusquedaClientesForm;
@@ -209,15 +210,38 @@ public class ControllerGraduacionCliente implements Serializable{
 		String mensaje4="";
 		String mensaje5="";
 		
+		graduacionesForm.setOD_esfera(String.valueOf(beanGraduaciones.getOD_esfera()));
+		graduacionesForm.setOD_cilindro(String.valueOf(beanGraduaciones.getOD_cilindro()));
+		graduacionesForm.setOD_eje(String.valueOf(beanGraduaciones.getOD_eje()));
+		graduacionesForm.setOD_cerca(String.valueOf(beanGraduaciones.getOD_cerca()));
+		graduacionesForm.setOD_adicion(String.valueOf(beanGraduaciones.getOD_adicion()));
+		graduacionesForm.setOD_dnpc(String.valueOf(beanGraduaciones.getOD_dnpl()));
+		graduacionesForm.setOD_dnpl(String.valueOf(beanGraduaciones.getOD_dnpl()));
+		graduacionesForm.setOD_avcc(String.valueOf(beanGraduaciones.getOD_avcc()));
+		graduacionesForm.setOD_avsc(String.valueOf(beanGraduaciones.getOD_avsc()));
+		
+		graduacionesForm.setOI_esfera(String.valueOf(beanGraduaciones.getOI_esfera()));
+		graduacionesForm.setOI_cilindro(String.valueOf(beanGraduaciones.getOI_cilindro()));
+		graduacionesForm.setOI_eje(String.valueOf(beanGraduaciones.getOI_eje()));
+		graduacionesForm.setOI_cerca(String.valueOf(beanGraduaciones.getOI_cerca()));
+		graduacionesForm.setOI_adicion(String.valueOf(beanGraduaciones.getOI_adicion()));
+		graduacionesForm.setOI_dnpc(String.valueOf(beanGraduaciones.getOI_dnpl()));
+		graduacionesForm.setOI_dnpl(String.valueOf(beanGraduaciones.getOI_dnpl()));
+		graduacionesForm.setOI_avcc(String.valueOf(beanGraduaciones.getOI_avcc()));
+		graduacionesForm.setOI_avsc(String.valueOf(beanGraduaciones.getOI_avsc()));
+		
+		
 		graduacionesForm.setAccion("insertarGraduacion");
 		pagina = graduacionesForm.getPagina();
 		existe_graduacion = graduacionesForm.getExiste_graduacion();		
 		
-		//respuesta1 = validaInformacion();
+		respuesta1 = validaInformacion();		
 		//respuesta  = true;
 		
 		if(respuesta1){
-			//respuesta  = validaGraduacion();
+			respuesta  = validaGraduacion();
+		}else {
+			return;
 		}
 		
 		//valida diferente adicion
@@ -236,6 +260,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		
 		if (pasaValidacionADD) {
+			
 			if(existe_graduacion.equals("true")){	
 				
 				if(respuesta && respuesta1){
@@ -520,10 +545,54 @@ public class ControllerGraduacionCliente implements Serializable{
 	}
 	
 	
-
+	@NotifyChange({"graduacionesForm"})
+	@Command
+	public void buscarDoctorAjax()
+    {        	
+    	String nifdoctor = graduacionesForm.getNifdoctor();	
+    	
+    	if(!nifdoctor.equals("")){    		
+    		
+    		sess.setAttribute("nifdoctor", nifdoctor);
+    		graduacionesDispatch.buscarDoctorAjax(graduacionesForm, sess);
+    		
+    		if (graduacionesForm.getNifdoctor().equals("")) {    		
+    			Messagebox.show("El doctor con rut "+nifdoctor+" no existe");
+    		}   		
+    		
+    	}else{
+    		Messagebox.show("Debe ingrese rut de doctor.");
+    	}	
+    }
+	
+	
+	@NotifyChange({"graduacionesForm"})
+	@Command
+	public void buscarMedico() {
+		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();
+		objetos.put("retorno", "seleccionaMedicoGraduacion");
+		
+		Window winBuscarMedico = (Window)Executions.createComponents(
+                "/zul/mantenedores/BusquedaMedico.zul", null, objetos);
+		
+		winBuscarMedico.doModal(); 		
+	}
+	
+	@NotifyChange({"graduacionesForm"})
+	@GlobalCommand
+	public void seleccionaMedicoGraduacion(@BindingParam("medico")OftalmologoBean medico) {
+		
+		graduacionesForm.setNifdoctor(medico.getNif());
+		graduacionesForm.setDvnifdoctor(medico.getLnif());
+		graduacionesForm.setNombre_doctor(medico.getNombre() + " " + medico.getApelli());
+		graduacionesForm.setCod_doctor(medico.getCodigo());
+			
+	}
+	
 	//===================================================
 	//=======Validaciones varias ========================
-	//===================================================
+	//===================================================	
 	
 	@Command
 	public void validaEsfera(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
@@ -532,10 +601,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		Double mult = 0.25;
 		Double cont = 0.00;		
 		Double esfera= 0.00;	
-		Double elementoadicion=0.00;
-		
-		DecimalFormat df = new DecimalFormat("#.##");
-		df.setRoundingMode(RoundingMode.CEILING);
+		Double elementoadicion=0.00;		
 			
 		if(elemento != 0){
 			
@@ -584,12 +650,20 @@ public class ControllerGraduacionCliente implements Serializable{
 			}else{
 				Messagebox.show("El valor esfera "+lado+" esta fuera del rango permitido -30 y 30");
 				elemento=0.00;
+				
+				if(lado.equals("derecha"))beanGraduaciones.setOD_esfera(0);
+				else beanGraduaciones.setOI_esfera(0);
+				return;
 				//elemento.focus();
 			}
 		}else{
 			esfera = 0.00;
 			Messagebox.show("Debe ingresar valores entre -30 y 30");
 			elemento=0.00;
+			
+			if(lado.equals("derecha"))beanGraduaciones.setOD_esfera(0);
+			else beanGraduaciones.setOI_esfera(0);
+			return;
 			//elemento.value = parseFloat(esfera).toFixed(2);
 			//elemento.focus();
 		}		
@@ -597,12 +671,11 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	
 	@Command
-	public void validaAdicion(Double elemento, String lado){
+	public void validaAdicion(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
 		
 		Double esfera = 0.0;
 		Double dnpl = 0.0;
-		Double adicion =0.0;
-		
+		Double adicion =0.0;		
 		
 		adicion = elemento;		
 		
@@ -636,15 +709,20 @@ public class ControllerGraduacionCliente implements Serializable{
 					}else{
 						if(adicion <= 0 ){						
 							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
+							beanGraduaciones.setOD_adicion(0);
+							return;
 						}else{
 							Messagebox.show("El valor de la adicion no puede ser mayor a 4");
+							beanGraduaciones.setOD_adicion(0);
+							return;
 						}
 					}	
 					
 				}else{
 					beanGraduaciones.setOD_cerca(0.00);				
 					beanGraduaciones.setOD_dnpl(0.00);
-					beanGraduaciones.setOD_dnpc(0.00);			
+					beanGraduaciones.setOD_dnpc(0.00);	
+					return;
 				}		
 				
 			}else if(lado.equals("izquierda")){
@@ -663,8 +741,12 @@ public class ControllerGraduacionCliente implements Serializable{
 					}else{
 						if(adicion <= 0 ){						
 							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
+							beanGraduaciones.setOI_adicion(0);
+							return;
 						}else{
 							Messagebox.show("El valor de la adicion no puede ser mayor a 4");
+							beanGraduaciones.setOI_adicion(0);
+							return;
 						}
 						
 					}					
@@ -672,6 +754,7 @@ public class ControllerGraduacionCliente implements Serializable{
 					beanGraduaciones.setOI_cerca(0.00);
 					beanGraduaciones.setOI_dnpl(0.00);
 					beanGraduaciones.setOI_dnpc(0.00);
+					return;
 				}			
 			}	
 		}else{
@@ -681,7 +764,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	
 	@Command
-	public boolean validaDNPL(Double elemento, String lado){
+	public boolean validaDNPL(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
 		
 		Double dnpl = elemento;	
 		Double adicion = 0.00;
@@ -728,6 +811,15 @@ public class ControllerGraduacionCliente implements Serializable{
 				}
 			}else{			
 				Messagebox.show("Distancia Naso pupilar, valor esta fuera de rango");
+				
+				if(lado.equals("derecha")){					
+					beanGraduaciones.setOD_dnpc(0.00);
+					
+				}else if(lado.equals("izquierda")){
+					beanGraduaciones.setOI_dnpc(0.00);
+					
+				}
+				
 				return false;	
 			}
 		}else{		
@@ -747,7 +839,7 @@ public class ControllerGraduacionCliente implements Serializable{
 
 
 	@Command
-	public void validaCilindro(Double elemento, String lado){
+	public void validaCilindro(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
 		
 		Double cilindro=0.0; 	
 		Double mult = 0.25;
@@ -781,6 +873,12 @@ public class ControllerGraduacionCliente implements Serializable{
 				}else{
 					Messagebox.show("El valor cilindro "+lado+" esta fuera del rango permitido -8 y 8");
 					elemento=0.00;
+					
+					if(lado.equals("derecho")){									
+						beanGraduaciones.setOD_cilindro(0);
+					}else {
+						beanGraduaciones.setOI_cilindro(0);
+					}	
 					//elemento.focus();
 				}
 			}else{
@@ -816,10 +914,10 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	
 	@Command
-	public void validaEje(Double elemento, String lado){
+	public void validaEje(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
 		
 		Double eje = elemento;
-		boolean esnumero=false;
+		//boolean esnumero=false;
 		
 		if(eje != 0){		
 			
@@ -830,6 +928,7 @@ public class ControllerGraduacionCliente implements Serializable{
 					Messagebox.show("El valor del eje "+lado+" esta fuera de rango [0..100]");
 					eje = 0.00;
 					elemento = 0.00;
+					
 				}
 			/*}else{
 				Messagebox.show("Debe ingresar solo numeros entre 0 y 180");
@@ -839,7 +938,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	
 	@Command
-	public void validacionCerca(Double elemento, String lado){
+	public void validacionCerca(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
 		
 		Double esfera = 0.0;
 		Double cerca = elemento;	
@@ -873,6 +972,8 @@ public class ControllerGraduacionCliente implements Serializable{
 						
 					}else{
 						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
+						beanGraduaciones.setOD_cerca(0);
+						return;
 					}	
 					
 				}		
@@ -891,6 +992,8 @@ public class ControllerGraduacionCliente implements Serializable{
 						validaDNPL(dnpl, lado);
 					}else{
 						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
+						beanGraduaciones.setOI_cerca(0);
+						return;
 					}				
 				}	
 				
@@ -903,7 +1006,7 @@ public class ControllerGraduacionCliente implements Serializable{
 
 	
 	@Command
-	public boolean validaDNPC(Double elemento, String lado){
+	public boolean validaDNPC(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
 		
 		Double dnpc = elemento;	
 		Double adicion = 0.0;
@@ -941,8 +1044,280 @@ public class ControllerGraduacionCliente implements Serializable{
 	}
 
 	
-	
-	
+	private boolean validaInformacion(){
+		
+		String nombre_cliente = graduacionesForm.getNombre_cliente();
+		nombre_cliente = nombre_cliente.trim();
+		
+		if(nombre_cliente.equals("")){
+			Messagebox.show("Debe ingresar cliente");
+			return false;
+		}
+		
+		String codigo_cliente = String.valueOf(graduacionesForm.getCliente());
+		codigo_cliente = codigo_cliente.trim();
+		
+		if(codigo_cliente.equals("") || codigo_cliente.equals("0")){		
+			Messagebox.show("Debe ingresar un cliente");
+			return false;
+		}		
+		
+		String doctor = graduacionesForm.getDoctor();
+		if(doctor.equals("")){
+			Messagebox.show("Debe ingresar un doctor");
+			return false;		
+		}
+		
+		String agente = graduacionesForm.getAgente();
+		if(agente.equals("-1")){
+			Messagebox.show("Debe Seleccionar agente");
+			return false;		
+		}
+		
+		/*var fechaEmision = document.getElementById('fechaEmision').value;
+		fechaEmision = trim(fechaEmision);
+		if("" == fechaEmision){
+			Messagebox.show("Debe ingresar fecha emisi\u00F3n");
+			return false;
+		}*/
+		
+		String OD_cantidad = graduacionesForm.getOD_cantidad();
+		OD_cantidad = OD_cantidad.trim();
+		if(!OD_cantidad.equals("")  && !OD_cantidad.equals("-1") ){
+			
+			String OD_base = graduacionesForm.getOD_base();
+			
+			if(OD_base.equals("")  || OD_base.equals("Seleccione") ){
+				Messagebox.show("Debe seleccionar Base de Prisma Derecho");
+				return false;
+			}
+			
+		}
+		
+		String OI_cantidad = graduacionesForm.getOI_cantidad();
+		OI_cantidad = OI_cantidad.trim();
+		if(!OI_cantidad.equals("")  && !OI_cantidad.equals("-1") ){
+			
+			String OI_base = graduacionesForm.getOI_base();
+			
+			if(OI_base.equals("")  || OI_base.equals("Seleccione") ){
+				Messagebox.show("Debe seleccionar Base de Prisma Izquierdo");
+				return false;
+			}
+			
+		}
+		
+		String OD_base = graduacionesForm.getOD_base();
+		if(!OD_base.equals("")  && !OD_base.equals("Seleccione") ){
+			
+			OD_cantidad = graduacionesForm.getOD_cantidad();		
+			
+			if(OD_cantidad.equals("")  || OD_cantidad.equals("-1") ){
+				Messagebox.show("Debe seleccionar Cantidad de Prisma Derecho");
+				return false;
+			}
+		}
+		
+		String OI_base = graduacionesForm.getOI_base();
+		if(!OI_base.equals("")  &&  OI_base.equals("Seleccione") ){
+			
+			OI_cantidad = graduacionesForm.getOI_cantidad();
+			if(OI_cantidad.equals("")  || OI_cantidad.equals("-1") ){
+				Messagebox.show("Debe seleccionar Cantidad de Prisma Izquierdo");
+				return false;
+			}
+		}
+		
+		return true; //true si llega hasta aqui
+	}
+
+
+	public boolean validaGraduacion(){
+		
+		double esferaD = 0;
+		double cilindroD = 0;
+		double ejeD = 0;
+		double adicionD=0;
+		double OD_dnpl=0;
+		
+		double esferaI = 0;
+		double cilindroI = 0;
+		double ejeI = 0;
+		double adicionI=0;
+		double OI_dnpl=0;
+		double intCilindro=0;
+		
+		/********* VALIDACIONES OJO DERECHO ********/
+		esferaD = beanGraduaciones.getOD_esfera();		
+		cilindroD = beanGraduaciones.getOD_cilindro();		
+		ejeD = beanGraduaciones.getOD_eje();			
+		adicionD = beanGraduaciones.getOD_adicion();	
+		OD_dnpl = beanGraduaciones.getOD_dnpl();
+				
+		
+		if(esferaD != 0){
+			if(esferaD < -30 || esferaD > 30){
+				Messagebox.show("El valor esfera derecha esta fuera del rango permitido -30 y 30");
+				return false;
+			}		
+		}else{
+			Messagebox.show("Debe ingresar esfera derecha.");
+			return false;
+		}		
+		
+		if(cilindroD != 0){		
+			if(cilindroD < -8  || cilindroD > 8){
+				Messagebox.show("El valor cilindro derecho esta fuera de rango");
+				return false;
+			}		
+		}else{
+			Messagebox.show("Debe ingresar valor del cilindro derecho");
+			return false;
+		}
+		
+		
+		intCilindro = cilindroD;
+		
+		if(cilindroD != 0){
+			if(ejeD == 0){
+				Messagebox.show("Debe ingresar eje derecho");
+				return false;
+			}
+		}
+		
+		
+		if(ejeD != 0){
+			if(cilindroD == 0){
+				Messagebox.show("Debe ingresar cilindro derecho");
+				return false;
+			}
+		}	
+		
+		if(ejeD != 0){
+			if(ejeD < 0 || ejeD >180){
+				Messagebox.show("El valor del eje derecho esta fuera de rango");
+				return false;
+			}
+		}
+		
+		
+		if(adicionD != 0){
+			if(adicionD < 0.50 || adicionD > 4){
+				Messagebox.show("El valor de la adicion derecha esta fuera de rango");
+				return false;
+			}
+		}
+		
+		if(OD_dnpl == 0){
+			Messagebox.show("Debe ingresar distancia naso pupilar derecha.");
+			return false;
+		}else{
+			boolean respuesta = validaDNPL(beanGraduaciones.getOD_dnpl(), "derecha");
+			if(respuesta == false){
+				return false;
+			}
+		}
+		
+		
+		
+		/********* FIN VALIDACIONES OJO DERECHO ********/
+		
+		
+		
+		/********* VALIDACIONES OJO IZQUIERDO ********/
+		
+		esferaI = beanGraduaciones.getOI_esfera();		
+		cilindroI = beanGraduaciones.getOI_cilindro();	
+		ejeI = beanGraduaciones.getOI_eje();		
+		adicionI = beanGraduaciones.getOI_adicion();		
+		OI_dnpl = beanGraduaciones .getOI_dnpl();
+		
+		
+		if(esferaI != 0){
+			if(esferaI < -30 || esferaI >30){
+				Messagebox.show("El valor esfera izquierda esta fuera de rango");
+				return false;
+			}	
+		}else{
+			Messagebox.show("Debe ingresar esfera izquierda.");
+			return false;
+		}
+		
+		if(cilindroI != 0){		
+			if(cilindroI < -8  || cilindroI > 8){
+				Messagebox.show("El valor cilindro izquierdo esta fuera de rango");
+				return false;
+			}		
+		}else{
+			Messagebox.show("Debe ingresar valor del cilindro izquierdo");
+			return false;
+		}
+		
+		if(cilindroI != 0){
+			if(ejeI == 0){
+				Messagebox.show("Debe ingresar eje izquierdo");
+				return false;
+			}
+		}	
+		
+		if(ejeI != 0){
+			if(cilindroI == 0){
+				Messagebox.show("Debe ingresar cilindro izquierdo");
+				return false;
+			}
+		}
+		if(ejeI != 0){
+			if(ejeI < 0 || ejeI >180){
+				Messagebox.show("El valor del eje izquierdo esta fuera de rango");
+				return false;
+			}
+		}
+		
+		
+		if(adicionI != 0){
+			if(adicionI <= 0 || adicionI > 4){
+				Messagebox.show("El valor de la adicion izquierda esta fuera de rango");
+				return false;
+			}
+		}
+		
+		if(OI_dnpl == 0){
+			Messagebox.show("Debe ingresar distancia naso pupilar izquierda.");
+			return false;
+		}else{
+			boolean respuesta = validaDNPL(beanGraduaciones.getOI_dnpl(), "izquierda");
+			if(respuesta == false){
+				return false;
+			}
+		}
+		
+		boolean respuestadnpc = validaDNPC(beanGraduaciones.getOD_dnpc(), "derecha");
+		if(respuestadnpc == false){
+			return false;
+		}
+		
+		/********* FIN VALIDACIONES OJO IZQUIERDO ********/	
+		
+		
+		String fechaProxRevision = graduacionesForm.getFechaProxRevision();
+		String fechaEmision = graduacionesForm.getFechaEmision();
+			
+		fechaEmision = fechaEmision.trim();
+		if(fechaEmision.equals("")){
+			Messagebox.show("Debe ingresar fecha de emision");
+			return false;
+		}
+		
+		fechaProxRevision = fechaProxRevision.trim();
+		if(fechaProxRevision.equals("")){
+			Messagebox.show("Debe ingresar fecha de revisi\u00F3n");
+			return false;
+		}
+		
+		return true;//CAMBIAR  a true
+	}
+
+
 	
 	
 	// Getter and Setter ================================

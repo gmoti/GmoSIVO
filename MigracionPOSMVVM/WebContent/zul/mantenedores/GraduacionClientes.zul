@@ -1,5 +1,6 @@
-   <?page title="new page title" contentType="text/html;charset=UTF-8"?>
- <window id="winGraduacionClientes" border="none"  width="65%" height="75%" vflex="min"
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winGraduacionClientes" border="none"  width="65%" height="75%" vflex="min"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
 			
 	<style>
@@ -109,17 +110,29 @@
 				   					<textbox value="@bind(vm.graduacionesForm.OD_dnpl)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_dnpc)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OD_avsc)" width="50px"/>
-				   					<textbox value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"/>-->
+				   					<textbox value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"/> 
 				   					
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" format="##,##" locale="it" onBlur="@command('validaEsfera',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_eje)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="##,##" locale="it" onBlur="@command('validaEsfera',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="##,##" locale="it" onBlur="@command('validaCilindro',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##,##" locale="it" onBlur="@command('validaEje',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="##,##" locale="it" onBlur="@command('validacionCerca',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="##,##" locale="it" onBlur="@command('validaAdicion',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="##,##" locale="it" onBlur="@command('validaDNPL',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" width="50px" format="##,##" locale="it" onBlur="@command('validaDNPC',elemento=vm.beanGraduaciones.OD_esfera,lado='derecha')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" width="50px" format="##,##" locale="it"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" width="50px" format="##,##" locale="it"/>			   					
+				   					-->
+				   					
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" width="50px" format="##,##" locale="it"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" width="50px" format="##,##" locale="it"/>			   					
+				   					
 				   					
 				   				</row>
 				   				
@@ -140,17 +153,27 @@
 				   					<textbox value="@bind(vm.graduacionesForm.OI_dnpl)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OI_dnpc)" width="50px"/>
 				   					<textbox value="@bind(vm.graduacionesForm.OI_avsc)" width="50px"/>
-				   					<textbox value="@bind(vm.graduacionesForm.OI_avcc)" width="50px"/>-->
+				   					<textbox value="@bind(vm.graduacionesForm.OI_avcc)" width="50px"/>
 				   					
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" format="##,##" locale="it" onblur="@command('validaEsfera',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_eje)" format="##.##"/> 
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" format="##.##"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avcc)" format="##.##"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="##,##" locale="it" onBlur="@command('validaEsfera',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="##,##" locale="it" onBlur="@command('validaCilindro',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##,##" locale="it" onBlur="@command('validaEje',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/> 
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="##,##" locale="it" onBlur="@command('validacionCerca',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="##,##" locale="it" onBlur="@command('validaAdicion',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="##,##" locale="it" onBlur="@command('validaDNPL',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" width="50px" format="##,##" locale="it" onBlur="@command('validaDNPC',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" width="50px" format="##,##" locale="it"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avcc)" width="50px" format="##,##" locale="it"/>-->
+				   					
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##,##" locale="it" /> 
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" width="50px" format="##,##" locale="it" />
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" width="50px" format="##,##" locale="it"/>
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_avcc)" width="50px" format="##,##" locale="it"/>
 				   				</row>
 				   				
 				   				<row>
@@ -285,8 +308,8 @@
 						<label value="Oftalmologo"/>
 						<textbox value="@bind(vm.graduacionesForm.nifdoctor)" width="150px"/>								
 						<textbox value="@bind(vm.graduacionesForm.dvnifdoctor)" width="50px" readonly="true"/>
-						<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
-						<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="" />
+						<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="@command('buscarDoctorAjax')" />
+						<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarMedico')" />
 						<toolbarbutton image="/iconos/nuevo.png" sclass="shrink16" onClick="" />
 						<label value="@load(vm.graduacionesForm.nombre_doctor)"/>					
 					</div>
@@ -305,53 +328,15 @@
 						<label value="F.Prox.Revision"/>
 						<datebox value="@bind(vm.fechaProxRevision)" format="dd/MM/yyyy"/>				
 					</div>
-				</div>
-					<!--<grid width="100%" vflex="min" oddRowSclass="none">
-						<columns>
-							<column />
-							<column />
-							<column />
-							<column />
-							<column />	
-							<column />
-						</columns>
-						<rows>
-							<row>
-								<label value="Oftalmologo"/>
-								<cell colspan="2">
-									<textbox value="@bind(vm.graduacionesForm.nifdoctor)" width="150px"/>								
-									<textbox value="@bind(vm.graduacionesForm.dvnifdoctor)" width="50px" readonly="true"/>
-									<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />
-									<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="" />
-									<toolbarbutton image="/iconos/nuevo.png" sclass="shrink16" onClick="" />
-								</cell>
-								
-								<cell/>
-								<cell/>
-								<cell/>								
-							</row>								
-							
-							<row>
-								<label value="Atendido por:"/>
-								<combobox model="@bind(vm.graduacionesForm.listaAgentes)">
-									<template name="model">
-										<comboitem label="@load(each.usuario)"/>
-									</template>								
-								</combobox>								
-								
-								
-								<label value="F.Emision:"/>
-								<datebox value="@bind(vm.fechaEmision)" format="dd/MM/yyyy"/>
-								
-								<label value="F.Prox.Revision"/>
-								<datebox value="@bind(vm.fechaProxRevision)" format="dd/MM/yyyy"/>
-							</row>
-						</rows>
-					</grid>
-				</div>
-			 </south>
-		</borderlayout> -->
+				</div>					
 	</div>	
 	
 	
 </window>
+
+<script>
+function meterUpdate() {
+	alert("validacion");
+}
+</script>
+</zk>

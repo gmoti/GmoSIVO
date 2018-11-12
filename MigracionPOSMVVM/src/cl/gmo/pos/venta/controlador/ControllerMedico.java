@@ -1,6 +1,7 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -28,6 +29,8 @@ public class ControllerMedico implements Serializable {
 	
 	private String usuario;	
 	private String sucursalDes;
+	
+	HashMap<String,Object> objetos;
 	
 	
 	@Init
@@ -58,8 +61,11 @@ public class ControllerMedico implements Serializable {
 	@Command
 	public void buscarMedico() {
 		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();	
+		objetos.put("retorn0", "seleccionaMedico");
+		
 		Window winBuscarMedico = (Window)Executions.createComponents(
-                "/zul/mantenedores/BusquedaMedico.zul", null, null);
+                "/zul/mantenedores/BusquedaMedico.zul", null, objetos);
 		
 		winBuscarMedico.doModal(); 		
 	}

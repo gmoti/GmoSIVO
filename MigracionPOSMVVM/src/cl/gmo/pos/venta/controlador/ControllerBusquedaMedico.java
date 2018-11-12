@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.ExecutionParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Session;
@@ -24,10 +26,11 @@ public class ControllerBusquedaMedico implements Serializable {
 	
 	private BusquedaMedicoForm busquedaMedicoForm;
 	private BusquedaMedicosActions busquedaMedicosActions; 
+	private String retorno;
 	
 	
 	@Init
-	public void inicial() {
+	public void inicial(@ExecutionArgParam("retorno")String ret) {
 		
 		busquedaMedicoForm = new BusquedaMedicoForm();
 		busquedaMedicosActions = new BusquedaMedicosActions();		
@@ -35,6 +38,8 @@ public class ControllerBusquedaMedico implements Serializable {
 		busquedaMedicoForm.setNif("");
 		busquedaMedicoForm.setNombre("");
 		busquedaMedicoForm.setApellido("");
+		
+		retorno=ret;
 	}
 	
 	
@@ -54,7 +59,7 @@ public class ControllerBusquedaMedico implements Serializable {
 		objetos = new HashMap<String,Object>();
 		objetos.put("medico",medico);
 		
-		BindUtils.postGlobalCommand(null, null, "seleccionaMedico", objetos);		
+		BindUtils.postGlobalCommand(null, null, retorno, objetos);		
 		win.detach();
 	}
 	

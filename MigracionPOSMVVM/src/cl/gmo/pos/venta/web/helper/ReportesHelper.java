@@ -359,6 +359,7 @@ public class ReportesHelper extends Utils{
 	public void creaListadoTotalDia(HttpSession session,HttpServletResponse response){
 		log.info("ReportesHelper:creaListadoTotalDia inicio");
 		InputStream io = ReportesHelper.class.getResourceAsStream("listadoTotalDia.jasper");
+		
 
 		 ArrayList<ListaTotalDiaBean> listaVenta =(ArrayList<ListaTotalDiaBean>)session.getAttribute("listaVenta");
 		 ArrayList<ListaTotalDiaBean> listaAnticipo =(ArrayList<ListaTotalDiaBean>)session.getAttribute("listaAnticipo");

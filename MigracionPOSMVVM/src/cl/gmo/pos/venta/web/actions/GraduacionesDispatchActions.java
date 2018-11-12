@@ -196,6 +196,7 @@ public class GraduacionesDispatchActions{
     	HashMap hm = new HashMap();
     	
     	if(null != listaMedicos && listaMedicos.size()>0 ){
+    		
     		for(OftalmologoBean bean: listaMedicos){
     			hm.put("nifdoctor", bean.getNif());
     			formulario.setNifdoctor(bean.getNif());
@@ -204,6 +205,7 @@ public class GraduacionesDispatchActions{
     			hm.put("dvnifdoctor", bean.getLnif());
     			formulario.setDvnifdoctor(bean.getLnif());
     			hm.put("nombredoctor", bean.getNombre() +" "+bean.getApelli());
+    			formulario.setNombre_doctor(bean.getNombre() +" "+bean.getApelli());
     			
     		}
     	}else{
@@ -211,6 +213,10 @@ public class GraduacionesDispatchActions{
 			hm.put("codigodoctor", "");
 			hm.put("dvnifdoctor", "");
 			hm.put("nombredoctor", "");
+			formulario.setNifdoctor("");
+			formulario.setDoctor("");
+			formulario.setDvnifdoctor("");
+			formulario.setNombre_doctor("");
     	}
     	try{
 	    	formulario.setListaAgentes(helper.traeAgentes(local));		

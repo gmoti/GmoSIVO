@@ -54,6 +54,7 @@ import cl.gmo.pos.venta.web.forms.PresupuestoForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
+
 public class ReportesHelper extends Utils{
 	Utils util= new Utils();
 	Logger log = Logger.getLogger( this.getClass() );
@@ -368,6 +369,7 @@ public class ReportesHelper extends Utils{
 		
 		log.info("ReportesHelper:creaListadoTotalDia inicio");
 		InputStream io = ReportesHelper.class.getResourceAsStream("listadoTotalDia.jasper");
+		//InputStream io = ReportesHelper.class.getResourceAsStream("ticket_cambio.jasper");
 		
 		//variables de session
 		Session sess = Sessions.getCurrent();
