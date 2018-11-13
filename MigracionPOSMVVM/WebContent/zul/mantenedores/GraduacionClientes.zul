@@ -316,7 +316,7 @@
 				
 					<div>
 						<label value="Atendido por:"/>
-						<combobox model="@bind(vm.graduacionesForm.listaAgentes)">
+						<combobox model="@bind(vm.graduacionesForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)">
 							<template name="model">
 								<comboitem label="@load(each.usuario)"/>
 							</template>								

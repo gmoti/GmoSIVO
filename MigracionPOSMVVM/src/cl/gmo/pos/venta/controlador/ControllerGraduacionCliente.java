@@ -68,6 +68,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	private PrismaBaseBean prismaBaseOD;
 	private PrismaCantidadBean prismaCantidadOI;
 	private PrismaBaseBean prismaBaseOI;
+	private AgenteBean agenteBean;
 	
 
 	@Init	
@@ -81,6 +82,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		prismaBaseOD = new PrismaBaseBean();
 		prismaCantidadOI = new PrismaCantidadBean();
 		prismaBaseOI = new PrismaBaseBean();
+		agenteBean = new AgenteBean();
 		
 		graduacionesForm = new GraduacionesForm();
 		graduacionesBean = new GraduacionesBean();
@@ -89,6 +91,8 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		graduacionesDispatch = new GraduacionesDispatchActions();
 		busquedaClientesDispatch = new BusquedaClientesDispatchActions();	
+		
+		fechaEmision = new Date(System.currentTimeMillis());
 		
 		Optional<String> o = Optional.ofNullable(origen);
 		if(!o.isPresent()) {
@@ -100,20 +104,22 @@ public class ControllerGraduacionCliente implements Serializable{
 		if (origen.equals("cliente")) {			
 			graduacionesForm.setCliente(Integer.parseInt(cliente.getCodigo()));
 			graduacionesForm.setNombre(cliente.getNombre());
-			graduacionesForm.setApellido(cliente.getApellido());
-			
+			graduacionesForm.setApellido(cliente.getApellido());			
 			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
 		}else {
 			graduacionesForm.setCliente(0);
 			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
-			
+		}	
+		
 			graduacionesForm.setOD_cantidad("-1");
 			graduacionesForm.setOI_cantidad("-1");
 			
 			graduacionesForm.setOD_base("Seleccione");
 			graduacionesForm.setOI_base("Seleccione");		
 			
-		}	
+			graduacionesForm.setAgente("Seleccione");
+		
+		
 		
 		posicionaCombo();
 		
@@ -121,10 +127,20 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	//==========Operaciones Principales de la clase ================
 	//==============================================================
-	@NotifyChange({"graduacionesForm"})
+	@NotifyChange({"graduacionesForm","beanGraduaciones"})
 	@Command
 	public void nuevaGraduacion() {
 		
+		beanGraduaciones = new BeanGraduaciones();
+		fechaEmision = new Date(System.currentTimeMillis());
+		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
+		graduacionesForm.setOD_cantidad("-1");
+		graduacionesForm.setOI_cantidad("-1");
+		
+		graduacionesForm.setOD_base("Seleccione");
+		graduacionesForm.setOI_base("Seleccione");		
+		
+		graduacionesForm.setAgente("Seleccione");
 		//solo limpia los campos visualmente
 	}
 	
@@ -480,20 +496,108 @@ public class ControllerGraduacionCliente implements Serializable{
 		posicionaCombo();
 	}
 	
-	@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI","fechaEmision","fechaProxRevision"})
+	//@NotifyChange({"graduacionesForm","beanGraduaciones","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI","fechaEmision","fechaProxRevision"})
+	@NotifyChange("*")
 	@Command
 	public void verGraduacion(@BindingParam("graduacion")GraduacionesBean graduacion)
 	{
+		
+		String esfera="0";
+		String cilindro="0";		
+		String eje="0";
+		String cerca="0";
+		String adicion="0";
+		String dnpl="0";
+		String dnpc="0";
+		String avcc="0";
+		String avsc="0";
+		
+		Optional<String> a ; 
+		Optional<String> b ;
+		Optional<String> c ;
+		Optional<String> d ;
+		Optional<String> e ;
+		Optional<String> f ;
+		Optional<String> g ;
+		Optional<String> h ;
+		Optional<String> i ;
+		
+		
 		graduacionesForm.setAccion("verGraduacion");
 		graduacionesForm.setFecha_graduacion(graduacion.getFecha());
 		graduacionesForm.setNumero_graduacion(graduacion.getNumero());		
-		graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);		
+		graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+		
+		//ojo derecho
+		
+		a = Optional.ofNullable(graduacionesForm.getOD_esfera()); 
+		b = Optional.ofNullable(graduacionesForm.getOD_cilindro());		
+		c = Optional.ofNullable(graduacionesForm.getOD_eje());
+		d = Optional.ofNullable(graduacionesForm.getOD_cerca());
+		e = Optional.ofNullable(graduacionesForm.getOD_adicion());
+		f = Optional.ofNullable(graduacionesForm.getOD_dnpl());
+		g = Optional.ofNullable(graduacionesForm.getOD_dnpc());
+		h = Optional.ofNullable(graduacionesForm.getOD_avcc());
+		i = Optional.ofNullable(graduacionesForm.getOD_avsc());
+		
+		if (!a.isPresent() || a.get().equals("")) esfera="0"; else esfera = a.get();
+		if (!b.isPresent() || b.get().equals("")) cilindro="0";	else cilindro = b.get();	
+		if (!c.isPresent() || c.get().equals("")) eje="0"; else eje = c.get();
+		if (!d.isPresent() || d.get().equals("")) cerca="0"; else cerca = d.get();
+		if (!e.isPresent() || e.get().equals("")) adicion="0";else adicion  = e.get();
+		if (!f.isPresent() || f.get().equals("")) dnpl="0";else dnpl = f.get();
+		if (!g.isPresent() || g.get().equals("")) dnpc="0";else dnpc = g.get();
+		if (!h.isPresent() || h.get().equals("")) avcc="0";else avcc = h.get(); 
+		if (!i.isPresent() || i.get().equals("")) avsc="0";else avsc = i.get();		   
+		
+		beanGraduaciones.setOD_esfera(Double.parseDouble(esfera));
+		beanGraduaciones.setOD_cilindro(Double.parseDouble(cilindro));
+		beanGraduaciones.setOD_eje(Double.parseDouble(eje));
+		beanGraduaciones.setOD_cerca(Double.parseDouble(cerca));
+		beanGraduaciones.setOD_adicion(Double.parseDouble(adicion));
+		beanGraduaciones.setOD_dnpl(Double.parseDouble(dnpl));
+		beanGraduaciones.setOD_dnpc(Double.parseDouble(dnpc));
+		beanGraduaciones.setOD_avcc(Double.parseDouble(avcc));
+		beanGraduaciones.setOD_avsc(Double.parseDouble(avsc));
+		
+		//ojo izquierdo
+		
+		a = Optional.ofNullable(graduacionesForm.getOI_esfera()); 
+		b = Optional.ofNullable(graduacionesForm.getOI_cilindro());		
+		c = Optional.ofNullable(graduacionesForm.getOI_eje());
+		d = Optional.ofNullable(graduacionesForm.getOI_cerca());
+		e = Optional.ofNullable(graduacionesForm.getOI_adicion());
+		f = Optional.ofNullable(graduacionesForm.getOI_dnpl());
+		g = Optional.ofNullable(graduacionesForm.getOI_dnpc());
+		h = Optional.ofNullable(graduacionesForm.getOI_avcc());
+		i = Optional.ofNullable(graduacionesForm.getOI_avsc());
+		
+		if (!a.isPresent() || a.get().equals("")) esfera="0"; else esfera = a.get();
+		if (!b.isPresent() || b.get().equals("")) cilindro="0";	else cilindro = b.get();	
+		if (!c.isPresent() || c.get().equals("")) eje="0"; else eje = c.get();
+		if (!d.isPresent() || d.get().equals("")) cerca="0"; else cerca = d.get();
+		if (!e.isPresent() || e.get().equals("")) adicion="0";else adicion  = e.get();
+		if (!f.isPresent() || f.get().equals("")) dnpl="0";else dnpl = f.get();
+		if (!g.isPresent() || g.get().equals("")) dnpc="0";else dnpc = g.get();
+		if (!h.isPresent() || h.get().equals("")) avcc="0";else avcc = h.get(); 
+		if (!i.isPresent() || i.get().equals("")) avsc="0";else avsc = i.get();			
+		
+		beanGraduaciones.setOI_esfera(Double.parseDouble(esfera));
+		beanGraduaciones.setOI_cilindro(Double.parseDouble(cilindro));
+		beanGraduaciones.setOI_eje(Double.parseDouble(eje));
+		beanGraduaciones.setOI_cerca(Double.parseDouble(cerca));
+		beanGraduaciones.setOI_adicion(Double.parseDouble(adicion));
+		beanGraduaciones.setOI_dnpl(Double.parseDouble(dnpl));
+		beanGraduaciones.setOI_dnpc(Double.parseDouble(dnpc));
+		beanGraduaciones.setOI_avcc(Double.parseDouble(avcc));
+		beanGraduaciones.setOI_avsc(Double.parseDouble(avsc));	
+		
 		
 		try {
 			fechaEmision = dt.parse(graduacionesForm.getFechaEmision());
 			fechaProxRevision = dt.parse(graduacionesForm.getFechaProxRevision());
-		} catch (ParseException e) {			
-			e.printStackTrace();
+		} catch (ParseException x) {			
+			x.printStackTrace();
 		}
 		
 		
@@ -502,7 +606,8 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	
 		
-	@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI"})
+	//@NotifyChange({"graduacionesForm","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI","agenteBean"})
+	@NotifyChange({"*"})
 	public void posicionaCombo() {	
 		
 		Optional<String> CantidadOD = Optional.ofNullable(graduacionesForm.getOD_cantidad());
@@ -541,7 +646,12 @@ public class ControllerGraduacionCliente implements Serializable{
 		Optional<PrismaBaseBean> d = graduacionesForm.getListaBaseOI()				
 				.stream().filter(s ->graduacionesForm.getOI_base().equals(s.getDescripcion())).findFirst();		
 						
-			if (d.isPresent()) prismaBaseOI = d.get(); else prismaBaseOI=null;		
+			if (d.isPresent()) prismaBaseOI = d.get(); else prismaBaseOI=null;			
+				
+		Optional<AgenteBean> e = graduacionesForm.getListaAgentes()				
+			.stream().filter(s ->graduacionesForm.getAgente().equals(s.getUsuario())).findFirst();	
+			
+			if (e.isPresent()) agenteBean = e.get(); else agenteBean=null;
 	}
 	
 	
@@ -587,6 +697,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm.setDvnifdoctor(medico.getLnif());
 		graduacionesForm.setNombre_doctor(medico.getNombre() + " " + medico.getApelli());
 		graduacionesForm.setCod_doctor(medico.getCodigo());
+		graduacionesForm.setDoctor(medico.getCodigo());
 			
 	}
 	
@@ -1069,17 +1180,19 @@ public class ControllerGraduacionCliente implements Serializable{
 		}
 		
 		String agente = graduacionesForm.getAgente();
-		if(agente.equals("-1")){
+		if(agente.equals("Seleccione")){
 			Messagebox.show("Debe Seleccionar agente");
 			return false;		
 		}
 		
-		/*var fechaEmision = document.getElementById('fechaEmision').value;
-		fechaEmision = trim(fechaEmision);
-		if("" == fechaEmision){
-			Messagebox.show("Debe ingresar fecha emisi\u00F3n");
+		
+		
+		//String fechaEmision = graduacionesForm.getFechaEmision().trim();	
+		String fecEmision = dt.format(fechaEmision);
+		if(fecEmision.equals("")){
+			Messagebox.show("Debe ingresar fecha emision");
 			return false;
-		}*/
+		}
 		
 		String OD_cantidad = graduacionesForm.getOD_cantidad();
 		OD_cantidad = OD_cantidad.trim();
@@ -1400,6 +1513,14 @@ public class ControllerGraduacionCliente implements Serializable{
 
 	public void setBeanGraduaciones(BeanGraduaciones beanGraduaciones) {
 		this.beanGraduaciones = beanGraduaciones;
+	}
+
+	public AgenteBean getAgenteBean() {
+		return agenteBean;
+	}
+
+	public void setAgenteBean(AgenteBean agenteBean) {
+		this.agenteBean = agenteBean;
 	}
 
 	
