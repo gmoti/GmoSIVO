@@ -1157,29 +1157,44 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	private boolean validaInformacion(){
 		
-		String nombre_cliente = graduacionesForm.getNombre_cliente();
-		nombre_cliente = nombre_cliente.trim();
+		String nombre_cliente; 
+		String codigo_cliente;
+		String doctor;
+		String agente;
+		String fecEmision;
+		String OD_cantidad;
+		String OD_base;
+		String OI_cantidad;
+		String OI_base;
+		
+		graduacionesForm.setOD_cantidad(String.valueOf(prismaCantidadOD.getCodigo()));
+		graduacionesForm.setOI_cantidad(String.valueOf(prismaCantidadOI.getCodigo()));
+		graduacionesForm.setOD_base(prismaBaseOD.getDescripcion());
+		graduacionesForm.setOI_base(prismaBaseOI.getDescripcion());
+		graduacionesForm.setAgente(agenteBean.getUsuario());
+		nombre_cliente = graduacionesForm.getNombre_cliente().trim();
 		
 		if(nombre_cliente.equals("")){
 			Messagebox.show("Debe ingresar cliente");
 			return false;
 		}
 		
-		String codigo_cliente = String.valueOf(graduacionesForm.getCliente());
-		codigo_cliente = codigo_cliente.trim();
+		codigo_cliente = String.valueOf(graduacionesForm.getCliente()).trim();
 		
 		if(codigo_cliente.equals("") || codigo_cliente.equals("0")){		
 			Messagebox.show("Debe ingresar un cliente");
 			return false;
 		}		
 		
-		String doctor = graduacionesForm.getDoctor();
+		doctor = graduacionesForm.getDoctor();
+		
 		if(doctor.equals("")){
 			Messagebox.show("Debe ingresar un doctor");
 			return false;		
 		}
 		
-		String agente = graduacionesForm.getAgente();
+		agente = graduacionesForm.getAgente();
+		
 		if(agente.equals("Seleccione")){
 			Messagebox.show("Debe Seleccionar agente");
 			return false;		
@@ -1188,17 +1203,17 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		
 		//String fechaEmision = graduacionesForm.getFechaEmision().trim();	
-		String fecEmision = dt.format(fechaEmision);
+		fecEmision = dt.format(fechaEmision);
 		if(fecEmision.equals("")){
 			Messagebox.show("Debe ingresar fecha emision");
 			return false;
 		}
 		
-		String OD_cantidad = graduacionesForm.getOD_cantidad();
+		OD_cantidad = graduacionesForm.getOD_cantidad();
 		OD_cantidad = OD_cantidad.trim();
 		if(!OD_cantidad.equals("")  && !OD_cantidad.equals("-1") ){
 			
-			String OD_base = graduacionesForm.getOD_base();
+			OD_base = graduacionesForm.getOD_base();
 			
 			if(OD_base.equals("")  || OD_base.equals("Seleccione") ){
 				Messagebox.show("Debe seleccionar Base de Prisma Derecho");
@@ -1207,11 +1222,11 @@ public class ControllerGraduacionCliente implements Serializable{
 			
 		}
 		
-		String OI_cantidad = graduacionesForm.getOI_cantidad();
+		OI_cantidad = graduacionesForm.getOI_cantidad();
 		OI_cantidad = OI_cantidad.trim();
 		if(!OI_cantidad.equals("")  && !OI_cantidad.equals("-1") ){
 			
-			String OI_base = graduacionesForm.getOI_base();
+			OI_base = graduacionesForm.getOI_base();
 			
 			if(OI_base.equals("")  || OI_base.equals("Seleccione") ){
 				Messagebox.show("Debe seleccionar Base de Prisma Izquierdo");
@@ -1220,7 +1235,7 @@ public class ControllerGraduacionCliente implements Serializable{
 			
 		}
 		
-		String OD_base = graduacionesForm.getOD_base();
+		OD_base = graduacionesForm.getOD_base();
 		if(!OD_base.equals("")  && !OD_base.equals("Seleccione") ){
 			
 			OD_cantidad = graduacionesForm.getOD_cantidad();		
@@ -1231,7 +1246,7 @@ public class ControllerGraduacionCliente implements Serializable{
 			}
 		}
 		
-		String OI_base = graduacionesForm.getOI_base();
+		OI_base = graduacionesForm.getOI_base();
 		if(!OI_base.equals("")  &&  OI_base.equals("Seleccione") ){
 			
 			OI_cantidad = graduacionesForm.getOI_cantidad();
@@ -1268,25 +1283,25 @@ public class ControllerGraduacionCliente implements Serializable{
 		OD_dnpl = beanGraduaciones.getOD_dnpl();
 				
 		
-		if(esferaD != 0){
+		//if(esferaD != 0){
 			if(esferaD < -30 || esferaD > 30){
 				Messagebox.show("El valor esfera derecha esta fuera del rango permitido -30 y 30");
 				return false;
 			}		
-		}else{
+		/*}else{
 			Messagebox.show("Debe ingresar esfera derecha.");
 			return false;
-		}		
+		}*/		
 		
-		if(cilindroD != 0){		
+		//if(cilindroD != 0){		
 			if(cilindroD < -8  || cilindroD > 8){
 				Messagebox.show("El valor cilindro derecho esta fuera de rango");
 				return false;
 			}		
-		}else{
+		/*}else{
 			Messagebox.show("Debe ingresar valor del cilindro derecho");
 			return false;
-		}
+		}*/
 		
 		
 		intCilindro = cilindroD;
@@ -1314,11 +1329,14 @@ public class ControllerGraduacionCliente implements Serializable{
 		}
 		
 		
-		if(adicionD != 0){
+		if(adicionD > 0){
 			if(adicionD < 0.50 || adicionD > 4){
 				Messagebox.show("El valor de la adicion derecha esta fuera de rango");
 				return false;
 			}
+		}else {
+			Messagebox.show("El Valor de la adicion no puede ser menor o igual a 0");
+			return false;
 		}
 		
 		if(OD_dnpl == 0){
@@ -1346,25 +1364,25 @@ public class ControllerGraduacionCliente implements Serializable{
 		OI_dnpl = beanGraduaciones .getOI_dnpl();
 		
 		
-		if(esferaI != 0){
+		//if(esferaI != 0){
 			if(esferaI < -30 || esferaI >30){
 				Messagebox.show("El valor esfera izquierda esta fuera de rango");
 				return false;
 			}	
-		}else{
+		/*}else{
 			Messagebox.show("Debe ingresar esfera izquierda.");
 			return false;
-		}
+		}*/
 		
-		if(cilindroI != 0){		
+		//if(cilindroI != 0){		
 			if(cilindroI < -8  || cilindroI > 8){
 				Messagebox.show("El valor cilindro izquierdo esta fuera de rango");
 				return false;
 			}		
-		}else{
+		/*}else{
 			Messagebox.show("Debe ingresar valor del cilindro izquierdo");
 			return false;
-		}
+		}*/
 		
 		if(cilindroI != 0){
 			if(ejeI == 0){
@@ -1411,18 +1429,24 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		/********* FIN VALIDACIONES OJO IZQUIERDO ********/	
 		
+		String fProxRevision;
+		String fEmision;
 		
-		String fechaProxRevision = graduacionesForm.getFechaProxRevision();
-		String fechaEmision = graduacionesForm.getFechaEmision();
+		graduacionesForm.setFechaEmision(dt.format(fechaEmision));
+		graduacionesForm.setFechaProxRevision(dt.format(fechaProxRevision));
+		
+		
+		fProxRevision = graduacionesForm.getFechaProxRevision().trim();
+		fEmision = graduacionesForm.getFechaEmision().trim();		
 			
-		fechaEmision = fechaEmision.trim();
-		if(fechaEmision.equals("")){
+		
+		if(fEmision.equals("")){
 			Messagebox.show("Debe ingresar fecha de emision");
 			return false;
 		}
 		
-		fechaProxRevision = fechaProxRevision.trim();
-		if(fechaProxRevision.equals("")){
+		
+		if(fProxRevision.equals("")){
 			Messagebox.show("Debe ingresar fecha de revisi\u00F3n");
 			return false;
 		}

@@ -41,7 +41,7 @@
 						</div>																			
 					</div>
 					
-					<grid sclass="MyGridRowHeight">
+					<grid sclass="MyGridRowHeight" oddRowSclass="none">
 						<columns>
 							<column width="300px" />
 							<column width="300px" />
@@ -53,7 +53,7 @@
 								<combobox
 									model="@load(vm.busquedaProductosForm.listaTipoFamilia)"
 									selectedItem="@bind(vm.tipoFamiliaBean)"
-									onSelect="@command('manejoComboBox',accion='tipofamilia')" placeholder="Seleccione"
+									onSelect="@command('manejoComboBox',accion='tipofamilia')" placeholder="SELECCIONE"
 									onRightClick="@command('comboSetNull',objetoBean=vm.tipoFamiliaBean)"
 									width="290px">
 
@@ -71,7 +71,7 @@
 									model="@load(vm.busquedaProductosForm.listaFamilias)"
 									selectedItem="@bind(vm.familiaBean)"
 									onSelect="@command('manejoComboBox',accion='familia')"
-									placeholder="Seleccione"
+									placeholder="SELECCIONE"
 									onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
 									width="290px">
 
@@ -89,7 +89,7 @@
 									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
 									selectedItem="@bind(vm.subFamiliaBean)"
 									onSelect="@command('manejoComboBox',accion='subfamilia')"
-									placeholder="Seleccione"
+									placeholder="SELECCIONE"
 									onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
 									width="290px">
 
@@ -106,7 +106,7 @@
 								<combobox
 									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
 									selectedItem="@bind(vm.grupoFamiliaBean)"
-									placeholder="Seleccione"
+									placeholder="SELECCIONE"
 									onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
 									width="290px">
 
@@ -128,7 +128,7 @@
 								<label value="Codigo Barra Producto" />
 								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
 								
-								<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('buscarProducto')"/>								
+								<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('despachador')"/>								
 							</row>
 
 						</rows>
@@ -147,7 +147,7 @@
 							<label value="Seleccion por:" />													
 						</div>
 								
-						<grid sclass="MyGridRowHeight" >						
+						<grid sclass="MyGridRowHeight" oddRowSclass="none">						
 							<columns>
 								<column  hflex="2"/>
 								<column  hflex="1"/>
@@ -241,7 +241,7 @@
 							<label value="Articulo" />	
 							<space width="80px"/>
 							<label value="Descripcion" />
-							<space width="210px"/>
+							<space width="230px"/>
 							<label value="Precio Iva" />
 							<space width="15px"/>
 							<label value="Importe" />
@@ -251,7 +251,8 @@
 							<label value="Estado" />												
 						</div>
 						
-						<grid model="@bind(vm.busquedaProductosForm.listaProductos)" sclass="MyGridRowHeight" height="150px" emptyMessage="Sin registros">
+						<grid model="@bind(vm.busquedaProductosForm.listaProductos)" 
+								sclass="MyGridRowHeight" height="150px" emptyMessage="Sin registros">
 							<columns>
 								<column width="150px" />
 								<column width="300px" />
@@ -278,7 +279,7 @@
 				</div>					
 			</center>		
 		</borderlayout>
-		
+		<!--                      popup de graduaciones  -->
 		<popup id="seleccionGraduaciones" width="800px">		
 			<div width="100%">
 			

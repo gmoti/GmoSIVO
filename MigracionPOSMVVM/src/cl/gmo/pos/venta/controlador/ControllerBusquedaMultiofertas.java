@@ -88,35 +88,21 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	
 	@NotifyChange({"busquedaProductosForm"})
 	@Command
-	public void buscarProducto() {
+	public void despachador() {
 		
-		Optional<TipoFamiliaBean>  tfam   = Optional.ofNullable(tipoFamiliaBean);
-		Optional<FamiliaBean>      fam    = Optional.ofNullable(familiaBean);
-		Optional<SubFamiliaBean>   subfam = Optional.ofNullable(subFamiliaBean);
-		Optional<GrupoFamiliaBean> grufam = Optional.ofNullable(grupoFamiliaBean);
+		Optional<String> tfam   = Optional.ofNullable(tipoFamiliaBean.getCodigo());
+		Optional<String> fam    = Optional.ofNullable(familiaBean.getCodigo());
+		Optional<String> subfam = Optional.ofNullable(subFamiliaBean.getCodigo());
+		Optional<String> grufam = Optional.ofNullable(grupoFamiliaBean.getCodigo());		
+		Optional<String> codbus = Optional.ofNullable(busquedaProductosForm.getCodigoBusqueda());
+		Optional<String> codbusbar = Optional.ofNullable(busquedaProductosForm.getCodigoBarraBusqueda());	
 		
-		
-		if (tfam.isPresent())		
-			busquedaProductosForm.setTipofamilia(tfam.get().getCodigo());
-		else
-			busquedaProductosForm.setTipofamilia("");
-		
-		if (fam.isPresent())		
-			busquedaProductosForm.setFamilia(fam.get().getCodigo());
-		else
-			busquedaProductosForm.setFamilia("");
-		
-		if(subfam.isPresent())
-			busquedaProductosForm.setSubFamilia(subfam.get().getCodigo());
-		else	
-			busquedaProductosForm.setSubFamilia("");
-		
-		if(grufam.isPresent())		
-			busquedaProductosForm.setGrupo(grufam.get().getCodigo());		    	
-		else
-			busquedaProductosForm.setGrupo("0");
-		
-		
+		busquedaProductosForm.setTipofamilia(tfam.orElse("0"));
+		busquedaProductosForm.setFamilia(fam.orElse("0"));
+		busquedaProductosForm.setSubFamilia(subfam.orElse("0"));
+		busquedaProductosForm.setGrupo(grufam.orElse("0"));
+		busquedaProductosForm.setCodigoBusqueda(codbus.orElse(""));
+		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse(""));			
 		
 		if (tipoFamiliaBean.getCodigo().equals("C") || tipoFamiliaBean.getCodigo().equals("L")) {			
 			if (!ojoDerecho && !ojoIzquierdo) {				
@@ -126,7 +112,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		}
 		
 		if (tipoFamiliaBean.getCodigo().equals("C")) {				
-			if (busquedaProductosForm.getFamilia().equals("") || busquedaProductosForm.getSubFamilia().equals("") || busquedaProductosForm.getGrupo().equals("")) {				
+			if (busquedaProductosForm.getFamilia().equals("0") || busquedaProductosForm.getSubFamilia().equals("0") || busquedaProductosForm.getGrupo().equals("0")) {				
 				Messagebox.show("Debes seleccionar todos los filtros");
 				return;
 			} 
@@ -178,16 +164,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		
 		//inicializo
 		busquedaProductosForm.setCodigoBusqueda("");
-		busquedaProductosForm.setCodigoBarraBusqueda("");
-		
-		//busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
-		//grupoFamiliaBean = new GrupoFamiliaBean();
-		
-		//busquedaProductosForm.setListaSubFamilias(new ArrayList<SubFamiliaBean>());
-		//subFamiliaBean = new SubFamiliaBean();
-		
-		//busquedaProductosForm.setListaFamilias(new ArrayList<FamiliaBean>());
-		//familiaBean = new FamiliaBean();
+		busquedaProductosForm.setCodigoBarraBusqueda("");		
 	}	
 	
 	
@@ -210,22 +187,49 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	}
 	
 	
-	@NotifyChange({"busquedaProductosForm","verGraduacion"})
+	//@NotifyChange({"busquedaProductosForm","verGraduacion"})
+	@NotifyChange("*")
 	@Command
 	public void manejoComboBox(@BindingParam("accion")String arg) {
 		
 		
 		if (arg.equals(Constantes.STRING_TIPO_FAMILIA)) {
 			busquedaProductosForm.setAccion(Constantes.STRING_TIPO_FAMILIA);
-			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());
-			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);			
+			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());			
+			
+			//al cambiar al padre los combos dependientes se hacen codigo inicial
+			familiaBean=new FamiliaBean();
+			subFamiliaBean=new SubFamiliaBean();
+			grupoFamiliaBean=new GrupoFamiliaBean();
+			busquedaProductosForm.setCodigoBarraBusqueda("");
+			busquedaProductosForm.setCodigoBusqueda("");
+			//al cambiar el padre se limpia la busqueda previamente ejecutada			
+			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+			busquedaProductosForm.setListaFamilias(new ArrayList<FamiliaBean>());
+			busquedaProductosForm.setListaSubFamilias(new ArrayList<SubFamiliaBean>());
+			busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
+			
+			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
+			
 		}
 		
 		if (arg.equals(Constantes.STRING_FAMILIA)) {
 			busquedaProductosForm.setAccion(Constantes.STRING_FAMILIA);
 			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());
 			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
+			
+			//al cambiar al padre los combos dependientes se hacen codigo inicial
+			subFamiliaBean=new SubFamiliaBean();
+			grupoFamiliaBean=new GrupoFamiliaBean();
+			busquedaProductosForm.setCodigoBarraBusqueda("");
+			busquedaProductosForm.setCodigoBusqueda("");
+			//al cambiar el padre se limpia la busqueda previamente ejecutada			
+			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+			busquedaProductosForm.setListaSubFamilias(new ArrayList<SubFamiliaBean>());
+			busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
+			
 			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
+			
 		}
 		
 		if (arg.equals(Constantes.STRING_SUBFAMILIA)) {
@@ -233,7 +237,17 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());
 			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
 			busquedaProductosForm.setSubFamilia(subFamiliaBean.getCodigo());
+			
+			//al cambiar al padre los combos dependientes se hacen codigo inicial			
+			grupoFamiliaBean=new GrupoFamiliaBean();
+			busquedaProductosForm.setCodigoBarraBusqueda("");
+			busquedaProductosForm.setCodigoBusqueda("");
+			//al cambiar el padre se limpia la busqueda previamente ejecutada			
+			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+			busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
+			
 			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
+			
 		}	
 		
 		if (tipoFamiliaBean.getCodigo().equals("C") || tipoFamiliaBean.getCodigo().equals("L"))

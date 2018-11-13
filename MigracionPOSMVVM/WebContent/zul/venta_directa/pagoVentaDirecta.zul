@@ -138,10 +138,10 @@
 	     								<cell/>		
 	     							</row>
 	     							<row>
-	     								<label value="Descuento(%)" />
+	     								<label value="Descuento(%)" visible="@bind(vm.disableDescuento)"/>
 	     								<textbox value="@bind(vm.seleccionPagoForm.descuento)" 
 	     									width="100px" 
-	     									readonly="@bind(vm.disableDescuento)" 
+	     									visible="@bind(vm.disableDescuento)" 
 	     									onOK="@command('calculaTotalvtaDirecta')" 
 	     									style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
 	     								<cell/>	

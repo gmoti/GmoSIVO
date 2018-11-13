@@ -904,7 +904,7 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
            st.execute();
            rs = (ResultSet)st.getObject(3);
            
-           TipoFamiliaBean tipoFamilia;
+           TipoFamiliaBean tipoFamilia;         
            
            while (rs.next())
            {
@@ -1085,7 +1085,7 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             st.execute();
             rs = (ResultSet)st.getObject(3);
            
-            SubFamiliaBean subfamilia;
+            SubFamiliaBean subfamilia;            
            
             while (rs.next())
             {
@@ -1207,7 +1207,8 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             rs = (ResultSet)st.getObject(4);
            
             GrupoFamiliaBean subgrupofamilia;
-            boolean traegrupo=false;
+            boolean traegrupo=false;            
+            
             while (rs.next())
             {
             	log.debug("UtilesDAOImpl:traeGruposFamiliasMultioferta entrando ciclo while");

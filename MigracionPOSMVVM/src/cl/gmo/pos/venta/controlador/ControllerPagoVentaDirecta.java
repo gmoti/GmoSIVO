@@ -1,38 +1,26 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
-
-import com.google.protobuf.Message;
-
 import cl.gmo.pos.venta.controlador.ventaDirecta.SeleccionPagoDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
-import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
 import cl.gmo.pos.venta.web.beans.PagoBean;
-import cl.gmo.pos.venta.web.beans.PedidosPendientesBean;
 import cl.gmo.pos.venta.web.forms.DevolucionForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaDirectaForm;
@@ -99,6 +87,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			fecha = ventaPedidoForm.getFecha();
 			controlBotones.setEnableGenerico1("true");
 			controlBotones.setEnableGenerico2("false");
+			disableDescuento="false";
 			
 			this.dto = 0.0;
 			sumaTotal = seleccionPagoForm.getSuma_total_albaranes();
@@ -110,7 +99,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			fecha = ventaDirectaForm.getFecha();
 			controlBotones.setEnableGenerico1("false");
 			controlBotones.setEnableGenerico2("true");
-			
+			disableDescuento="true";
 			this.dto = ventaDirectaForm.getDescuentoTotal();
 			sumaTotal = ventaDirectaForm.getSumaTotal();
 			descuentoMaximo = ventaDirectaForm.getPorcentaje_descuento_max();
@@ -121,7 +110,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			fecha = devolucionForm.getFecha();
 			controlBotones.setEnableGenerico1("false");
 			controlBotones.setEnableGenerico2("true");
-			
+			disableDescuento="false";
 		}		
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
