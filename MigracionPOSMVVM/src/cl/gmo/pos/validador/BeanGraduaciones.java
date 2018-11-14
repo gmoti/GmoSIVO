@@ -11,7 +11,7 @@ public class BeanGraduaciones implements Serializable {
 	
 	private double OD_esfera;
 	private double OD_cilindro;
-	private double OD_eje;
+	private int    OD_eje;
 	private double OD_cerca;
 	private double OD_adicion;
 	private double OD_dnpl;
@@ -21,7 +21,7 @@ public class BeanGraduaciones implements Serializable {
 	
 	private double OI_esfera;
 	private double OI_cilindro;
-	private double OI_eje;
+	private int    OI_eje;
 	private double OI_cerca;
 	private double OI_adicion;
 	private double OI_dnpl;
@@ -34,7 +34,7 @@ public class BeanGraduaciones implements Serializable {
 		
 		OD_esfera = 0.00;
 		OD_cilindro = 0.00;
-		OD_eje = 0.00;
+		OD_eje = 0;
 		OD_cerca = 0.00;
 		OD_adicion = 0.00;
 		OD_dnpl = 0.00;
@@ -44,7 +44,7 @@ public class BeanGraduaciones implements Serializable {
 		
 		OI_esfera = 0.00;
 		OI_cilindro = 0.00;
-		OI_eje = 0.00;
+		OI_eje = 0;
 		OI_cerca = 0.00;
 		OI_adicion = 0.00;
 		OI_dnpl = 0.00;
@@ -75,12 +75,12 @@ public class BeanGraduaciones implements Serializable {
 	}
 
 
-	public double getOD_eje() {
+	public int getOD_eje() {
 		return OD_eje;
 	}
 
 
-	public void setOD_eje(double oD_eje) {
+	public void setOD_eje(int oD_eje) {
 		OD_eje = oD_eje;
 	}
 
@@ -165,12 +165,12 @@ public class BeanGraduaciones implements Serializable {
 	}
 
 
-	public double getOI_eje() {
+	public int getOI_eje() {
 		return OI_eje;
 	}
 
 
-	public void setOI_eje(double oI_eje) {
+	public void setOI_eje(int oI_eje) {
 		OI_eje = oI_eje;
 	}
 

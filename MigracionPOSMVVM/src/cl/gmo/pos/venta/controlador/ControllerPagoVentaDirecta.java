@@ -100,6 +100,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			controlBotones.setEnableGenerico1("false");
 			controlBotones.setEnableGenerico2("true");
 			disableDescuento="true";
+			
 			this.dto = ventaDirectaForm.getDescuentoTotal();
 			sumaTotal = ventaDirectaForm.getSumaTotal();
 			descuentoMaximo = ventaDirectaForm.getPorcentaje_descuento_max();
@@ -108,9 +109,11 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		if (arg3 instanceof DevolucionForm) { 
 			devolucionForm= (DevolucionForm)arg3; 
 			fecha = devolucionForm.getFecha();
-			controlBotones.setEnableGenerico1("false");
+			controlBotones.setEnableGenerico1("true");
 			controlBotones.setEnableGenerico2("true");
 			disableDescuento="false";
+			
+			
 		}		
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
@@ -281,6 +284,17 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			try {
 				seleccionPagoForm.setAccion("pagar");
 				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);
+				
+				//impresion de nota de credito
+				
+				objetos = new HashMap<String,Object>();		
+				objetos.put("seleccionPago",seleccionPagoForm);	
+				
+				BindUtils.postGlobalCommand(null, null, "creaPagoExitosoDevolucion", objetos);
+				
+				ventanaActual.detach();	
+				
+				
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}
@@ -296,6 +310,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		
 		//arg =1 boleta
 		//arg =2 guia despacho
+		//ARG =3 albaran devolucion 
 		
 		if(arg.equals("1")) {		
 			
@@ -313,6 +328,9 @@ public class ControllerPagoVentaDirecta implements Serializable{
 				
 				if(origen.equals("PEDIDO"))
 					BindUtils.postGlobalCommand(null, null, "creaPagoExitosoEncargo", objetos);				
+				
+				if(origen.equals("ALBARAN_DEVOLUCION"))
+					BindUtils.postGlobalCommand(null, null, "creaPagoExitosoDevolucion", objetos);	
 				
 			} catch (Exception e) {
 				

@@ -118,7 +118,9 @@ public class ControllerGraduacionCliente implements Serializable{
 			graduacionesForm.setOI_base("Seleccione");		
 			
 			graduacionesForm.setAgente("Seleccione");
-		
+			
+			//graduacion nueva
+			graduacionesForm.setExiste_graduacion("false");
 		
 		
 		posicionaCombo();
@@ -141,6 +143,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm.setOI_base("Seleccione");		
 		
 		graduacionesForm.setAgente("Seleccione");
+		graduacionesForm.setExiste_graduacion("false");
 		//solo limpia los campos visualmente
 	}
 	
@@ -228,7 +231,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		graduacionesForm.setOD_esfera(String.valueOf(beanGraduaciones.getOD_esfera()));
 		graduacionesForm.setOD_cilindro(String.valueOf(beanGraduaciones.getOD_cilindro()));
-		graduacionesForm.setOD_eje(String.valueOf(beanGraduaciones.getOD_eje()));
+		graduacionesForm.setOD_eje(String.valueOf(Integer.parseInt(String.valueOf(beanGraduaciones.getOD_eje()))));
 		graduacionesForm.setOD_cerca(String.valueOf(beanGraduaciones.getOD_cerca()));
 		graduacionesForm.setOD_adicion(String.valueOf(beanGraduaciones.getOD_adicion()));
 		graduacionesForm.setOD_dnpc(String.valueOf(beanGraduaciones.getOD_dnpl()));
@@ -238,7 +241,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		graduacionesForm.setOI_esfera(String.valueOf(beanGraduaciones.getOI_esfera()));
 		graduacionesForm.setOI_cilindro(String.valueOf(beanGraduaciones.getOI_cilindro()));
-		graduacionesForm.setOI_eje(String.valueOf(beanGraduaciones.getOI_eje()));
+		graduacionesForm.setOI_eje(String.valueOf(Integer.parseInt(String.valueOf(beanGraduaciones.getOI_eje()))));
 		graduacionesForm.setOI_cerca(String.valueOf(beanGraduaciones.getOI_cerca()));
 		graduacionesForm.setOI_adicion(String.valueOf(beanGraduaciones.getOI_adicion()));
 		graduacionesForm.setOI_dnpc(String.valueOf(beanGraduaciones.getOI_dnpl()));
@@ -251,21 +254,25 @@ public class ControllerGraduacionCliente implements Serializable{
 		pagina = graduacionesForm.getPagina();
 		existe_graduacion = graduacionesForm.getExiste_graduacion();		
 		
-		respuesta1 = validaInformacion();		
-		//respuesta  = true;
+		respuesta1 = validaInformacion();	
 		
-		if(respuesta1){
-			respuesta  = validaGraduacion();
-		}else {
+		if(!respuesta1){	
 			return;
 		}
+		
+		respuesta  = validaGraduacion();
+		
+		if(!respuesta){	
+			return;
+		}
+		
 		
 		//valida diferente adicion
 		check = graduacionesForm.isDiferenteAdd();		
 		pasaValidacionADD = true;
 		
 		if (!check) {
-			if (!graduacionesForm.getOI_adicion().equals("") || !graduacionesForm.getOD_adicion().equals("")) {
+			if (!graduacionesForm.getOI_adicion().equals("0.0") || !graduacionesForm.getOD_adicion().equals("0.0")) {
 				if (graduacionesForm.getOI_adicion().equals(graduacionesForm.getOD_adicion()))
 				{
 					pasaValidacionADD = false;
@@ -277,10 +284,11 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		if (pasaValidacionADD) {
 			
-			if(existe_graduacion.equals("true")){	
+			if(!existe_graduacion.equals("true")){	
 				
 				if(respuesta && respuesta1){
-					if("NOGRABAR" != pagina){
+					
+					if(!pagina.equals("NOGRABAR")){
 						
 						OD_esfera = graduacionesForm.getOD_esfera();
 						OD_cilindro = graduacionesForm.getOD_cilindro();
@@ -552,7 +560,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		beanGraduaciones.setOD_esfera(Double.parseDouble(esfera));
 		beanGraduaciones.setOD_cilindro(Double.parseDouble(cilindro));
-		beanGraduaciones.setOD_eje(Double.parseDouble(eje));
+		beanGraduaciones.setOD_eje(Integer.parseInt(eje));
 		beanGraduaciones.setOD_cerca(Double.parseDouble(cerca));
 		beanGraduaciones.setOD_adicion(Double.parseDouble(adicion));
 		beanGraduaciones.setOD_dnpl(Double.parseDouble(dnpl));
@@ -584,7 +592,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		beanGraduaciones.setOI_esfera(Double.parseDouble(esfera));
 		beanGraduaciones.setOI_cilindro(Double.parseDouble(cilindro));
-		beanGraduaciones.setOI_eje(Double.parseDouble(eje));
+		beanGraduaciones.setOI_eje(Integer.parseInt(eje));
 		beanGraduaciones.setOI_cerca(Double.parseDouble(cerca));
 		beanGraduaciones.setOI_adicion(Double.parseDouble(adicion));
 		beanGraduaciones.setOI_dnpl(Double.parseDouble(dnpl));
@@ -1013,11 +1021,11 @@ public class ControllerGraduacionCliente implements Serializable{
 			}else{
 				
 				if(lado.equals("derecho")){	
-					beanGraduaciones.setOD_eje(0.00);					
+					beanGraduaciones.setOD_eje(0);					
 					//document.getElementById('OD_eje').disabled =true;		
 					
 				}else if(lado.equals("izquierda")){				
-					beanGraduaciones.setOI_eje(0.00);
+					beanGraduaciones.setOI_eje(0);
 					//document.getElementById('OI_eje').disabled =true;
 				}
 			}			

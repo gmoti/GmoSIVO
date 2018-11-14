@@ -125,7 +125,7 @@
 				   					
 				   					<doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="##,##" locale="it" />
 				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="##,##" locale="it" />
-				   					<doublebox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##,##" locale="it" />
+				   					<intbox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##" locale="it" />
 				   					<doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="##,##" locale="it" />
 				   					<doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="##,##" locale="it" />
 				   					<doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="##,##" locale="it" />
@@ -157,7 +157,7 @@
 				   					
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="##,##" locale="it" onBlur="@command('validaEsfera',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="##,##" locale="it" onBlur="@command('validaCilindro',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##,##" locale="it" onBlur="@command('validaEje',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/> 
+				   					<doublebox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##" locale="it" onBlur="@command('validaEje',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/> 
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="##,##" locale="it" onBlur="@command('validacionCerca',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="##,##" locale="it" onBlur="@command('validaAdicion',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="##,##" locale="it" onBlur="@command('validaDNPL',elemento=vm.beanGraduaciones.OD_esfera,lado='izquierda')"/>
@@ -167,7 +167,7 @@
 				   					
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="##,##" locale="it" />
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="##,##" locale="it" />
-				   					<doublebox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##,##" locale="it" /> 
+				   					<intbox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##" locale="it" /> 
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="##,##" locale="it" />
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="##,##" locale="it" />
 				   					<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="##,##" locale="it" />

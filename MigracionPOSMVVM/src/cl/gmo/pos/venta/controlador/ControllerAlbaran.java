@@ -24,6 +24,7 @@ import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.actions.DevolucionDispatchActions;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.AlbaranBean;
+import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.ConvenioBean;
 import cl.gmo.pos.venta.web.beans.DevolucionBean;
 import cl.gmo.pos.venta.web.beans.DivisaBean;
@@ -50,6 +51,7 @@ public class ControllerAlbaran implements Serializable{
 	private VentaPedidoForm ventaPedidoForm;
 	private DevolucionDispatchActions devolucionDispatch;
 	private SeleccionPagoDispatchActions seleccionPagoDispatch;
+	private ClienteBean cliente;
 	
 	private String usuario;	
 	private String sucursalDes;	
@@ -92,7 +94,8 @@ public class ControllerAlbaran implements Serializable{
 		tipoMotivoDevolucionBean = new TipoMotivoDevolucionBean();
 		formaPagoBean = new FormaPagoBean();
 		convenioBean = new ConvenioBean();
-		provinciaBean = new ProvinciaBean();	
+		provinciaBean = new ProvinciaBean();
+		cliente = new ClienteBean();
 		
 		fechaActual = new Date(System.currentTimeMillis());
 		horaActual  = new Date(System.currentTimeMillis());
@@ -128,6 +131,7 @@ public class ControllerAlbaran implements Serializable{
 		provinciaBean=null;
 		
 		disabledCampo=false;
+		cliente = new ClienteBean();
 	}
 	
 	@Command
@@ -245,13 +249,22 @@ public class ControllerAlbaran implements Serializable{
 					
 					//showPopWin("<%=request.getContextPath()%>/SeleccionPago.do?method=cargaFormularioCobroAlbaran&fecha="+fecha+"", 710, 285, vuelve_Pago_albaran_devolucion, false);
 					try {
+						
+						seleccionPagoForm = new SeleccionPagoForm();						
+						sess.setAttribute(Constantes.STRING_ORIGEN, "ALBARAN_DEVOLUCION");
+						
+						seleccionPagoForm.setFech_pago(devolucionForm.getFecha());
+						seleccionPagoForm.setFecha(devolucionForm.getFecha());
+						//seleccionPagoForm.setTipo_doc('B');
+						seleccionPagoForm.setOrigen("ALBARAN_DEVOLUCION");						
+						
 						seleccionPagoDispatch.cargaFormularioCobroAlbaran(seleccionPagoForm, sess);
 						
 						objetos = new HashMap<String,Object>();
-						//objetos.put("cliente",cliente);
+						objetos.put("cliente",cliente);
 						objetos.put("pagoForm",seleccionPagoForm);
 						objetos.put("ventaOrigenForm",devolucionForm);
-						objetos.put("origen","PEDIDO");
+						objetos.put("origen","ALBARAN_DEVOLUCION");
 						
 						Window windowPagoVentaDirecta = (Window)Executions.createComponents(
 				                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
@@ -271,13 +284,22 @@ public class ControllerAlbaran implements Serializable{
 				//showPopWin("<%=request.getContextPath()%>/SeleccionPago.do?method=cargaFormularioCobroAlbaran&fecha="+fecha+"", 710, 285, vuelve_Pago_albaran_devolucion, false);
 				
 				try {
+					
+					seleccionPagoForm = new SeleccionPagoForm();						
+					sess.setAttribute(Constantes.STRING_ORIGEN, "ALBARAN_DEVOLUCION");
+					
+					seleccionPagoForm.setFech_pago(devolucionForm.getFecha());
+					seleccionPagoForm.setFecha(devolucionForm.getFecha());
+					//seleccionPagoForm.setTipo_doc('B');
+					seleccionPagoForm.setOrigen("ALBARAN_DEVOLUCION");	
+					
 					seleccionPagoDispatch.cargaFormularioCobroAlbaran(seleccionPagoForm, sess);
 					
 					objetos = new HashMap<String,Object>();
-					//objetos.put("cliente",cliente);
+					objetos.put("cliente",cliente);
 					objetos.put("pagoForm",seleccionPagoForm);
 					objetos.put("ventaOrigenForm",devolucionForm);
-					objetos.put("origen","PEDIDO");
+					objetos.put("origen","ALBARAN_DEVOLUCION");
 					
 					Window windowPagoVentaDirecta = (Window)Executions.createComponents(
 			                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
@@ -384,79 +406,44 @@ public class ControllerAlbaran implements Serializable{
 	//========= Prcesos adicionales de la clase =====================
 	//===============================================================	
 		
-	@NotifyChange({"*","controlBotones"})
+	@NotifyChange({"devolucionForm"})
 	@GlobalCommand	
-    public void creaPagoExitosoDevolucion(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {		
+    public void creaPagoExitosoDevolucion(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {	
 		
-		/*
-		dform_in = new DevolucionForm();
-		dform_out = new DevolucionForm();
-		dform_in.setAccion(Constantes.FORWARD_DEVOLUCION);			
-		sesion.setAttribute(Constantes.STRING_TIPO_ALBARAN, "DEVOLUCION");	
-		dform_in.setBoleta_guia(sesion.getAttribute(Constantes.STRING_TIPO_DOCUMENTO).toString());
-		dform_in.setNumero_boleta_guia(sesion.getAttribute("NUMERO_BOLETA_GUIA").toString());
-		dform_in.setLista_productos(this.getLista_productos());
-		for(ProductosBean b : dform_in.getLista_productos()) {
-			System.out.println(b.getCod_articulo()+"<=======>"+b.getDescripcion());
-		}
-		dform_in.setAgente(this.getAgente());
-		this.getListaAgentes().forEach(t->{
-			if(t.getUsuario().equals(this.getAgente())){
-				dform_in.setAgente(t.getUsuario());
-				dform_in.setAgenteSeleccionado(t.getUsuario());
-			}
-		}
-		);
-		this.getLista_mot_devo().forEach(t->{
-				if(t.getDescripcion().equals(this.getMotivo())){
-					dform_in.setMotivo(t.getCodigo());
-				}
-			}
-		);
-		dform_in.setFecha(util.traeFechaHoyFormateadaString());
-		dform_in.setCodigo_cliente(sesion.getAttribute(Constantes.STRING_CLIENTE).toString());
-		dform_in.setAgente(sesion.getAttribute(Constantes.STRING_USUARIO).toString());
-		dform_in.setTipoAlbaran("D");
-		dform_in.setCambio("1");
-		dform_in.setDivisa("PESO");
-		try {
-			dform_out = dev_dis.cargaAlbaran(dform_in,sesion);			
-			sesion.setAttribute(Constantes.STRING_TICKET, dform_in.getCodigo1()+ "/" + dform_in.getCodigo2());
-			
-			postCobro();
-			
-            if (dform_out.getEstado_boleta().trim().toUpperCase().contains("TRUE") ) {
+		String[] tmp;
+		
+		devolucionForm.setAccion(Constantes.FORWARD_DEVOLUCION);
+		devolucionDispatch.cargaAlbaran(devolucionForm, sess);		
+		
+		tmp = devolucionForm.getEstado_boleta().split("_");
+		
 				
-				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente (1).");
-			}else {
-				if(!dform_out.getEstado_boleta().equals("") && dform_out.getEstado_boleta()!= null) {
-					
-					String[] boleta =  dform_out.getEstado_boleta().split("_");
-					//String url ="http://10.216.4.24/NC/61 "+dform_in.getNif()+"-"+dform_in.getDvnif()+" "+boleta[1]+".pdf";
-					String url ="http://10.216.4.24/NC/61 66666666-6 79912.pdf";
-					
-					objetos = new HashMap<String,Object>();
-					objetos.put("documento",url);
-					objetos.put("titulo","Venta Directa");
-					
-					Window window = (Window)Executions.createComponents(
-			                "/zul/reportes/VisorDocumento.zul", null, objetos);
-					
-			        window.doModal();	
-			        
-				 }else {
-					 Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente (2).");
-				 }
+		
+		//var tipoimpresion = $j("#tipoimp").val() == "1" ? "Carta": "Termica";
+		/*
+		var rut = tmp[3];
+		
+		var nota = tmp[1]+".pdf"; 
 						
-			}
-            System.out.println("DFORM CODIGO ============>"+dform_out.getCodigo1()+ "/" + dform_out.getCodigo2());
-            this.setCodigo_completo(dform_out.getCodigo1()+ "/" + dform_out.getCodigo2());
+		var urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;				
+		
+		if(tmp[0] == "0" || tmp[2] =="true"){
+			alert("Error: No se pudo generar la boleta");
 			
-		} catch (Exception e) {
+		}else if(tmp[0] == "1" && tmp[2] =="false"){
 			
-			e.printStackTrace();
-		}			
+			$j(".pantalla2,#load_gif").css("display","block");
+			alert("Generando Nota de Cr\u00e9dito, espere un momento por favor....");
+			setTimeout(function(){  
+				window.open(urlbol); $j(".pantalla2,#load_gif").css("display","NONE");
+			}, 4000);						
+			
+		}else if(tmp[0] == "2" && tmp[2] =="false"){
+			alert("!ATENCI\u00d3N¡ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+		}	
 		*/
+		
+			
 	}
 	
 	@NotifyChange({"devolucionForm"})
@@ -504,6 +491,9 @@ public class ControllerAlbaran implements Serializable{
 		devolucionForm.setCdg_venta(albaran.getCodigo_albaran());		
 		devolucionDispatch.cargaAlbaran(devolucionForm, sess);
 		
+		cliente.setNif(devolucionForm.getNif());
+		cliente.setDvnif(devolucionForm.getDvnif());
+		
 		try {
 			fechaActual = dt.parse(devolucionForm.getFecha());
 			
@@ -543,6 +533,7 @@ public class ControllerAlbaran implements Serializable{
 		String boleta_guia = devolucionForm.getBoleta_guia();
 		//var resp = getRadioButtonSelected(boleta_guia);
 		int data;	
+		cliente = new ClienteBean();
 		
 		
 		if(numero_boleta_guia.equals("")){
@@ -569,6 +560,9 @@ public class ControllerAlbaran implements Serializable{
 				devolucionForm.setTipoAlbaran("D");
 				devolucionForm.setAccion("cargarDatos");
 				devolucionDispatch.cargaAlbaran(devolucionForm, sess);
+				
+				cliente.setNif(devolucionForm.getNif());
+				cliente.setDvnif(devolucionForm.getDvnif());
 				
 				Optional<String> d = Optional.ofNullable(devolucionForm.getFecha_garantia());
 				

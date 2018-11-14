@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
@@ -23,6 +24,7 @@ import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.actions.ContactologiaDispatchActions;
 import cl.gmo.pos.venta.web.beans.ContactologiaBean;
+import cl.gmo.pos.venta.web.beans.OftalmologoBean;
 import cl.gmo.pos.venta.web.forms.ContactologiaForm;
 
 public class ControllerContactologia implements Serializable {
@@ -65,6 +67,7 @@ public class ControllerContactologia implements Serializable {
 		
 		try {			
 			contactologiaDispatch.cargaFormulario(contactologiaForm, sess);
+			contactologiaForm.setExisteContactologia("false");
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
@@ -78,7 +81,50 @@ public class ControllerContactologia implements Serializable {
 	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void nuevoGraduacion() {
-		//ventana inalcanzable
+		//document.getElementById("estaGrabado").value=2;
+		/*var inputs = document.getElementsByTagName("input");
+		var cliente = document.getElementById('cliente');
+		var exito = document.getElementById('exito');
+		var nombre_cliente = document.getElementById('nombre_cliente');*/
+		
+		contactologiaForm.setEstaGrabado(2);
+		
+		contactologiaForm.setO_radio1("");
+		contactologiaForm.setO_radio2("");
+		contactologiaForm.setO_esfera("");
+		contactologiaForm.setO_cilindro("");
+		contactologiaForm.setO_eje("");
+		contactologiaForm.setO_diamt("");
+		contactologiaForm.setO_diaz("");
+		contactologiaForm.setO_bandas("");
+		contactologiaForm.setO_radio3("");
+		contactologiaForm.setO_diamp("");
+		contactologiaForm.setO_colo("");
+		contactologiaForm.setO_adic("");
+			
+		contactologiaForm.setI_radio1("");
+		contactologiaForm.setI_radio2("");
+		contactologiaForm.setI_esfera("");
+		contactologiaForm.setI_cilindro("");
+		contactologiaForm.setI_eje("");
+		contactologiaForm.setI_diamt("");
+		contactologiaForm.setI_diaz("");
+		contactologiaForm.setI_bandas("");
+		contactologiaForm.setI_radio3("");
+		contactologiaForm.setI_diamp("");
+		contactologiaForm.setI_colo("");
+		contactologiaForm.setI_adic("");  
+		
+		contactologiaForm.setNifdoctor("");
+		contactologiaForm.setDvnifdoctor("");
+		contactologiaForm.setRecomendaciones("");
+		contactologiaForm.setCalculo_opt("");
+		contactologiaForm.setLaboratorio("");
+		contactologiaForm.setOtro("");
+		contactologiaForm.setNombre_doctor("");
+		
+		contactologiaForm.setExisteContactologia("false");
+		
 	}
 	
 	
@@ -125,10 +171,30 @@ public class ControllerContactologia implements Serializable {
 		boolean respuesta=false;
 		String respuesta3="";
 		
-		contactologiaForm.setFecha_caducidad(dt.format(fechaCaducidad));
-		contactologiaForm.setFecha_entrega(dt.format(fechaEntrega));
-		contactologiaForm.setFecha_pedido(dt.format(fechaEncargo));
-		contactologiaForm.setFecha_recepcion(dt.format(fechaRecepcion));	
+		Optional<Date> fcaducidad = Optional.ofNullable(fechaCaducidad);
+		Optional<Date> fentrega   = Optional.ofNullable(fechaEntrega);
+		Optional<Date> fencargo   = Optional.ofNullable(fechaEncargo);
+		Optional<Date> frecepcion = Optional.ofNullable(fechaRecepcion);
+		
+		if (fcaducidad.isPresent())		
+			contactologiaForm.setFecha_caducidad(dt.format(fechaCaducidad));
+		else
+			contactologiaForm.setFecha_caducidad("");
+		
+		if (fentrega.isPresent())		
+			contactologiaForm.setFecha_entrega(dt.format(fechaEntrega));
+		else
+			contactologiaForm.setFecha_entrega("");
+		
+		if(fencargo.isPresent())
+			contactologiaForm.setFecha_pedido(dt.format(fechaEncargo));
+		else
+			contactologiaForm.setFecha_pedido("");
+		
+		if(frecepcion.isPresent())
+			contactologiaForm.setFecha_recepcion(dt.format(fechaRecepcion));
+		else
+			contactologiaForm.setFecha_recepcion("");
 		
 		doctor = contactologiaForm.getDoctor();
 		pagina = contactologiaForm.getGrabar();
@@ -195,41 +261,104 @@ public class ControllerContactologia implements Serializable {
 		contactologiaDispatch.ingresaContactologia(contactologiaForm, sess);	
 		
 		Optional<String> a =  Optional.ofNullable(contactologiaForm.getFecha_pedido());
-		if (!a.isPresent()) contactologiaForm.setFecha_pedido("");
+		if (!a.isPresent() || a.get().equals("")) {
+			contactologiaForm.setFecha_pedido("");
+			fechaEncargo=null;
+		}else {
+			try {
+				fechaEncargo = dt.parse(contactologiaForm.getFecha_pedido());
+			} catch (ParseException e) {				
+				e.printStackTrace();
+			}			
+		}
 		
 		Optional<String> b =  Optional.ofNullable(contactologiaForm.getFecha_recepcion());
-		if (!b.isPresent()) contactologiaForm.setFecha_recepcion("");
+		if (!b.isPresent() || b.get().equals("")) {
+			contactologiaForm.setFecha_recepcion("");
+			fechaRecepcion=null;
+		}else {
+			try {
+				fechaRecepcion = dt.parse(contactologiaForm.getFecha_recepcion());
+			} catch (ParseException e) {				
+				e.printStackTrace();
+			}
+		}
 		
 		Optional<String> c =  Optional.ofNullable(contactologiaForm.getFecha_entrega());
-		if (!c.isPresent()) contactologiaForm.setFecha_entrega("");
+		if (!c.isPresent() || c.get().equals("")) {
+			contactologiaForm.setFecha_entrega("");
+			fechaEntrega=null;
+		}else {
+			try {
+				fechaEntrega = dt.parse(contactologiaForm.getFecha_entrega());
+			} catch (ParseException e) {				
+				e.printStackTrace();
+			}
+		}
 		
 		Optional<String> d =  Optional.ofNullable(contactologiaForm.getFecha_caducidad());
-		if (!d.isPresent()) contactologiaForm.setFecha_caducidad("");
-		
-		
-		try {
-			fechaEncargo = dt.parse(contactologiaForm.getFecha_pedido());						
-		} catch (ParseException e) {			
-			e.printStackTrace();
+		if (!d.isPresent() || d.get().equals("")) {
+			contactologiaForm.setFecha_caducidad("");
+			fechaCaducidad=null;
+		}else {
+			try {
+				fechaCaducidad = dt.parse(contactologiaForm.getFecha_caducidad());
+			} catch (ParseException e) {				
+				e.printStackTrace();
+			}
 		}		
-		try {
-			fechaRecepcion = dt.parse(contactologiaForm.getFecha_recepcion());
-		} catch (ParseException e) {			
-			e.printStackTrace();
-		}
-		try {
-			fechaEntrega = dt.parse(contactologiaForm.getFecha_entrega());
-		} catch (ParseException e) {			
-			e.printStackTrace();
-		}
-		try {
-			fechaCaducidad = dt.parse(contactologiaForm.getFecha_caducidad());
-		} catch (ParseException e) {			
-			e.printStackTrace();
-		}
-		
 		
 	}
+	
+	@NotifyChange({"contactologiaForm"})
+	@Command
+	public void buscarDoctorAjax()
+    {        	
+    	String nifdoctor = contactologiaForm.getNifdoctor();	
+    	
+    	if(!nifdoctor.equals("")){    		
+    		
+    		sess.setAttribute("nifdoctor", nifdoctor);
+    		contactologiaDispatch.buscarDoctorAjax(contactologiaForm, sess);
+    		
+    		if (contactologiaForm.getNifdoctor().equals("")) {    		
+    			Messagebox.show("El doctor con rut "+nifdoctor+" no existe");
+    		}   		
+    		
+    	}else{
+    		Messagebox.show("Debe ingrese rut de doctor.");
+    	}	
+    }
+	
+	
+	@NotifyChange({"contactologiaForm"})
+	@Command
+	public void buscarMedico() {
+		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();
+		objetos.put("retorno", "seleccionaMedicoContactologia");
+		
+		Window winBuscarMedico = (Window)Executions.createComponents(
+                "/zul/mantenedores/BusquedaMedico.zul", null, objetos);
+		
+		winBuscarMedico.doModal(); 		
+	}
+	
+	@NotifyChange({"contactologiaForm"})
+	@GlobalCommand
+	public void seleccionaMedicoContactologia(@BindingParam("medico")OftalmologoBean medico) {
+		
+		contactologiaForm.setNifdoctor(medico.getNif());
+		contactologiaForm.setDvnifdoctor(medico.getLnif());
+		contactologiaForm.setNombre_doctor(medico.getNombre() + " " + medico.getApelli());
+		//contactologiaForm.setCod_doctor(medico.getCodigo());
+		contactologiaForm.setDoctor(medico.getCodigo());
+			
+	}
+	
+	
+	//======validaciones  varias=================
+	//=============================================
 	
 	public boolean validaInfoContactologia(){
 		

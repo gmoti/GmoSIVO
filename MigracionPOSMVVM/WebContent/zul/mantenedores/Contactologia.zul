@@ -155,9 +155,9 @@
 		   			<div width="100%" vflex="max" style="background-color:black;color: white">
 						<space width="5px"/>
 						<label value="Fecha"/>	
-						<space width="35px"/>
+						<space width="25px"/>
 						<label value="Nunero"/>	
-						<space width="35px"/>	
+						<space width="25px"/>	
 						<label value="Detalle"/>																														
 					</div>
 		   		
@@ -196,8 +196,8 @@
 		   						<cell colspan="1">
 		   							<textbox value="@bind(vm.contactologiaForm.nifdoctor)" width="100px"/>
 		   							<textbox value="@bind(vm.contactologiaForm.dvnifdoctor)" width="30px"/>
-		   							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="" />
-		   							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="" />	   							
+		   							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="@command('buscarDoctorAjax')" />
+		   							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarMedico')" />	   							
 		   						</cell>	  
 		   						<cell/>
 		   						<cell/>
