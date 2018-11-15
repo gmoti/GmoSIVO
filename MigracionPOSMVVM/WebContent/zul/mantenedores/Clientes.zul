@@ -65,12 +65,12 @@
 						<intbox value="@bind(vm.clienteForm.codigo)" readonly="true" disabled="@bind(vm.bDisableinicialRut)"/>
 						<label value="Rut"/>
 						<cell>
-							<textbox value="@bind(vm.clienteForm.rut)" 
+							<textbox value="@bind(vm.clienteForm.rut)" onBlur="@command('validarRut')"
 								width="150px" disabled="@bind(vm.bDisableinicialRut)"
 								constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
 								
 							<textbox value="@bind(vm.clienteForm.dv)" 
-								width="50px" readonly="true" onBlur="@command('validarRut')"/>
+								width="50px" readonly="true" />
 								
 							<toolbarbutton image="/iconos/luparapida.png" 
 								sclass="shrink16" onClick="@command('buscar')" disabled="@bind(vm.bDisableinicialRut)"/>

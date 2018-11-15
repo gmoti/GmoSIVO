@@ -80,7 +80,7 @@ public class ControllerCliente implements Serializable{
 		busquedaClientes = new BusquedaClientesDispatchActions();
 		clienteForm = new ClienteForm();
 		
-		fechaNac = new Date(System.currentTimeMillis());
+		//fechaNac = new Date(System.currentTimeMillis());
 		bDisableinicial = false;
 		bDisableinicialRut = false;		
 		
@@ -100,23 +100,65 @@ public class ControllerCliente implements Serializable{
 	@NotifyChange({"clienteForm","fechaNac"})
 	public void ingresarCliente()  {
 		
-		clienteForm.setAccion("ingresoCliente");
-		clienteForm.setFnacimiento(dt.format(fechaNac));
-		clienteForm.setAgente(agenteBean.getUsuario());
-		clienteForm.setVia(tipoViaBean.getCodigo());
-		clienteForm.setProvincia_cliente(provinciaBean.getCodigo());		
+		Optional<Date> fn = Optional.ofNullable(fechaNac);
+		Optional<AgenteBean> ab = Optional.ofNullable(agenteBean);
 		
-		clid.ingresoCliente(clienteForm, sess);		
+		Optional<String> tvb = Optional.ofNullable(tipoViaBean.getCodigo());
+		Optional<String> pb = Optional.ofNullable(provinciaBean.getCodigo());
 		
-		if(clienteForm.getExito().equals(Constantes.STRING_ACTION_MODIFICADO)) {
+		Optional<String> r = Optional.ofNullable(clienteForm.getRut());	
+		
+		if (!r.isPresent() || clienteForm.getRut().trim().equals("") || clienteForm.getRut().trim().equals("0")) {
+			Messagebox.show("Debe indicar el rut");
+		    return;		
+		}		
+		
+		if(fn.isPresent()) 
+			clienteForm.setFnacimiento(dt.format(fechaNac));
+		
+		if(!ab.isPresent() || ab.get().getUsuario().equals("Seleccione") || ab.get().getUsuario().equals("")) {
+			Messagebox.show("Debe indicar un agente");
+			return;			
+		}else	
+			clienteForm.setAgente(agenteBean.getUsuario());
+		
+		
+		if(!tvb.isPresent() || tvb.get().equals(""))	
+			clienteForm.setTipo_via("0");
+		else	
+			clienteForm.setTipo_via(tipoViaBean.getCodigo());
+		 
+		
+		if(!pb.isPresent() || pb.get().equals("")) 
+			clienteForm.setProvincia_cliente("0");
+		else
+			clienteForm.setProvincia_cliente(provinciaBean.getCodigo());
+		 
+		
+		
+		clienteForm.setAccion("ingresoCliente");	
+		clid.ingresoCliente(clienteForm, sess);	
+		
+		switch (clienteForm.getExito()) {
+		case Constantes.STRING_ACTION_MODIFICADO:
 			Messagebox.show("Se modifico exitosamente el Cliente.");
-		}
-		if(clienteForm.getExito().equals(Constantes.STRING_ACTION_EXISTE)) {
+			break;
+			
+		case Constantes.STRING_ACTION_EXISTE:
 			Messagebox.show("Se ingreso exitosamente el Cliente.");
-		}
-		if(clienteForm.getExito().equals(Constantes.STRING_FALSE)) {
+			break;
+			
+		case Constantes.STRING_FALSE:
 			Messagebox.show("No se pudo Ingresar el Cliente.");
+			break;		
+
+		default:
+			Messagebox.show("Informacion minima requerida");
+			break;
 		}
+		
+		
+		
 		
 	}
 	

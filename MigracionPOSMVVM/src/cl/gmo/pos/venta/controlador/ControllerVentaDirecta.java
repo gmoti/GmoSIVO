@@ -377,7 +377,7 @@ public class ControllerVentaDirecta implements Serializable{
 									winVentaDirecta.detach();									
 															
 									Window window = (Window)Executions.createComponents(
-							                "/zul/mantenedores/Cliente.zul", null, null);			
+							                "/zul/mantenedores/Clientes.zul", null, null);			
 							        window.doModal();								
 							}						
 						}

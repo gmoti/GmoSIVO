@@ -113,7 +113,9 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			controlBotones.setEnableGenerico2("true");
 			disableDescuento="false";
 			
-			
+			this.dto = 0.0;
+			sumaTotal = devolucionForm.getSumaTotal();
+			descuentoMaximo = 0;
 		}		
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
@@ -240,6 +242,14 @@ public class ControllerPagoVentaDirecta implements Serializable{
 	{
 		int correcto = 1;
 		
+		//Se muven los bean de los combos a el Form
+		
+		Optional<FormaPagoBean> fpb = Optional.ofNullable(formaPagoBean);
+		
+		if(fpb.isPresent())		
+			seleccionPagoForm.setForma_pago(formaPagoBean.getId());
+		else
+			seleccionPagoForm.setForma_pago("0");
 		
 		if (seleccionPagoForm.getEstado().equals("PAGADO_TOTAL")) {
 			Messagebox.show("No hay saldos pendientes por pagar");

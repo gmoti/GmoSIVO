@@ -7,8 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.regex.Pattern;
-
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.GlobalCommand;
@@ -18,6 +16,8 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.controlador.ventaDirecta.SeleccionPagoDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
@@ -60,7 +60,7 @@ public class ControllerAlbaran implements Serializable{
 	SimpleDateFormat tt = new SimpleDateFormat("hh:mm:ss");		
 	
 	private Date fechaActual;
-	private Date horaActual;
+	//private Time horaActual;
 	private Date fechaGarantia;
 	private boolean disabledCampo=false;
 	
@@ -98,7 +98,7 @@ public class ControllerAlbaran implements Serializable{
 		cliente = new ClienteBean();
 		
 		fechaActual = new Date(System.currentTimeMillis());
-		horaActual  = new Date(System.currentTimeMillis());
+		//horaActual  = new Date(System.currentTimeMillis());
 		fechaGarantia= new Date(System.currentTimeMillis());
 		disabledCampo=true;
 		
@@ -118,8 +118,11 @@ public class ControllerAlbaran implements Serializable{
 		devolucionDispatch.cargaFormulario(devolucionForm, sess);
 		
 		fechaActual = new Date(System.currentTimeMillis());
-		horaActual  = new Date(System.currentTimeMillis());
+		//horaActual  = new Date(System.currentTimeMillis());
 		fechaGarantia= new Date(System.currentTimeMillis());
+		
+		devolucionForm.setFecha(dt.format(fechaActual));
+		devolucionForm.setHora(tt.format(fechaActual));
 		
 		tipoAlbaranBean=null;
 		idiomaBean=null;
@@ -137,6 +140,48 @@ public class ControllerAlbaran implements Serializable{
 	@Command
 	@NotifyChange({"devolucionForm"})
 	public void pagarAlbaran(){
+		
+		Optional<Date> fg = Optional.ofNullable(fechaGarantia);
+		
+		Optional<TipoAlbaranBean> tab = Optional.ofNullable(tipoAlbaranBean);
+		Optional<IdiomaBean> ib = Optional.ofNullable(idiomaBean);
+		Optional<AgenteBean> ab = Optional.ofNullable(agenteBean);
+		Optional<DivisaBean> db = Optional.ofNullable(divisaBean);
+		Optional<TipoMotivoDevolucionBean> tmd = Optional.ofNullable(tipoMotivoDevolucionBean);
+		Optional<FormaPagoBean> fpb = Optional.ofNullable(formaPagoBean);
+		Optional<ConvenioBean> cb = Optional.ofNullable(convenioBean);
+		Optional<ProvinciaBean> pb = Optional.ofNullable(provinciaBean);
+		
+		if (tab.isPresent()) devolucionForm.setTipo_albaran(String.valueOf(tab.get().getCodigo()));
+		else devolucionForm.setTipo_albaran("0");
+		
+		if(ib.isPresent()) devolucionForm.setIdioma(ib.get().getId());
+		else devolucionForm.setIdioma("0");
+		
+		if(ab.isPresent()) devolucionForm.setAgente(ab.get().getUsuario());
+		else devolucionForm.setAgente("0");
+		
+		if(db.isPresent()) devolucionForm.setDivisa(db.get().getId());
+		else devolucionForm.setDivisa("0");
+		
+		if(tmd.isPresent()) devolucionForm.setMotivo(tmd.get().getCodigo());
+		else devolucionForm.setMotivo("0");
+		
+		if(fpb.isPresent()) devolucionForm.setFormaPago(fpb.get().getId());
+		else devolucionForm.setFormaPago("0");
+		
+		if(cb.isPresent()) devolucionForm.setConvenio(cb.get().getId());
+		else devolucionForm.setConvenio("0");
+		
+		if(pb.isPresent()) devolucionForm.setProvincia(pb.get().getCodigo());
+		else devolucionForm.setProvincia("0");
+		
+		
+		
+		if (fg.isPresent())		
+			devolucionForm.setFecha_garantia(dt.format(fechaGarantia));
+		else
+			devolucionForm.setFecha_garantia("");
 		
 		if(devolucionForm.getTipo_albaran().equals("DIRECTA")) {			
 			devolucionForm.setAccion("traeAlbaranBuscado2");
@@ -411,13 +456,52 @@ public class ControllerAlbaran implements Serializable{
     public void creaPagoExitosoDevolucion(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {	
 		
 		String[] tmp;
+		String rut;
+		String nota;
+		String urlbol;
 		
 		devolucionForm.setAccion(Constantes.FORWARD_DEVOLUCION);
 		devolucionDispatch.cargaAlbaran(devolucionForm, sess);		
 		
 		tmp = devolucionForm.getEstado_boleta().split("_");
 		
-				
+		rut  = tmp[3];
+		nota = tmp[1]+".pdf";
+		urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;
+		
+		if(tmp[0].equals("0") || tmp[2].equals("true")){
+			Messagebox.show("Error: No se pudo generar la boleta");	
+			return;
+			
+		}else if(tmp[0].equals("1") && tmp[2].equals("false")){			
+			
+			Messagebox.show("Generando Nota de Cr\u00e9dito, espere un momento por favor....");
+			
+			Messagebox.show("Albaran", "Generando Nota de Cr\\u00e9dito, espere un momento por favor...",
+					Messagebox.OK,	Messagebox.INFORMATION, new EventListener<Event>() {			
+				@Override
+				public void onEvent(Event e) throws Exception {	
+					
+						if( ((Integer) e.getData()).intValue() == Messagebox.OK ) {
+							
+							objetos = new HashMap<String,Object>();
+							objetos.put("documento",urlbol);
+							objetos.put("titulo","Albaran");
+							
+							Window window = (Window)Executions.createComponents(
+					                "/zul/reportes/VisorDocumento.zul", null, objetos);
+							
+					        window.doModal();
+						}						
+					}
+			});	
+			
+			
+		}else if(tmp[0].equals("2") && tmp[2].equals("false")){
+			Messagebox.show("!ATENCI\u00d3N¡ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+			return;
+		}
+		
 		
 		//var tipoimpresion = $j("#tipoimp").val() == "1" ? "Carta": "Termica";
 		/*
@@ -498,12 +582,12 @@ public class ControllerAlbaran implements Serializable{
 			fechaActual = dt.parse(devolucionForm.getFecha());
 			
 			Optional<String> d = Optional.ofNullable(devolucionForm.getFecha_garantia());
-			if(d.isPresent())
+			if(d.isPresent() || d.get().equals(""))
 				fechaGarantia = dt.parse(devolucionForm.getFecha_garantia());
 			else
 				fechaGarantia = null;
 			
-			horaActual = tt.parse(devolucionForm.getFecha());
+			//horaActual = tt.parse(devolucionForm.getFecha());
 		} catch (ParseException e) {			
 			e.printStackTrace();
 		}
@@ -568,13 +652,15 @@ public class ControllerAlbaran implements Serializable{
 				
 				try {
 					fechaActual = dt.parse(devolucionForm.getFecha());
+					//horaActual = dt.parse(devolucionForm.getFecha());
 					
-					if(d.isPresent())
-						fechaGarantia = dt.parse(devolucionForm.getFecha_garantia());
-					else
+					if(!d.isPresent() || d.get().equals(""))
 						fechaGarantia = null;
+					else	
+						fechaGarantia = dt.parse(devolucionForm.getFecha_garantia());
 					
-					horaActual = tt.parse(devolucionForm.getFecha());
+											
+					
 				} catch (ParseException e) {			
 					e.printStackTrace();
 				}
@@ -701,13 +787,13 @@ public class ControllerAlbaran implements Serializable{
 		this.fechaActual = fechaActual;
 	}
 
-	public Date getHoraActual() {
+	/*public Date getHoraActual() {
 		return horaActual;
 	}
 
 	public void setHoraActual(Date horaActual) {
 		this.horaActual = horaActual;
-	}
+	}*/
 
 	public boolean isDisabledCampo() {
 		return disabledCampo;

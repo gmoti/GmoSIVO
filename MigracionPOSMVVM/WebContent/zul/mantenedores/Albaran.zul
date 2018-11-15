@@ -83,7 +83,7 @@
 									<datebox value="@bind(vm.fechaActual)" format="dd/MM/yyyy" disabled="@bind(vm.disabledCampo)"/>
 									
 									<label value="Hora"/>
-									<datebox value="@bind(vm.horaActual)" format="hh:mm:ss" readonly="true" buttonVisible="false" disabled="@bind(vm.disabledCampo)"/>								
+									<datebox value="@bind(vm.fechaActual)" format="hh:mm:ss" readonly="true" buttonVisible="false" disabled="@bind(vm.disabledCampo)"/>								
 									
 									
 									<radiogroup>
