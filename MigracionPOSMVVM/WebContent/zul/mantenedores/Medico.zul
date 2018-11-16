@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-
+<zk xmlns:w="client"> 
 <window id="winMedico" border="none" width="60%" height="60%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMedico')  ">
 			
@@ -28,8 +28,37 @@
 		 
 		 tr.z-row td.z-row-inner { 
 		 		border: none; 
-		 }		 
+		 		
+		 }		
+		 
+		 .z-textbox{
+    		text-transform:uppercase;
+    		} 
 	</style>	
+	
+	<script><![CDATA[
+        function upperValid(cadena) {
+            //var valLabel = zk.$('$id_apellido');
+            
+            //alert("seleccion " + cadena.id);
+           
+            if (cadena.getValue() != '') {            	
+            	
+            	switch( cadena.id ){
+	         	   	case "id_apeMedic":
+	         	   		var valLabel = zk.$('$id_apeMedic');  
+	         	   		valLabel.$n().value=(cadena.getValue().toUpperCase());
+	                    break;
+	                    
+	         	   	case "id_nomMedic":
+	         	   		var valLabel = zk.$('$id_nomMedic');  
+         	   			valLabel.$n().value=(cadena.getValue().toUpperCase());               
+	                    break;
+	             	}
+            }   
+        }
+        
+    ]]></script>
 	
 	<div width="100%" height="100%">	
 		
@@ -63,7 +92,7 @@
 							<space width="20px"/>					
 							<label value="Rut" />
 							<space width="20px"/>
-							<textbox value="@bind(vm.medicoForm.rut)" width="150px" onBlur="@command('retornaDv')"/>
+							<textbox value="@bind(vm.medicoForm.rut)" width="150px" onBlur="@command('retornaDv')" constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
 							<textbox value="@bind(vm.medicoForm.dv)" width="50px" readonly="true"/>
 							<toolbarbutton image="/iconos/lupa.png" width="50px" onClick="@command('buscarMedico')" sclass="shrink16"/>
 						</cell>
@@ -71,12 +100,12 @@
 					
 					<row>				
 						<label value="Apellidos"/>
-						<textbox value="@bind(vm.medicoForm.apellidos)" width="400px"/>
+						<textbox id="id_apeMedic" value="@bind(vm.medicoForm.apellidos)" width="400px"/>  <!-- w:onBlur="upperValid(this)" -->
 					</row>
 					
 					<row>				
 						<label value="Nombres"/>
-						<textbox value="@bind(vm.medicoForm.nombres)" width="400px"/>
+						<textbox id="id_nomMedic" value="@bind(vm.medicoForm.nombres)" width="400px"/>  <!-- w:onBlur="upperValid(this)" -->
 					</row>
 					
 					<row>				
@@ -91,7 +120,8 @@
 					
 					<row>				
 						<label value="Provincia"/>
-						<combobox model="@bind(vm.medicoForm.listaProvincia)" placeholder="Seleccione">
+						<combobox model="@bind(vm.medicoForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)" 
+							placeholder="Seleccione">
 							<template name="model">
 								<comboitem label="@bind(each.descripcion)"/>
 							</template>						
@@ -127,5 +157,5 @@
 			</grid>
 		</div>
 	</div>
-
 </window>
+</zk>

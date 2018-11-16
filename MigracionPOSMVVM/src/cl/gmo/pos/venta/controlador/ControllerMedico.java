@@ -2,6 +2,7 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -17,6 +18,7 @@ import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.controlador.general.MedicoDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.OftalmologoBean;
+import cl.gmo.pos.venta.web.beans.ProvinciaBean;
 import cl.gmo.pos.venta.web.forms.MedicoForm;
 
 public class ControllerMedico implements Serializable {
@@ -30,6 +32,8 @@ public class ControllerMedico implements Serializable {
 	private String usuario;	
 	private String sucursalDes;
 	
+	private ProvinciaBean provinciaBean;
+	
 	HashMap<String,Object> objetos;
 	
 	
@@ -42,17 +46,57 @@ public class ControllerMedico implements Serializable {
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
+		provinciaBean = new ProvinciaBean();
+		
 		medicoDispatchActions.cargaFormulario(medicoForm, sess);
 		
 	}
 
 	
-	@NotifyChange({"medicoForm"})
+	@NotifyChange({"medicoForm","provinciaBean"})
 	@Command
-	public void ingresaMedico() {   	
+	public void ingresaMedico() {   
+		
+		Optional<String> rut = Optional.ofNullable(medicoForm.getRut());
+		Optional<String> nom = Optional.ofNullable(medicoForm.getNombres());
+		Optional<String> ape = Optional.ofNullable(medicoForm.getApellidos());
+		Optional<String> pro = Optional.ofNullable(provinciaBean.getCodigo());
+		
+		if(!rut.isPresent() || rut.get().trim().equals("")) {		
+			Messagebox.show("Debe ingresar el RUT");
+			return;
+		}else	
+			medicoForm.setRut(rut.get());
+		
+		if(!nom.isPresent() || nom.get().trim().equals("")) {
+			Messagebox.show("Debe ingresar el Nombre del medico");
+			return;
+		}else
+			medicoForm.setNombres(nom.get());
+		
+		if(!ape.isPresent() || ape.get().trim().equals("")) {
+			Messagebox.show("Debe ingresar el Apellido del medico");
+			return;
+		}else
+			medicoForm.setApellidos(ape.get());
+		
+		if(!pro.isPresent() || pro.get().equals("")) {
+			Messagebox.show("Debe ingresar la provincia");
+			return;
+		}else
+			medicoForm.setProvinci(provinciaBean.getCodigo());
+			
+		
 	   	
 	   	medicoForm.setAccion("ingresaMedico");
 	   	medicoDispatchActions.ingresaMedico(medicoForm, sess);
+	   	
+	   	if (medicoForm.getExito().equals("0")) {
+	   		Messagebox.show("Ingreso de Medico exitoso");
+	   	}else {
+	   		Messagebox.show("Problemas al grabar el Medico");
+	   	}
+	   	
 		
 	}
 	
@@ -71,7 +115,7 @@ public class ControllerMedico implements Serializable {
 	}
 	
 	
-	@NotifyChange({"medicoForm"})
+	@NotifyChange({"medicoForm","provinciaBean"})
 	@GlobalCommand
 	public void seleccionaMedico(@BindingParam("medico")OftalmologoBean medico) {
 		
@@ -93,16 +137,38 @@ public class ControllerMedico implements Serializable {
 	
 	@NotifyChange({"medicoForm"})
 	@Command
-	public void retornaDv() {
+	public boolean retornaDv() {
 		
-		int dv = Digito_verificador(medicoForm.getRut());
-		
-		if(dv == -1){			
-			Messagebox.show("Debe ingresar RUT valido");
-			return;
-		}else{
-			medicoForm.setDv(String.valueOf(dv));			
+		int rutAux,m,s = 0;
+		char dv;
+		String rut = medicoForm.getRut();
+		 
+		boolean validacion = false;
+		try {
+			rut =  rut.toUpperCase();
+			rut = rut.replace(".", "");
+			rut = rut.replace("-", "");
+			rutAux = Integer.parseInt(rut);
+			 
+			dv = rut.charAt(rut.length() - 1);
+			 
+			m = 0; s = 1;
+			
+			for (; rutAux != 0; rutAux /= 10) {
+				s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
+			}
+			
+			medicoForm.setDv(String.valueOf((char) (s != 0 ? s + 47 : 75)));
+			
+			/*if (dv == (char) (s != 0 ? s + 47 : 75)) {
+				validacion = true;
+				clienteForm.setDv(String.valueOf(dv));
+			}*/
+		 
+		} catch (java.lang.NumberFormatException e) {
+		} catch (Exception e) {
 		}
+		return validacion;
 		
 	}
 	
@@ -140,6 +206,14 @@ public class ControllerMedico implements Serializable {
 
 	public void setSucursalDes(String sucursalDes) {
 		this.sucursalDes = sucursalDes;
+	}
+
+	public ProvinciaBean getProvinciaBean() {
+		return provinciaBean;
+	}
+
+	public void setProvinciaBean(ProvinciaBean provinciaBean) {
+		this.provinciaBean = provinciaBean;
 	}
 	
 }

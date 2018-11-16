@@ -1,5 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
+<zk xmlns:w="client"> 
 <window id="winClientes" border="none" width="75%" vflex="min" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')  ">
 
@@ -28,7 +29,63 @@
 		tr.z-row td.z-row-inner { 
 		 		border: none;  		
 		}
+		
+		.z-textbox{
+    		text-transform:uppercase;
+    	} 
 	</style>
+	
+	
+	
+	<script><![CDATA[
+        function upperValid(cadena) {
+            //var valLabel = zk.$('$id_apellido');
+            
+            //alert("seleccion " + cadena.id);
+           
+            if (cadena.getValue() != '') {            	
+            	
+            	switch( cadena.id ){
+	         	   	case "id_apellido":
+	         	   		var valLabel = zk.$('$id_apellido');  
+	         	   		valLabel.$n().value=(cadena.getValue().toUpperCase());
+	                    break;
+	                    
+	         	   	case "id_nombre":
+	         	   		var valLabel = zk.$('$id_nombre');  
+         	   			valLabel.$n().value=(cadena.getValue().toUpperCase());               
+	                    break;
+	                               
+	         	   	case "id_direccion":
+	         	   		var valLabel = zk.$('$id_direccion');  
+     	   				valLabel.$n().value=(cadena.getValue().toUpperCase());              
+	                    break;
+	                               
+	         	   	case "id_localidad":
+	         	   		var valLabel = zk.$('$id_localidad');  
+ 	   					valLabel.$n().value=(cadena.getValue().toUpperCase());
+                       	break;    
+                       
+	         	  	case "id_contacto":
+	         	  		var valLabel = zk.$('$id_contacto');  
+ 	   					valLabel.$n().value=(cadena.getValue().toUpperCase());
+                      	break;               
+	               
+	         	 	case "id_email":
+	         	 		var valLabel = zk.$('$id_email');  
+ 	   					valLabel.$n().value=(cadena.getValue().toUpperCase());
+                     	break;   
+	              
+	         		case "id_profesion":
+	         			var valLabel = zk.$('$id_profesion');  
+ 	   					valLabel.$n().value=(cadena.getValue().toUpperCase());
+                    	break;     
+	             	}
+            	
+            }   
+        }
+        
+    ]]></script>
 	
 	<div width="100%" height="100%">
 	
@@ -89,15 +146,19 @@
 					</row>
 					
 					<row><!-- Linea 2 -->
-						<label value="Apellidos(*)"/>
-						<textbox value="@bind(vm.clienteForm.apellidos)" disabled="@bind(vm.bDisableinicial)"/>
+						<label value="Apellidos(*)"/><!-- w:onBlur="upperValid(this)" -->
+						<textbox id="id_apellido" value="@bind(vm.clienteForm.apellidos)" 
+								disabled="@bind(vm.bDisableinicial)"/>
+						
 						<label value="Edad"/>
-						<textbox value="@bind(vm.clienteForm.edad)" width="60px" disabled="@bind(vm.bDisableinicial)"/>					
+						<textbox value="@bind(vm.clienteForm.edad)" width="60px"
+								disabled="@bind(vm.bDisableinicial)"/>					
 					</row>
 					
 					<row><!-- Linea 3 -->
-						<label value="Nombres"/>
-						<textbox value="@bind(vm.clienteForm.nombres)" disabled="@bind(vm.bDisableinicial)"/>
+						<label value="Nombres(*)"/> 
+						<textbox id="id_nombre"  value="@bind(vm.clienteForm.nombres)"  
+								disabled="@bind(vm.bDisableinicial)"/>
 						
 						<label value="Agente"/>
 						<combobox model="@bind(vm.clienteForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
@@ -120,7 +181,9 @@
 						<label value="Direccion(*)"/>
 						
 						<cell>
-							<textbox value="@bind(vm.clienteForm.via)" readonly="@bind(vm.bDireccion eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+							<textbox id="id_direccion" value="@bind(vm.clienteForm.via)"  
+								readonly="@bind(vm.bDireccion eq 'true'?'true':'false')" 
+								disabled="@bind(vm.bDisableinicial)"/>
 							<checkbox checked="@bind(vm.bDireccion)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
 						
@@ -135,7 +198,8 @@
 					
 					<row><!-- Linea 5 -->
 						<label value="Localidad"/>
-						<textbox value="@bind(vm.clienteForm.localidad)" disabled="@bind(vm.bDisableinicial)"/>
+						<textbox id="id_localidad" value="@bind(vm.clienteForm.localidad)"  
+								disabled="@bind(vm.bDisableinicial)"/>
 						
 						<label value="Provincia/comuna(*)"/>
 						<cell>							
@@ -156,13 +220,14 @@
 						<label value="Cod.Postal"/>
 						<textbox value="@bind(vm.clienteForm.cod_postal)" disabled="@bind(vm.bDisableinicial)"/>
 						<label value="Persona contacto"/>
-						<textbox value="@bind(vm.clienteForm.contacto)" disabled="@bind(vm.bDisableinicial)"/>					
+						<textbox id="id_contacto" value="@bind(vm.clienteForm.contacto)" 
+								disabled="@bind(vm.bDisableinicial)"/>					
 					</row>
 					
 					<row><!-- Linea 7 -->
 						<label value="Email(*)"/>
 						<cell>
-							<textbox value="@bind(vm.clienteForm.email)" 
+							<textbox id="id_email" value="@bind(vm.clienteForm.email)" 
 								readonly="@bind(vm.bEmail eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
 							<checkbox checked="@bind(vm.bEmail)" disabled="@bind(vm.bDisableinicial)"/>
 						</cell>
@@ -188,7 +253,8 @@
 					
 					<row><!-- Linea 8 -->
 						<label value="Profesion"/>
-						<textbox value="@bind(vm.clienteForm.profesion)" disabled="@bind(vm.bDisableinicial)"/>
+						<textbox id="id_profesion" value="@bind(vm.clienteForm.profesion)" 
+								disabled="@bind(vm.bDisableinicial)"/>
 						<label value="Telefono movil(*)"/>
 						<cell>							
 							<textbox value="@bind(vm.clienteForm.telefono_movil)" 
@@ -253,6 +319,5 @@
 		</div>
 	
 	</div>
-
-
 </window>
+</zk>

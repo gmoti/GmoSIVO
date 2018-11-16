@@ -100,41 +100,9 @@ public class ControllerCliente implements Serializable{
 	@NotifyChange({"clienteForm","fechaNac"})
 	public void ingresarCliente()  {
 		
-		Optional<Date> fn = Optional.ofNullable(fechaNac);
-		Optional<AgenteBean> ab = Optional.ofNullable(agenteBean);
 		
-		Optional<String> tvb = Optional.ofNullable(tipoViaBean.getCodigo());
-		Optional<String> pb = Optional.ofNullable(provinciaBean.getCodigo());
-		
-		Optional<String> r = Optional.ofNullable(clienteForm.getRut());	
-		
-		if (!r.isPresent() || clienteForm.getRut().trim().equals("") || clienteForm.getRut().trim().equals("0")) {
-			Messagebox.show("Debe indicar el rut");
-		    return;		
-		}		
-		
-		if(fn.isPresent()) 
-			clienteForm.setFnacimiento(dt.format(fechaNac));
-		
-		if(!ab.isPresent() || ab.get().getUsuario().equals("Seleccione") || ab.get().getUsuario().equals("")) {
-			Messagebox.show("Debe indicar un agente");
-			return;			
-		}else	
-			clienteForm.setAgente(agenteBean.getUsuario());
-		
-		
-		if(!tvb.isPresent() || tvb.get().equals(""))	
-			clienteForm.setTipo_via("0");
-		else	
-			clienteForm.setTipo_via(tipoViaBean.getCodigo());
-		 
-		
-		if(!pb.isPresent() || pb.get().equals("")) 
-			clienteForm.setProvincia_cliente("0");
-		else
-			clienteForm.setProvincia_cliente(provinciaBean.getCodigo());
-		 
-		
+		 if (!validacionGeneral())
+			 return;		
 		
 		clienteForm.setAccion("ingresoCliente");	
 		clid.ingresoCliente(clienteForm, sess);	
@@ -153,14 +121,124 @@ public class ControllerCliente implements Serializable{
 			break;		
 
 		default:
-			Messagebox.show("Informacion minima requerida");
+			Messagebox.show("Informacion " + clienteForm.getExito());
 			break;
+		}	
+	}
+	
+	
+	public boolean validacionGeneral() {
+		
+		boolean bRet=true;
+		
+		Optional<Date> fn = Optional.ofNullable(fechaNac);
+		Optional<AgenteBean> ab = Optional.ofNullable(agenteBean);		
+		Optional<String> tvb = Optional.ofNullable(tipoViaBean.getCodigo());
+		Optional<String> pb = Optional.ofNullable(provinciaBean.getCodigo());		
+		Optional<String> r = Optional.ofNullable(clienteForm.getRut());		
+		Optional<String> nom = Optional.ofNullable(clienteForm.getNombres());
+		Optional<String> ape = Optional.ofNullable(clienteForm.getApellidos());		
+		
+		Optional<String> loc = Optional.ofNullable(clienteForm.getLocalidad());
+		Optional<String> con = Optional.ofNullable(clienteForm.getContacto());
+		Optional<String> ema = Optional.ofNullable(clienteForm.getEmail());
+		Optional<String> pro = Optional.ofNullable(clienteForm.getProfesion());
+		
+		
+		if (!r.isPresent() || clienteForm.getRut().trim().equals("") || clienteForm.getRut().trim().equals("0")) {
+			Messagebox.show("Debe indicar el rut");
+		    return false;		
+		}
+		
+		if(!nom.isPresent() || nom.get().trim().equals("")) {
+			Messagebox.show("Debe indicar el Nombre del cliente");
+			return false;
+		}else {
+			clienteForm.setNombres(nom.get());
+		}
+				
+		if(!ape.isPresent() || ape.get().trim().equals("")) {
+			Messagebox.show("Debe indicar el Apellido del cliente");
+			return false;
+		}else {
+			clienteForm.setApellidos(ape.get());
+		}	
+		
+		if(fn.isPresent()) 
+			clienteForm.setFnacimiento(dt.format(fechaNac));
+		
+		if(!ab.isPresent() || ab.get().getUsuario().equals("Seleccione") || ab.get().getUsuario().equals("")) {
+			Messagebox.show("Debe indicar un agente");
+			return false;			
+		}else	
+			clienteForm.setAgente(agenteBean.getUsuario());
+		
+		
+		if(!tvb.isPresent() || tvb.get().equals(""))	
+			clienteForm.setTipo_via("0");
+		else	
+			clienteForm.setTipo_via(tipoViaBean.getCodigo());
+		 
+		
+		if(!pb.isPresent() || pb.get().equals("")) {
+			clienteForm.setProvincia_cliente("0");
+			Messagebox.show("Debe indicar la provincia o comuna");
+			return false;
+		}
+		else
+			clienteForm.setProvincia_cliente(provinciaBean.getCodigo());
+		
+		
+		if(!loc.isPresent() || loc.get().equals("")) {
+			clienteForm.setLocalidad("");
+			Messagebox.show("Debe indicar la localidad");
+			return false;
+		}
+		else
+			clienteForm.setLocalidad(loc.get());
+		
+		
+		if(!con.isPresent() || con.get().equals("")) {
+			clienteForm.setContacto("");
+			Messagebox.show("Debe indicar un contacto");
+			return false;
+		}
+		else
+			clienteForm.setContacto(con.get());
+		
+		
+		if(!ema.isPresent() || ema.get().equals("")) {
+			clienteForm.setEmail("");
+			Messagebox.show("Debe indicar un Email");
+			return false;
+		}
+		else
+			clienteForm.setEmail(ema.get());
+		
+		
+		if(!pro.isPresent() || pro.get().equals("")) {
+			clienteForm.setProfesion("");
+			Messagebox.show("Debe indicar una Profesion");
+			return false;
+		}
+		else
+			clienteForm.setProfesion(pro.get());
+		
+		if(clienteForm.getMk_correo_postal().equals("false") &&
+			clienteForm.getMk_correo_electronico().equals("false") &&
+			clienteForm.getMk_sms().equals("false") &&
+			clienteForm.getMk_telefonia().equals("false") &&
+			clienteForm.getMk_nodata().equals("false")) {
+			
+			Messagebox.show("Debe indicar un tipo de marketing");
+			return false;
 		}
 		
 		
 		
-		
+		return bRet;
 	}
+	
 	
 	@Command
 	public void cerrar(@BindingParam("arg1")  Window x) {
@@ -173,7 +251,8 @@ public class ControllerCliente implements Serializable{
 		
 		clienteForm.setAccion("nuevo_cliente");
 		clid.ingresoCliente(clienteForm, sess);
-		fechaNac = new Date(System.currentTimeMillis());
+		//fechaNac = new Date(System.currentTimeMillis());
+		fechaNac =null;
 		bDisableinicialRut = false;
 	}
 	

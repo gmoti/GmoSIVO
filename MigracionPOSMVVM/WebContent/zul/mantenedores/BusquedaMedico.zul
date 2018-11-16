@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-
+<zk xmlns:w="client">
 <window id="winBusquedaMedico" width="40%" height="50%" border="none" 
 		position="center" closable="false" mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaMedico')">
@@ -30,7 +30,29 @@
 			tr.z-row td.z-row-inner { 
 			 		border: none;  		
 			}
-		</style>		
+		</style>	
+		
+		<script><![CDATA[
+	        function upperValid(cadena) {
+	            
+	           
+	            if (cadena.getValue() != '') {            	
+	            	
+	            	switch( cadena.id ){
+		         	   	case "id_apellido":
+		         	   		var valLabel = zk.$('$id_apellido');  
+		         	   		valLabel.$n().value=(cadena.getValue().toUpperCase());
+		                    break;
+		                    
+		         	   	case "id_nombre":
+		         	   		var valLabel = zk.$('$id_nombre');  
+	         	   			valLabel.$n().value=(cadena.getValue().toUpperCase());               
+		                    break;           
+		         	  	     
+		            }
+	            }   
+	        }        
+    	]]></script>	
 		
 		
 		<div width="100%" height="100%">
@@ -61,11 +83,11 @@
 								</row>
 								<row>
 									<label value="Apellido" width="95px"/>
-									<textbox value="@bind(vm.busquedaMedicoForm.apellido)" width="195px"/>								
+									<textbox id="id_apellido" value="@bind(vm.busquedaMedicoForm.apellido)" w:onBlur="upperValid(this)" width="195px"/>								
 								</row>
 								<row>
 									<label value="Nombre" width="95px"/>
-									<textbox value="@bind(vm.busquedaMedicoForm.nombre)" width="195px"/>								
+									<textbox id="id_nombre" value="@bind(vm.busquedaMedicoForm.nombre)" w:onBlur="upperValid(this)" width="195px"/>								
 								</row>
 								<row>
 									<label/>
@@ -112,3 +134,4 @@
 			</borderlayout>
 		</div>
 </window>
+</zk>
