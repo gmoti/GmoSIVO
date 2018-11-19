@@ -5,10 +5,33 @@
 		
 		
 		<style>
-			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
-			border:1px solid white; border-right:1px solid transparent;
-			padding:0px; margin:0px; }
-		</style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
+		}
+		
+		
+	</style>
 		
 		<div width="100%" height="100%">
 		
@@ -19,8 +42,8 @@
 							style="background-color:black;color: white" height="40px">
 							<label value="BUSQUEDA GENERAL DE ARTICULOS" />
 							<div style="float: right">
-								<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')"/>
-								<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaGeneralArticulos.detach()"/>
+								<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
+								<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaGeneralArticulos.detach()" sclass="shrink24"/>
 							</div>
 						</div>
 
@@ -54,14 +77,14 @@
 							</div>
 						
 							<div width="100%">
-								<textbox value="@load(each.codigoBarra)" width="150px" disabled="true"/>
-								<textbox value="@load(each.descripcion)" width="350px" disabled="true"/>
-								<textbox value="@load(each.familia)" width="100px" disabled="true"/>
-								<textbox value="@load(each.subFamilia)" width="100px" disabled="true"/>
-								<textbox value="@load(each.grupoFamilia)" width="100px" disabled="true"/>								
+								<textbox value="@load(each.codigoBarra)" width="150px" readonly="true"/>
+								<textbox value="@load(each.descripcion)" width="350px" readonly="true"/>
+								<textbox value="@load(each.familia)" width="100px" readonly="true"/>
+								<textbox value="@load(each.subFamilia)" width="100px" readonly="true"/>
+								<textbox value="@load(each.grupoFamilia)" width="100px" readonly="true"/>								
 							</div>	
 							
-							<div width="100%" style="background-color:black;color: white">
+							<div width="100%" style="background-color:grey;color: white">
 								<space width="20px"/>
 								<label value="Precio"/>
 								<space width="60px"/>																		
@@ -74,9 +97,9 @@
 								<template name="children" var="detalle">									
 							
 									<div width="100%">
-										<intbox value="@load(detalle.precio)" width="130px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
-										<intbox value="@load(detalle.precioIva)" width="130px" disabled="true" style="text-align:right" format="#,###,##0" locale="it"/>
-										<textbox value="@load(detalle.tarifa)" width="130px" disabled="true" style="text-align:center"/>																	
+										<intbox value="@load(detalle.precio)" width="130px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+										<intbox value="@load(detalle.precioIva)" width="130px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+										<textbox value="@load(detalle.tarifa)" width="130px" readonly="true" style="text-align:center"/>																	
 									</div>
 							
 								</template>

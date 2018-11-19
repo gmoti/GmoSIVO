@@ -2,37 +2,33 @@ package cl.gmo.pos.venta.controlador;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Optional;
 
-import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
-import org.zkoss.zk.ui.Component;
+import org.zkoss.zhtml.Messagebox;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.reporte.nuevo.InformeOpticoHelper;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
+import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.forms.InformeOpticoForm;
 
 
 public class ControllerInformeOptico implements Serializable{
 	
 	
-/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3911700019027519574L;
 
-Session sess = Sessions.getCurrent();
+	Session sess = Sessions.getCurrent();
 	
-	@Wire("#reporte2")
-	private Window win;
 	
 	private AMedia fileContent;	
 	private String nif;
@@ -43,14 +39,8 @@ Session sess = Sessions.getCurrent();
     private InformeOpticoHelper informeOpticoHelper;
     private InformeOpticoForm informeOpticoForm;
     private ReportesHelper reportesHelper;
-    
-   
-	
-	@AfterCompose
-	public void initSetup(@ContextParam(ContextType.VIEW) Component view)	             {
-	     Selectors.wireComponents(view, this, false);
-	     
-	}
+    private ClienteBean clienteBean;
+ 
 	
 	@Init
 	public void inicial()  { 		
@@ -59,22 +49,47 @@ Session sess = Sessions.getCurrent();
 		informeOpticoForm = new InformeOpticoForm();
 		reportesHelper = new ReportesHelper(); 
 		
-		local = (String) sess.getAttribute("sucursal");	
-		nombreSucural = (String)sess.getAttribute("nombreSucural");	
+		clienteBean = new ClienteBean();
 		
-		informeOpticoForm.setCdgCli("0");
-		//informeOpticoForm.setNombreCli("Francisco");
+		local = (String) sess.getAttribute("sucursal");	
+		nombreSucural = (String)sess.getAttribute("nombreSucural");			
+		
 	}
 	
 	@Command
-	public void buscar() {
+	public void buscarCliente() {
 		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();		
+		objetos.put("retorno","buscarClienteInfOptico");		
+		
+		Window winBusquedaClientes = (Window)Executions.createComponents(
+                "/zul/general/BusquedaClientes.zul", null, objetos);
+		
+		winBusquedaClientes.doModal();	
+		
+	}
+	
+	@NotifyChange({"informeOpticoForm"})
+	@GlobalCommand
+	public void buscarClienteInfOptico(@BindingParam("cliente")ClienteBean cliente) {
+		
+		informeOpticoForm.setNombreCli(cliente.getNombre() + " " + cliente.getApellido());
+		clienteBean = cliente;
 	}
 	
 	
 	@NotifyChange("fileContent")
 	@Command
 	public void reporte() {  		
+		
+		Optional<String> cli = Optional.ofNullable(clienteBean.getCodigo());
+		
+		if (cli.isPresent())
+			informeOpticoForm.setCdgCli(clienteBean.getCodigo());
+		else {
+			Messagebox.show("Debe un ingresar un cliente");
+			return;
+		}
 		
 		try {		
 			

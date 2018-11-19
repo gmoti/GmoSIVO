@@ -4,6 +4,7 @@ import java.io.Serializable;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import cl.gmo.pos.venta.reporte.dispatch.InformeBusquedaProductoDispatchActions;
@@ -26,23 +27,36 @@ public class ControllerBusquedaGeneralArticulos implements Serializable {
 	public void inicial() {
 		
 		informeBusquedaProductoForm = new InformeBusquedaProductoForm();
-		informeBusquedaProducto = new  InformeBusquedaProductoDispatchActions();  
-		
+		informeBusquedaProducto = new  InformeBusquedaProductoDispatchActions();
 		
 		informeBusquedaProducto.cargaFormulario(informeBusquedaProductoForm, sess);
-	
+		
+		codigo="";
+		descripcion="";
 	}
 	
 	
-	@NotifyChange({"informeBusquedaProductoForm"})
+	@NotifyChange({"informeBusquedaProductoForm","codigo","descripcion"})
 	@Command
-	public void reporte() {		
+	public void reporte() {	
 		
-		informeBusquedaProductoForm.setCodigoArticulo(0);
+		if (codigo.trim().equals("")) {
+			Messagebox.show("Debe ingresar el codigo del producto");
+			return;
+		}
+		
+		if (descripcion.trim().equals("")) {
+			Messagebox.show("Debe ingresar una descripcion valida");
+			return;
+		}			
+		
+		descripcion = descripcion.toUpperCase();
+		
+		
+		informeBusquedaProductoForm.setCodigoArticulo(Integer.parseInt(codigo));
 		informeBusquedaProductoForm.setDescripcionArticulo(descripcion);
 		
-		informeBusquedaProductoForm = informeBusquedaProducto.buscarArticulo(informeBusquedaProductoForm, sess);
-		
+		informeBusquedaProductoForm = informeBusquedaProducto.buscarArticulo(informeBusquedaProductoForm, sess);		
 	}	
 	
 	

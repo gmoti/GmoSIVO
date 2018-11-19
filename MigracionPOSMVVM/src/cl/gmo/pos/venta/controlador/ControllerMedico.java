@@ -93,7 +93,12 @@ public class ControllerMedico implements Serializable {
 	   	
 	   	if (medicoForm.getExito().equals("0")) {
 	   		Messagebox.show("Ingreso de Medico exitoso");
-	   	}else {
+	   	
+	   	}else if (medicoForm.getExito().equals("2")){
+	   		Messagebox.show("Medico modificado con exito");
+	   	}
+	   		
+	   	else {
 	   		Messagebox.show("Problemas al grabar el Medico");
 	   	}
 	   	
@@ -106,7 +111,7 @@ public class ControllerMedico implements Serializable {
 	public void buscarMedico() {
 		
 		HashMap<String,Object> objetos = new HashMap<String,Object>();	
-		objetos.put("retorn0", "seleccionaMedico");
+		objetos.put("retorno", "seleccionaMedico");
 		
 		Window winBuscarMedico = (Window)Executions.createComponents(
                 "/zul/mantenedores/BusquedaMedico.zul", null, objetos);
@@ -120,12 +125,23 @@ public class ControllerMedico implements Serializable {
 	public void seleccionaMedico(@BindingParam("medico")OftalmologoBean medico) {
 		
 		medicoForm.setCodigo(medico.getCodigo());
-		medicoForm.setRut(medico.getNif());
-		
+		medicoForm.setRut(medico.getNif());		
 		medicoForm.setNombres(medico.getNombre());
-		medicoForm.setApellidos(medico.getApelli());
-		
+		medicoForm.setApellidos(medico.getApelli());		
 		medicoForm.setExterno(medico.getExterno());
+		medicoForm.setDv(medico.getLnif());
+		
+		Optional<String> prov = Optional.ofNullable(medico.getProvinci());
+		
+		if (prov.isPresent()) {
+			medicoForm.setProvinci(medico.getProvinci());		
+			
+			Optional<ProvinciaBean> pb = medicoForm.getListaProvincia().stream().filter(s -> medicoForm.getProvinci().equals(s.getCodigo())).findFirst();
+			
+			if (pb.isPresent())
+			   provinciaBean = pb.get();			
+		}
+		
 		
 		//no se utilizan actualmente
 		//medicoForm.setEmail(medico.getEmail());

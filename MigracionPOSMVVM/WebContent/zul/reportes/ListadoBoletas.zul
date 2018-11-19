@@ -3,27 +3,67 @@
 	<window id="reporte3" viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoBoleta')"	
 		border="normal" width="100%" height="100%" closable="false">
 		
+		<style>
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+			
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			  		
+			tr.z-row td.z-row-inner { 
+			 		border: none;  		
+			}		
+		
+		</style>	
+		
+		
 		<div width="100%" style="background-color:black;color: white" height="40px">
 			<label value="Listado de boletas" />
-			<div style="float: right">					
-				<toolbarbutton image="/iconos/cancel.png" onClick="reporte3.detach()"/>		
+			<div style="float: right">	
+				<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>			
+				<toolbarbutton image="/iconos/cancel.png" onClick="reporte3.detach()" sclass="shrink24"/>		
 			</div>																			
 		</div>			
 		
 		<borderlayout>
 			<north>
 				<div>
-					<vbox>
-						<hbox>
-							<label value="Fecha Busqueda" />
-							<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy"/>					
-						</hbox>
-						<hbox>
-							<label value="Nro.Boleta" />
-							<textbox value ="@bind(vm.listadoBoletasForm.numero_boleta)"/>							
-						</hbox>	
-						<button label="Emitir"	onClick="@command('reporte')" />					
-					</vbox>
+					<grid oddRowSclass="none">
+						<columns>
+							<column hflex="min" />
+							<column hflex="min" />
+						</columns>
+						<rows>
+							<row>
+								<label value="Fecha Busqueda" />
+								<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" width="150px"/>
+							</row>
+							<row>
+								<label value="Nro.Boleta" />
+								<textbox value ="@bind(vm.listadoBoletasForm.numero_boleta)" width="150px"/>
+							</row>
+							<!-- 
+							<row>
+								<cell/>
+								<button label="Emitir"	onClick="@command('reporte')"/>
+							</row> -->
+						</rows>
+					</grid>				
 				</div>
 			</north>
 			<center>

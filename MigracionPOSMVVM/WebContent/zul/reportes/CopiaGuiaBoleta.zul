@@ -4,9 +4,30 @@
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCopiaGuiaBoleta')">
 		
 		<style>
-			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
-			border:1px solid white; border-right:1px solid transparent;
-			padding:0px; margin:0px; }
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
+		}
 		</style>
 		
 		<div height="100%" width="100%">		
@@ -15,28 +36,34 @@
 				style="background-color:black;color: white" height="40px">
 				<label value="IMPRIMIR BOLETA - GUIA" />
 				<div style="float: right">
-					<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')" />
-					<toolbarbutton image="/iconos/cancel.png"  onClick="winCopiaGuiaBoleta.detach()" />
+					<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
+					<toolbarbutton image="/iconos/cancel.png"  onClick="winCopiaGuiaBoleta.detach()" sclass="shrink24"/>
 				</div>
 			</div>
 
-			<div width="100%" height="100%" style="padding:15px 0px 0px 0px">
-			
-				<hbox>
-					<label value="Numero de Boleta" />
-					<textbox value="@bind(vm.numeroBoleta)"/>
-				</hbox>
-				
-				<hbox>
-					<label value="Tipo de documento" />
-					<combobox value="@bind(vm.documento)">
-					<comboitem value="" label="Seleccionar"/>
-					<comboitem value="B" label="Boleta"/>
-					<comboitem value="N" label="Nota de credito"/>
-					<comboitem value="O" label="Guia"/>
-					</combobox>
-				</hbox>		
-				
+			<div width="100%" height="100%" style="padding-top:15px">			
+				<grid sclass="MyGridRowHeight" oddRowSclass="none">
+					<columns>
+						<column hflex="min"/>
+						<column hflex="min"/>
+					</columns>
+					<rows>
+						<row>
+							<label value="Numero de Boleta" />
+							<textbox value="@bind(vm.numeroBoleta)"/>
+						</row>
+						
+						<row>
+							<label value="Tipo de documento" />
+							<combobox value="@bind(vm.documento)">
+								<comboitem value="" label="Seleccionar"/>
+								<comboitem value="B" label="Boleta"/>
+								<comboitem value="N" label="Nota de credito"/>
+								<comboitem value="O" label="Guia"/>
+							</combobox>
+						</row>
+					</rows>
+				</grid>				
 			</div>
 		</div>
 

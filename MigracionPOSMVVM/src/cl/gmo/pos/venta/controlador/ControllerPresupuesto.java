@@ -184,7 +184,7 @@ public class ControllerPresupuesto implements Serializable{
 		
 		//Posicion incial
 		
-		beanControlBotones.setEnableNew("false");
+		beanControlBotones.setEnableNew("true");
 		beanControlBotones.setEnablePrint("true");
 		beanControlBotones.setEnableEliminar("true");
 		beanControlBotones.setEnableBuscar("false");
@@ -246,7 +246,7 @@ public class ControllerPresupuesto implements Serializable{
 	//=========== Selecciona Presupuesto ============
 	//===============================================	
 	
-	@NotifyChange({"presupuestoForm","agenteBean","divisaBean","formaPagoBean","idiomaBean"})
+	@NotifyChange({"presupuestoForm","agenteBean","divisaBean","formaPagoBean","idiomaBean","beanControlBotones"})
 	@GlobalCommand
 	public void presupuestoSeleccionado(@BindingParam("arg")PresupuestoForm arg,
 										@BindingParam("arg2")PresupuestosBean arg2) {		
@@ -263,6 +263,12 @@ public class ControllerPresupuesto implements Serializable{
 		sess.setAttribute(Constantes.STRING_PRESUPUESTO, index);
 		presupuestoForm.setAccion(Constantes.STRING_SELECCIONA_PRESUPUESTO);
 		presupuestoForm = presupuestoDispatchActions.cargaPresupuestos(presupuestoForm, sess);	
+		
+		beanControlBotones.setEnableNew("true");
+		beanControlBotones.setEnablePrint("false");
+		beanControlBotones.setEnableEliminar("false");		
+		beanControlBotones.setEnableGenerico1("false");		
+		
 		//salvo el descuento original
 		asignaDescAux();
 		posicionaCombos();		
@@ -376,7 +382,7 @@ public class ControllerPresupuesto implements Serializable{
 		objetos.put("presupuestoForm",presupuestoForm);
 		
 		Window window = (Window)Executions.createComponents(
-                "/zul/presupuestos/BusquedaPresupuesto.zul", null, objetos);
+                "/zul/presupuestos/ListarPresupuesto.zul", null, objetos);
 		
         window.doModal(); 		
 		
@@ -391,7 +397,8 @@ public class ControllerPresupuesto implements Serializable{
 	
 	@NotifyChange("*")
 	@GlobalCommand
-	public void accionNuevoPedido() {		
+	public void accionNuevoPedido() {	
+		beanControlBotones.setEnableNew("false");
 		this.nuevoPresupuesto();
 	}
 	

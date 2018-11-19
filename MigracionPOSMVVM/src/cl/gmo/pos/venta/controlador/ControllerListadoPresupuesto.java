@@ -3,6 +3,7 @@ package cl.gmo.pos.venta.controlador;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.zkoss.bind.annotation.AfterCompose;
@@ -10,10 +11,12 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.Selectors;
@@ -27,6 +30,7 @@ import com.google.protobuf.Message;
 import cl.gmo.pos.venta.reporte.dispatch.ListadoPresupuestosDispatchActions;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
 import cl.gmo.pos.venta.utils.Constantes;
+import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.DivisaBean;
 import cl.gmo.pos.venta.web.beans.FamiliaBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
@@ -46,9 +50,6 @@ public class ControllerListadoPresupuesto implements Serializable {
 
 	Session sess = Sessions.getCurrent();
 	
-	@Wire("#reporte4")
-	private Window win;
-	
 	private AMedia fileContent;
 	private byte[] bytes;
 	private Date fechaInicio;
@@ -56,23 +57,20 @@ public class ControllerListadoPresupuesto implements Serializable {
 	
 	private DivisaBean divisaBean;
 	private FormaPagoBean formaPagoBean;
+	private ClienteBean clienteBean;
+	private String nombre;
 
 	private ListadoPresupuestosForm listadoPresupuestosForm;
 	private ReportesHelper reportesHelper;
 	private ListadoPresupuestosDispatchActions listadoPresupuestosDispatchActions;
 	
 	
-	@AfterCompose
-	public void initSetup(@ContextParam(ContextType.VIEW) Component view)	             {
-	     Selectors.wireComponents(view, this, false);
-	     
-	}
-	
 	@Init
 	public void inicial()  { 	
 		
 		divisaBean = new DivisaBean() ;
-		formaPagoBean = new FormaPagoBean();		
+		formaPagoBean = new FormaPagoBean();	
+		clienteBean = new ClienteBean();
 		
 		listadoPresupuestosForm = new ListadoPresupuestosForm() ;		
 		listadoPresupuestosDispatchActions = new ListadoPresupuestosDispatchActions() ;
@@ -83,6 +81,28 @@ public class ControllerListadoPresupuesto implements Serializable {
 		fechaInicio = new Date(System.currentTimeMillis());
 		fechaFin    = new Date(System.currentTimeMillis());
 		
+	}
+	
+	@Command
+	public void buscarCliente() {
+		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();		
+		objetos.put("retorno","buscarClienteInfPresup");		
+		
+		Window winBusquedaClientes = (Window)Executions.createComponents(
+                "/zul/general/BusquedaClientes.zul", null, objetos);
+		
+		winBusquedaClientes.doModal();		
+	}
+	
+	@NotifyChange({"listadoPresupuestosForm","nombre"})
+	@GlobalCommand
+	public void buscarClienteInfPresup(@BindingParam("cliente")ClienteBean cliente) {
+		
+		nombre = cliente.getNombre() + " " + cliente.getApellido();
+		clienteBean = cliente;
+		
+		listadoPresupuestosForm.setCliente(clienteBean.getCodigo());
 	}
 	
 	@NotifyChange({"*"})
@@ -154,10 +174,7 @@ public class ControllerListadoPresupuesto implements Serializable {
 			divisaBean=null;			
 		
 		if (arg instanceof FormaPagoBean)
-			formaPagoBean=null;				
-		
-				
-			
+			formaPagoBean=null;			
 	}
 
 	public AMedia getFileContent() {
@@ -207,10 +224,13 @@ public class ControllerListadoPresupuesto implements Serializable {
 	public void setFormaPagoBean(FormaPagoBean formaPagoBean) {
 		this.formaPagoBean = formaPagoBean;
 	}
-	
-	
-	
-	
-	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}	
 
 }

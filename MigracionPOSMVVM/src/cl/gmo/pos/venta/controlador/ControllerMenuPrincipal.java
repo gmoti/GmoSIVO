@@ -18,11 +18,8 @@ import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.utils.Constantes;
 
-public class ControllerMenuPrincipal implements Serializable{
+public class ControllerMenuPrincipal implements Serializable{	
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7591341824630787025L;
 	Session sess = Sessions.getCurrent();
 	

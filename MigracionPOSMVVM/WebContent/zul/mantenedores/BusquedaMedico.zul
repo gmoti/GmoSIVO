@@ -83,11 +83,11 @@
 								</row>
 								<row>
 									<label value="Apellido" width="95px"/>
-									<textbox id="id_apellido" value="@bind(vm.busquedaMedicoForm.apellido)" w:onBlur="upperValid(this)" width="195px"/>								
+									<textbox id="id_apellido" value="@bind(vm.busquedaMedicoForm.apellido)"  width="195px"/>								
 								</row>
 								<row>
 									<label value="Nombre" width="95px"/>
-									<textbox id="id_nombre" value="@bind(vm.busquedaMedicoForm.nombre)" w:onBlur="upperValid(this)" width="195px"/>								
+									<textbox id="id_nombre" value="@bind(vm.busquedaMedicoForm.nombre)"  width="195px"/>								
 								</row>
 								<row>
 									<label/>

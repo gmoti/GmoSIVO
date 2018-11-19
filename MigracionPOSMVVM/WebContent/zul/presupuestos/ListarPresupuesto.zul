@@ -2,7 +2,7 @@
 <zk>
 	<window id="winBusquedaPresupuesto"  border="normal" width="40%" height="40%" 
 		position="center"  mode="modal" sizable="false" 
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaPresupuesto')">
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListarPresupuesto')">
 
 		<style>
 			.MyGridRowHeight

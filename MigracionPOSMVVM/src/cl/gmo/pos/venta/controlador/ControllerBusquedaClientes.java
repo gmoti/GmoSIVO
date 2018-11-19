@@ -54,6 +54,9 @@ public class ControllerBusquedaClientes implements Serializable {
 	@Command
 	public void buscarCliente() {
 		
+		busquedaClientesForm.setApellido(busquedaClientesForm.getApellido().toUpperCase());
+		busquedaClientesForm.setNombre(busquedaClientesForm.getNombre().toUpperCase());
+		
 		busquedaClientesForm.setAccion("busqueda");
 		busquedaClientesDispatch.buscar(busquedaClientesForm, sess);
 		

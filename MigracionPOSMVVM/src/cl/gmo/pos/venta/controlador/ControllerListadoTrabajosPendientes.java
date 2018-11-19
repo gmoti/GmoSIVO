@@ -3,14 +3,18 @@ package cl.gmo.pos.venta.controlador;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.Selectors;
@@ -18,6 +22,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.reporte.dispatch.ListadoTrabajosPendientesDispatchActions;
+import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.DivisaBean;
 import cl.gmo.pos.venta.web.forms.ListadoTrabajosPendientesForm;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
@@ -32,28 +37,29 @@ public class ControllerListadoTrabajosPendientes implements Serializable {
 	
 	private ListadoTrabajosPendientesForm listadoTrabajosPendientesForm;
 	private ListadoTrabajosPendientesDispatchActions listadoTrabajosPendientesDispatchActions;
-	
-	@Wire("#reporte5")
-	private Window win;
-	
+		
 	private AMedia fileContent;	
 	private Date fechaInicio;
 	private Date fechaFin;
 	private byte[] bytes;
 	private ReportesHelper reportes;
+	private ClienteBean clienteBean;
 	
 	private DivisaBean divisaBean;
 	private String anulado;
 	
+	private String nombre;
+	
+	
 	
 	@Init
-	public void inicial(@ContextParam(ContextType.VIEW) Component view)	{
-	     Selectors.wireComponents(view, this, false); 
+	public void inicial()	{	    
 		
 		listadoTrabajosPendientesForm = new ListadoTrabajosPendientesForm();
 		listadoTrabajosPendientesDispatchActions = new ListadoTrabajosPendientesDispatchActions();
 		reportes = new ReportesHelper();	
 		divisaBean = new DivisaBean();
+		clienteBean = new ClienteBean();
 		anulado = "";
 		
 		listadoTrabajosPendientesDispatchActions.cargaFormulario(listadoTrabajosPendientesForm, sess);		
@@ -63,6 +69,29 @@ public class ControllerListadoTrabajosPendientes implements Serializable {
 		fechaInicio = new Date(System.currentTimeMillis());
 		fechaFin    = new Date(System.currentTimeMillis());
 	}	
+	
+	
+	@Command
+	public void buscarCliente() {
+		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();		
+		objetos.put("retorno","buscarClienteInfEncargo");		
+		
+		Window winBusquedaClientes = (Window)Executions.createComponents(
+                "/zul/general/BusquedaClientes.zul", null, objetos);
+		
+		winBusquedaClientes.doModal();		
+	}
+	
+	@NotifyChange({"listadoTrabajosPendientesForm","nombre"})
+	@GlobalCommand
+	public void buscarClienteInfEncargo(@BindingParam("cliente")ClienteBean cliente) {
+		
+		nombre = cliente.getNombre() + " " + cliente.getApellido();		
+		clienteBean = cliente;
+		
+		listadoTrabajosPendientesForm.setCliente(clienteBean.getCodigo());
+	}
 	
 	@NotifyChange({"fileContent","listadoTrabajosPendientesForm"})
 	@Command
@@ -134,6 +163,14 @@ public class ControllerListadoTrabajosPendientes implements Serializable {
 
 	public void setAnulado(String anulado) {
 		this.anulado = anulado;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 	

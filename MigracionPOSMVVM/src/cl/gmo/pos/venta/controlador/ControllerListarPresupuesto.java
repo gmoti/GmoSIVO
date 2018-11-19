@@ -19,7 +19,7 @@ import cl.gmo.pos.venta.web.beans.PresupuestosBean;
 import cl.gmo.pos.venta.web.forms.PresupuestoForm;
 
 
-public class ControllerBusquedaPresupuesto implements Serializable{
+public class ControllerListarPresupuesto implements Serializable{
 	
 	/**
 	 * 

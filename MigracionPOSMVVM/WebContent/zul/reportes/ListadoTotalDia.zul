@@ -3,10 +3,40 @@
 	<window id="test" viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListadoTotalDia')"	
 		border="normal" width="100%" height="100%" closable="false">
 		
+		<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
+		}
+		
+		
+	</style>
+		
 		<div width="100%" style="background-color:black;color: white" height="40px">
 			<label value="Listado Total Dia" />
 			<div style="float: right">					
-				<toolbarbutton image="/iconos/cancel.png" onClick="test.detach()"/>		
+				<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
+				<toolbarbutton image="/iconos/cancel.png" onClick="test.detach()" sclass="shrink24"/>		
 			</div>																			
 		</div>
 		
@@ -15,8 +45,8 @@
 				<div>
 					<label value="Fecha incio" />
 					<datebox format="dd/MM/yyyy" value="@bind(vm.fecha)"/>
-					<button id="btn" label="Emitir"
-						onClick="@command('reporte')" />
+					<!-- <button id="btn" label="Emitir"
+						onClick="@command('reporte')" /> -->
 
 				</div>
 			</north>

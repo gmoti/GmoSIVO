@@ -34,31 +34,7 @@
 		 .z-textbox{
     		text-transform:uppercase;
     		} 
-	</style>	
-	
-	<script><![CDATA[
-        function upperValid(cadena) {
-            //var valLabel = zk.$('$id_apellido');
-            
-            //alert("seleccion " + cadena.id);
-           
-            if (cadena.getValue() != '') {            	
-            	
-            	switch( cadena.id ){
-	         	   	case "id_apeMedic":
-	         	   		var valLabel = zk.$('$id_apeMedic');  
-	         	   		valLabel.$n().value=(cadena.getValue().toUpperCase());
-	                    break;
-	                    
-	         	   	case "id_nomMedic":
-	         	   		var valLabel = zk.$('$id_nomMedic');  
-         	   			valLabel.$n().value=(cadena.getValue().toUpperCase());               
-	                    break;
-	             	}
-            }   
-        }
-        
-    ]]></script>
+	</style>
 	
 	<div width="100%" height="100%">	
 		
@@ -99,13 +75,13 @@
 					</row>
 					
 					<row>				
-						<label value="Apellidos"/>
-						<textbox id="id_apeMedic" value="@bind(vm.medicoForm.apellidos)" width="400px"/>  <!-- w:onBlur="upperValid(this)" -->
+						<label value="Apellidos (*)"/>
+						<textbox id="id_apeMedic" value="@bind(vm.medicoForm.apellidos)" width="400px"/>
 					</row>
 					
 					<row>				
-						<label value="Nombres"/>
-						<textbox id="id_nomMedic" value="@bind(vm.medicoForm.nombres)" width="400px"/>  <!-- w:onBlur="upperValid(this)" -->
+						<label value="Nombres (*)"/>
+						<textbox id="id_nomMedic" value="@bind(vm.medicoForm.nombres)" width="400px"/> 
 					</row>
 					
 					<row>				
@@ -119,7 +95,7 @@
 					</row>
 					
 					<row>				
-						<label value="Provincia"/>
+						<label value="Provincia (*)"/>
 						<combobox model="@bind(vm.medicoForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)" 
 							placeholder="Seleccione">
 							<template name="model">

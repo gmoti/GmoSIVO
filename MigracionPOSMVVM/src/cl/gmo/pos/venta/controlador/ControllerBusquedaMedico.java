@@ -47,6 +47,9 @@ public class ControllerBusquedaMedico implements Serializable {
 	@Command
 	public void buscar() {
 		
+		busquedaMedicoForm.setApellido(busquedaMedicoForm.getApellido().toUpperCase());
+		busquedaMedicoForm.setNombre(busquedaMedicoForm.getNombre().toUpperCase());
+		
 		busquedaMedicoForm.setAccion("busquedaMedicos");
 		busquedaMedicosActions.buscarMedico(busquedaMedicoForm, sess);
 	}
