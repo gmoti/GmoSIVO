@@ -408,18 +408,18 @@
 							<space width="15px"/>							
 							
 							<label value="Cantidad" />
-							<space width="15px"/>						
+							<space width="30px"/>						
 							<label value="Descuento" />
-							<space width="15px"/>
+							<space width="25px"/>
 							<label value="Importe" />
-							<space width="15px"/>
+							<space width="45px"/>
 							
 							<label value="Grupo" />
 							<space width="20px"/>
 							<label value="Estado" />
 							<space width="45px"/>
 							<label value="Tipo" />
-							<space width="30px"/>
+							<space width="45px"/>
 							<label value="Ver" />																				
 							<space width="20px"/>
 							<label value="Multi" />
@@ -443,7 +443,7 @@
 									<column width="85px" />
 									
 									<column width="65px" />								
-									<column width="105px" />
+									<column width="85px" />
 									<column width="65px" />
 									
 									<column width="45px" />								
@@ -472,7 +472,7 @@
 										<textbox value="@load(each.grupo)" width="60px" readonly="false" style="text-align:right"  
 												onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>									
 										
-										<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="100px"/>	
+										<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="80px"/>	
 																		
 										<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
 										
@@ -480,7 +480,7 @@
 											onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
 										
 										<toolbarbutton image="/iconos/add.png" width="40px" 
-											onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)"  visible="@bind(each.familia eq 'MUL'?'true':'false')"/> 
+											onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)" visible="@bind(each.familia eq 'MUL'?'true':'false')"/> <!-- visible="@bind(each.familia eq 'MUL'?'true':'false')" --> 
 											
 										<space width="40px" />
 											

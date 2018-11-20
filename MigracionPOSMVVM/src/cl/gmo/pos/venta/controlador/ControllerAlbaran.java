@@ -152,8 +152,8 @@ public class ControllerAlbaran implements Serializable{
 		Optional<ConvenioBean> cb = Optional.ofNullable(convenioBean);
 		Optional<ProvinciaBean> pb = Optional.ofNullable(provinciaBean);
 		
-		if (tab.isPresent()) devolucionForm.setTipo_albaran(String.valueOf(tab.get().getCodigo()));
-		else devolucionForm.setTipo_albaran("0");
+		if (tab.isPresent()) devolucionForm.setTipo_albaran(String.valueOf(tab.get().getDescripcion()));
+		else devolucionForm.setTipo_albaran("");
 		
 		if(ib.isPresent()) devolucionForm.setIdioma(ib.get().getId());
 		else devolucionForm.setIdioma("0");
@@ -243,6 +243,8 @@ public class ControllerAlbaran implements Serializable{
 			//document.getElementById("fecha").disabled=true;
 			//showPopWin("<%=request.getContextPath()%>/SeleccionPago.do?method=cargaFormularioAlbaranDirecta&fecha="+fecha+"", 710, 285, vuelve_Pago_albaran, false);
 			try {
+				seleccionPagoForm = new SeleccionPagoForm();
+				seleccionPagoForm.setEstado("");
 				seleccionPagoDispatch.cargaFormularioAlbaranDirecta(seleccionPagoForm, sess);
 				
 				objetos = new HashMap<String,Object>();
@@ -269,6 +271,7 @@ public class ControllerAlbaran implements Serializable{
 			//showPopWin("<%=request.getContextPath()%>/SeleccionPago.do?method=cargaFormulario", 710, 285, vuelve_Pago_albaran_devolucion, false);
 			
 			//seleccionPagoDispatch.carga_formulario(seleccionPagoForm, sess, fecha_formulario);
+			seleccionPagoForm = new SeleccionPagoForm();
 			
 			
 		}else if(tipo_albaran.equals("DEVOLUCION")){		
@@ -295,7 +298,8 @@ public class ControllerAlbaran implements Serializable{
 					//showPopWin("<%=request.getContextPath()%>/SeleccionPago.do?method=cargaFormularioCobroAlbaran&fecha="+fecha+"", 710, 285, vuelve_Pago_albaran_devolucion, false);
 					try {
 						
-						seleccionPagoForm = new SeleccionPagoForm();						
+						seleccionPagoForm = new SeleccionPagoForm();	
+						seleccionPagoForm.setEstado("");
 						sess.setAttribute(Constantes.STRING_ORIGEN, "ALBARAN_DEVOLUCION");
 						
 						seleccionPagoForm.setFech_pago(devolucionForm.getFecha());
@@ -330,7 +334,8 @@ public class ControllerAlbaran implements Serializable{
 				
 				try {
 					
-					seleccionPagoForm = new SeleccionPagoForm();						
+					seleccionPagoForm = new SeleccionPagoForm();
+					seleccionPagoForm.setEstado("");
 					sess.setAttribute(Constantes.STRING_ORIGEN, "ALBARAN_DEVOLUCION");
 					
 					seleccionPagoForm.setFech_pago(devolucionForm.getFecha());

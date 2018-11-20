@@ -41,6 +41,7 @@ import cl.gmo.pos.venta.web.beans.IdiomaBean;
 import cl.gmo.pos.venta.web.beans.PresupuestosBean;
 import cl.gmo.pos.venta.web.beans.ProductosBean;
 import cl.gmo.pos.venta.web.forms.BusquedaConveniosForm;
+import cl.gmo.pos.venta.web.forms.BusquedaPresupuestosForm;
 import cl.gmo.pos.venta.web.forms.PresupuestoForm;
 
 public class ControllerPresupuesto implements Serializable{
@@ -251,7 +252,7 @@ public class ControllerPresupuesto implements Serializable{
 	public void presupuestoSeleccionado(@BindingParam("arg")PresupuestoForm arg,
 										@BindingParam("arg2")PresupuestosBean arg2) {		
 		
-		int index=0;
+		int index=0;		
 		
 		for (PresupuestosBean p : arg.getListaPresupuestos()) {			
 			if (p.getCodigo().equals(arg2.getCodigo())) break;
@@ -273,6 +274,29 @@ public class ControllerPresupuesto implements Serializable{
 		asignaDescAux();
 		posicionaCombos();		
 	}
+	
+	@NotifyChange({"presupuestoForm","agenteBean","divisaBean","formaPagoBean","idiomaBean","beanControlBotones"})
+	@GlobalCommand
+	public void seleccionaProductoBusqueda(@BindingParam("arg")BusquedaPresupuestosForm arg,
+										   @BindingParam("arg2")PresupuestosBean arg2) {		
+		
+				
+		presupuestoForm.setAccion(Constantes.STRING_CARGA_PRESUPUESTO_SELECCION);
+		presupuestoForm.setAddProducto(arg2.getCodigo());
+		
+		presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);		
+		
+		beanControlBotones.setEnableNew("true");
+		beanControlBotones.setEnablePrint("false");
+		beanControlBotones.setEnableEliminar("false");		
+		beanControlBotones.setEnableGenerico1("false");		
+		
+		//salvo el descuento original
+		asignaDescAux();
+		posicionaCombos();		
+	}
+	
+	
 	
 	//============ Imprimir Presupuesto ==============
 	//================================================	
@@ -369,8 +393,14 @@ public class ControllerPresupuesto implements Serializable{
 	//=================================================================
 	@NotifyChange({"presupuestoForm"})
 	@Command
-	public void busquedaPresupuesto(){}
-	
+	public void busquedaPresupuesto(){
+		
+		Window winBuscaPresupuesto = (Window)Executions.createComponents(
+                "/zul/presupuestos/BuscarPresupuesto.zul", null, null);
+		
+		winBuscaPresupuesto.doModal();
+		
+	}
 	
 	
 	//==================== Listar Presupuestos ========================
@@ -381,11 +411,10 @@ public class ControllerPresupuesto implements Serializable{
 		objetos = new HashMap<String,Object>();		
 		objetos.put("presupuestoForm",presupuestoForm);
 		
-		Window window = (Window)Executions.createComponents(
+		Window winListaPresupuesto = (Window)Executions.createComponents(
                 "/zul/presupuestos/ListarPresupuesto.zul", null, objetos);
 		
-        window.doModal(); 		
-		
+		winListaPresupuesto.doModal();		
 	}	
 	
 	

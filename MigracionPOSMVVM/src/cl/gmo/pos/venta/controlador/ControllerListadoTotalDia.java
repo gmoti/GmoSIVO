@@ -34,8 +34,8 @@ public class ControllerListadoTotalDia implements Serializable{
 
 	Session sess = Sessions.getCurrent();
 	
-	@Wire("#test")
-	private Window win;
+	private String usuario;	
+	private String sucursalDes;	
 	
 	private AMedia fileContent;
 	private Date fecha=null;
@@ -45,23 +45,20 @@ public class ControllerListadoTotalDia implements Serializable{
 	
 	private ListadoTotalDiaDAOImpl listadoTotalDiasImpl;
 	private ListasTotalesDiaBean listasTotalesDiaBean;
-	private ReportesHelper reportesHelper;
-	
-	
-   @AfterCompose
-   public void initSetup(@ContextParam(ContextType.VIEW) Component view)	             {
-     Selectors.wireComponents(view, this, false);
-     
-   }
+	private ReportesHelper reportesHelper;	
 	
 	
 	@Init
 	public void inicial()  { 		
 		fecha = new Date(System.currentTimeMillis());
 		listadoTotalDiasImpl = new ListadoTotalDiaDAOImpl();
-		reportesHelper = new ReportesHelper();		
-		local = (String) sess.getAttribute("sucursal");	
-		nombreSucural = (String)sess.getAttribute("nombreSucural");		
+		reportesHelper = new ReportesHelper();	
+		
+		local = sess.getAttribute(Constantes.STRING_SUCURSAL).toString();	
+		//nombreSucural = sess.getAttribute("nombreSucural").toString();	
+		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 	}
 	
 	
@@ -74,7 +71,7 @@ public class ControllerListadoTotalDia implements Serializable{
 		String fechaReporte = dt.format(fecha);
 		sess.setAttribute(Constantes.STRING_ACTION_LISTA_VENTA_FECHA, fechaReporte);
 		sess.setAttribute(Constantes.STRING_ACTION_LISTA_FECHA_BUSQUEDA_TOTAL, fechaReporte);
-		sess.setAttribute(Constantes.STRING_REPORTER_NOMBRE_SUCURSAL, nombreSucural);
+		sess.setAttribute(Constantes.STRING_REPORTER_NOMBRE_SUCURSAL, sucursalDes);
 		//System.out.println("fecha "  + fechaReporte);
 		
 		try {

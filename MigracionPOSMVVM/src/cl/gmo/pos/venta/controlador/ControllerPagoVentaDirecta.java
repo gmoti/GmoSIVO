@@ -92,6 +92,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			this.dto = 0.0;
 			sumaTotal = seleccionPagoForm.getSuma_total_albaranes();
 			descuentoMaximo = ventaPedidoForm.getPorcentaje_descuento_max();
+			sess.setAttribute(Constantes.STRING_AGENTE, ventaPedidoForm.getAgente());
 		}
 		
 		if (arg3 instanceof VentaDirectaForm) { 
@@ -104,6 +105,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			this.dto = ventaDirectaForm.getDescuentoTotal();
 			sumaTotal = ventaDirectaForm.getSumaTotal();
 			descuentoMaximo = ventaDirectaForm.getPorcentaje_descuento_max();
+			sess.setAttribute(Constantes.STRING_AGENTE, ventaDirectaForm.getAgente());
 		}
 		
 		if (arg3 instanceof DevolucionForm) { 
@@ -114,14 +116,15 @@ public class ControllerPagoVentaDirecta implements Serializable{
 			disableDescuento="false";
 			
 			this.dto = 0.0;
-			sumaTotal = devolucionForm.getSumaTotal();
+			sumaTotal = seleccionPagoForm.getSuma_total_albaranes();
 			descuentoMaximo = 0;
+			sess.setAttribute(Constantes.STRING_AGENTE, devolucionForm.getAgente());
 		}		
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
 		
 		this.setDiferencia_total(seleccionPagoForm.getV_total());		
-		seleccionPagoForm.setV_a_pagar(0);		
+		seleccionPagoForm.setV_a_pagar(0);	
 		
 	}
 
@@ -272,14 +275,14 @@ public class ControllerPagoVentaDirecta implements Serializable{
 					Messagebox.show("Debe ingresar una forma de pago");
 					correcto = 0;
 				}
-				else
+				/*else
 				{
 					if(seleccionPagoForm.getDiferencia() == 0)
 					{
 						Messagebox.show("No hay saldos pendientes por pagar");
 						correcto = 0;
 					}
-				} 
+				} */
 			}
 		}
 		

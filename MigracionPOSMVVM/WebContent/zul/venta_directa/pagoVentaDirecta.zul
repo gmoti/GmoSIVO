@@ -119,9 +119,24 @@
 	     										width="100px" readonly="true" 
 	     										style="text-align:right" format="#,###,##0" locale="it"/>
 	     										
-	     								<intbox value="@bind(vm.sumaTotal)" 
+	     								<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		
+	     									<intbox value="@bind(vm.sumaTotal)" 
 	     										width="100px" readonly="true" 
 	     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
+	     								</zk>
+	     								
+	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">		
+	     									<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
+	     										width="100px" readonly="true" 
+	     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
+	     								</zk>
+	     								
+	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">		
+	     									<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
+	     										width="100px" readonly="true" 
+	     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
+	     								</zk>
+	     										
 	     								<cell/>		
 	     								<cell/>	     								
 	     							</row>

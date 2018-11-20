@@ -280,6 +280,7 @@ public class DevolucionDAOImpl implements DevolucionDAO {
 			}
 		}catch(Exception ex){
 			log.error("DevolucionDAOImpl:traeBoleta error controlado",ex);
+			System.out.println(ex.getMessage());
 		} finally {
             try{
                 if (null != albvt_cabecera){

@@ -33,7 +33,7 @@
 					</div>																			
 				</div>
 				
-				<grid sclass="MyGridRowHeight">
+				<grid sclass="MyGridRowHeight" oddRowSclass="none">
 					<columns>
 						<column width="300px" />
 						<column width="300px" />
@@ -94,7 +94,7 @@
 					<space width="30px"/>			
 					<label value="Sel" />								
 					</div>	
-					<grid model= "@load(vm.busquedaPedidosForm.lista_pedidos)" 
+					<grid model= "@load(vm.busquedaPedidosForm.lista_pedidos)" oddRowSclass="none"
 							sclass="MyGridRowHeight" height="200px"  emptyMessage="Sin registros">						
 					<columns>
 						<column width="150px"/>
