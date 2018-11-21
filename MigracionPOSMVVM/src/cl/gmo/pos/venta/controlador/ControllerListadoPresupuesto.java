@@ -64,9 +64,15 @@ public class ControllerListadoPresupuesto implements Serializable {
 	private ReportesHelper reportesHelper;
 	private ListadoPresupuestosDispatchActions listadoPresupuestosDispatchActions;
 	
+	private String usuario;	
+	private String sucursalDes;
+	
 	
 	@Init
 	public void inicial()  { 	
+		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 		divisaBean = new DivisaBean() ;
 		formaPagoBean = new FormaPagoBean();	
@@ -231,6 +237,22 @@ public class ControllerListadoPresupuesto implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}	
+	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
 	}	
 
 }

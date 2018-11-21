@@ -8,6 +8,7 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import cl.gmo.pos.venta.reporte.dispatch.InformeBusquedaProductoDispatchActions;
+import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.forms.InformeBusquedaProductoForm;
 
 
@@ -22,9 +23,15 @@ public class ControllerBusquedaGeneralArticulos implements Serializable {
 	private String codigo;
 	private String descripcion;
 	
+	private String usuario;	
+	private String sucursalDes;	
+	
 	
 	@Init
 	public void inicial() {
+		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 		informeBusquedaProductoForm = new InformeBusquedaProductoForm();
 		informeBusquedaProducto = new  InformeBusquedaProductoDispatchActions();
@@ -80,19 +87,28 @@ public class ControllerBusquedaGeneralArticulos implements Serializable {
 		this.codigo = codigo;
 	}
 
-
 	public String getDescripcion() {
 		return descripcion;
 	}
-
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 	
-	
-	
-	
-	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}	
 
 }

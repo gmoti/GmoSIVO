@@ -46,14 +46,18 @@ public class ControllerListadoTrabajosPendientes implements Serializable {
 	private ClienteBean clienteBean;
 	
 	private DivisaBean divisaBean;
-	private String anulado;
-	
+	private String anulado;	
 	private String nombre;
 	
+	private String usuario;	
+	private String sucursalDes;	
 	
 	
 	@Init
-	public void inicial()	{	    
+	public void inicial()	{	
+		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 		listadoTrabajosPendientesForm = new ListadoTrabajosPendientesForm();
 		listadoTrabajosPendientesDispatchActions = new ListadoTrabajosPendientesDispatchActions();
@@ -173,7 +177,20 @@ public class ControllerListadoTrabajosPendientes implements Serializable {
 		this.nombre = nombre;
 	}
 	
-	
-	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}		
 
 }

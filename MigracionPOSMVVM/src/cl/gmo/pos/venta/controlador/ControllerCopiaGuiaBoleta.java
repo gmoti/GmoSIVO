@@ -35,15 +35,19 @@ public class ControllerCopiaGuiaBoleta implements Serializable {
 	
 	HashMap<String,Object> objetos;
 	
+	private String usuario;	
+	private String sucursalDes;		
 	
 	@Init
 	public void inicial() {
 		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		
 		documento = ""; 
 		numeroBoleta = "";   
 		copiaGuiaBoletaForm = new CopiaGuiaBoletaForm();
-		copiaGuiaBoletaDispatchActions = new CopiaGuiaBoletaDispatchActions();
-	
+		copiaGuiaBoletaDispatchActions = new CopiaGuiaBoletaDispatchActions();	
 	}
 	
 	
@@ -125,6 +129,22 @@ public class ControllerCopiaGuiaBoleta implements Serializable {
 
 	public void setCopiaGuiaBoletaForm(CopiaGuiaBoletaForm copiaGuiaBoletaForm) {
 		this.copiaGuiaBoletaForm = copiaGuiaBoletaForm;
+	}
+	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
 	}	
 
 }

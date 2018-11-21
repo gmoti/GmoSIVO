@@ -33,9 +33,17 @@ public class ControllerLiberacionEncargos implements Serializable {
 	SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat tt = new SimpleDateFormat("hh:mm:ss");
 	
+	private String usuario;
+	private String sucursal;
+	private String sucursalDes;
+	
 	
 	@Init	
 	public void inicial() {
+		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
+		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 		busquedaLiberacionesForm = new BusquedaLiberacionesForm();
 		BusquedaLiberaciones = new BusquedaLiberacionesDispatchActions();
@@ -168,6 +176,29 @@ public class ControllerLiberacionEncargos implements Serializable {
 	public void setEstadoEncargo(String estadoEncargo) {
 		this.estadoEncargo = estadoEncargo;
 	}
-	
+
+	public String getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(String sucursal) {
+		this.sucursal = sucursal;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 
 }

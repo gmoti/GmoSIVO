@@ -104,6 +104,30 @@ public class ControllerListadoTotalDia implements Serializable{
 	public void setFileContent(AMedia fileContent) {
 		this.fileContent = fileContent;
 	}
-	
 
+
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}
+	
+	
 }

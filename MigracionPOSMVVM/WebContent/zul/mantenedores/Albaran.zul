@@ -75,7 +75,7 @@
 								<row>
 									<label value="Codigo"/>
 									<cell colspan="1">
-										<textbox value="@bind(vm.devolucionForm.codigo1)" width="30px"/>
+										<textbox value="@bind(vm.devolucionForm.codigo1)" width="50px"/>
 										<textbox value="@bind(vm.devolucionForm.codigo2)" width="100px"/>
 										<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarAlbaranesDevo')" />
 									</cell>

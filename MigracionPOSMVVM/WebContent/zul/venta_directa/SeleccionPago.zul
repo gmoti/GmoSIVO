@@ -1,7 +1,7 @@
 <?page title="Pago Venta Directa" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window id="winPagoVentaDirecta" border="none" height="50%" width="65%" 
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerPagoVentaDirecta')">	
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionPago')">	
 		
 		<style>
 			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
@@ -153,12 +153,59 @@
 	     								<cell/>		
 	     							</row>
 	     							<row>
+	     								<!-- 
 	     								<label value="Descuento(%)" visible="@bind(vm.disableDescuento)"/>
+	     								
 	     								<textbox value="@bind(vm.seleccionPagoForm.descuento)" 
 	     									width="100px" 
 	     									visible="@bind(vm.disableDescuento)" 
 	     									onOK="@command('calculaTotalvtaDirecta')" 
-	     									style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
+	     									style="text-align:right" tooltiptext="Presione Enter para aceptar"/> -->
+	     							
+	     							
+	     								<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		     								
+	     									<label value="Descuento(%)"/>
+	     								
+	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
+		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
+		     										onOK="@command('calculaTotalvtaDirecta')" 
+		     										style="text-align:right" width="100px" 
+		     										tooltiptext="Presione Enter para aceptar"/>
+		     								</zk>	
+		     								
+		     								<zk if="${vm.seleccionPagoForm.tiene_pagos =='1'}">
+		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"
+		     										style="text-align:right" width="100px" readonly="true"/>
+		     								</zk>
+										</zk>
+	     							
+	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">
+	     									<label value="Descuento(%)"/>
+	     								
+	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
+		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
+		     										onOK="@command('calculaTotal')" 
+		     										style="text-align:right" width="100px" 
+		     										tooltiptext="Presione Enter para aceptar"/>	
+		     								</zk>
+		     								
+		     								<zk if="${vm.seleccionPagoForm.tiene_pagos =='1'}">
+		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"
+		     										style="text-align:right" width="100px" readonly="true"/>
+		     								</zk>		     								
+	     								</zk>
+	     								
+	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">
+	     									<label value="Descuento(%)"/>
+	     								
+	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
+		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
+		     										onOK="@command('calculaTotal')" 
+		     										style="text-align:right" width="100px" 
+		     										tooltiptext="Presione Enter para aceptar"/>
+		     								</zk>		
+	     								</zk>	
+	     									
 	     								<cell/>	
 	     								<cell/>	
 	     								<cell/>		

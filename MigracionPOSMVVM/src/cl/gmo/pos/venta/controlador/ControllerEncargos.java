@@ -369,6 +369,7 @@ public class ControllerEncargos implements Serializable {
 		
 		objetos = new HashMap<String,Object>();		
 		objetos.put("seleccionPago",seleccionPagoForm);
+		objetos.put("ventanaOrigen","encargo");
 		
 		Window windowMostrarPagosBoleta = (Window)Executions.createComponents(
                 "/zul/encargos/MostrarPagosBoleta.zul", null, objetos);
@@ -845,10 +846,13 @@ public class ControllerEncargos implements Serializable {
 			
 			if (ventaPedidoForm.getEstado().equals(Constantes.STRING_GENERA_COBRO)) {
 				
+				//aqui se cargan las variables de session
+				ventaPedidoDispatchActions.generaVentaPedido(ventaPedidoForm, sess);
+				
 				seleccionPagoForm = new SeleccionPagoForm();
 				
-				seleccionPagoForm.setFech_pago(ventaPedidoForm.getFecha());
-				//seleccionPagoForm.setFecha(ventaPedidoForm.getFecha());
+				/*seleccionPagoForm.setFech_pago(ventaPedidoForm.getFecha());
+				esta comentado seleccionPagoForm.setFecha(ventaPedidoForm.getFecha());
 				seleccionPagoForm.setTipo_doc('G');	
 				
 				Optional<TipoPedidoBean> pedido = Optional.ofNullable(tipoPedidoBean);
@@ -865,7 +869,7 @@ public class ControllerEncargos implements Serializable {
 				sess.setAttribute(Constantes.STRING_CLIENTE, cliente.getCodigo()  );
 				sess.setAttribute(Constantes.STRING_TICKET,  ventaPedidoForm.getCodigo_suc() + "/" + ventaPedidoForm.getCodigo() );
 				sess.setAttribute(Constantes.STRING_FECHA,   ventaPedidoForm.getFecha());		
-				sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());
+				sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());*/
 				
 				objetos = new HashMap<String,Object>();
 				objetos.put("cliente",cliente);
@@ -874,7 +878,7 @@ public class ControllerEncargos implements Serializable {
 				objetos.put("origen","PEDIDO");
 				
 				Window windowPagoVentaDirecta = (Window)Executions.createComponents(
-		                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
+		                "/zul/venta_directa/SeleccionPago.zul", null, objetos);
 				
 				windowPagoVentaDirecta.doModal();				
 				

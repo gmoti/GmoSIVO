@@ -254,7 +254,7 @@ public class ControllerAlbaran implements Serializable{
 				objetos.put("origen","PEDIDO");
 				
 				Window windowPagoVentaDirecta = (Window)Executions.createComponents(
-		                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
+		                "/zul/venta_directa/SeleccionPago.zul", null, objetos);
 				
 				windowPagoVentaDirecta.doModal();			
 				
@@ -316,7 +316,7 @@ public class ControllerAlbaran implements Serializable{
 						objetos.put("origen","ALBARAN_DEVOLUCION");
 						
 						Window windowPagoVentaDirecta = (Window)Executions.createComponents(
-				                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
+				                "/zul/venta_directa/SeleccionPago.zul", null, objetos);
 						
 						windowPagoVentaDirecta.doModal();					
 						
@@ -341,7 +341,7 @@ public class ControllerAlbaran implements Serializable{
 					seleccionPagoForm.setFech_pago(devolucionForm.getFecha());
 					seleccionPagoForm.setFecha(devolucionForm.getFecha());
 					//seleccionPagoForm.setTipo_doc('B');
-					seleccionPagoForm.setOrigen("ALBARAN_DEVOLUCION");	
+					seleccionPagoForm.setOrigen("ALBARAN_DEVOLUCION");
 					
 					seleccionPagoDispatch.cargaFormularioCobroAlbaran(seleccionPagoForm, sess);
 					
@@ -352,7 +352,7 @@ public class ControllerAlbaran implements Serializable{
 					objetos.put("origen","ALBARAN_DEVOLUCION");
 					
 					Window windowPagoVentaDirecta = (Window)Executions.createComponents(
-			                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
+			                "/zul/venta_directa/SeleccionPago.zul", null, objetos);
 					
 					windowPagoVentaDirecta.doModal();	
 					
@@ -401,21 +401,17 @@ public class ControllerAlbaran implements Serializable{
 	@NotifyChange({"devolucionForm"})
 	public void mostrarPagosBoletas(){
 		
-		/*seleccionPagoForm = new SeleccionPagoForm();
-		
-		seleccionPagoForm.setFech_pago(ventaPedidoForm.getFecha());
-		seleccionPagoForm.setFecha(ventaPedidoForm.getFecha());
-		seleccionPagoForm.setTipo_doc('G');
-		seleccionPagoForm.setOrigen("PEDIDO");
-		seleccionPagoForm.setSerie(ventaPedidoForm.getCodigo_suc()+"/"+ventaPedidoForm.getCodigo());
+		seleccionPagoForm = new SeleccionPagoForm();		
+		seleccionPagoForm.setSerie(devolucionForm.getCodigo1()+"/"+devolucionForm.getCodigo2());
 		
 		objetos = new HashMap<String,Object>();		
 		objetos.put("seleccionPago",seleccionPagoForm);
+		objetos.put("ventanaOrigen","albaran");
 		
 		Window windowMostrarPagosBoleta = (Window)Executions.createComponents(
                 "/zul/encargos/MostrarPagosBoleta.zul", null, objetos);
 		
-		windowMostrarPagosBoleta.doModal();*/
+		windowMostrarPagosBoleta.doModal();
 		
 		
 	}

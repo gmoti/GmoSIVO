@@ -32,23 +32,39 @@ public class ControllerMostrarPagosBoleta implements Serializable {
 	
 	
 	@Init
-	public void inicial(@ExecutionArgParam("seleccionPago")SeleccionPagoForm arg) {	
+	public void inicial(@ExecutionArgParam("seleccionPago")SeleccionPagoForm arg,
+						@ExecutionArgParam("ventanaOrigen")String arg2 ) {	
 		
 		seleccionPagoForm = new SeleccionPagoForm();
 		seleccionPagoForm = arg;
 		seleccionPagoDispatchActions = new SeleccionPagoDispatchActions();	
-		pagoBean = new PagoBean();
+		pagoBean = new PagoBean();	
 		
-		
-		
-		sess.setAttribute("tipo", "PEDIDO");		
+		if (arg2.equals("encargo")) {
 			
-		try {
-			seleccionPagoDispatchActions.cargaMostrarPagosBoletas(seleccionPagoForm, sess);
+			sess.setAttribute("tipo", "PEDIDO");		
 			
-		} catch (Exception e) {			
-			e.printStackTrace();
-		}		
+			try {
+				seleccionPagoDispatchActions.cargaMostrarPagosBoletas(seleccionPagoForm, sess);
+				
+			} catch (Exception e) {			
+				e.printStackTrace();
+			}		
+		}
+		
+		if (arg2.equals("albaran")) {
+			
+			sess.setAttribute("tipo", "DIRECTA");
+		
+			try {
+				seleccionPagoDispatchActions.cargaMostrarPagosBoletasAlbaranes(seleccionPagoForm, sess);
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		}
+				
 	}
 	
 	

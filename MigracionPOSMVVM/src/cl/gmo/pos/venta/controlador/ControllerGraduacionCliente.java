@@ -111,6 +111,10 @@ public class ControllerGraduacionCliente implements Serializable{
 			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
 		}	
 		
+			graduacionesForm.setNifdoctor("");
+			graduacionesForm.setDvnifdoctor("");
+			graduacionesForm.setNombre_doctor("");
+		
 			graduacionesForm.setOD_cantidad("-1");
 			graduacionesForm.setOI_cantidad("-1");
 			
@@ -129,12 +133,14 @@ public class ControllerGraduacionCliente implements Serializable{
 	
 	//==========Operaciones Principales de la clase ================
 	//==============================================================
-	@NotifyChange({"graduacionesForm","beanGraduaciones"})
+	//@NotifyChange({"graduacionesForm","beanGraduaciones","fechaEmision","fechaProxRevision","agenteBean"})
+	@NotifyChange("*")
 	@Command
 	public void nuevaGraduacion() {
 		
 		beanGraduaciones = new BeanGraduaciones();
 		fechaEmision = new Date(System.currentTimeMillis());
+		fechaProxRevision = null;
 		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
 		graduacionesForm.setOD_cantidad("-1");
 		graduacionesForm.setOI_cantidad("-1");
@@ -144,7 +150,13 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		graduacionesForm.setAgente("Seleccione");
 		graduacionesForm.setExiste_graduacion("false");
+		
+		graduacionesForm.setNifdoctor("");
+		graduacionesForm.setDvnifdoctor("");
+		graduacionesForm.setNombre_doctor("");
 		//solo limpia los campos visualmente
+		
+		posicionaCombo();
 	}
 	
 	@NotifyChange({"graduacionesForm"})
@@ -350,11 +362,20 @@ public class ControllerGraduacionCliente implements Serializable{
 								Messagebox.CANCEL, 
 								Messagebox.QUESTION, new EventListener<Event>() {			
 							@Override
-							public void onEvent(Event e) throws Exception {	
+							public void onEvent(Event e) throws Exception {								
 								
 									if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {								
 										
 										graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+										
+										if (graduacionesForm.getExito().equals("true")) {
+											Messagebox.show("Los datos fueron grabados correctamente");
+											return;
+										}else {
+											Messagebox.show("Error al intentar grabar los datos");
+											return;
+										}
+										
 									}						
 								}
 						});	
@@ -438,6 +459,14 @@ public class ControllerGraduacionCliente implements Serializable{
 													if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {		
 														graduacionesForm.setAccion("modificarGraduacion");
 														graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+														
+														if (graduacionesForm.getExito().equals("true")) {
+															Messagebox.show("Los datos fueron grabados correctamente");
+															return;
+														}else {
+															Messagebox.show("Error al intentar grabar los datos");
+															return;
+														}
 													}						
 												}
 										});	

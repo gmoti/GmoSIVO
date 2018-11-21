@@ -28,7 +28,7 @@ import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
 
 
-public class ControllerPagoVentaDirecta implements Serializable{
+public class ControllerSeleccionPago implements Serializable{
 	
 	
 	private static final long serialVersionUID = -3283893161345500968L;
@@ -68,8 +68,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		seleccionPagoForm 	= null;
 		ventaPedidoForm		= null;
 		ventaDirectaForm	= null;
-		devolucionForm      = null;	
-		
+		devolucionForm      = null;			
 		
 		controlBotones 	= new BeanControlBotones();
 		formaPagoBean   = new FormaPagoBean();
@@ -123,7 +122,7 @@ public class ControllerPagoVentaDirecta implements Serializable{
 		
 		seleccionPagoDispatchActions.carga_formulario(seleccionPagoForm, sess, fecha);
 		
-		this.setDiferencia_total(seleccionPagoForm.getV_total());		
+		this.setDiferencia_total(seleccionPagoForm.getDiferencia());		
 		seleccionPagoForm.setV_a_pagar(0);	
 		
 	}

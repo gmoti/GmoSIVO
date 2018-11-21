@@ -18,6 +18,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.reporte.nuevo.InformeOpticoHelper;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
+import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.forms.InformeOpticoForm;
 
@@ -31,28 +32,33 @@ public class ControllerInformeOptico implements Serializable{
 	
 	
 	private AMedia fileContent;	
-	private String nif;
-	private String local;
-	private String nombreSucural;
+	private String nif;	
 	private byte[] bytes;
 	
     private InformeOpticoHelper informeOpticoHelper;
     private InformeOpticoForm informeOpticoForm;
     private ReportesHelper reportesHelper;
     private ClienteBean clienteBean;
+    
+    private String usuario;	
+	private String sucursalDes;
+	private String local;
+	private String nombreSucural;
  
 	
 	@Init
 	public void inicial()  { 		
 		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		local = (String) sess.getAttribute("sucursal");	
+		//nombreSucural = (String)sess.getAttribute("nombreSucural");
+		
 		informeOpticoHelper = new InformeOpticoHelper();
 		informeOpticoForm = new InformeOpticoForm();
 		reportesHelper = new ReportesHelper(); 
 		
-		clienteBean = new ClienteBean();
-		
-		local = (String) sess.getAttribute("sucursal");	
-		nombreSucural = (String)sess.getAttribute("nombreSucural");			
+		clienteBean = new ClienteBean();				
 		
 	}
 	
@@ -132,6 +138,24 @@ public class ControllerInformeOptico implements Serializable{
 	public void setInformeOpticoForm(InformeOpticoForm informeOpticoForm) {
 		this.informeOpticoForm = informeOpticoForm;
 	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}
+	
+	
 	
 
 

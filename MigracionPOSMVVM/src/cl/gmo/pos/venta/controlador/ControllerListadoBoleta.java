@@ -19,44 +19,38 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.reporte.dispatch.ListadoBoletasDispatchActions;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
+import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.forms.ListadoBoletasForm;
 
 
 public class ControllerListadoBoleta implements Serializable{
-	
 
-/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7856414447863092650L;
 
-Session sess = Sessions.getCurrent();
-	
-	@Wire("#reporte3")
-	private Window win;
+	Session sess = Sessions.getCurrent();
 	
 	private AMedia fileContent;	
 	private String nif;
 	private String local;
 	private String nombreSucural;
+	private String usuario;	
+	private String sucursalDes;	
 	private byte[] bytes;
 	
 	private ReportesHelper reportesHelper; 
 	private ListadoBoletasDispatchActions listadoBoletasDispatchActions;
 	private ListadoBoletasForm listadoBoletasForm;
-	private Date fecha;
+	private Date fecha;	
 	
-	@AfterCompose
-	public void initSetup(@ContextParam(ContextType.VIEW) Component view)	             {
-	     Selectors.wireComponents(view, this, false);
-	     
-	}
 	
 	@Init
 	public void inicial()  { 		
 		
 		local = (String) sess.getAttribute("sucursal");	
 		nombreSucural = (String)sess.getAttribute("nombreSucural");	
+		
+		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 		listadoBoletasForm = new ListadoBoletasForm();
 		listadoBoletasDispatchActions = new ListadoBoletasDispatchActions();
@@ -80,8 +74,6 @@ Session sess = Sessions.getCurrent();
 		fileContent = media;
 		
 	}
-	
-	
 	
 
 	public AMedia getFileContent() {
@@ -108,7 +100,20 @@ Session sess = Sessions.getCurrent();
 		this.fecha = fecha;
 	}
 	
-	
-	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSucursalDes() {
+		return sucursalDes;
+	}
+
+	public void setSucursalDes(String sucursalDes) {
+		this.sucursalDes = sucursalDes;
+	}	
 
 }

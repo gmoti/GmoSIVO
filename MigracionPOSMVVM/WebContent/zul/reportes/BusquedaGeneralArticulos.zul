@@ -38,14 +38,21 @@
 			<borderlayout>
 				<north>
 					<div height="100%" width="100%">					
-						<div width="100%"
-							style="background-color:black;color: white" height="40px">
-							<label value="BUSQUEDA GENERAL DE ARTICULOS" />
-							<div style="float: right">
-								<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
-								<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaGeneralArticulos.detach()" sclass="shrink24"/>
+
+						<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+					   		<label value="Busqueda General de Articulos" style="float: left ; font-weight: bold; font-size: 150%;"/>
+							<div style="float: right">					
+								<label value="@load(vm.sucursalDes)"/>
+								<label value="::"/>
+								<label value="@load(vm.usuario)"/>	
 							</div>
-						</div>
+						</div>		
+				
+						<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
+							<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaGeneralArticulos.detach()" sclass="shrink24"/>
+					   	</div>
+						
 
 						<div width="100%" height="100%" style="padding:15px 0px 0px 0px">
 							<hbox>

@@ -30,15 +30,23 @@
 		}
 		
 		
-	</style>
+	</style>		
 		
-		<div width="100%" style="background-color:black;color: white" height="40px">
-			<label value="Listado Total Dia" />
+		
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="Listado Total Dia" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
-				<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
-				<toolbarbutton image="/iconos/cancel.png" onClick="test.detach()" sclass="shrink24"/>		
-			</div>																			
-		</div>
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>		
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
+			<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
+			<toolbarbutton image="/iconos/cancel.png" onClick="test.detach()" sclass="shrink24"/>
+	   	</div>	
+		
 		
 		<borderlayout>
 			<north>

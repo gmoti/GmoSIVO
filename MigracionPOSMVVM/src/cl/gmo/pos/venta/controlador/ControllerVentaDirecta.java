@@ -81,7 +81,11 @@ public class ControllerVentaDirecta implements Serializable{
 	@Init
 	public void inicial(@ContextParam(ContextType.VIEW) Component view) {
 		
-        Selectors.wireComponents(view, this, false);		
+        Selectors.wireComponents(view, this, false);	
+        
+        usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
+		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 				
 		clienteImp = new ClienteDAOImpl();					
 		productoBean = new ProductosBean();		
@@ -107,9 +111,6 @@ public class ControllerVentaDirecta implements Serializable{
 		ventaDirectaAccion.carga(ventaDirectaForm, sess);
 		ventaDirectaAccion.cargaCaja(ventaDirectaForm, sess);
 		
-		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
-		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
-		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 	}
 	
 	
@@ -216,7 +217,7 @@ public class ControllerVentaDirecta implements Serializable{
 								
 								seleccionPagoForm = new SeleccionPagoForm();
 								
-								seleccionPagoForm.setFech_pago(ventaDirectaForm.getFecha());
+								/*seleccionPagoForm.setFech_pago(ventaDirectaForm.getFecha());
 								seleccionPagoForm.setFecha(ventaDirectaForm.getFecha());
 								seleccionPagoForm.setTipo_doc('B');
 								seleccionPagoForm.setOrigen("DIRECTA");
@@ -226,7 +227,7 @@ public class ControllerVentaDirecta implements Serializable{
 								sess.setAttribute(Constantes.STRING_TICKET,  ventaDirectaForm.getEncabezado_ticket() + "/" + ventaDirectaForm.getNumero_ticket() );
 								sess.setAttribute(Constantes.STRING_FECHA,   ventaDirectaForm.getFecha());								
 								
-								sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaDirectaForm.getListaProductos());				
+								sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaDirectaForm.getListaProductos());	*/			
 								
 								objetos = new HashMap<String,Object>();
 								objetos.put("cliente",cliente);
@@ -235,7 +236,7 @@ public class ControllerVentaDirecta implements Serializable{
 								objetos.put("origen","DIRECTA");
 								
 								Window window = (Window)Executions.createComponents(
-						                "/zul/venta_directa/pagoVentaDirecta.zul", null, objetos);
+						                "/zul/venta_directa/SeleccionPago.zul", null, objetos);
 								
 						        window.doModal();							
 								
