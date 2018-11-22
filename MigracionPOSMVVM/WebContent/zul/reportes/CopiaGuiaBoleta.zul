@@ -60,8 +60,11 @@
 						</row>
 						
 						<row>
-							<label value="Tipo de documento" />
+							<label value="Tipo de documento"/>
 							<combobox value="@bind(vm.documento)">
+								<attribute name="onCreate">
+										self.setSelectedIndex(0);
+								</attribute>
 								<comboitem value="" label="Seleccionar"/>
 								<comboitem value="B" label="Boleta"/>
 								<comboitem value="N" label="Nota de credito"/>

@@ -1,0 +1,120 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winCambioFolio" border="none"  width="45%" height="40%" vflex="min"
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCambioFolio')">
+			
+	<style>
+		.MyGridRowHeight
+		    tr.z-row td.z-row-inner div.z-row-content{
+		        border:1px solid white;
+		        border-right:1px solid transparent;
+		        padding:0px;
+		        margin:0px;
+		}
+		
+		.shrink24 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 24px;
+		  		height: 24px;
+		}
+				
+		.shrink16 img {
+		  		vertical-align: middle;
+		  		border-style: none;
+		  		width: 16px;
+		  		height: 16px;
+		  		
+		tr.z-row td.z-row-inner { 
+		 		border: none;  		
+		}
+	</style>	
+		
+			
+	<div width="100%" height="100%">
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="Cambio de Folio" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>		
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">					
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('habilitarCampos')" tooltiptext=""/>			
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winCambioFolio.detach()" tooltiptext="Salir"/>
+	   	</div>
+	         	
+	  
+	   	<div width="100%" vflex="min" style="background-color:grey;color: white;" >
+	   		<label value="Guias de Despacho"/>
+	   	</div>
+	   	
+	   	<grid sclass="MyGridRowHeight" oddRowSclass="none">
+	   		<columns>
+	   			<column width="150px" />
+	   			<column width="250px" />
+	   		</columns>
+	   		<rows>
+	   			<row>
+	   				<label value="Desde Guia"/>
+	   				<intbox value="@bind(vm.cambioFolioForm.desdeGuia)" disabled="@bind(vm.habilitaCampo)" style="text-align:right"/>
+	   			</row>
+	   			<row>
+	   				<label value="Hasta Guia"/>
+	   				<intbox value="@bind(vm.cambioFolioForm.hastaGuia)" disabled="@bind(vm.habilitaCampo)" style="text-align:right"/>
+	   			</row>
+	   		</rows>
+	   	</grid>
+	   	
+	   	<div width="100%" vflex="min" style="background-color:grey;color: white;" >
+	   		<label value="Boletas"/>
+	   	</div>
+	   	
+	   	<grid sclass="MyGridRowHeight" oddRowSclass="none">
+	   		<columns>
+	   			<column width="150px" />
+	   			<column width="250px" />
+	   		</columns>
+	   		<rows>
+	   			<row>
+	   				<label value="Desde Boleta"/>
+	   				<intbox value="@bind(vm.cambioFolioForm.desdeBoleta)" disabled="@bind(vm.habilitaCampo)" style="text-align:right"/>
+	   			</row>
+	   			<row>
+	   				<label value="Hasta Boleta"/>
+	   				<intbox value="@bind(vm.cambioFolioForm.hastaBoleta)" disabled="@bind(vm.habilitaCampo)" style="text-align:right"/>
+	   			</row>
+	   		</rows>
+	   	</grid>
+	   	
+	   	<div width="100%" vflex="min" style="background-color:grey;color: white;" >
+	   		<label value="Notas de Credito"/>
+	   	</div>
+	   	
+	   	<grid sclass="MyGridRowHeight" oddRowSclass="none">
+	   		<columns>
+	   			<column width="150px" />
+	   			<column width="250px" />
+	   		</columns>
+	   		<rows>
+	   			<row>
+	   				<label value="Desde Nota Credito"/>
+	   				<intbox value="@bind(vm.cambioFolioForm.desdeNota)" disabled="@bind(vm.habilitaCampo)" style="text-align:right"/>
+	   			</row>
+	   			<row>
+	   				<label value="Hasta Nota Credito"/>
+	   				<intbox value="@bind(vm.cambioFolioForm.hastaNota)" disabled="@bind(vm.habilitaCampo)" style="text-align:right"/>
+	   			</row>
+	   			<row>
+	   				<cell/>
+	   				<button label="Grabar"  image="/iconos/check.png" sclass="shrink16" onClick="@command('guardarFolio')"/>
+	   			</row>
+	   		</rows>
+	   	</grid>
+	</div>		
+
+</window>
+</zk>

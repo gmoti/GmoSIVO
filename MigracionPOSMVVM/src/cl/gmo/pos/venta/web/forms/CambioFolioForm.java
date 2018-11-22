@@ -2,7 +2,7 @@ package cl.gmo.pos.venta.web.forms;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.FormAction;
 
-public class CambioFolioForm{
+public class CambioFolioForm extends GenericForm{
 
 	/**
 	 * 

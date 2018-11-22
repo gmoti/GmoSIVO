@@ -67,7 +67,7 @@ public class ControllerContactologia implements Serializable {
 		
 		try {			
 			contactologiaDispatch.cargaFormulario(contactologiaForm, sess);
-			contactologiaForm.setExisteContactologia("false");
+			//contactologiaForm.setExisteContactologia("false");
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
@@ -208,7 +208,7 @@ public class ControllerContactologia implements Serializable {
 			
 			respuesta= validaInfoContactologia();
 			
-			if(!(pagina.equals("false")) || (!respuesta)) {
+			if((!pagina.equals("false")) || (respuesta=false)) {
 				
 				if (respuesta) {
 					
@@ -314,7 +314,9 @@ public class ControllerContactologia implements Serializable {
 	@Command
 	public void buscarDoctorAjax()
     {        	
-    	String nifdoctor = contactologiaForm.getNifdoctor();	
+		Optional<String> nif = Optional.ofNullable(contactologiaForm.getNifdoctor());		
+		
+    	String nifdoctor = nif.orElse("");
     	
     	if(!nifdoctor.equals("")){    		
     		
@@ -520,7 +522,21 @@ public class ControllerContactologia implements Serializable {
 		return true;
 	}
 	
-	
+	@NotifyChange("*")
+	@Command
+	public boolean isNumeric(@BindingParam("valor")String valor) {  
+		
+		boolean bRet=false;
+		
+		if(valor != null && valor.matches("[-+]?\\d*\\.?\\d+")) {
+			bRet=true;
+		}else {
+			Messagebox.show("No es un valor correcto");
+		}
+		
+	    //return s != null && s.matches("[-+]?\\d*\\.?\\d+");
+		return bRet;
+	} 
 	
 	//======Getter and Setter =====================
 	//=============================================

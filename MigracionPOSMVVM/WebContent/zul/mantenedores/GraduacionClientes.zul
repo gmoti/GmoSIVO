@@ -1,4 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <zk>
 <window id="winGraduacionClientes" border="none"  width="65%" height="75%" vflex="min"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
@@ -32,13 +33,12 @@
 		
 			
 	<div width="100%" height="100%">	
-		
-		
 			
 				<div width="100%" vflex="min">
 				
 					<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
-				   		<label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
+				   		<!-- <label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/> -->
+				   		<label value="${c:l('cliente.graduacion.graduacion.cliente')}" style="float: left ; font-weight: bold; font-size: 150%;"/>
 						<div style="float: right">					
 							<label value="@load(vm.sucursalDes)"/>
 							<label value="::"/>
@@ -254,7 +254,8 @@
 												<label value="OD"/>
 												<combobox model="@bind(vm.graduacionesForm.listaCantidadOD)" 
 															selectedItem="@bind(vm.prismaCantidadOD)" 
-														 	width="100px">
+														 	width="100px">																								 	
+														 	
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
@@ -262,7 +263,8 @@
 												
 												<combobox model="@bind(vm.graduacionesForm.listaBaseOD)" 
 															selectedItem="@bind(vm.prismaBaseOD)" 
-															width="100px">
+															width="100px">													
+															
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
@@ -276,7 +278,8 @@
 												<label value="OI"/>
 												<combobox model="@bind(vm.graduacionesForm.listaCantidadOI)" 
 															selectedItem="@bind(vm.prismaCantidadOI)"
-															width="100px">
+															width="100px">													
+															
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>
@@ -284,7 +287,8 @@
 												
 												<combobox model="@bind(vm.graduacionesForm.listaBaseOI)" 
 															selectedItem="@bind(vm.prismaBaseOI)" 
-															width="100px">
+															width="100px">													
+															
 													<template name="model">
 														<comboitem label="@load(each.descripcion)"/>
 													</template>

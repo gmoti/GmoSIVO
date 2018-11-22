@@ -33,4 +33,8 @@
 	<client-config>
 		<processing-prompt-delay>1</processing-prompt-delay>
 	</client-config>	
+	
+	<system-config>
+    	<label-location>/WEB-INF/labels/ApplicationResource.properties</label-location>    
+	</system-config>
 </zk>

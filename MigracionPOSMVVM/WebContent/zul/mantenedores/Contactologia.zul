@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-
+<!-- <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?> -->
 <window id="winContactologia" border="none" width="80%" height="80%"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerContactologia')">
 			
@@ -109,20 +109,20 @@
 	   			</columns>
 	   			<rows>
 	   			
-	   				<row>
+	   				<row> 
 	   					<label value="OD"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_radio1)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_radio2)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_esfera)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_cilindro)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_eje)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_diamt)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_diaz)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_bandas)" width="100px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_radio3)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_diamp)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_colo)" width="50px"/>
-	   					<textbox value="@bind(vm.contactologiaForm.o_adic)" width="50px"/>	   				
+	   					<textbox value="@bind(vm.contactologiaForm.o_radio1)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_radio2)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_esfera)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_cilindro)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_eje)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_diamt)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_diaz)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_bandas)" width="100px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_radio3)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_diamp)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_colo)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>
+	   					<textbox value="@bind(vm.contactologiaForm.o_adic)" width="50px" onBlur="@command('isNumeric',valor=self.value)"/>	   				
 	   				</row>
 	   				
 	   				<row>

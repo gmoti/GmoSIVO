@@ -106,7 +106,14 @@ public class ControllerMenuPrincipal implements Serializable{
 	                "/zul/mantenedores/Albaran.zul", null, null);
 			
 	        window.doModal();
-	        break;     
+	        break; 
+	    
+		case "M2_5":	
+			window = (Window)Executions.createComponents(
+	                "/zul/mantenedores/CambioFolio.zul", null, null);
+			
+	        window.doModal();
+	        break;    
 	        
 	        
 	        //reportes

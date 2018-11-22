@@ -300,7 +300,7 @@
 							<space width="55px"/>
 							<label value="Cantidad" />
 							<space width="45px"/>
-							<label value="Descuento" />
+							<label value="Descuento (%)" />
 							<space width="80px"/>							
 							<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" />							
 						</div>
@@ -327,7 +327,7 @@
 									<intbox value="@load(each.precio)"  width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox value="@load(each.importe)" width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
-									<intbox value="@bind(each.descuento)" width="100px" style="text-align:right"/>
+									<doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right"/>
 									
 									<toolbarbutton image="/iconos/cancel2.png" width="40px" 
 											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>

@@ -1,8 +1,6 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +10,6 @@ import java.util.Optional;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.ExecutionParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -23,9 +20,6 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
-
-import com.google.javascript.jscomp.Var;
-import com.google.protobuf.Message;
 
 import cl.gmo.pos.validador.BeanGraduaciones;
 import cl.gmo.pos.venta.controlador.general.BusquedaClientesDispatchActions;
@@ -106,11 +100,33 @@ public class ControllerGraduacionCliente implements Serializable{
 			graduacionesForm.setNombre(cliente.getNombre());
 			graduacionesForm.setApellido(cliente.getApellido());			
 			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
+			
+			if (graduacionesForm.getPagina().equals("NOGRABAR")) {			
+				
+				graduacionesBean.setFecha(graduacionesForm.getFecha_graduacion());
+				graduacionesBean.setNumero((int)graduacionesForm.getNumero_graduacion());
+				
+				verGraduacion(graduacionesBean);
+			}else {
+				
+				graduacionesForm.setNifdoctor("");
+				graduacionesForm.setDvnifdoctor("");
+				graduacionesForm.setNombre_doctor("");
+			
+				graduacionesForm.setOD_cantidad("-1");
+				graduacionesForm.setOI_cantidad("-1");
+				
+				graduacionesForm.setOD_base("Seleccione");
+				graduacionesForm.setOI_base("Seleccione");		
+				graduacionesForm.setAgente("Seleccione");
+				posicionaCombo();
+			}
+			
+			
 		}else {
 			graduacionesForm.setCliente(0);
-			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
-		}	
-		
+			graduacionesDispatch.cargaFormulario(graduacionesForm, sess);	
+			
 			graduacionesForm.setNifdoctor("");
 			graduacionesForm.setDvnifdoctor("");
 			graduacionesForm.setNombre_doctor("");
@@ -120,15 +136,13 @@ public class ControllerGraduacionCliente implements Serializable{
 			
 			graduacionesForm.setOD_base("Seleccione");
 			graduacionesForm.setOI_base("Seleccione");		
-			
 			graduacionesForm.setAgente("Seleccione");
 			
-			//graduacion nueva
-			graduacionesForm.setExiste_graduacion("false");
+			posicionaCombo();
+		}			
 		
 		
-		posicionaCombo();
-		
+				
 	}
 	
 	//==========Operaciones Principales de la clase ================
@@ -155,6 +169,10 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm.setDvnifdoctor("");
 		graduacionesForm.setNombre_doctor("");
 		//solo limpia los campos visualmente
+		
+		graduacionesForm.setPagina("");		
+		graduacionesForm.setExiste_graduacion("");
+		
 		
 		posicionaCombo();
 	}
@@ -239,7 +257,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		String mensaje2="";
 		String mensaje3="";
 		String mensaje4="";
-		String mensaje5="";
+		//String mensaje5="";
 		
 		graduacionesForm.setOD_esfera(String.valueOf(beanGraduaciones.getOD_esfera()));
 		graduacionesForm.setOD_cilindro(String.valueOf(beanGraduaciones.getOD_cilindro()));
@@ -537,8 +555,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	@NotifyChange("*")
 	@Command
 	public void verGraduacion(@BindingParam("graduacion")GraduacionesBean graduacion)
-	{
-		
+	{	
 		String esfera="0";
 		String cilindro="0";		
 		String eje="0";

@@ -43,7 +43,7 @@
 					<menuseparator />
 					<menuitem label="Albaran" onClick="@command('seleccionMenu',arg='M2_4')"/>
 					<menuseparator />
-					<menuitem label="Cambio de folio" />
+					<menuitem label="Cambio de folio" onClick="@command('seleccionMenu',arg='M2_5')"/>
 				</menupopup>
 			</menu>
 	
