@@ -904,7 +904,14 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
            st.execute();
            rs = (ResultSet)st.getObject(3);
            
-           TipoFamiliaBean tipoFamilia;         
+           TipoFamiliaBean tipoFamilia;       
+           
+           //FQuiroz Agrego un registro incial en 0
+           /*tipoFamilia = new TipoFamiliaBean();
+           tipoFamilia.setCodigo("0");
+    	   tipoFamilia.setDescripcion("SELECCIONE");        	   
+    	   tipoFamilia.setCantidad(0);      
+    	   lista_tipo_Familias.add(tipoFamilia);*/
            
            while (rs.next())
            {
@@ -963,6 +970,12 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             rs = (ResultSet)st.getObject(4);
            
             FamiliaBean familia;
+            
+            //FQuiroz Agrego un registro incial en 0
+            /*familia = new FamiliaBean();
+            familia.setCodigo("0");
+            familia.setDescripcion("SELECCIONE");
+            lista_Familias.add(familia);*/
            
             while (rs.next())
             {
@@ -1085,7 +1098,14 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             st.execute();
             rs = (ResultSet)st.getObject(3);
            
-            SubFamiliaBean subfamilia;            
+            SubFamiliaBean subfamilia;   
+            
+            //FQUIROZ
+            //Agrego nodo igual 0
+            /*subfamilia = new SubFamiliaBean();
+            subfamilia.setCodigo("0");
+            subfamilia.setDescripcion("SELECCIONE");
+            lista_SubFamilias.add(subfamilia);*/
            
             while (rs.next())
             {
@@ -1207,7 +1227,13 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             rs = (ResultSet)st.getObject(4);
            
             GrupoFamiliaBean subgrupofamilia;
-            boolean traegrupo=false;            
+            boolean traegrupo=false;        
+            
+            //FQuiroz agrega un registro en 0
+            /*subgrupofamilia = new GrupoFamiliaBean();
+            subgrupofamilia.setCodigo("0");
+            subgrupofamilia.setDescripcion("SELECCIONE");               
+            lista_GrupoFamilias.add(subgrupofamilia);*/
             
             while (rs.next())
             {

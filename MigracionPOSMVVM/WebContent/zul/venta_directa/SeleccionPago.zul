@@ -1,4 +1,4 @@
-<?page title="Pago Venta Directa" contentType="text/html;charset=UTF-8"?>
+<?page title="Seleccion de Pago" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window id="winPagoVentaDirecta" border="none" height="50%" width="65%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionPago')">	

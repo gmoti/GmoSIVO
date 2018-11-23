@@ -2,8 +2,12 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -198,11 +202,16 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());			
 			
 			//al cambiar al padre los combos dependientes se hacen codigo inicial
-			familiaBean=new FamiliaBean();
-			subFamiliaBean=new SubFamiliaBean();
-			grupoFamiliaBean=new GrupoFamiliaBean();
+			//familiaBean=new FamiliaBean();
+			//subFamiliaBean=new SubFamiliaBean();
+			//grupoFamiliaBean=new GrupoFamiliaBean();
+			//familiaBean=null;
+			//subFamiliaBean=null;
+			//grupoFamiliaBean=null;			
+			
 			busquedaProductosForm.setCodigoBarraBusqueda("");
 			busquedaProductosForm.setCodigoBusqueda("");
+			
 			//al cambiar el padre se limpia la busqueda previamente ejecutada			
 			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 			busquedaProductosForm.setListaFamilias(new ArrayList<FamiliaBean>());
@@ -211,6 +220,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			
 			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 			
+			posicionaCombo(4);
 		}
 		
 		if (arg.equals(Constantes.STRING_FAMILIA)) {
@@ -219,10 +229,14 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
 			
 			//al cambiar al padre los combos dependientes se hacen codigo inicial
-			subFamiliaBean=new SubFamiliaBean();
-			grupoFamiliaBean=new GrupoFamiliaBean();
+			//subFamiliaBean=new SubFamiliaBean();
+			//grupoFamiliaBean=new GrupoFamiliaBean();
+			//subFamiliaBean=null;
+			//grupoFamiliaBean=null;			
+			
 			busquedaProductosForm.setCodigoBarraBusqueda("");
 			busquedaProductosForm.setCodigoBusqueda("");
+			
 			//al cambiar el padre se limpia la busqueda previamente ejecutada			
 			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 			busquedaProductosForm.setListaSubFamilias(new ArrayList<SubFamiliaBean>());
@@ -230,6 +244,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			
 			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 			
+			posicionaCombo(3);
 		}
 		
 		if (arg.equals(Constantes.STRING_SUBFAMILIA)) {
@@ -239,21 +254,78 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			busquedaProductosForm.setSubFamilia(subFamiliaBean.getCodigo());
 			
 			//al cambiar al padre los combos dependientes se hacen codigo inicial			
-			grupoFamiliaBean=new GrupoFamiliaBean();
+			//grupoFamiliaBean=new GrupoFamiliaBean();
+			//grupoFamiliaBean=null;			
+			
 			busquedaProductosForm.setCodigoBarraBusqueda("");
 			busquedaProductosForm.setCodigoBusqueda("");
+			
 			//al cambiar el padre se limpia la busqueda previamente ejecutada			
 			busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 			busquedaProductosForm.setListaGruposFamilias(new ArrayList<GrupoFamiliaBean>());
 			
 			busquedaProductosMultiOfertasDispatchActions.buscarMultioferta(busquedaProductosForm, sess);
 			
+			posicionaCombo(2);
 		}	
 		
 		if (tipoFamiliaBean.getCodigo().equals("C") || tipoFamiliaBean.getCodigo().equals("L"))
 			verGraduacion="true";
 		else
 			verGraduacion="false";
+		
+	}
+	
+	
+	@NotifyChange({"*"})
+	@Command
+	public void posicionaCombo(int i) { 
+		
+		//Collections.addAll(listOne, listTwo.toArray());
+		//List<String> newList = Stream.concat(listOne.stream(), listTwo.stream()).collect(Collectors.toList());
+		
+		String posInicial="0";		
+		Optional<FamiliaBean> fb;
+		Optional<SubFamiliaBean> sfb;
+		Optional<GrupoFamiliaBean> gf;
+		
+		FamiliaBean fBean = new FamiliaBean();
+		SubFamiliaBean sfBean = new SubFamiliaBean();
+		GrupoFamiliaBean gfBean = new GrupoFamiliaBean();
+		
+		fBean.setCodigo("0");
+		fBean.setDescripcion("SELECCIONE");
+		fBean.setTipo_fam("0");
+		
+		sfBean.setCodigo("0");
+		sfBean.setDescripcion("SELECCIONE");
+		
+		gfBean.setCodigo("0");
+		gfBean.setDescripcion("SELECCIONE");
+		gfBean.setFamilia("0");
+		gfBean.setSubfamilia("0");
+		
+		if (i >= 4) {
+			//familiaBean = fBean;
+			ArrayList<FamiliaBean> afBean = new ArrayList<FamiliaBean>();			
+			afBean.add(fBean);
+			
+			ArrayList<FamiliaBean> newList = (ArrayList<FamiliaBean>) Stream.concat(afBean.stream(), busquedaProductosForm.getListaFamilias().stream()).collect(Collectors.toList());			
+			busquedaProductosForm.setListaFamilias(newList);
+		}
+		if (i >= 3) {
+			subFamiliaBean = sfBean;
+			ArrayList<SubFamiliaBean> asfBean = new ArrayList<SubFamiliaBean>();
+			asfBean.add(subFamiliaBean);
+			busquedaProductosForm.setListaSubFamilias(asfBean);
+		}
+		if (i >= 2) {
+			grupoFamiliaBean = gfBean;
+			ArrayList<GrupoFamiliaBean> agfBean = new ArrayList<GrupoFamiliaBean>();
+			agfBean.add(grupoFamiliaBean);
+			busquedaProductosForm.setListaGruposFamilias(agfBean);
+		}
+		
 		
 	}
 	

@@ -218,173 +218,7 @@
 								
 							</rows>
 						</grid>
-					</div>				
-					
-					<!--  
-					<div width="100%" style="padding :10px 0px 0px 0px">									
-					   <hbox>
-					    <div width="300px">
-					    	<label value="Codigo" />
-					    	<space width="42px"/>
-					    	<textbox value="@bind(vm.ventaPedidoForm.codigo_suc)" width="30px" readonly="true" />
-					    	<textbox value="@bind(vm.ventaPedidoForm.codigo)" 	  width="150px"	readonly="true" />
-					    </div>
-
-						<div width="380px">
-						    <label value="Cliente"/>	
-						    <space width="2px"/>					
-							<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="150px"/>
-							<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="30px" readonly="true"/>
-							
-							<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
-							<toolbarbutton image="/iconos/lupa2.png" width="30px"/>
-							<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px"/>										
-						</div>
-						
-						<textbox value="@load(vm.ventaPedidoForm.nombre_cliente)" width="250px" readonly="true"/>
-						
-						<space width="100px"></space>
-						<label value="fecha"/>
-						<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />
-						</hbox>					
-					</div>	
-					
-					
-					<div width="100%" style="padding :10px 0px 0px 0px">
-						<hbox>						
-							<div width="305px">
-								<label value="Forma pago" />
-								<space width="2px"/>
-								<space width="7px"/>									
-								<combobox model="@bind(vm.ventaPedidoForm.listaFormasPago)"
-									      width="180px" placeholder="Seleccione" 
-									      onRightClick="@command('comboSetNull',objetoBean=vm.formaPagoBean)" 					      
-									      selectedItem="@bind(vm.formaPagoBean)"									      
-									      disabled="@bind(vm.beanControlCombos.comboFpagoEnable)">
-									      
-								   <template name="model">
-									<comboitem label="@load(each.descripcion)"/>
-								   </template>	
-								</combobox>
-							</div>
-									
-							<div width="350px">			
-								<label value="Divisa" />							
-								<combobox model="@bind(vm.ventaPedidoForm.listaDivisas)"  
-										  width="180px" placeholder="Seleccione"
-										  onRightClick="@command('comboSetNull',objetoBean=vm.divisaBean)" 										   
-										  selectedItem="@bind(vm.divisaBean)" 
-										  disabled="@bind(vm.beanControlCombos.comboDivisaEnable)">
-										  
-								  <template name="model">
-									<comboitem label="@load(each.descripcion)" />
-								  </template>	
-								</combobox>
-							</div>
-							
-							<div width="350px">	
-								<label value="Idioma" />
-								<combobox model="@load(vm.ventaPedidoForm.listaIdiomas)" 
-										  width="180px" placeholder="Seleccione" 
-										  onRightClick="@command('comboSetNull',objetoBean=vm.idiomaBean)"										  
-										  selectedItem="@bind(vm.idiomaBean)" 
-										  disabled="@bind(vm.beanControlCombos.comboIdiomaEnable)">
-										  
-								  <template name="model">
-									<comboitem label="@load(each.descripcion)" />
-								  </template>
-								</combobox>
-							</div>											
-							
-							<space width="100px"></space>
-							<label value="Hora" />
-							<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true"/>
-						</hbox>
-					</div>
-
-					
-					<div width="100%" style="padding :10px 0px 0px 0px">
-						<hbox>							
-						
-							<div width="305px">
-								<label value="Tipo encargo" />	
-								<space width="2px"/>									
-								<combobox model="@bind(vm.ventaPedidoForm.listaTiposPedidos)" 
-										  width="180px" placeholder="Seleccione" 
-										  selectedItem="@bind(vm.tipoPedidoBean)"										  
-										  onRightClick="@command('comboSetNull',objetoBean=vm.tipoPedidoBean)" 
-										  disabled="@bind(vm.beanControlCombos.comboTiposEnable)">
-										  
-								  <template name="model">
-									<comboitem label="@load(each.descripcion)"/>
-								  </template>	
-								</combobox>
-							</div>						
-						
-							<div width="300px">
-								<label value="Agente" />	
-								<space width="8px"/>									
-								<combobox model="@bind(vm.ventaPedidoForm.listaAgentes)" 
-										  width="180px"  placeholder="Seleccione"
-										  selectedItem="@bind(vm.agenteBean)"										  
-										  onRightClick="@command('comboSetNull',objetoBean=vm.agenteBean)" 
-										  disabled="@bind(vm.beanControlCombos.comboAgenteEnable)">
-										  
-								  <template name="model">
-									<comboitem label="@load(each.usuario)" />
-								  </template>	
-								</combobox>
-							</div>								
-							
-																				
-							
-							<div width="450px">
-								<label value="Convenio" />	
-								<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="80px" />
-								<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="150px" readonly="true"/>								
-								<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-								<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" tooltiptext="Busqueda rapida convenio"/>
-								<toolbarbutton image="/iconos/cancel2.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>
-							</div>
-							
-							<label value="Cambio" />
-							<textbox value="@bind(vm.ventaPedidoForm.cambio)" width="30px" readonly="true"/>
-						</hbox>
-					</div>
-					
-					
-					<div width="100%" style="padding :10px 0px 0px 0px">
-						<hbox>
-							<div width="350px">
-								<label value="No Sobre" />
-					    		<space width="30px"/>
-					    		<textbox/>
-							</div>
-						
-							<div width="300px">
-								<button label="Entrega de encargos" onClick="@command('pedidoEntrega')"/>
-							</div>
-							
-							<div width="350px">	
-								<label value="Promocion" />
-								<combobox model="@load(vm.ventaPedidoForm.listaPromociones)" 
-										  width="180px" placeholder="Seleccione"
-										  selectedItem="@bind(vm.promocionBean)"
-										  onRightClick="@command('comboSetNull',objetoBean=vm.promocionBean)"
-										  readonly="@bind(vm.beanControlCombos.comboPromoEnable)">
-								  <template name="model">
-									<comboitem label="@load(each.descripcion)" />
-								  </template>
-								</combobox>
-							</div>
-							
-							<div width="300px">
-								<button label="Cupon" onClick="@command('validaCupon')"/>
-							</div>
-							
-						</hbox>					
-					</div>-->
-														
+					</div>														
 								
 				</div>
 			</north>
@@ -453,39 +287,146 @@
 								</columns>
 								<template name="model">
 									<row>
-										<textbox value="@load(each.cod_barra)" width="150px" 
-											tooltiptext="Click para ver detalles" 
+										<!-- Codigo de la grilla -->
+										<zk if="${each.tipoFamilia =='C'}">
+											<textbox value="@load(each.cod_barra)" width="150px" 											
 											onClick="@command('actualizaDetalles',arg=each)" 
-											readonly="true"/>
+											tooltiptext="Click para ver detalles" readonly="true"/>											
+										</zk>
+										<zk if="${each.tipoFamilia !='C'}">
+											<zk if="${each.tipoFamilia =='L'}">
+												<textbox value="@load(each.cod_barra)" width="150px"
+												tooltiptext="Click para ver detalles" readonly="true"/>											
+											</zk>
 											
-										<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+											<zk if="${each.tipoFamilia !='L'}">
+												<zk if="${each.cod_barra =='ARCLI'}">
+													<textbox value="@load(each.cod_barra)" width="150px"
+													tooltiptext="Click para ver detalles" readonly="true"/>											
+												</zk>
+											
+												<zk if="${each.cod_barra !='ARCLI'}">
+													<textbox value="@load(each.cod_barra)" width="150px"
+													tooltiptext="Click para ver detalles" readonly="true"/>	
+												</zk>											
+											</zk>
+										</zk>
+										<!-- Fin Codigo de la grilla -->
+											
+										<!-- Descripcion de la grilla -->
+										<zk if="${each.descripcion_manual !='true'}">
+											<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+										</zk>
+										<zk if="${each.descripcion_manual =='true'}">
+											<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+										</zk>										
+										<!-- Fin Descripcion de la grilla -->
 										
 										<intbox value="@load(each.precio)"  width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-																			
-										<intbox value="@bind(each.cantidad)" width="80px" readonly="true" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
-																			
-										<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##.###0"  
+													
+										<!-- Cantidad de la grilla -->
+										<zk if="${each.tiene_grupo =='true'}">
+											<intbox value="@bind(each.cantidad)" width="80px" style="text-align:right" readonly="true"/>
+										</zk>
+										
+										<zk if="${each.tiene_grupo !='true'}">
+											<zk if="${each.familia=='MUL'}">
+												<intbox value="@bind(each.cantidad)" width="80px" style="text-align:right" readonly="true"/>
+											</zk>
+											<zk if="${each.familia != 'MUL'}">
+												<zk if="${each.prevtln == ''}">
+													<intbox value="@bind(each.cantidad)" width="80px" readonly="true" onBlur="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+												</zk>
+												<zk if="${each.prevtln != ''}">
+													<intbox value="@bind(each.cantidad)" width="80px" style="text-align:right" readonly="true"/>
+												</zk>
+											</zk>
+										</zk>
+										<!-- Fin Cantidad de la grilla -->
+												
+										<!-- Descuento de la grilla -->
+										<zk if="${each.familia=='MUL'}">
+											<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##.###0" readonly="true"/>										
+										</zk>
+										<zk if="${each.familia !='MUL'}">
+											<zk if="${each.prevtln ==''}">
+												<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##.###0"  
 													onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)" />
+											</zk>
+											<zk if="${each.prevtln != ''}">
+												<doublebox value="@bind(each.descuento)" width="80px" style="text-align:right" format="##.###0" readonly="true"/>
+											</zk>
+										</zk>
+										<!-- Fin Descuento de la grilla -->
 																						
 										<intbox value="@load(each.importe)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>	
-																		
-										<textbox value="@load(each.grupo)" width="60px" readonly="false" style="text-align:right"  
-												onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>									
+													
+										<!-- Grupo de la grilla -->			
+										<zk if="${each.familia == 'MUL'}">
+											<textbox value="@load(each.grupo)" width="60px" style="text-align:right" readonly="true"/>
+										</zk>
+										
+										<zk if="${each.familia != 'MUL'}">
+											<zk if="${each.tiene_grupo =='true'}">
+												<textbox value="@load(each.grupo)" width="60px" style="text-align:right"  
+													onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>
+											</zk>
+											
+											<zk if="${each.tiene_grupo !='true'}">
+												<textbox value="@load(each.grupo)" width="60px" style="text-align:right" readonly="true"/>
+											</zk>
+										</zk>
+										<!-- Fin Grupo de la grilla -->
 										
 										<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="80px"/>	
-																		
-										<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
+											
+										<!-- Tipo de la grilla -->	
+										<zk if="${each.tipoFamilia =='C'}">
+											<textbox value="@load(each.tipo)" width="60px"/>
+										</zk>
+										<zk if="${each.tipoFamilia !='C'}">
+											<zk if="${each.tipoFamilia =='L'}">
+												<textbox value="@load(each.tipo)" width="60px"/>
+											</zk>
+											
+											<zk if="${each.tipoFamilia !='L'}">
+												<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
+											</zk>
+										</zk>	
+										<!-- Fin Tipo de la grilla -->							
 										
-										<toolbarbutton image="/iconos/add.png" width="40px" 
-											onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)" visible="@load(each.tiene_suple)"/>	<!-- visible="@load(each.tiene_suple)" -->								
+										<!-- Suplementos de la grilla -->
+										<zk if="${each.tiene_suple == 'true'}">
+											<toolbarbutton image="/iconos/add.png" width="40px" 
+											onClick="@command('seleccionTratamientos',index=forEachStatus.index,producto=each)"/>	
+										</zk>	
+										<zk if="${each.tiene_suple != 'true'}">
+											<toolbarbutton image="/iconos/add.png" width="40px" visible="true"/>	
+										</zk>	
+										<!-- Suplementos de la grilla -->									
 										
-										<toolbarbutton image="/iconos/add.png" width="40px" 
-											onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)" visible="@bind(each.familia eq 'MUL'?'true':'false')"/> <!-- visible="@bind(each.familia eq 'MUL'?'true':'false')" --> 
+										<!-- Multiofertas de la grilla -->
+										<zk if="${each.familia == 'MUL'}">
+											<toolbarbutton image="/iconos/add.png" width="40px" 
+												onClick="@command('multiofertaProducto',producto=each,index=forEachStatus.index)"/>  
+										</zk>
+										<zk if="${each.familia != 'MUL'}">
+											<toolbarbutton image="/iconos/add.png" width="40px" visible="false"/>  
+										</zk>
+										<!-- Fin Multiofertas de la grilla -->
 											
 										<space width="40px" />
 											
-										<toolbarbutton image="/iconos/cancel2.png" width="40px" 
+										<!-- Delete de la grilla -->
+										<zk if="${each.familia == 'MUL'}">
+											<toolbarbutton image="/iconos/cancel.png" width="40px" sclass="shrink16"
+												onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>										
+										</zk>
+										<zk if="${each.familia != 'MUL'}">
+											<toolbarbutton image="/iconos/cancel.png" width="40px" sclass="shrink16"
 												onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
+										</zk>									
+										<!-- Fin Delete de la grilla -->		
 										
 									</row>
 								</template>

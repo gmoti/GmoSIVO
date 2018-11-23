@@ -54,8 +54,8 @@
 									model="@load(vm.busquedaProductosForm.listaTipoFamilia)"
 									selectedItem="@bind(vm.tipoFamiliaBean)"
 									onSelect="@command('manejoComboBox',accion='tipofamilia')" placeholder="SELECCIONE"
-									onRightClick="@command('comboSetNull',objetoBean=vm.tipoFamiliaBean)"
-									width="290px">
+									onRightClick="@command('comboSetNull',objetoBean=vm.tipoFamiliaBean)"									
+									width="290px">					
 
 									<template name='model'>
 										<comboitem
