@@ -194,20 +194,12 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	//@NotifyChange({"busquedaProductosForm","verGraduacion"})
 	@NotifyChange("*")
 	@Command
-	public void manejoComboBox(@BindingParam("accion")String arg) {
-		
+	public void manejoComboBox(@BindingParam("accion")String arg) {	
+			
 		
 		if (arg.equals(Constantes.STRING_TIPO_FAMILIA)) {
 			busquedaProductosForm.setAccion(Constantes.STRING_TIPO_FAMILIA);
-			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());			
-			
-			//al cambiar al padre los combos dependientes se hacen codigo inicial
-			//familiaBean=new FamiliaBean();
-			//subFamiliaBean=new SubFamiliaBean();
-			//grupoFamiliaBean=new GrupoFamiliaBean();
-			//familiaBean=null;
-			//subFamiliaBean=null;
-			//grupoFamiliaBean=null;			
+			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());					
 			
 			busquedaProductosForm.setCodigoBarraBusqueda("");
 			busquedaProductosForm.setCodigoBusqueda("");
@@ -226,13 +218,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		if (arg.equals(Constantes.STRING_FAMILIA)) {
 			busquedaProductosForm.setAccion(Constantes.STRING_FAMILIA);
 			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());
-			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
-			
-			//al cambiar al padre los combos dependientes se hacen codigo inicial
-			//subFamiliaBean=new SubFamiliaBean();
-			//grupoFamiliaBean=new GrupoFamiliaBean();
-			//subFamiliaBean=null;
-			//grupoFamiliaBean=null;			
+			busquedaProductosForm.setFamilia(familiaBean.getCodigo());				
 			
 			busquedaProductosForm.setCodigoBarraBusqueda("");
 			busquedaProductosForm.setCodigoBusqueda("");
@@ -251,11 +237,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			busquedaProductosForm.setAccion(Constantes.STRING_SUBFAMILIA);
 			busquedaProductosForm.setTipofamilia(tipoFamiliaBean.getCodigo());
 			busquedaProductosForm.setFamilia(familiaBean.getCodigo());
-			busquedaProductosForm.setSubFamilia(subFamiliaBean.getCodigo());
-			
-			//al cambiar al padre los combos dependientes se hacen codigo inicial			
-			//grupoFamiliaBean=new GrupoFamiliaBean();
-			//grupoFamiliaBean=null;			
+			busquedaProductosForm.setSubFamilia(subFamiliaBean.getCodigo());		
 			
 			busquedaProductosForm.setCodigoBarraBusqueda("");
 			busquedaProductosForm.setCodigoBusqueda("");
@@ -279,15 +261,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	
 	@NotifyChange({"*"})
 	@Command
-	public void posicionaCombo(int i) { 
-		
-		//Collections.addAll(listOne, listTwo.toArray());
-		//List<String> newList = Stream.concat(listOne.stream(), listTwo.stream()).collect(Collectors.toList());
-		
-		String posInicial="0";		
-		Optional<FamiliaBean> fb;
-		Optional<SubFamiliaBean> sfb;
-		Optional<GrupoFamiliaBean> gf;
+	public void posicionaCombo(int i) { 	
 		
 		FamiliaBean fBean = new FamiliaBean();
 		SubFamiliaBean sfBean = new SubFamiliaBean();
@@ -305,25 +279,35 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		gfBean.setFamilia("0");
 		gfBean.setSubfamilia("0");
 		
-		if (i >= 4) {
-			//familiaBean = fBean;
+		if (i >= 4) {			
 			ArrayList<FamiliaBean> afBean = new ArrayList<FamiliaBean>();			
 			afBean.add(fBean);
 			
 			ArrayList<FamiliaBean> newList = (ArrayList<FamiliaBean>) Stream.concat(afBean.stream(), busquedaProductosForm.getListaFamilias().stream()).collect(Collectors.toList());			
 			busquedaProductosForm.setListaFamilias(newList);
+			
+			Optional<FamiliaBean> fb = busquedaProductosForm.getListaFamilias().stream().filter(s -> fBean.getCodigo().equals(s.getCodigo())).findFirst();
+			familiaBean = fb.orElse(new FamiliaBean());
 		}
-		if (i >= 3) {
-			subFamiliaBean = sfBean;
+		if (i >= 3) {			
 			ArrayList<SubFamiliaBean> asfBean = new ArrayList<SubFamiliaBean>();
-			asfBean.add(subFamiliaBean);
-			busquedaProductosForm.setListaSubFamilias(asfBean);
+			asfBean.add(sfBean);
+			
+			ArrayList<SubFamiliaBean> newList = (ArrayList<SubFamiliaBean>) Stream.concat(asfBean.stream(), busquedaProductosForm.getListaSubFamilias().stream()).collect(Collectors.toList());
+			busquedaProductosForm.setListaSubFamilias(newList);
+			
+			Optional<SubFamiliaBean> sfb = busquedaProductosForm.getListaSubFamilias().stream().filter(s -> sfBean.getCodigo().equals(s.getCodigo())).findFirst();
+			subFamiliaBean = sfb.orElse(new SubFamiliaBean());
 		}
-		if (i >= 2) {
-			grupoFamiliaBean = gfBean;
+		if (i >= 2) {			
 			ArrayList<GrupoFamiliaBean> agfBean = new ArrayList<GrupoFamiliaBean>();
-			agfBean.add(grupoFamiliaBean);
-			busquedaProductosForm.setListaGruposFamilias(agfBean);
+			agfBean.add(gfBean);
+			
+			ArrayList<GrupoFamiliaBean> newList = (ArrayList<GrupoFamiliaBean>) Stream.concat(agfBean.stream(), busquedaProductosForm.getListaGruposFamilias().stream()).collect(Collectors.toList());
+			busquedaProductosForm.setListaGruposFamilias(newList);
+			
+			Optional<GrupoFamiliaBean> gfb = busquedaProductosForm.getListaGruposFamilias().stream().filter(s -> gfBean.getCodigo().equals(s.getCodigo())).findFirst();
+			grupoFamiliaBean = gfb.orElse(new GrupoFamiliaBean());
 		}
 		
 		

@@ -232,6 +232,12 @@
 		     							<cell/>	
 		     							<cell/>	
 	     							</row>
+	     							<row>	     							
+		     							<label value="N° Doc Isapre"/>
+		     							<textbox value="@bind(vm.seleccionPagoForm.n_isapre)"  width="100px" readonly="true"/>
+		     							<cell/>	
+		     							<cell/>	
+	     							</row>
 	     						</rows>
 	     					</grid>
      					</div>
@@ -279,6 +285,13 @@
      				
 			</div>				
 		</div>
+		
+		<!-- 
+		Ventanas popup para operaciones adicionales en el pago
+		//
+		//
+		//
+		 -->		
 		<!-- 
 		<popup id="popPregunta" >		    
 			<window id="ventana" mode="modal" visible="false">
@@ -288,5 +301,68 @@
 			</window>		
 		</popup>	
 		 -->
+		 
+		<popup id="documentos" width="400px"> 
+			<div width="100%">			
+				<div width="100%" style="background-color:black;color: white" height="40px">
+					<label value="Documentos" />
+					<div style="float: right">					
+						<toolbarbutton image="/iconos/cancel.png" onClick="documentos.close()" sclass="shrink16"/>		
+					</div>																			
+				</div>
+				
+				<div width="100%" height="100%">
+					<radio label="Boleta" />
+					<radio label="Guia de despacho"/>
+					
+					<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="" />
+				</div>
+			</div>
+		</popup>
+		
+		<popup id="Documento_cambio_folio" > 
+			<div width="100%">			
+				<div width="100%" style="background-color:black;color: white" height="40px">
+					<label value="Cambio de folio" />
+					<div style="float: right">					
+						<toolbarbutton image="/iconos/cancel.png" onClick="Documento_cambio_folio.close()" sclass="shrink16"/>		
+					</div>																			
+				</div>
+				
+				<div width="100%" height="100%">
+					<label value="Numero"/>
+					<intbox value="@bind(vm.seleccionPagoForm.numero_boleta_conf)"/>
+					
+					<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="" />
+				</div>
+			</div>		
+		</popup>
+		
+		<popup id="Numero_Documento" > 
+			<div width="100%">			
+				<div width="100%" style="background-color:black;color: white" height="40px">
+					<label value="Numero de documento" />
+					<div style="float: right">					
+						<toolbarbutton image="/iconos/cancel.png" onClick="Numero_Documento.close()" sclass="shrink16"/>		
+					</div>																			
+				</div>
+				
+				<div width="100%" height="100%">
+					<label value="Numero"/>
+					<intbox value="@bind(vm.seleccionPagoForm.numero_boleta)"/>
+					<label value="Numero"/>
+					<intbox value="@bind(vm.seleccionPagoForm.numero_boleta_conf)"/>
+					<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="" />
+				</div>
+			</div>		
+		</popup>
+		
+		<popup id="Confirmacion" > 
+		
+		
+		</popup>
+		
+		 
+		 
 	</window>	
 </zk>

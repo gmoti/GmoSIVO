@@ -1,6 +1,7 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
 import cl.gmo.pos.venta.web.beans.PagoBean;
+import cl.gmo.pos.venta.web.beans.ProductosBean;
 import cl.gmo.pos.venta.web.forms.DevolucionForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.VentaDirectaForm;
@@ -64,6 +66,9 @@ public class ControllerSeleccionPago implements Serializable{
 					   @ExecutionArgParam("origen")String arg4) {	
 		
 		
+		String convenio;
+		String isapre;		
+		
 		cliente             = null;		
 		seleccionPagoForm 	= null;
 		ventaPedidoForm		= null;
@@ -92,6 +97,14 @@ public class ControllerSeleccionPago implements Serializable{
 			sumaTotal = seleccionPagoForm.getSuma_total_albaranes();
 			descuentoMaximo = ventaPedidoForm.getPorcentaje_descuento_max();
 			sess.setAttribute(Constantes.STRING_AGENTE, ventaPedidoForm.getAgente());
+			
+			/* Acciones posteriores a la carga */
+			/* =============================== */
+			convenio = ventaPedidoForm.getConvenio();
+			isapre   = ventaPedidoForm.getIsapre();
+			ArrayList<ProductosBean> listaProductos = ventaPedidoForm.getListaProductos();
+			
+			postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);
 		}
 		
 		if (arg3 instanceof VentaDirectaForm) { 
@@ -125,7 +138,45 @@ public class ControllerSeleccionPago implements Serializable{
 		this.setDiferencia_total(seleccionPagoForm.getDiferencia());		
 		seleccionPagoForm.setV_a_pagar(0);	
 		
+		
+		
+		
 	}
+	
+	private void postCarga(String convenio, String isapre, Integer diferencia, ArrayList<ProductosBean> listaProductos) {		
+		
+		int paso_grp = 0;
+	 	int cont = 0;
+	 	int dent = 0;
+	 	
+	 	
+	 	for(PagoBean pb : seleccionPagoForm.getListaPagos()) {	 		
+	 		if (pb.getForma_pago().equals("GRPON") || pb.getForma_pago().equals("ISAPR")) 
+	 			paso_grp = 1; 		
+	 	}
+	 	
+	 	for(ProductosBean pb : listaProductos) {	 		
+	 		if (pb.getFamilia().equals("DES")){
+	 			
+	 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
+	 			
+	 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+	 				if(fpb.getId().equals("GAR") || fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED") || fpb.getId().equals("CRB")) {
+	 					aux.remove(fpb);
+	 				}	 				
+	 			}	 			
+	 			
+	 			seleccionPagoForm.setListaFormasPago(aux);
+	 		}	 		
+	 	}
+	 	
+	 	
+	 	
+		
+		
+		
+		
+	} 
 
 	
 	@NotifyChange({"seleccionPagoForm","formaPagoBean"})

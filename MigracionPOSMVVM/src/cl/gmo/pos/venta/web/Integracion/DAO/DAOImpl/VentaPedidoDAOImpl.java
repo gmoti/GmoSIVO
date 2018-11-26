@@ -861,7 +861,7 @@ public class VentaPedidoDAOImpl implements VentaPedidoDAO{
 				st.registerOutParameter(9, Types.DATE);			
 				st.execute();
 				fecha_entrega = st.getDate(9);
-				System.out.println(local+","+tipo+","+familia+","+subFamilia+","+grupoFamilia+","+fecha+","+esfera+","+cilindro+"==>"+fecha_entrega.toString());
+				//System.out.println(local+","+tipo+","+familia+","+subFamilia+","+grupoFamilia+","+fecha+","+esfera+","+cilindro+"==>"+fecha_entrega.toString());
 			}
 		}catch(SQLException ex){
 			log.error("VentaPedidoDAOImpl:traeFechaEntrega error controlado 2013032013",ex);
