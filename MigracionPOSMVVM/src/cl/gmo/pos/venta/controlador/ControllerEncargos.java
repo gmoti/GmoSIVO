@@ -68,6 +68,7 @@ public class ControllerEncargos implements Serializable {
 	HashMap<String,Object> objetos;
 	private Window wBusqueda;
 	private boolean bWin=true;
+	private boolean wArcliVisible=false;
 	
 	SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat tt = new SimpleDateFormat("hh:mm:ss");	
@@ -118,7 +119,8 @@ public class ControllerEncargos implements Serializable {
 	private long dto_total_monto = 0;
 	private long dto_total = 0;
 	
-	
+	//variables particulares de validaciones
+	private boolean descripcionFocus=false;
 	
 	
 	@Init
@@ -2209,6 +2211,31 @@ public class ControllerEncargos implements Serializable {
 	}
 	
 	
+	//=====================Valida Descripcion ===========================
+	//===================================================================
+	@NotifyChange({"ventaPedidoForm","descripcionFocus"})
+	@Command
+	public void actualiza_descripcion(@BindingParam("index")int index, @BindingParam("producto")ProductosBean producto ) {
+		
+		if(producto.getDescripcion().equals("")) {			
+			Messagebox.show("Debe ingresar una descripcion del producto para continuar");
+			descripcionFocus=true;
+			return;
+		}else {			
+			
+			try {
+				ventaPedidoForm.setAccion("agrega_descripcion");
+				ventaPedidoForm.setAddProducto(String.valueOf(index));
+				ventaPedidoForm.setDescripcion(producto.getDescripcion());
+				
+				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+		}	
+		
+	}	
 	
 	//======================Getter and Setter============================
 	//===================================================================
@@ -2349,6 +2376,27 @@ public class ControllerEncargos implements Serializable {
 	public void setSucursalDes(String sucursalDes) {
 		this.sucursalDes = sucursalDes;
 	}
+
+
+	public boolean iswArcliVisible() {
+		return wArcliVisible;
+	}
+	
+	public void setwArcliVisible(boolean wArcliVisible) {
+		this.wArcliVisible = wArcliVisible;
+	}
+
+
+	public boolean isDescripcionFocus() {
+		return descripcionFocus;
+	}
+
+
+	public void setDescripcionFocus(boolean descripcionFocus) {
+		this.descripcionFocus = descripcionFocus;
+	}
+	
+	
 	
 	
 }

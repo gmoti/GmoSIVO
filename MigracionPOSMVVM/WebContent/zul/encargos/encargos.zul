@@ -1,5 +1,5 @@
 <?page title="Encargos" contentType="text/html;charset=UTF-8"?>
-
+<zk> 
 	<window id="winEncargos" border="none" width="100%" height="100%" vflex="min" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerEncargos')">
 		
@@ -315,10 +315,11 @@
 											
 										<!-- Descripcion de la grilla -->
 										<zk if="${each.descripcion_manual !='true'}">
-											<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+											<textbox value="@bind(each.descripcion)" width="330px" readonly="true"/>
 										</zk>
-										<zk if="${each.descripcion_manual =='true'}">
-											<textbox value="@load(each.descripcion)" width="330px" readonly="true"/>
+										<zk if="${each.descripcion_manual =='true'}">											
+											<textbox value="@bind(each.descripcion)" width="330px" readonly="false" onBlur="@command('actualiza_descripcion',index=forEachStatus.index,producto=each)" focus="@bind('descripcionFocus')"/>																							
+											
 										</zk>										
 										<!-- Fin Descripcion de la grilla -->
 										
@@ -584,3 +585,6 @@
 	</div>	
 	
 </window>
+
+
+</zk>

@@ -1,0 +1,89 @@
+<?page title="Busqueda Encargo" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winAdicionalesArcli" border="normal" width="50%" height="41%"
+		 position="center"  mode="modal" sizable="false" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAdicionalesArcli')">
+		
+		<style>
+			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
+			border:1px solid white; border-right:1px solid transparent;
+			padding:0px; margin:0px; }
+
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			 }
+			 tr.z-row td.z-row-inner { border: none; } 	
+		</style>
+		
+		
+		<div width="100%" height="100%">			
+			<div width="100%" style="background-color:black;color: white" height="40px">
+				<label value="Adicionales ARCLI" />
+				<!--  <div style="float: right">					
+					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+					onClick="@command('seleccionaProducto',win=winBusquedaEncargo)"/>		
+				</div> -->																			
+			</div>
+			
+			<div>
+				<grid>
+					<columns>
+						<column hflex="1" />
+						<column hflex="min" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Tipo de Armazón"/>
+							<combobox selectedItem="@bind(vm.ventaPedidoForm.tipo_armazon)">
+								<comboitem label="${c:l('venta.pedido.seleccione')}" value="0"/>
+								<comboitem label="${c:l('venta.pedido.tipoArmazon.c')}" value="C"/>
+								<comboitem label="${c:l('venta.pedido.tipoArmazon.a')}" value="A"/>
+								<comboitem label="${c:l('venta.pedido.tipoArmazon.s')}" value="S"/>
+								<comboitem label="${c:l('venta.pedido.tipoArmazon.p')}" value="P"/>
+								<comboitem label="${c:l('venta.pedido.tipoArmazon.n')}" value="N"/>
+							</combobox>
+						</row>
+						
+						<row>
+							<label value="Puente"/>
+							<textbox value="@bind(vm.ventaPedidoForm.puente)"/>
+						</row>
+						
+						<row>
+							<label value="Diagonal"/>
+							<textbox value="@bind(vm.ventaPedidoForm.diagonal)"/>
+						</row>
+						
+						<row>
+							<label value="Horizontal"/>
+							<textbox value="@bind(vm.ventaPedidoForm.horizontal)"/>
+						</row>
+						
+						<row>
+							<label value="Vertical"/>
+							<textbox value="@bind(vm.ventaPedidoForm.vertical)"/>
+						</row>
+						
+						<row>
+							<cell/>
+							<button label="enviar"/>
+						</row>
+						
+					</rows>
+				</grid>
+			</div>			
+		</div>
+
+
+</window>
+</zk>
