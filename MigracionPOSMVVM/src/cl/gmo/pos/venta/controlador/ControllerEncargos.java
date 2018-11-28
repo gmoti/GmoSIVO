@@ -33,6 +33,7 @@ import cl.gmo.pos.venta.controlador.ventaDirecta.BusquedaProductosDispatchAction
 import cl.gmo.pos.venta.controlador.ventaDirecta.DevolucionDispatchActions;
 import cl.gmo.pos.venta.controlador.ventaDirecta.VentaPedidoDispatchActions;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
+import cl.gmo.pos.venta.respuesta.RespuestaEncargos;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
@@ -683,6 +684,18 @@ public class ControllerEncargos implements Serializable {
 		}
 		
 		
+		//actualiza el grupo del la forma
+		int longitud = ventaPedidoForm.getListaProductos().size();
+		int i = 0;
+		String[] grupoAux = new String[longitud];
+		
+		for (ProductosBean pb : ventaPedidoForm.getListaProductos()) {			
+			grupoAux[i] = pb.getGrupo(); 
+			i++;
+		}
+		
+		ventaPedidoForm.setGrupo(grupoAux);	
+		
 		ventaPedidoForm.setAgente(agenteBean.getUsuario());			
 		ventaPedidoForm.setForma_pago(formaPagoBean.getId());
 		ventaPedidoForm.setIdioma(idiomaBean.getId());
@@ -702,13 +715,13 @@ public class ControllerEncargos implements Serializable {
 						
 		 				ventaPedidoForm.setAccion("ingresa_pedido");
 		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-		 				valGrabar=true;
+		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
 						
 					}else {
 						
 						ventaPedidoForm.setAccion("ingresa_pedido");
 		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-		 				valGrabar=true;
+		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
 					}		
 					
 					
@@ -738,7 +751,7 @@ public class ControllerEncargos implements Serializable {
 			 				
 			 				ventaPedidoForm.setAccion("ingresa_pedido");
 			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-			 				valGrabar=true;
+			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
 							break;
 						default:
 							
@@ -758,15 +771,16 @@ public class ControllerEncargos implements Serializable {
 					
 						try {
 							valtienda = ventaPedidoDispatchActions.validaTipoPedido(ventaPedidoForm, sess);
-						
+							
 						if (valtienda) {
 						
 							
 						}else {
 							
 			 				ventaPedidoForm.setAccion("ingresa_pedido");
-			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-			 				valGrabar=true;}
+			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			 				
+			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
+			 				}
 						
 						} catch (Exception e) {					
 							e.printStackTrace();
@@ -778,8 +792,7 @@ public class ControllerEncargos implements Serializable {
 		}	
 		
 		
-		if (valGrabar)
-		   Messagebox.show("Pedido Grabado");
+		
 		
 	}
 	
@@ -1228,6 +1241,27 @@ public class ControllerEncargos implements Serializable {
 			
 			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 			
+			//actualizar el grupo
+			/*int longitud = ventaPedidoForm.getListaProductos().size();
+			
+			if (longitud == 1) {
+				
+				String[] gr = new String[1];
+				gr[0] = arg.getGrupo();
+				ventaPedidoForm.setGrupo(gr);
+				
+			}else {		
+				
+				String[] grupo;
+				String[] grupoAux;
+				int tam=0;
+				
+				grupo = ventaPedidoForm.getGrupo();
+				grupoAux = new String[grupo.length + 1];
+				grupoAux[grupoAux.length -1]=arg.getGrupo();				
+			}	*/	
+			
+			
 			//valida segundo cristal
 			 if(seg_cristal && seg_arm.equals("2")){
 				 
@@ -1334,6 +1368,50 @@ public class ControllerEncargos implements Serializable {
 	        window.doModal();			
 			
 		}		
+		
+		//===============================================
+		//Clase manejadora de la respuesta de estados
+		//Simula las recarga de struts
+		int indice = ventaPedidoForm.getListaProductos().size();
+		ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
+		RespuestaEncargos.evaluaEstado(ventaPedidoForm);
+		
+	}
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@GlobalCommand
+	public void cargaAdicionalesArcli(@BindingParam("valores")String[] valores) {	
+		
+		try {
+			ventaPedidoForm.setTipo_armazon(valores[0]);
+			ventaPedidoForm.setPuente(valores[1]);
+			ventaPedidoForm.setDiagonal(valores[2]);
+			ventaPedidoForm.setHorizontal(valores[3]);
+			ventaPedidoForm.setVertical(valores[4]);
+			ventaPedidoForm.setAddProducto(valores[5]);
+			ventaPedidoForm.setAccion("agrega_adicionales_arcli");
+			
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}		
+		
+	}
+	
+	@Command
+	public void seleccionarAdicionalesARCLI(@BindingParam("indice")int indice) {
+		
+		ventaPedidoForm.setAddProducto(String.valueOf(indice));		
+		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();
+		objetos.put("ventaPedido", ventaPedidoForm);
+		
+		Window window = (Window)Executions.createComponents(
+                "/zul/encargos/AdicionalesArcli.zul", null, objetos);
+		
+        window.doModal();
+		
 	}
 	
 	
@@ -2220,7 +2298,7 @@ public class ControllerEncargos implements Serializable {
 		if(producto.getDescripcion().equals("")) {			
 			Messagebox.show("Debe ingresar una descripcion del producto para continuar");
 			descripcionFocus=true;
-			ventaPedidoForm.getListaProductos().get(index).setDescripcion("no es valido");
+			ventaPedidoForm.getListaProductos().get(index).setDescripcion("Agregar Descripcion");
 			return;
 		}else {			
 			

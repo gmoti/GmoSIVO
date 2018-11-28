@@ -1,14 +1,24 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
+import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.ExecutionParam;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.impl.BinderUtil;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.controlador.ventaDirecta.VentaPedidoDispatchActions;
+import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
 public class ControllerAdicionalesArcli implements Serializable {
@@ -21,24 +31,29 @@ public class ControllerAdicionalesArcli implements Serializable {
 	
 	
 	private VentaPedidoDispatchActions VentaPedidoDispatch;
-	private VentaPedidoForm ventaPedidoForm;
-	
+	private VentaPedidoForm ventaPedidoForm;	
 	
 	@Init
-	public void inicial() {
+	public void inicial(@ExecutionArgParam("ventaPedido")VentaPedidoForm ventaPedido) {
 		
-		ventaPedidoForm = new VentaPedidoForm();
+		ventaPedidoForm = ventaPedido;
 		VentaPedidoDispatch = new VentaPedidoDispatchActions();
 		
+		ventaPedidoForm.setTipo_armazon("0");
 		ventaPedidoForm.setPuente("0");
 		ventaPedidoForm.setDiagonal("0");
 		ventaPedidoForm.setHorizontal("0");
-		ventaPedidoForm.setVertical("0");
+		ventaPedidoForm.setVertical("0");	
+		
+		sess.setAttribute("indice", ventaPedidoForm.getAddProducto());		
+		
+		VentaPedidoDispatch.carga_adicionales_arcli(ventaPedidoForm, sess);
 	}
 	
 	
+	@NotifyChange({"ventaPedidoForm"})
 	@Command
-	public void enviar() {
+	public void enviar(@BindingParam("win")Window win) {
 		
 		int puente=0;
 		int diagonal=0;
@@ -86,15 +101,23 @@ public class ControllerAdicionalesArcli implements Serializable {
 				
 				if((horizontal > 25) && (horizontal < 100)) {
 					
-					if((vertical > 18) && (vertical < 70)) {
+					if((vertical > 18) && (vertical < 70)) {						
 						
-						/*returnVal = new Array(document.getElementById('armazon').value,
-								document.getElementById('puente').value,
-								document.getElementById('diagonal').value,
-								document.getElementById('horizontal').value,
-								document.getElementById('vertical').value,
-								document.getElementById('productoSeleccionado').value);	*/	
+						HashMap<String,Object> objetos = new HashMap<String,Object>();
+						String[] valores = new String[6];
 						
+						valores[0] = armazon;
+						valores[1] = String.valueOf(puente);
+						valores[2] = String.valueOf(diagonal);
+						valores[3] = String.valueOf(horizontal);
+						valores[4] = String.valueOf(vertical);						
+						valores[5] = sess.getAttribute("indice").toString();
+						
+						objetos.put("valores",valores);
+						
+						BindUtils.postGlobalCommand(null, null, "cargaAdicionalesArcli", objetos);
+						
+						win.detach();
 					
 					}else {					
 						Messagebox.show("Vertical: esta fuera del rango permitido");

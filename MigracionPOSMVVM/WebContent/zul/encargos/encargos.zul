@@ -304,19 +304,21 @@
 									<row>
 										<!-- Codigo de la grilla -->
 										<zk if="${each.tipoFamilia =='C'}">
-											<textbox value="@load(each.cod_barra)" width="150px" 											
+											<textbox value="@load(each.cod_barra)" width="150px" style="color: blue; text-decoration: underline;"											
 											onClick="@command('actualizaDetalles',arg=each)" 
 											tooltiptext="Click para ver detalles" readonly="true"/>											
 										</zk>
 										<zk if="${each.tipoFamilia !='C'}">
 											<zk if="${each.tipoFamilia =='L'}">
-												<textbox value="@load(each.cod_barra)" width="150px"
+												<textbox value="@load(each.cod_barra)" width="150px" style="color: blue; text-decoration: underline;"
+												onClick="@command('actualizaDetalles',arg=each)"
 												tooltiptext="Click para ver detalles" readonly="true"/>											
 											</zk>
 											
 											<zk if="${each.tipoFamilia !='L'}">
 												<zk if="${each.cod_barra =='ARCLI'}">
-													<textbox value="@load(each.cod_barra)" width="150px"
+													<textbox value="@load(each.cod_barra)" width="150px" style="color: blue; text-decoration: underline;"
+													onClick="@command('seleccionarAdicionalesARCLI',indice=forEachStatus.index)"
 													tooltiptext="Click para ver detalles" readonly="true"/>											
 												</zk>
 											
@@ -383,17 +385,17 @@
 													
 										<!-- Grupo de la grilla -->			
 										<zk if="${each.familia == 'MUL'}">
-											<textbox value="@load(each.grupo)" width="60px" style="text-align:right" readonly="true"/>
+											<textbox value="@bind(each.grupo)" width="60px" style="text-align:right" readonly="true"/>
 										</zk>
 										
 										<zk if="${each.familia != 'MUL'}">
 											<zk if="${each.tiene_grupo =='true'}">
-												<textbox value="@load(each.grupo)" width="60px" style="text-align:right"  
+												<textbox value="@bind(each.grupo)" width="60px" style="text-align:right"  
 													onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>
 											</zk>
 											
 											<zk if="${each.tiene_grupo !='true'}">
-												<textbox value="@load(each.grupo)" width="60px" style="text-align:right" readonly="true"/>
+												<textbox value="@bind(each.grupo)" width="60px" style="text-align:right" readonly="true"/>
 											</zk>
 										</zk>
 										<!-- Fin Grupo de la grilla -->

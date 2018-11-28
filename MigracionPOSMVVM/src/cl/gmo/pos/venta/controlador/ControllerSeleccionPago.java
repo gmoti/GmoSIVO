@@ -150,6 +150,14 @@ public class ControllerSeleccionPago implements Serializable{
 	 	int dent = 0;
 	 	String tmp;
 	 	
+	 	Optional<String> con = Optional.ofNullable(convenio);
+	 	Optional<String> isa = Optional.ofNullable(isapre);
+	 	
+	 	convenio = con.orElse("");
+	 	isapre = isa.orElse("");
+	 	
+	 	if (seleccionPagoForm.getListaPagos() == null)
+	 		seleccionPagoForm.setListaPagos(new ArrayList<PagoBean>());
 	 	
 	 	for(PagoBean pb : seleccionPagoForm.getListaPagos()) {	 		
 	 		if (pb.getForma_pago().equals("GRPON") || pb.getForma_pago().equals("ISAPR")) 
@@ -174,98 +182,117 @@ public class ControllerSeleccionPago implements Serializable{
 	 	
 	 	if (paso_grp != 1) {
 	 		
-	 		//if($j.cookie("convenio") != "sdg"){
+	 	    if($j.cookie("convenio") != "sdg"){
 	 		
-	 		if(convenio.equals("50368") || 
-	 				convenio.equals("50369") || 
-	 				convenio.equals("50472") || 
-	 				convenio.equals("50473") || 
-	 				convenio.equals("50474") ){
-	 			
-	 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-	 			
-	 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
-	 				if(!fpb.getId().equals("GRPON") && !fpb.getId().equals("0")) {
-	 					aux.remove(fpb);
-	 					tmp ="paso";
-	 				}	 				
-	 			}
-	 			
-	 			sess.setAttribute("convenio", "sdg");			  
-				  
-			 }else{
-			 	//borra_grpn();
-			 }
-	 		
-	 		if(convenio.equals("51001") || convenio.equals("51002")){	 			
-	 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-	 			
-	 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
-	 				if(!fpb.getId().equals("OA") && !fpb.getId().equals("0")) {
-	 					aux.remove(fpb);
-	 					tmp ="paso";
-	 				}	 				
-	 			}				  
-				sess.setAttribute("convenio", "sdg");	
-			 }	
-	 		
-	 		if(convenio.equals("50472")){
-				//$j("#sumaPagar").val("80000").attr("readonly",true);
-				seleccionPagoForm.setV_a_pagar(80000);
-			 }
-	 		
-			 if(convenio.equals("50473")){
-				//$j("#sumaPagar").val("120000").attr("readonly",true);
-				 seleccionPagoForm.setV_a_pagar(120000);
-			 }
-			 if(convenio.equals("50474")){
-				//$j("#sumaPagar").val("160000").attr("readonly",true);
-				 seleccionPagoForm.setV_a_pagar(160000);
-			 }
-			 if(convenio.equals("50368")){
-				//$j("#sumaPagar").val("30000").attr("readonly",true);
-				 seleccionPagoForm.setV_a_pagar(30000);
-			 }
-			 if(convenio.equals("50369")){
-				//$j("#sumaPagar").val("15000").attr("readonly",true);
-				 seleccionPagoForm.setV_a_pagar(15000);
-			 }	
-	 			
-			 /*if(convenio.equals("51001")){
-				 seleccionPagoForm.setV_total_parcial(v_total_parcial);
-				 
-					$j("#sumaParcial").val("41650").attr("readonly",true);
-					$j("#sumaPagar").val("41650").attr("readonly",true);
-					$j("#diferencia").val("41650").attr("readonly",true);
-					$j("#v_total").val("41650").attr("readonly",true);
-					$j("#diferencia_total").val("41650").attr("readonly",true);
+		 		if(convenio.equals("50368") || 
+		 				convenio.equals("50369") || 
+		 				convenio.equals("50472") || 
+		 				convenio.equals("50473") || 
+		 				convenio.equals("50474") ){
+		 			
+		 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
+		 			
+		 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+		 				if(!fpb.getId().equals("GRPON") && !fpb.getId().equals("0")) {
+		 					aux.remove(fpb);
+		 					tmp ="paso";
+		 				}	 				
+		 			}
+		 			
+		 			sess.setAttribute("convenio", "sdg");			  
+					  
+				 }else{
+				 	//borra_grpn();
 				 }
-			 
-			 if(convenio.equals("51002")){					
-					$j("#sumaParcial").val("83300").attr("readonly",true);
-					$j("#sumaPagar").val("83300").attr("readonly",true);
-					$j("#diferencia").val("83300").attr("readonly",true);
-					$j("#v_total").val("83300").attr("readonly",true);
-					$j("#diferencia_total").val("83300").attr("readonly",true);
-				 }	*/
-	 			
-	 			
-	 			
-	 			
-	 		//}else{
-			//	borra_grpn();
-			//}
 	 		
+		 		if(convenio.equals("51001") || convenio.equals("51002")){	 			
+		 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
+		 			
+		 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+		 				if(!fpb.getId().equals("OA") && !fpb.getId().equals("0")) {
+		 					aux.remove(fpb);
+		 					tmp ="paso";
+		 				}	 				
+		 			}				  
+					sess.setAttribute("convenio", "sdg");	
+				 }	
 	 		
-	 	}
-	 	
-	 	
-	 	
-		
-		
-		
-		
+		 		if(convenio.equals("50472")){
+					//$j("#sumaPagar").val("80000").attr("readonly",true);
+					seleccionPagoForm.setV_a_pagar(80000);
+				 }
+		 		
+				 if(convenio.equals("50473")){
+					//$j("#sumaPagar").val("120000").attr("readonly",true);
+					 seleccionPagoForm.setV_a_pagar(120000);
+				 }
+				 if(convenio.equals("50474")){
+					//$j("#sumaPagar").val("160000").attr("readonly",true);
+					 seleccionPagoForm.setV_a_pagar(160000);
+				 }
+				 if(convenio.equals("50368")){
+					//$j("#sumaPagar").val("30000").attr("readonly",true);
+					 seleccionPagoForm.setV_a_pagar(30000);
+				 }
+				 if(convenio.equals("50369")){
+					//$j("#sumaPagar").val("15000").attr("readonly",true);
+					 seleccionPagoForm.setV_a_pagar(15000);
+				 }	
+	 			
+				 /*if(convenio.equals("51001")){
+					 seleccionPagoForm.setV_total_parcial(v_total_parcial);
+					 
+						$j("#sumaParcial").val("41650").attr("readonly",true);
+						$j("#sumaPagar").val("41650").attr("readonly",true);
+						$j("#diferencia").val("41650").attr("readonly",true);
+						$j("#v_total").val("41650").attr("readonly",true);
+						$j("#diferencia_total").val("41650").attr("readonly",true);
+					 }
+				 
+				 if(convenio.equals("51002")){					
+						$j("#sumaParcial").val("83300").attr("readonly",true);
+						$j("#sumaPagar").val("83300").attr("readonly",true);
+						$j("#diferencia").val("83300").attr("readonly",true);
+						$j("#v_total").val("83300").attr("readonly",true);
+						$j("#diferencia_total").val("83300").attr("readonly",true);
+					 }	*/
+	 			
+				// CRUZ BLANCA
+				 // 20141203 - SE MODIFICA A PETICION DE PAULO BARRERA.
+				 if($j("#tiene_doc").val()=="false"){
+				 		 if(tipoconvenio =="S"){  
+				 		 	  $j("#crb_input").css("display","block");	
+							  $j("#forma_pago option").each(function(i){
+							  		if($j(this).val() !="ISAPR" && $j(this).val() !="EXCED" && $j(this).val() !="0"){						  		   
+							  			$j(this).attr("disabled","disabled");
+							  		}
+							  });
+							  $j.cookie('convenio','sdg');
+						  }else{
+						  	 $j("#forma_pago option").each(function(i){
+							  		if($j(this).val() =="ISAPR" || $j(this).val() =="EXCED"){						  		   
+							  			$j(this).attr("disabled","disabled");
+							  		}
+							  });
+						  }
+				 }else{
+				 		borra_crb();		 		
+				 		
+				 }	
+	 			
+	 			
+	 	      }	 //cookie("convenio") != "sdg"				 
+				 
+	 		}else{//paso_grp != 1
+				borra_grpn();
+			}	 	
 	} 
+	
+	
+	
+	
+	
+	
 
 	
 	@NotifyChange({"seleccionPagoForm","formaPagoBean"})
