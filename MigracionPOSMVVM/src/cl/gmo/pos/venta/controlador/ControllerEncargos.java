@@ -2220,6 +2220,7 @@ public class ControllerEncargos implements Serializable {
 		if(producto.getDescripcion().equals("")) {			
 			Messagebox.show("Debe ingresar una descripcion del producto para continuar");
 			descripcionFocus=true;
+			ventaPedidoForm.getListaProductos().get(index).setDescripcion("no es valido");
 			return;
 		}else {			
 			

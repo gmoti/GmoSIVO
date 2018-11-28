@@ -31,6 +31,21 @@
 			 		border: none; 
 			 }		 
 		</style>
+		
+		<script><![CDATA[
+        function emptyDescripcion(cadena) {
+            var valLabel = zk.$('$'+cadena.id);            
+            
+            if (cadena.getValue().trim() == "") {    
+            	
+            	alert("seleccion no puede estar en blanco");
+            	valLabel.$n().value="ARMAZON CLIENTE";
+            	valLabel.$n().focus();
+            }   
+        }
+        
+    ]]></script>
+	
 
 	<div width="100%" height="100%">
 		<borderlayout vflex="min">
@@ -317,8 +332,12 @@
 										<zk if="${each.descripcion_manual !='true'}">
 											<textbox value="@bind(each.descripcion)" width="330px" readonly="true"/>
 										</zk>
-										<zk if="${each.descripcion_manual =='true'}">											
-											<textbox value="@bind(each.descripcion)" width="330px" readonly="false" onBlur="@command('actualiza_descripcion',index=forEachStatus.index,producto=each)" focus="@bind('descripcionFocus')"/>																							
+										<zk if="${each.descripcion_manual =='true'}">	
+																				
+											<textbox id="textbox${forEachStatus.index}" value="@bind(each.descripcion)" xmlns:w="client"
+											width="330px" readonly="false" 
+											onBlur="@command('actualiza_descripcion',index=forEachStatus.index,producto=each)" />
+											<!--  w:onBlur="emptyDescripcion(this)"/>	-->																						
 											
 										</zk>										
 										<!-- Fin Descripcion de la grilla -->
