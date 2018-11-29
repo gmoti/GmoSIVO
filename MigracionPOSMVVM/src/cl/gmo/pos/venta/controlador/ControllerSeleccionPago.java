@@ -182,7 +182,7 @@ public class ControllerSeleccionPago implements Serializable{
 	 	
 	 	if (paso_grp != 1) {
 	 		
-	 	    if($j.cookie("convenio") != "sdg"){
+	 	    if(!sess.getAttribute("convenio").equals("sdg")){
 	 		
 		 		if(convenio.equals("50368") || 
 		 				convenio.equals("50369") || 
@@ -198,7 +198,7 @@ public class ControllerSeleccionPago implements Serializable{
 		 					tmp ="paso";
 		 				}	 				
 		 			}
-		 			
+		 			seleccionPagoForm.setListaFormasPago(aux);
 		 			sess.setAttribute("convenio", "sdg");			  
 					  
 				 }else{
@@ -214,6 +214,8 @@ public class ControllerSeleccionPago implements Serializable{
 		 					tmp ="paso";
 		 				}	 				
 		 			}				  
+		 			
+		 			seleccionPagoForm.setListaFormasPago(aux);
 					sess.setAttribute("convenio", "sdg");	
 				 }	
 	 		
@@ -257,40 +259,81 @@ public class ControllerSeleccionPago implements Serializable{
 						$j("#diferencia_total").val("83300").attr("readonly",true);
 					 }	*/
 	 			
-				// CRUZ BLANCA
+				 // CRUZ BLANCA
 				 // 20141203 - SE MODIFICA A PETICION DE PAULO BARRERA.
-				 if($j("#tiene_doc").val()=="false"){
-				 		 if(tipoconvenio =="S"){  
-				 		 	  $j("#crb_input").css("display","block");	
-							  $j("#forma_pago option").each(function(i){
-							  		if($j(this).val() !="ISAPR" && $j(this).val() !="EXCED" && $j(this).val() !="0"){						  		   
-							  			$j(this).attr("disabled","disabled");
-							  		}
-							  });
-							  $j.cookie('convenio','sdg');
-						  }else{
-						  	 $j("#forma_pago option").each(function(i){
-							  		if($j(this).val() =="ISAPR" || $j(this).val() =="EXCED"){						  		   
-							  			$j(this).attr("disabled","disabled");
-							  		}
-							  });
-						  }
+				 if (seleccionPagoForm.getTiene_documentos().equals("false")){
+					 if(isapre.equals("S")){
+						 //$j("#crb_input").css("display","block");
+						ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
+				 			
+			 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+			 				if(!fpb.getId().equals("ISAPR") && !fpb.getId().equals("EXCED") && !fpb.getId().equals("0")) {
+			 					aux.remove(fpb);			 					
+			 				}	 				
+			 			}
+			 			
+			 			seleccionPagoForm.setListaFormasPago(aux); 		
+			 			
+					 }else{
+						 
+						ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
+				 			
+			 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+			 				if(fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED")) {
+			 					aux.remove(fpb);			 					
+			 				}	 				
+			 			}
+			 			
+			 			seleccionPagoForm.setListaFormasPago(aux); 
+					 }					 
+					 
 				 }else{
 				 		borra_crb();		 		
 				 		
-				 }	
-	 			
+				 }
 	 			
 	 	      }	 //cookie("convenio") != "sdg"				 
 				 
 	 		}else{//paso_grp != 1
 				borra_grpn();
-			}	 	
-	} 
+			}
+	 	
+	} //fin metodo principal
 	
 	
+	private void borra_grpn(){
+		
+		ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
+			
+		for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+			if(fpb.getId().equals("GRPON")) {
+				aux.remove(fpb);			 					
+			}	 				
+		}
+			
+		seleccionPagoForm.setListaFormasPago(aux);		
+	}
 	
-	
+	//GROUPON 
+	private void borra_crb(){
+		//$j.cookie("crb","crb_2");
+		
+		String alb = seleccionPagoForm.getOrigen();
+		
+		if(alb.toLowerCase().indexOf("albaran") < 0){
+			
+			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
+			
+			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+				if(fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED")) {
+					aux.remove(fpb);			 					
+				}	 				
+			}
+				
+			seleccionPagoForm.setListaFormasPago(aux);
+			
+		}	
+	}
 	
 	
 
