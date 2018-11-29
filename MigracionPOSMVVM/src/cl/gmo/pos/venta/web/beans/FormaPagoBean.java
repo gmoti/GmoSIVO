@@ -13,11 +13,13 @@ public class FormaPagoBean {
     private String id;
     private String descripcion;
     private String texto;
+    private boolean activo;
     
     public FormaPagoBean() {
     	this.id="";
     	this.descripcion="";
     	this.texto="";
+    	this.activo=false;
     }    
 
     public String getTexto() {
@@ -43,6 +45,16 @@ public class FormaPagoBean {
     public String getId() {
         return id;
     }
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+    
+    
     
     
     

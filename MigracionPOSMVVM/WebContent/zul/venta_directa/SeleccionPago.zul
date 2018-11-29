@@ -143,7 +143,7 @@
 	     							<row>
 	     								<label value="Valor a pagar" />
 	     								<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)"
-	     									onOK="@command('validaPago')"
+	     									onOK="@command('validaPago')" focus="true" readonly="@bind(vm.pagarReadOnly)"
 	     									width="100px" style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
 	     									
 	     								<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
@@ -225,16 +225,20 @@
 		     								<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 
 		     										width="230px" selectedItem="@bind(vm.formaPagoBean)" placeholder="Selecciona forma pago">     								
 			     								<template name='model'>
-			     									<comboitem label="@load(each.descripcion)"/>  
+			     									<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
+				     									<attribute name="style" if="${each.activo==true}">
+															color: RED;
+														</attribute>  
+													</comboitem>	
 			     								</template>	   									
 		     								</combobox>
 		     							</cell>	
 		     							<cell/>	
 		     							<cell/>	
 	     							</row>
-	     							<row>	     							
+	     							<row visible="@bind(vm.isapreVisible)">	     							
 		     							<label value="N° Doc Isapre"/>
-		     							<textbox value="@bind(vm.seleccionPagoForm.n_isapre)"  width="100px" readonly="true"/>
+		     							<textbox value="@bind(vm.seleccionPagoForm.n_isapre)"  width="100px"/>
 		     							<cell/>	
 		     							<cell/>	
 	     							</row>

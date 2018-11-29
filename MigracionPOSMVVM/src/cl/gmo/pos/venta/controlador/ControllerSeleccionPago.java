@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
-
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -58,16 +57,19 @@ public class ControllerSeleccionPago implements Serializable{
 	private BeanControlBotones controlBotones;
 	
 	private Window ventanaActual= new Window();
+	private boolean isapreVisible=false;
+	private boolean pagarReadOnly=false;
+	
 	
 	@Init
 	public void inicio(@ExecutionArgParam("cliente")ClienteBean arg,
 					   @ExecutionArgParam("pagoForm")SeleccionPagoForm arg2,
 					   @ExecutionArgParam("ventaOrigenForm")Object arg3,
-					   @ExecutionArgParam("origen")String arg4) {	
+					   @ExecutionArgParam("origen")String arg4) {			
 		
-		
-		String convenio;
-		String isapre;		
+		String convenio="";
+		String isapre="";		
+		ArrayList<ProductosBean> listaProductos= new ArrayList<ProductosBean>();
 		
 		cliente             = null;		
 		seleccionPagoForm 	= null;
@@ -84,7 +86,8 @@ public class ControllerSeleccionPago implements Serializable{
 		seleccionPagoForm = (SeleccionPagoForm)arg2;
 		origen            = (String)arg4;
 		
-		controlBotones.setEnableGenerico1("false");
+		controlBotones.setEnableGenerico1("false");		
+		
 		
 		if (arg3 instanceof VentaPedidoForm) { 
 			ventaPedidoForm = (VentaPedidoForm)arg3;
@@ -102,9 +105,9 @@ public class ControllerSeleccionPago implements Serializable{
 			/* =============================== */
 			convenio = ventaPedidoForm.getConvenio();
 			isapre   = ventaPedidoForm.getIsapre();
-			ArrayList<ProductosBean> listaProductos = ventaPedidoForm.getListaProductos();
+			listaProductos = ventaPedidoForm.getListaProductos();
 			
-			postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);
+			//postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);
 		}
 		
 		if (arg3 instanceof VentaDirectaForm) { 
@@ -138,17 +141,21 @@ public class ControllerSeleccionPago implements Serializable{
 		this.setDiferencia_total(seleccionPagoForm.getDiferencia());		
 		seleccionPagoForm.setV_a_pagar(0);	
 		
-		
-		
-		
+		if (arg3 instanceof VentaPedidoForm) {		
+			
+			postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);
+	
+		}
 	}
 	
-	private void postCarga(String convenio, String isapre, Integer diferencia, ArrayList<ProductosBean> listaProductos) {		
+	@NotifyChange({"seleccionPagoForm"})
+	public void postCarga(String convenio, String isapre, Integer diferencia, ArrayList<ProductosBean> listaProductos) {		
 		
 		int paso_grp = 0;
 	 	int cont = 0;
 	 	int dent = 0;
 	 	String tmp;
+	 	int i=0;
 	 	
 	 	Optional<String> con = Optional.ofNullable(convenio);
 	 	Optional<String> isa = Optional.ofNullable(isapre);
@@ -165,17 +172,16 @@ public class ControllerSeleccionPago implements Serializable{
 	 	}
 	 	
 	 	for(ProductosBean pb : listaProductos) {	 		
-	 		if (pb.getFamilia().equals("DES")){
+	 		if (pb.getFamilia().equals("DES")){	 			
 	 			
-	 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-	 			
-	 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+	 			i=0;
+	 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {	 			
 	 				if(fpb.getId().equals("GAR") || fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED") || fpb.getId().equals("CRB")) {
-	 					aux.remove(fpb);
-	 				}	 				
-	 			}	 			
-	 			
-	 			seleccionPagoForm.setListaFormasPago(aux);
+	 					fpb.setActivo(true);
+	 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+	 				}
+	 				i++;
+	 			} 			
 	 		}	 		
 	 	}
 	 	
@@ -189,102 +195,117 @@ public class ControllerSeleccionPago implements Serializable{
 		 				convenio.equals("50472") || 
 		 				convenio.equals("50473") || 
 		 				convenio.equals("50474") ){
-		 			
-		 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-		 			
+		 			i=0;
 		 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
 		 				if(!fpb.getId().equals("GRPON") && !fpb.getId().equals("0")) {
-		 					aux.remove(fpb);
-		 					tmp ="paso";
-		 				}	 				
-		 			}
-		 			seleccionPagoForm.setListaFormasPago(aux);
+		 					fpb.setActivo(true);
+		 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+		 				}	
+		 				i++;
+		 			} 		 			
+		 			
 		 			sess.setAttribute("convenio", "sdg");			  
 					  
 				 }else{
-				 	//borra_grpn();
+				 	borra_grpn();
 				 }
 	 		
-		 		if(convenio.equals("51001") || convenio.equals("51002")){	 			
-		 			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-		 			
+		 		if(convenio.equals("51001") || convenio.equals("51002")){
+		 			i=0;
 		 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
 		 				if(!fpb.getId().equals("OA") && !fpb.getId().equals("0")) {
-		 					aux.remove(fpb);
-		 					tmp ="paso";
-		 				}	 				
-		 			}				  
+		 					fpb.setActivo(true);
+		 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+		 				}	
+		 				i++;
+		 			} 	 			
 		 			
-		 			seleccionPagoForm.setListaFormasPago(aux);
 					sess.setAttribute("convenio", "sdg");	
 				 }	
 	 		
 		 		if(convenio.equals("50472")){
 					//$j("#sumaPagar").val("80000").attr("readonly",true);
 					seleccionPagoForm.setV_a_pagar(80000);
+					pagarReadOnly=true;
 				 }
 		 		
 				 if(convenio.equals("50473")){
 					//$j("#sumaPagar").val("120000").attr("readonly",true);
 					 seleccionPagoForm.setV_a_pagar(120000);
+					 pagarReadOnly=true;
 				 }
 				 if(convenio.equals("50474")){
 					//$j("#sumaPagar").val("160000").attr("readonly",true);
 					 seleccionPagoForm.setV_a_pagar(160000);
+					 pagarReadOnly=true;
 				 }
 				 if(convenio.equals("50368")){
 					//$j("#sumaPagar").val("30000").attr("readonly",true);
 					 seleccionPagoForm.setV_a_pagar(30000);
+					 pagarReadOnly=true;
 				 }
 				 if(convenio.equals("50369")){
 					//$j("#sumaPagar").val("15000").attr("readonly",true);
 					 seleccionPagoForm.setV_a_pagar(15000);
+					 pagarReadOnly=true;
 				 }	
 	 			
-				 /*if(convenio.equals("51001")){
-					 seleccionPagoForm.setV_total_parcial(v_total_parcial);
+				 if(convenio.equals("51001")){
 					 
-						$j("#sumaParcial").val("41650").attr("readonly",true);
-						$j("#sumaPagar").val("41650").attr("readonly",true);
-						$j("#diferencia").val("41650").attr("readonly",true);
-						$j("#v_total").val("41650").attr("readonly",true);
-						$j("#diferencia_total").val("41650").attr("readonly",true);
-					 }
+					 seleccionPagoForm.setV_total_parcial(41650); 
+					 seleccionPagoForm.setV_a_pagar(41650);
+					 seleccionPagoForm.setDiferencia(41650);
+					 seleccionPagoForm.setV_total(41650);
+					 seleccionPagoForm.setDiferencia(41650);
+					 pagarReadOnly=true;
+					 
+					/*$j("#sumaParcial").val("41650").attr("readonly",true);
+					$j("#sumaPagar").val("41650").attr("readonly",true);
+					$j("#diferencia").val("41650").attr("readonly",true);
+					$j("#v_total").val("41650").attr("readonly",true);
+					$j("#diferencia_total").val("41650").attr("readonly",true);*/
+					}
 				 
-				 if(convenio.equals("51002")){					
-						$j("#sumaParcial").val("83300").attr("readonly",true);
-						$j("#sumaPagar").val("83300").attr("readonly",true);
-						$j("#diferencia").val("83300").attr("readonly",true);
-						$j("#v_total").val("83300").attr("readonly",true);
-						$j("#diferencia_total").val("83300").attr("readonly",true);
-					 }	*/
+				 if(convenio.equals("51002")){	
+					 
+					 seleccionPagoForm.setV_total_parcial(83300); 
+					 seleccionPagoForm.setV_a_pagar(83300);
+					 seleccionPagoForm.setDiferencia(83300);
+					 seleccionPagoForm.setV_total(83300);
+					 seleccionPagoForm.setDiferencia(83300);	
+					 pagarReadOnly=true;
+					 
+					/*$j("#sumaParcial").val("83300").attr("readonly",true);
+					$j("#sumaPagar").val("83300").attr("readonly",true);
+					$j("#diferencia").val("83300").attr("readonly",true);
+					$j("#v_total").val("83300").attr("readonly",true);
+					$j("#diferencia_total").val("83300").attr("readonly",true);*/
+				 	}
 	 			
 				 // CRUZ BLANCA
 				 // 20141203 - SE MODIFICA A PETICION DE PAULO BARRERA.
 				 if (seleccionPagoForm.getTiene_documentos().equals("false")){
 					 if(isapre.equals("S")){
-						 //$j("#crb_input").css("display","block");
-						ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-				 			
-			 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
-			 				if(!fpb.getId().equals("ISAPR") && !fpb.getId().equals("EXCED") && !fpb.getId().equals("0")) {
-			 					aux.remove(fpb);			 					
-			 				}	 				
-			 			}
-			 			
-			 			seleccionPagoForm.setListaFormasPago(aux); 		
-			 			
-					 }else{
+						 isapreVisible=true;
+						 i=0;
+						 for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+							 if(!fpb.getId().equals("ISAPR") && !fpb.getId().equals("EXCED") && !fpb.getId().equals("0")) {
+				 					fpb.setActivo(true);
+				 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+				 			}
+							i++; 
+				 		 } 
 						 
-						ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-				 			
-			 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
-			 				if(fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED")) {
-			 					aux.remove(fpb);			 					
-			 				}	 				
-			 			}
-			 			
-			 			seleccionPagoForm.setListaFormasPago(aux); 
+					 }else{
+						 i=0;
+						 for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+							 if(fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED")) {
+				 					fpb.setActivo(true);
+				 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+				 			 }	
+							 i++;
+				 		 } 			 
+						
 					 }					 
 					 
 				 }else{
@@ -298,40 +319,80 @@ public class ControllerSeleccionPago implements Serializable{
 				borra_grpn();
 			}
 	 	
+	 	
+	 	//valida doc convenio cruz blanca
+	 	if (seleccionPagoForm.getTiene_documentos().equals("false")) {
+	 		
+	 		if(isapre.equals("S")) {
+	 			isapreVisible=true;
+	 			i=0;
+	 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+	 				if(!fpb.getId().equals("ISAPR") && !fpb.getId().equals("EXCED") && !fpb.getId().equals("0")) {
+		 					fpb.setActivo(true);
+		 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+		 			}
+	 				i++;
+		 		 } 		
+	 			
+	 		}else {
+	 			i=0;
+	 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
+	 				if(fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED")) {
+		 					fpb.setActivo(true);
+		 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+		 			}
+	 				i++;
+		 		 }  			
+	 						
+	 		}
+	 	}else{
+	 		borra_crb();		 		
+	 		
+	 	}
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
+	 	
 	} //fin metodo principal
 	
 	
-	private void borra_grpn(){
-		
-		ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-			
+	public void borra_grpn(){
+		int i=0;
 		for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
 			if(fpb.getId().equals("GRPON")) {
-				aux.remove(fpb);			 					
-			}	 				
-		}
-			
-		seleccionPagoForm.setListaFormasPago(aux);		
+ 					fpb.setActivo(true);
+ 					seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+ 			}
+			i++;
+ 		 } 		
 	}
 	
 	//GROUPON 
-	private void borra_crb(){
+	public void borra_crb(){
 		//$j.cookie("crb","crb_2");
-		
 		String alb = seleccionPagoForm.getOrigen();
 		
 		if(alb.toLowerCase().indexOf("albaran") < 0){
-			
-			ArrayList<FormaPagoBean> aux = seleccionPagoForm.getListaFormasPago();
-			
+			int i=0;
 			for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {
 				if(fpb.getId().equals("ISAPR") || fpb.getId().equals("EXCED")) {
-					aux.remove(fpb);			 					
-				}	 				
-			}
-				
-			seleccionPagoForm.setListaFormasPago(aux);
-			
+	 					fpb.setActivo(true);
+	 			}
+				i++;
+	 		 } 			
 		}	
 	}
 	
@@ -877,5 +938,24 @@ public class ControllerSeleccionPago implements Serializable{
 	public void setSumaTotal(Integer sumaTotal) {
 		this.sumaTotal = sumaTotal;
 	}
+
+	public boolean isIsapreVisible() {
+		return isapreVisible;
+	}
+
+	public void setIsapreVisible(boolean isapreVisible) {
+		this.isapreVisible = isapreVisible;
+	}
+
+	public boolean isPagarReadOnly() {
+		return pagarReadOnly;
+	}
+
+	public void setPagarReadOnly(boolean pagarReadOnly) {
+		this.pagarReadOnly = pagarReadOnly;
+	}
+	
+	
+
 	
 }
