@@ -109,8 +109,11 @@ public class ControllerVentaDirecta implements Serializable{
 		ventaDirectaForm = new VentaDirectaForm();
 		
 		ventaDirectaAccion.carga(ventaDirectaForm, sess);
-		ventaDirectaAccion.cargaCaja(ventaDirectaForm, sess);
+		ventaDirectaAccion.cargaCaja(ventaDirectaForm, sess);	
 		
+		Optional<CajaBean> cb = ventaDirectaForm.getListaCajas().stream().findFirst();
+		
+		cajaBean = cb.get();
 	}
 	
 	
@@ -148,7 +151,9 @@ public class ControllerVentaDirecta implements Serializable{
 		if (!bWin) {
 			wBusqueda.detach();
 			bWin=true;
-		}		
+		}	
+		
+		return;
 	}
 	
 	
@@ -307,6 +312,9 @@ public class ControllerVentaDirecta implements Serializable{
 		        window.doModal();	
 		        
 		        this.nuevaVenta();
+		        controlBotones.setEnableGenerico1("false");
+		        controlBotones.setEnableGenerico2("true");
+		        
 		        //BindUtils.postGlobalCommand(null, null, "nuevaVenta", null);
 		        
 				
@@ -531,6 +539,14 @@ public class ControllerVentaDirecta implements Serializable{
 	@NotifyChange({"controlBotones","ventaDirectaForm"})	
 	@Command
 	public void seleccionaCaja() {
+		
+		Optional<String> ab = Optional.ofNullable(agenteBean.getUsuario()) ;
+		
+		if (!ab.isPresent() || ab.get().equals("")) {
+			Messagebox.show("Debe seleccionar un cajero");
+			return;
+		}
+		
 		
 		controlBotones.setEnableGenerico1("true");
 		controlBotones.setEnableGenerico2("false");

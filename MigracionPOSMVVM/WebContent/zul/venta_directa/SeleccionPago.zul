@@ -86,9 +86,11 @@
 			
 			<div width="100%" height="15%" style="background-color:black;color: white">
 				<label value="Cobro" />
-				<div style="float: right">					
+				<div style="float: right">	
+								
 					<toolbarbutton image="/iconos/save.png" sclass="shrink24" 
 							onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
+							
      				<toolbarbutton image="/iconos/printer.png" 
      						onClick="@command('generaBoleta')" sclass="shrink24" 
      						disabled="@bind(vm.seleccionPagoForm.origen eq 'ALBARAN_DEVOLUCION'?'true':'false')"/>	

@@ -177,6 +177,7 @@
 									  <template name="model">
 										<comboitem label="@load(each.descripcion)"/>
 									  </template>	
+									  
 									</combobox>
 								
 									<label value="Agente" />	
@@ -221,7 +222,7 @@
 											  width="180px" placeholder="Seleccione"
 											  selectedItem="@bind(vm.promocionBean)"
 											  onRightClick="@command('comboSetNull',objetoBean=vm.promocionBean)"
-											  readonly="@bind(vm.beanControlCombos.comboPromoEnable)">
+											  disabled="@bind(vm.beanControlCombos.comboPromoEnable)">
 									  <template name="model">
 										<comboitem label="@load(each.descripcion)" />
 									  </template>

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.log4j.Logger;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -38,6 +41,7 @@ import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.DivisaBean;
+import cl.gmo.pos.venta.web.beans.FamiliaBean;
 import cl.gmo.pos.venta.web.beans.FichaTecnicaBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
 import cl.gmo.pos.venta.web.beans.GraduacionesBean;
@@ -206,7 +210,8 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoDispatchActions.IngresaVentaPedidoGraduacion(ventaPedidoForm, sess);
 			
 		}
-				
+		
+		creaItemSelecciona();		
 		posicionCombo();		
 		
 		//inicializo descuento
@@ -252,6 +257,7 @@ public class ControllerEncargos implements Serializable {
 		beanControlBotones.setEnableGrid("true");
 		beanControlBotones.setEnableMulti("true");
 		
+		creaItemSelecciona();
 		posicionCombo();
 		
 		if (!bWin) {
@@ -1569,7 +1575,8 @@ public class ControllerEncargos implements Serializable {
 		
 		String divisa="PESO";
 		String idioma="CAST";
-		String formaPago="1";		
+		String formaPago="1";	
+		String cero="0";
 		
 		Optional<DivisaBean> b = ventaPedidoForm.getListaDivisas().stream().filter(s -> divisa.equals(s.getId())).findFirst();
 		divisaBean = b.get();		
@@ -1580,18 +1587,17 @@ public class ControllerEncargos implements Serializable {
 		Optional<FormaPagoBean> e = ventaPedidoForm.getListaFormasPago().stream().filter(s -> formaPago.equals(s.getId())).findFirst();
 		formaPagoBean = e.get();	
 		
-		/*Optional<String> usuario = Optional.ofNullable(ventaPedidoForm.getAgente());
 		
-		if(usuario.isPresent()) {
-			Optional<AgenteBean> a = ventaPedidoForm.getListaAgentes().stream().filter(s -> ventaPedidoForm.getAgente().equals(s.getUsuario())).findFirst();		
-			agenteBean = a.get();
-		}else {
-			agenteBean = null;
-		}		
-		*/
-		agenteBean=new AgenteBean();		
-		tipoPedidoBean=null;
-		promocionBean=null;
+		
+		Optional<AgenteBean> a = ventaPedidoForm.getListaAgentes().stream().filter(s -> "Seleccione".equals(s.getUsuario())).findFirst();
+		agenteBean = a.get();
+		
+		Optional<TipoPedidoBean> c = ventaPedidoForm.getListaTiposPedidos().stream().filter(s -> cero.equals(s.getCodigo())).findFirst();
+		tipoPedidoBean = c.get();
+		
+		Optional<PromocionBean> f = ventaPedidoForm.getListaPromociones().stream().filter(s -> cero.equals(s.getId())).findFirst();
+		promocionBean = f.get();		
+		
 	}
 	
 	
@@ -2314,6 +2320,59 @@ public class ControllerEncargos implements Serializable {
 			
 		}	
 		
+	}	
+	
+	
+	//=====================Manejo de ComboBox ===========================
+	//===================================================================
+	public void creaItemSelecciona() {
+		
+		String descripcion = "Seleccione";		
+		
+		//Agente
+		ArrayList<AgenteBean> aAgenteBean = new ArrayList<AgenteBean>();
+		ArrayList<AgenteBean> newList1;
+		
+		agenteBean = new AgenteBean(); 
+		agenteBean.setUsuario(descripcion);
+		agenteBean.setNombre_completo(descripcion);
+		aAgenteBean.add(agenteBean);
+		newList1 = (ArrayList<AgenteBean>) Stream.concat(aAgenteBean.stream(), ventaPedidoForm.getListaAgentes().stream()).collect(Collectors.toList());
+		ventaPedidoForm.setListaAgentes(newList1);
+		
+		//Forma de pago
+		ArrayList<FormaPagoBean> aFormaPagoBean = new ArrayList<FormaPagoBean>();
+		ArrayList<FormaPagoBean> newList2;
+		
+		formaPagoBean = new FormaPagoBean();
+		formaPagoBean.setId("0");
+		formaPagoBean.setDescripcion(descripcion);
+		aFormaPagoBean.add(formaPagoBean);
+		newList2 = (ArrayList<FormaPagoBean>) Stream.concat(aFormaPagoBean.stream(), ventaPedidoForm.getListaFormaPago().stream()).collect(Collectors.toList());
+		ventaPedidoForm.setListaFormaPago(newList2);
+		
+		//Tipo Encargo
+		ArrayList<TipoPedidoBean> aTipoPedidoBean = new ArrayList<TipoPedidoBean>();
+		ArrayList<TipoPedidoBean> newList3;
+		
+		tipoPedidoBean = new TipoPedidoBean();
+		tipoPedidoBean.setCodigo("0");
+		tipoPedidoBean.setDescripcion(descripcion);
+		aTipoPedidoBean.add(tipoPedidoBean);
+		newList3 = (ArrayList<TipoPedidoBean>) Stream.concat(aTipoPedidoBean.stream(), ventaPedidoForm.getListaTiposPedidos().stream()).collect(Collectors.toList());
+		ventaPedidoForm.setListaTiposPedidos(newList3);
+		
+		
+		//Promocion
+		ArrayList<PromocionBean> aPromocionBean = new ArrayList<PromocionBean>();
+		ArrayList<PromocionBean> newList4;
+		
+		promocionBean = new PromocionBean();		
+		promocionBean.setId("0");
+		promocionBean.setDescripcion(descripcion);		
+		aPromocionBean.add(promocionBean);
+		newList4 = (ArrayList<PromocionBean>) Stream.concat(aPromocionBean.stream(), ventaPedidoForm.getListaPromociones().stream()).collect(Collectors.toList());
+		ventaPedidoForm.setListaPromociones(newList4);	
 	}	
 	
 	//======================Getter and Setter============================

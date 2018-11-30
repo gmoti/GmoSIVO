@@ -9,18 +9,11 @@ import java.util.Optional;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Window;
-
 import cl.gmo.pos.venta.controlador.ventaDirecta.BusquedaProductosDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.Integracion.DAO.DAOImpl.UtilesDAOImpl;
@@ -40,11 +33,6 @@ public class ControllerSearchProduct implements Serializable{
 	
 	Session sess = Sessions.getCurrent();	
 	
-	//constantes
-	private final String SUCURSAL="T002";
-	private final String MONEDA="PESO";
-	private final String TIPO_BUSQUEDA="DIRECTA";
-
 	private FamiliaBean familiaBean;
 	private SubFamiliaBean subFamiliaBean;
 	private GrupoFamiliaBean grupoFamiliaBean;

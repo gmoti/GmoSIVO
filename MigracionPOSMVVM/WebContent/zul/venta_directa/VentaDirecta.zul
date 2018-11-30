@@ -296,13 +296,18 @@
 		
 	<div visible="@bind(vm.controlBotones.enableGenerico2)" >
 	
-		<div width="100%" style="background-color:black;color: white;">
-			<label value="DATOS DE CAJA" />
-		</div>
-		
-		<div width="100%" height="20%" style="background-color:black;color: white;" align="right">			
+		<div width="100%" vflex="min" style="background-color:black;color: white">
+			<label value="DATOS DE CAJA" style="float: left ; font-weight: bold; font-size: 150%;"/>	
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>				
+		</div>	
+					
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">			
     		<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir')" sclass="shrink24"/>			    		    					
-		</div>		
+		</div>			
 		
 		<grid sclass="MyGridRowHeight" width="100%" height="200px" fixedLayout="true" oddRowSclass="none">
 			<columns>
@@ -312,7 +317,7 @@
 			<rows>
 				<row>
 					<label value="No de caja" />
-					<combobox model="@bind(vm.ventaDirectaForm.listaCajas)" selectedItem="@bind(vm.cajaBean)">
+					<combobox model="@bind(vm.ventaDirectaForm.listaCajas)" selectedItem="@bind(vm.cajaBean)">				
 						<template name="model">
 							<comboitem label="@load(each.descripcion)" />
 						</template>

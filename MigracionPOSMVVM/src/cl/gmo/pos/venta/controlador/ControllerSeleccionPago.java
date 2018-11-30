@@ -60,6 +60,11 @@ public class ControllerSeleccionPago implements Serializable{
 	private boolean isapreVisible=false;
 	private boolean pagarReadOnly=false;
 	
+	//variables adicionales para el manejo de jquery
+	private String convenio;
+	private String isapre;		
+	private ArrayList<ProductosBean> listaProductos;
+	
 	
 	@Init
 	public void inicio(@ExecutionArgParam("cliente")ClienteBean arg,
@@ -67,9 +72,9 @@ public class ControllerSeleccionPago implements Serializable{
 					   @ExecutionArgParam("ventaOrigenForm")Object arg3,
 					   @ExecutionArgParam("origen")String arg4) {			
 		
-		String convenio="";
-		String isapre="";		
-		ArrayList<ProductosBean> listaProductos= new ArrayList<ProductosBean>();
+		convenio="";
+		isapre="";		
+		listaProductos= new ArrayList<ProductosBean>();
 		
 		cliente             = null;		
 		seleccionPagoForm 	= null;
@@ -408,7 +413,7 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		if(!seleccionPagoForm.getOrigen().equals("ALBARAN_DEVOLUCION")) {
 			
-			guardarPago();
+			pagarNoDevolucion();
 		}
 		
         if(seleccionPagoForm.getOrigen().equals("ALBARAN_DEVOLUCION")) {
@@ -422,7 +427,41 @@ public class ControllerSeleccionPago implements Serializable{
 	}	
 	
 	
-	public void guardarPago() {
+	public void pagarNoDevolucion() {
+		
+		int tmpcrb = 1;	
+		int cont = 0;
+		
+		for(PagoBean pb: seleccionPagoForm.getListaPagos()) {
+			if(pb.getForma_pago().equals("ISAPR") || pb.getForma_pago().equals("EXCED")) {
+				tmpcrb++;	
+			}
+			cont++;
+		}	
+		
+		if (isapre.equals("S") && cont == 0) {
+			
+			if(seleccionPagoForm.getN_isapre().trim().equals("")) {
+				
+				Messagebox.show("Debes ingresar el N° Doc Isapre para guardar pago.");
+				return;
+			}else {				
+				if (tmpcrb >= 2) {
+					sess.setAttribute("imp_guia","7");
+					sess.setAttribute("preg","1");
+					generaBoleta(); 
+				}else {
+					sess.setAttribute("preg","7");
+					guarda_Pago();
+				}				
+			}			
+		}else {
+			guarda_Pago();
+		}		
+	}// ==> Fin pagarNoDevolucion
+	
+	
+	public void guarda_Pago() {
 		
 		int correcto = 1;	
 		
