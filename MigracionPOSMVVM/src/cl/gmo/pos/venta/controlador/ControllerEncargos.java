@@ -163,7 +163,9 @@ public class ControllerEncargos implements Serializable {
 		fecha= new Date(System.currentTimeMillis());
 		fechaEntrega= new Date(System.currentTimeMillis());		
 		ventaPedidoForm.setFecha(dt.format(new Date(System.currentTimeMillis())));
-		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));				
+		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));		
+		
+		sess.setAttribute("_Convenio","0");	
 		
 		//Si el encargo es invocado desde presupuesto, debe pasar por aqui
 		if(arg.equals("presupuesto")) {			
@@ -339,7 +341,7 @@ public class ControllerEncargos implements Serializable {
 							
 							ventaPedidoForm.setAccion("eliminarPedidoSeleccion");
 							ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
-							
+							//RespuestaEncargos.evaluaEstado(ventaPedidoForm, sess);
 							
 							BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
 							
@@ -407,8 +409,7 @@ public class ControllerEncargos implements Serializable {
 			
 		
 		
-		if(ventaPedidoForm.getCodigo().equals("") || ventaPedidoForm.getCliente().equals("")) {
-			Messagebox.show("Debe guardar la venta");
+		if(ventaPedidoForm.getCodigo().equals("") || ventaPedidoForm.getCliente().equals("")) {			
 			return;
 		}			
 		
@@ -560,17 +561,11 @@ public class ControllerEncargos implements Serializable {
 		String cdg="";
 		
 		
-		if (ventaPedidoForm.getListaProductos().size() < 1) {
-			//Messagebox.show("Debe ingresar articulos para generar cobros");
+		if(ventaPedidoForm.getCodigo().equals("") || ventaPedidoForm.getCliente().equals("")) {			
 			return;
-		}		
+		}			
 		
-		tieneTrioMulti = ventaPedidoDispatchActions.validaTrioMultioferta(sess);
-		
-		if (codigo_pedido.equals("") && cliente.equals("")) { 
-			Messagebox.show("Debe guardar la venta");
-			return;
-		}
+		tieneTrioMulti = ventaPedidoDispatchActions.validaTrioMultioferta(sess);	
 		
 		if (tieneTrioMulti.equals(""))
 			return;
@@ -721,13 +716,13 @@ public class ControllerEncargos implements Serializable {
 						
 		 				ventaPedidoForm.setAccion("ingresa_pedido");
 		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
+		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 						
 					}else {
 						
 						ventaPedidoForm.setAccion("ingresa_pedido");
 		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
+		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 					}		
 					
 					
@@ -757,7 +752,7 @@ public class ControllerEncargos implements Serializable {
 			 				
 			 				ventaPedidoForm.setAccion("ingresa_pedido");
 			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
+			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 							break;
 						default:
 							
@@ -785,7 +780,7 @@ public class ControllerEncargos implements Serializable {
 							
 			 				ventaPedidoForm.setAccion("ingresa_pedido");
 			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			 				
-			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm);
+			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 			 				}
 						
 						} catch (Exception e) {					
@@ -864,33 +859,15 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm.setAccion("valida_pedido");
 			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 			
+			sess.setAttribute("_Cliente", cliente);
+			RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 			
+			/*
 			if (ventaPedidoForm.getEstado().equals(Constantes.STRING_GENERA_COBRO)) {
 				
 				//aqui se cargan las variables de session
-				ventaPedidoDispatchActions.generaVentaPedido(ventaPedidoForm, sess);
-				
-				seleccionPagoForm = new SeleccionPagoForm();
-				
-				/*seleccionPagoForm.setFech_pago(ventaPedidoForm.getFecha());
-				esta comentado seleccionPagoForm.setFecha(ventaPedidoForm.getFecha());
-				seleccionPagoForm.setTipo_doc('G');	
-				
-				Optional<TipoPedidoBean> pedido = Optional.ofNullable(tipoPedidoBean);
-				if (pedido.isPresent())			
-					sess.setAttribute("TIPO_PEDIDO", tipoPedidoBean.getCodigo());
-				else
-					sess.setAttribute("TIPO_PEDIDO", null);				
-				
-				sess.setAttribute(Constantes.STRING_LISTA_PAGOS, seleccionPagoForm.getListaPagos());
-				sess.setAttribute(Constantes.STRING_PORCENTAJE_ANTICIPO, ventaPedidoForm.getPorcentaje_anticipo());
-				sess.setAttribute(Constantes.STRING_FORMA_PAGO_ORIGEN, formaPagoBean.getId());
-				sess.setAttribute(Constantes.STRING_ORIGEN, Constantes.STRING_PEDIDO);
-				sess.setAttribute(Constantes.STRING_TOTAL, ventaPedidoForm.getTotal());
-				sess.setAttribute(Constantes.STRING_CLIENTE, cliente.getCodigo()  );
-				sess.setAttribute(Constantes.STRING_TICKET,  ventaPedidoForm.getCodigo_suc() + "/" + ventaPedidoForm.getCodigo() );
-				sess.setAttribute(Constantes.STRING_FECHA,   ventaPedidoForm.getFecha());		
-				sess.setAttribute(Constantes.STRING_LISTA_PRODUCTOS, ventaPedidoForm.getListaProductos());*/
+				ventaPedidoDispatchActions.generaVentaPedido(ventaPedidoForm, sess);				
+				seleccionPagoForm = new SeleccionPagoForm();		
 				
 				objetos = new HashMap<String,Object>();
 				objetos.put("cliente",cliente);
@@ -906,7 +883,7 @@ public class ControllerEncargos implements Serializable {
 			}else {
 				
 				Messagebox.show(ventaPedidoForm.getError());
-			}			
+			}	*/		
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
@@ -1245,27 +1222,7 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm.setOjo(arg.getOjo());
 			ventaPedidoForm.setDescripcion(tipo);			
 			
-			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
-			
-			//actualizar el grupo
-			/*int longitud = ventaPedidoForm.getListaProductos().size();
-			
-			if (longitud == 1) {
-				
-				String[] gr = new String[1];
-				gr[0] = arg.getGrupo();
-				ventaPedidoForm.setGrupo(gr);
-				
-			}else {		
-				
-				String[] grupo;
-				String[] grupoAux;
-				int tam=0;
-				
-				grupo = ventaPedidoForm.getGrupo();
-				grupoAux = new String[grupo.length + 1];
-				grupoAux[grupoAux.length -1]=arg.getGrupo();				
-			}	*/	
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
 			
 			
 			//valida segundo cristal
@@ -1342,45 +1299,18 @@ public class ControllerEncargos implements Serializable {
 			e.printStackTrace();
 		}	
 			
-		actTotal(ventaPedidoForm.getListaProductos());				
-		
-		if (ventaPedidoForm.getEstado().equals(Constantes.STRING_CARGA_MULTIOFERTAS)) {			
-			
-			int index=-1;
-			
-			for(int i=0; i < ventaPedidoForm.getListaProductos().size(); i++) {
-				index=i;
-			}		
-			
-			busquedaProductosForm    = new BusquedaProductosForm();
-			
-			busquedaProductosForm.setCliente(cliente.getCodigo());
-			busquedaProductosForm.setCodigoBusqueda(arg.getCod_barra());
-			busquedaProductosForm.setCodigoMultioferta(ventaPedidoForm.getCodigo_mult());
-			busquedaProductosForm.setIndex_multi(ventaPedidoForm.getIndex_multi());			
-			busquedaProductosForm.setFecha_graduacion(arg.getFecha_graduacion());			
-			busquedaProductosForm.setCdg(ventaPedidoForm.getCodigo_suc() +"/"+ ventaPedidoForm.getCodigo());
-			
-			objetos = new HashMap<String,Object>();
-			objetos.put("busquedaProductos",busquedaProductosForm);
-			objetos.put("origen","consultaProducto");
-			objetos.put("beanProducto",arg);
-			objetos.put("index",index);
-			/*objetos.put("ventaPedido",ventaPedidoForm);*/
-			
-			Window window = (Window)Executions.createComponents(
-	                "/zul/encargos/BusquedaMultiofertas.zul", null, objetos);
-			
-	        window.doModal();			
-			
-		}		
+		actTotal(ventaPedidoForm.getListaProductos());		
 		
 		//===============================================
 		//Clase manejadora de la respuesta de estados
 		//Simula las recarga de struts
 		int indice = ventaPedidoForm.getListaProductos().size();
+		
+		//sessiones
+		sess.setAttribute("productosBean", arg);
+		
 		ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
-		RespuestaEncargos.evaluaEstado(ventaPedidoForm);
+		RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 		
 	}
 	

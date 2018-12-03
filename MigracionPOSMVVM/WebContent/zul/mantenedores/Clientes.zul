@@ -132,7 +132,7 @@
 							<toolbarbutton image="/iconos/luparapida.png" 
 								sclass="shrink16" onClick="@command('buscar')" disabled="@bind(vm.bDisableinicialRut)"/>
 								
-							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaCliente')"
+							<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaCliente',retorno='buscarClienteCliente')"
 								sclass="shrink16" disabled="@bind(vm.bDisableinicialRut)"/>
 						</cell>
 						
@@ -271,8 +271,9 @@
 		</div>
 		
 		<div width="100%" vflex="min">
-			<grid width="100%" vflex="min">
+			<grid width="100%" vflex="min" oddRowSclass="none">
 				<columns>
+					<column hflex="min" />
 					<column hflex="min" />
 					<column hflex="min" />
 				</columns>
@@ -282,9 +283,10 @@
 						<cell colspan="1">
 							<textbox value="@bind(vm.clienteForm.remitente)" width="150px" disabled="@bind(vm.bDisableinicial)"/>
 							<textbox value="@bind(vm.clienteForm.dvFactura)" width="50px" disabled="@bind(vm.bDisableinicial)"/>
-							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
-							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)" onClick="@command('buscarRemitente')"/>
+							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)" onClick="@command('busquedaCliente',retorno='buscarClienteRemitente')"/>
 						</cell>
+						<label value="@load(vm.clienteForm.nombre_cliente_factura)" width="250px"/>
 					</row>
 					<row>
 						<label value="Giro" />

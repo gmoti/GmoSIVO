@@ -330,6 +330,29 @@ public class ControllerCliente implements Serializable{
 		
 	}	
 	
+	
+	@Command
+	@NotifyChange({"*"})
+	public void buscarRemitente()  {
+		
+		sess.setAttribute("nif",clienteForm.getRemitente());
+		sess.setAttribute("pagina","");	
+		
+		try {
+			ClienteBean clien = busquedaClientes.buscarClienteAjax(busquedaClientesForm, sess);
+			
+			clienteForm.setRemitente(clien.getNif());
+			clienteForm.setDvFactura(clien.getDvnif());
+			clienteForm.setNombre_cliente_factura(clien.getNombre() + " " + clien.getApellido());
+			
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void posicionaCombos() {		
 		
 		Optional<AgenteBean> a = clienteForm.getListaAgentes().stream().filter(s -> clienteForm.getAgente().equals(s.getUsuario())).findFirst();		
@@ -390,10 +413,10 @@ public class ControllerCliente implements Serializable{
 	
 	
 	@Command
-	public void busquedaCliente() {
+	public void busquedaCliente(@BindingParam("retorno")String retorno) {
 		
 		HashMap<String,Object> objetos = new HashMap<String,Object>();		
-		objetos.put("retorno","buscarClienteCliente");		
+		objetos.put("retorno",retorno);		
 		
 		Window winBusquedaClientes = (Window)Executions.createComponents(
                 "/zul/general/BusquedaClientes.zul", null, objetos);
@@ -417,7 +440,23 @@ public class ControllerCliente implements Serializable{
 		bDisableinicial = true;
 		bDisableinicialRut = true;
 		
-	}	
+	}
+	
+	@NotifyChange({"clienteForm"})
+	@GlobalCommand
+	public void buscarClienteRemitente(@BindingParam("cliente")ClienteBean cliente) {
+		
+		clienteForm.setAccion("traeClienteSeleccionado");
+		clienteForm.setRemitente(cliente.getNif());
+		clienteForm.setDvFactura(cliente.getCodigo());
+		
+		clid.ingresoCliente(clienteForm, sess);
+		
+		clienteForm.setNombre_cliente_factura(cliente.getNombre() + " " + cliente.getApellido());
+		//bDisableinicial = true;
+		//bDisableinicialRut = true;
+		
+	}
 	
 	
 	//Getter and Setter ======================

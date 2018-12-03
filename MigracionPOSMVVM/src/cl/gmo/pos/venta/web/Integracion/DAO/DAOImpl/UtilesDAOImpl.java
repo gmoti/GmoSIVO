@@ -671,10 +671,10 @@ public  ArrayList<TipoMotivoDevolucionBean> traeMotivoDevolucion() throws Except
             AgenteBean agente;
             
             //Francisco Quiroz
-            agente = new AgenteBean();
+            /*agente = new AgenteBean();
             agente.setUsuario("Seleccione");
             agente.setNombre_completo("Seleccione");
-            lista_Agentes.add(agente);
+            lista_Agentes.add(agente);*/
            
             while (rs.next())
             {

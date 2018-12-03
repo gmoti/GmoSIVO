@@ -86,6 +86,8 @@ public class ControllerVentaDirecta implements Serializable{
         usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
 		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		
+		sess.setAttribute("_Convenio","0");	
 				
 		clienteImp = new ClienteDAOImpl();					
 		productoBean = new ProductosBean();		

@@ -73,7 +73,7 @@ public class ControllerSeleccionPago implements Serializable{
 					   @ExecutionArgParam("origen")String arg4) {			
 		
 		convenio="";
-		isapre="";		
+		isapre="N";		
 		listaProductos= new ArrayList<ProductosBean>();
 		
 		cliente             = null;		
@@ -110,9 +110,11 @@ public class ControllerSeleccionPago implements Serializable{
 			/* =============================== */
 			convenio = ventaPedidoForm.getConvenio();
 			isapre   = ventaPedidoForm.getIsapre();
-			listaProductos = ventaPedidoForm.getListaProductos();
+			listaProductos = ventaPedidoForm.getListaProductos();	
 			
-			//postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);
+			Optional<String> isp = Optional.ofNullable(isapre);
+			isapre= isp.orElse("N");
+			
 		}
 		
 		if (arg3 instanceof VentaDirectaForm) { 
@@ -126,6 +128,12 @@ public class ControllerSeleccionPago implements Serializable{
 			sumaTotal = ventaDirectaForm.getSumaTotal();
 			descuentoMaximo = ventaDirectaForm.getPorcentaje_descuento_max();
 			sess.setAttribute(Constantes.STRING_AGENTE, ventaDirectaForm.getAgente());
+			
+			/* Acciones posteriores a la carga */
+			/* =============================== */
+			convenio = "0";
+			isapre   = "N";
+			listaProductos = ventaDirectaForm.getListaProductos();			
 		}
 		
 		if (arg3 instanceof DevolucionForm) { 
@@ -146,10 +154,8 @@ public class ControllerSeleccionPago implements Serializable{
 		this.setDiferencia_total(seleccionPagoForm.getDiferencia());		
 		seleccionPagoForm.setV_a_pagar(0);	
 		
-		if (arg3 instanceof VentaPedidoForm) {		
-			
-			postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);
-	
+		if ((arg3 instanceof VentaPedidoForm) || (arg3 instanceof VentaDirectaForm)){			
+			postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);	
 		}
 	}
 	
@@ -164,6 +170,10 @@ public class ControllerSeleccionPago implements Serializable{
 	 	
 	 	Optional<String> con = Optional.ofNullable(convenio);
 	 	Optional<String> isa = Optional.ofNullable(isapre);
+	 	Optional<String> tieneDoc = Optional.ofNullable(seleccionPagoForm.getTiene_documentos());
+	 	
+	 	seleccionPagoForm.setTiene_documentos(tieneDoc.orElse(""));
+	 	
 	 	
 	 	convenio = con.orElse("");
 	 	isapre = isa.orElse("");
@@ -193,7 +203,7 @@ public class ControllerSeleccionPago implements Serializable{
 	 	
 	 	if (paso_grp != 1) {
 	 		
-	 	    if(!sess.getAttribute("convenio").equals("sdg")){
+	 	    if(!sess.getAttribute("_Convenio").equals("sdg")){
 	 		
 		 		if(convenio.equals("50368") || 
 		 				convenio.equals("50369") || 
@@ -209,7 +219,7 @@ public class ControllerSeleccionPago implements Serializable{
 		 				i++;
 		 			} 		 			
 		 			
-		 			sess.setAttribute("convenio", "sdg");			  
+		 			sess.setAttribute("_Convenio", "sdg");			  
 					  
 				 }else{
 				 	borra_grpn();
@@ -225,7 +235,7 @@ public class ControllerSeleccionPago implements Serializable{
 		 				i++;
 		 			} 	 			
 		 			
-					sess.setAttribute("convenio", "sdg");	
+					sess.setAttribute("_Convenio", "sdg");	
 				 }	
 	 		
 		 		if(convenio.equals("50472")){
@@ -430,7 +440,8 @@ public class ControllerSeleccionPago implements Serializable{
 	public void pagarNoDevolucion() {
 		
 		int tmpcrb = 1;	
-		int cont = 0;
+		int cont = 0;	
+		
 		
 		for(PagoBean pb: seleccionPagoForm.getListaPagos()) {
 			if(pb.getForma_pago().equals("ISAPR") || pb.getForma_pago().equals("EXCED")) {
@@ -902,7 +913,10 @@ public class ControllerSeleccionPago implements Serializable{
 					
 					//ventana de seleccion de impresion
 					Window winSelecciona = (Window)Executions.createComponents(
-			                "/zul/venta_directa/SeleccionImpresion.zul", null, objetos);					
+			                "/zul/venta_directa/SeleccionImpresion.zul", null, objetos);
+					
+					winSelecciona.doModal();
+					
 				}else {
 					Messagebox.show("No hay pagos nuevos para imprimir");
 					return;

@@ -80,6 +80,8 @@ public class ControllerAlbaran implements Serializable{
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
+		sess.setAttribute("_Convenio","0");	
+		
 		devolucionForm = new DevolucionForm();
 		devolucionBean = new DevolucionBean();
 		seleccionPagoForm = new SeleccionPagoForm();
