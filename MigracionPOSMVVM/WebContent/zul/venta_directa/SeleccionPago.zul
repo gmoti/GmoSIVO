@@ -145,7 +145,7 @@
 	     							<row>
 	     								<label value="Valor a pagar" />
 	     								<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)"
-	     									onOK="@command('validaPago')" focus="true" readonly="@bind(vm.pagarReadOnly)"
+	     									onBlur="@command('validaPago')" focus="true" readonly="@bind(vm.pagarReadOnly)"
 	     									width="100px" style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
 	     									
 	     								<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -113,9 +115,13 @@ public class ControllerVentaDirecta implements Serializable{
 		ventaDirectaAccion.carga(ventaDirectaForm, sess);
 		ventaDirectaAccion.cargaCaja(ventaDirectaForm, sess);	
 		
-		Optional<CajaBean> cb = ventaDirectaForm.getListaCajas().stream().findFirst();
-		
+		Optional<CajaBean> cb = ventaDirectaForm.getListaCajas().stream().findFirst();		
 		cajaBean = cb.get();
+		
+		creaItemSelecciona();
+		Optional<AgenteBean> ab = ventaDirectaForm.getListaAgentes().stream().findFirst();
+		agenteBean=ab.get();
+		
 	}
 	
 	
@@ -148,7 +154,11 @@ public class ControllerVentaDirecta implements Serializable{
 		
 		ventaDirectaForm.setListaProductos(new ArrayList<ProductosBean>());
 		
+		creaItemSelecciona();
 		posicionaCombos();
+		/*creaItemSelecciona();
+		Optional<AgenteBean> ab = ventaDirectaForm.getListaAgentes().stream().findFirst();
+		agenteBean=ab.get();		*/
 		
 		if (!bWin) {
 			wBusqueda.detach();
@@ -542,13 +552,12 @@ public class ControllerVentaDirecta implements Serializable{
 	@Command
 	public void seleccionaCaja() {
 		
-		Optional<String> ab = Optional.ofNullable(agenteBean.getUsuario()) ;
+		Optional<String> ab = Optional.ofNullable(agenteBean.getUsuario());		
 		
-		if (!ab.isPresent() || ab.get().equals("")) {
+		if (!ab.isPresent() || ab.get().equals("") || ab.get().equals("Seleccione cajero")) {
 			Messagebox.show("Debe seleccionar un cajero");
 			return;
-		}
-		
+		}		
 		
 		controlBotones.setEnableGenerico1("true");
 		controlBotones.setEnableGenerico2("false");
@@ -580,6 +589,23 @@ public class ControllerVentaDirecta implements Serializable{
 				}					
 			}			
 		});		
+	}
+	
+	public void creaItemSelecciona() {
+		
+		String descripcion = "Seleccione cajero";		
+		
+		//Agente
+		ArrayList<AgenteBean> aAgenteBean = new ArrayList<AgenteBean>();
+		ArrayList<AgenteBean> newList1;
+		
+		agenteBean = new AgenteBean(); 
+		agenteBean.setUsuario("Seleccione cajero");
+		agenteBean.setNombre_completo(descripcion);
+		aAgenteBean.add(agenteBean);
+		newList1 = (ArrayList<AgenteBean>) Stream.concat(aAgenteBean.stream(), ventaDirectaForm.getListaAgentes().stream()).collect(Collectors.toList());
+		ventaDirectaForm.setListaAgentes(newList1);
+		
 	}
 	
 	public void posicionaCombos() {		

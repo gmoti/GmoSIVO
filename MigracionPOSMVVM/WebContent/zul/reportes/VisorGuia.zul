@@ -1,0 +1,39 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window id="winVisorDocumento" border="none" width="80%" height="80%" position="center" closable="false" mode="modal" sizable="false"
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVisorGuia')">		
+		
+		
+		<div height="100%" width="100%">			
+			
+			<div width="100%" style="background-color:black;color: white" height="40px">
+				<label value="@bind(vm.title)" />
+				<div style="float: right">					
+					<toolbarbutton image="/iconos/cancel.png" onClick="winVisorDocumento.detach()"/>		
+				</div>																			
+			</div>
+		
+			<div height="100%" width="100%">
+				<iframe id="reporte" height="100%" width="100%"	autohide="true" xmlns:x="xhtml" xmlns:zk="zk">
+				
+					<x:table width="850" border="0" align="center">
+						<x:tr>
+						
+						</x:tr>
+						<x:tr>
+							<x:td>
+								<x:table width="100%" border="0">
+									<x:tr>
+										<x:td>
+											<zk:label>prueba</zk:label>
+										</x:td>
+									</x:tr>								
+								</x:table>
+							</x:td>
+						</x:tr>					
+					</x:table>		
+				
+				
+				</iframe>
+			</div>
+		</div>
+</window>

@@ -352,7 +352,8 @@ public class ClienteDispatchActions {
 		}else{
 			hm.put("giroID", "");
 			hm.put("descripcion","");
-			 
+			formulario.setGiro("");
+			formulario.setDescripcionGiro(""); 
 		}
     	
 		

@@ -122,7 +122,7 @@
 						<intbox value="@bind(vm.clienteForm.codigo)" readonly="true" disabled="@bind(vm.bDisableinicialRut)"/>
 						<label value="Rut"/>
 						<cell>
-							<textbox value="@bind(vm.clienteForm.rut)" onBlur="@command('validarRut')"
+							<textbox value="@bind(vm.clienteForm.rut)" onBlur="@command('validarRut',persona='cliente')"
 								width="150px" disabled="@bind(vm.bDisableinicialRut)"
 								constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
 								
@@ -275,26 +275,30 @@
 				<columns>
 					<column hflex="min" />
 					<column hflex="min" />
-					<column hflex="min" />
+					<column width="450px" />
 				</columns>
 				<rows>
 					<row>
-						<label value="A:" />
+						<label value="A:"/>
 						<cell colspan="1">
-							<textbox value="@bind(vm.clienteForm.remitente)" width="150px" disabled="@bind(vm.bDisableinicial)"/>
-							<textbox value="@bind(vm.clienteForm.dvFactura)" width="50px" disabled="@bind(vm.bDisableinicial)"/>
+							<textbox value="@bind(vm.clienteForm.remitente)" width="150px" disabled="@bind(vm.bDisableinicial)" onBlur="@command('validarRut',persona='remitente')"/>
+							<textbox value="@bind(vm.clienteForm.dvFactura)" width="50px" readonly="true"/>
 							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)" onClick="@command('buscarRemitente')"/>
 							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)" onClick="@command('busquedaCliente',retorno='buscarClienteRemitente')"/>
 						</cell>
-						<label value="@load(vm.clienteForm.nombre_cliente_factura)" width="250px"/>
+						<label value="@load(vm.clienteForm.nombre_cliente_factura)" width="300px"/>
 					</row>
 					<row>
 						<label value="Giro" />
 						<cell colspan="1">						
 							<textbox value="@bind(vm.clienteForm.giro)" width="150px" disabled="@bind(vm.bDisableinicial)"/>
-							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
-							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" disabled="@bind(vm.bDisableinicial)"/>
+							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" 
+							disabled="@bind(vm.bDisableinicial)" onClick="@command('buscarGiroAjax')"/>
+							
+							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" 
+							disabled="@bind(vm.bDisableinicial)" popup="seleccionGiros,x=50,y=50"/>
 						</cell>
+						<label value="@load(vm.clienteForm.descripcionGiro)" width="300px"/>
 					</row>
 				</rows>
 			</grid>
@@ -318,8 +322,69 @@
 		    
 		    <label value="(*) NOTA: Los campos marcados con asterisco son importantes, trate de ingresarlos correctamente,"/>
 		    <label value="si el cliente no desea brindar la información seleciona el Check ubicado a la derecha." />	
-		</div>
-	
+		</div>	
 	</div>
+	
+	<popup id="seleccionGiros" width="600px" height="400px">	
+		<div width="100%" height="100%">
+			<div width="100%" height="30px" style="background-color:black;color: white;">			   	
+			   	<label value="Busqueda de Giro Cliente" style="float: left;"/>				
+			</div>		
+			
+			<div width="100%" height="30px" style="background-color:black;color: white;" align="right">				
+		   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="seleccionGiros.close()"/>
+		   	</div>
+		   	
+		   	<div>
+		   		<grid oddRowSclass="none" sclass="MyGridRowHeight">
+		   			<columns>
+		   				<column hflex="min" />
+		   				<column hflex="min" />
+		   			</columns>
+		   			<rows>
+		   				<row>
+		   					<label value="Codigo de giro"/>
+		   					<textbox value="@bind(vm.clienteForm.giro)"/>
+		   				</row>
+		   				<row>
+		   					<label value="Descripción de giro"/>
+		   					<textbox value="@bind(vm.clienteForm.descripcionGiro)"/>
+		   				</row>
+		   				<row>
+		   					<cell/>
+		   					<button image="/iconos/lupa.png" label="Buscar" sclass="shrink16" onClick="@command('buscarGiro')"/>
+		   				</row>
+		   			</rows>
+		   		</grid>
+		   	</div>		   	
+		   
+		   	<div width="100%" vflex="min" style="background-color:black;color: white">
+				<space width="20px"/>
+				<label value="Codigo de giro" />	
+				<space width="60px"/>
+				<label value="Descripción de giro" />																						
+			</div>	   	
+		   
+		   	<div>
+		   		<grid model="@bind(vm.clienteForm.listaGiros)" oddRowSclass="none" sclass="MyGridRowHeight"
+		   					width="100%" height="200px">
+		   			<columns>
+		   				<column width="90px" />
+		   				<column width="405px" />
+		   				<column width="55px" />		   				
+		   			</columns>
+		   			<template name="model">
+		   				<row>
+		   					<textbox value="@load(each.codigo)" readonly="true" width="85px"/>
+		   					<textbox value="@load(each.descripcion)" readonly="true" width="400px"/>
+		   					<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaGiro',giro=each,win=seleccionGiros)" width="50px"/>
+		   				</row>		   				
+		   			</template>
+		   		</grid>	   	
+		   	</div>
+		   		
+		</div>
+	</popup>	
+	
 </window>
 </zk>

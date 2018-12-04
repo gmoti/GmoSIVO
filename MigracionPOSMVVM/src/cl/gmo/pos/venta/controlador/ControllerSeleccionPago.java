@@ -641,17 +641,17 @@ public class ControllerSeleccionPago implements Serializable{
 	@GlobalCommand
 	public void seleccionImpresion(@BindingParam("seleccion")String arg) {
 		
-		//arg =1 boleta
-		//arg =2 guia despacho
+		//arg =B boleta
+		//arg =G guia despacho
 		//ARG =3 albaran devolucion 
 		
-		if(arg.equals("1")) {		
+		if(arg.equals("B")) {		
 			
 			try {
 				seleccionPagoForm.setAccion("valida_boleta");
 				seleccionPagoForm.setTipo_doc('B');
 				
-				seleccionPagoForm = seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);				
+				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);				
 				
 				objetos = new HashMap<String,Object>();		
 				objetos.put("seleccionPago",seleccionPagoForm);
@@ -670,9 +670,42 @@ public class ControllerSeleccionPago implements Serializable{
 				e.printStackTrace();
 			}									
 			
-			ventanaActual.detach();		
-			
+			ventanaActual.detach();				
 		}	
+		
+		
+		if(arg.equals("G")) {		
+			
+			try {
+				seleccionPagoForm.setTipo_doc('G');
+				seleccionPagoForm.setAccion("imprime_guia");
+				
+				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);
+				
+				objetos = new HashMap<String,Object>();		
+				objetos.put("seleccionPago",seleccionPagoForm);
+				
+				//BindUtils.postGlobalCommand(null, null, "creaGuiaDespacho", objetos);			
+					
+				sess.setAttribute(Constantes.STRING_TIPO, "GUIA");
+				seleccionPagoDispatchActions.imprime_documento(seleccionPagoForm, sess);	
+				
+				//abre el visor de guia
+				
+				Window window = (Window)Executions.createComponents(
+		                "/zul/reportes/VisorGuia.zul", null, objetos);
+				
+		        window.doModal();
+					
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			
+			ventanaActual.detach();
+		}
+		
 		
 	}		
 	

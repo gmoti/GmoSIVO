@@ -445,8 +445,23 @@ public class ControllerAlbaran implements Serializable{
 	}
 	
 	@Command
-	public void cerrarVentanas(@BindingParam("win")  Window win) {
-	    win.detach();
+	public void cerrar_ventanas(@BindingParam("win")  Window win) {
+		
+		Messagebox.show("Se perderan todos los datos, Esta seguro de cancelar la venta?","Notificación",
+				Messagebox.YES|
+				Messagebox.NO,
+				Messagebox.QUESTION ,new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event e) throws Exception {				
+				if(  ((Integer) e.getData()).intValue() == Messagebox.YES) {					
+					
+					win.detach();
+				}					
+			}			
+		});			
+		
+	   // win.detach();
 	}	
 	
 	

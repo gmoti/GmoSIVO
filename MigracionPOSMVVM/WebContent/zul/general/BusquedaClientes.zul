@@ -43,7 +43,7 @@
 			</div>
 			
 			<div width="100%" vflex="min">
-				<grid width="100%" vflex="min" oddRowSclass="none">
+				<grid width="100%" vflex="min" oddRowSclass="none" sclass="MyGridRowHeight">
 					<columns>
 						<column width="150px" />
 						<column hflex="min" />
@@ -89,7 +89,7 @@
 			<div width="100%" vflex="min">
 
 				<grid model="@bind(vm.busquedaClientesForm.listaClientes)" 
-					width="100%" height="200px" oddRowSclass="none">
+					width="100%" height="200px" oddRowSclass="none" sclass="MyGridRowHeight">
 					<columns>
 						<column width="85px" />
 						<column width="165px" />

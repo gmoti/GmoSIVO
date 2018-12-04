@@ -21,6 +21,7 @@ import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Popup;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.controlador.general.BusquedaClientesDispatchActions;
@@ -28,6 +29,7 @@ import cl.gmo.pos.venta.controlador.general.ClienteDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
+import cl.gmo.pos.venta.web.beans.GiroBean;
 import cl.gmo.pos.venta.web.beans.ProvinciaBean;
 import cl.gmo.pos.venta.web.beans.TipoViaBean;
 import cl.gmo.pos.venta.web.forms.BusquedaClientesForm;
@@ -295,13 +297,7 @@ public class ControllerCliente implements Serializable{
 			cliente = busquedaClientes.buscarClienteAjax(busquedaClientesForm, sess);
 			
 			clienteForm.setCodigo(Integer.parseInt(cliente.getCodigo()));
-			clienteForm.setDv(cliente.getDvnif());
-			clienteForm.setFnacimiento(cliente.getFecha_nac());
-			clienteForm.setNombres(cliente.getNombre());
-			clienteForm.setApellidos(cliente.getApellido());			
-			fechaNac =  dt.parse(cliente.getFecha_nac());
-			
-			//validaciones pendientes
+			clienteForm.setDv(cliente.getDvnif());			
 			
 			clienteForm.setAccion("traeClienteSeleccionado");
 			clienteForm.setNif_cliente_agregado(cliente.getNif());
@@ -309,14 +305,25 @@ public class ControllerCliente implements Serializable{
 			
 			clid.ingresoCliente(clienteForm, sess);
 			
-			Optional<String> a = Optional.ofNullable(clienteForm.getAgente());			
-			if(!a.isPresent()) clienteForm.setAgente("");
+			clienteForm.setFnacimiento(cliente.getFecha_nac());
+			clienteForm.setNombres(cliente.getNombre());
+			clienteForm.setApellidos(cliente.getApellido());
 			
-			Optional<String> b = Optional.ofNullable(clienteForm.getTipo_via());			
-			if(!b.isPresent()) clienteForm.setTipo_via("");
+			Optional<String> f = Optional.ofNullable(cliente.getFecha_nac());
 			
-			Optional<String> c = Optional.ofNullable(clienteForm.getProvincia_cliente());			
-			if(!c.isPresent()) clienteForm.setProvincia_cliente("");			
+			if(f.isPresent())			
+				fechaNac =  dt.parse(cliente.getFecha_nac());
+			else
+				fechaNac = null;
+			
+			Optional<String> a = Optional.ofNullable(clienteForm.getAgente());				
+			clienteForm.setAgente(a.orElse(""));		
+			
+			Optional<String> b = Optional.ofNullable(clienteForm.getTipo_via());		
+			clienteForm.setTipo_via(b.orElse(""));		
+			
+			Optional<String> c = Optional.ofNullable(clienteForm.getProvincia_cliente());	
+			clienteForm.setProvincia_cliente(c.orElse(""));					
 			
 			posicionaCombos();
 			
@@ -353,7 +360,7 @@ public class ControllerCliente implements Serializable{
 		
 	}
 	
-	public void posicionaCombos() {		
+	public void posicionaCombos() {			
 		
 		Optional<AgenteBean> a = clienteForm.getListaAgentes().stream().filter(s -> clienteForm.getAgente().equals(s.getUsuario())).findFirst();		
 		if (a.isPresent()) 
@@ -377,11 +384,16 @@ public class ControllerCliente implements Serializable{
 	
 	@NotifyChange({"clienteForm"})
 	@Command
-	public boolean validarRut() {
+	public boolean validarRut(@BindingParam("persona")String persona) {
 		
 		int rutAux,m,s = 0;
 		char dv;
-		String rut = clienteForm.getRut();
+		String rut;
+		
+		if(persona.equals("cliente"))
+			rut = clienteForm.getRut();
+		else
+			rut = clienteForm.getRemitente();		
 		 
 		boolean validacion = false;
 		try {
@@ -398,7 +410,10 @@ public class ControllerCliente implements Serializable{
 				s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
 			}
 			
-			clienteForm.setDv(String.valueOf((char) (s != 0 ? s + 47 : 75)));
+			if(persona.equals("cliente"))
+				clienteForm.setDv(String.valueOf((char) (s != 0 ? s + 47 : 75)));
+			else
+				clienteForm.setDvFactura(String.valueOf((char) (s != 0 ? s + 47 : 75)));
 			
 			/*if (dv == (char) (s != 0 ? s + 47 : 75)) {
 				validacion = true;
@@ -433,7 +448,16 @@ public class ControllerCliente implements Serializable{
 		clienteForm.setNif_cliente_agregado(cliente.getNif());
 		clienteForm.setCodigo_cliente_agregado(cliente.getCodigo());
 		
-		clid.ingresoCliente(clienteForm, sess);
+		clid.ingresoCliente(clienteForm, sess);		
+		
+		Optional<String> a = Optional.ofNullable(clienteForm.getAgente());				
+		clienteForm.setAgente(a.orElse(""));	
+		
+		Optional<String> b = Optional.ofNullable(clienteForm.getTipo_via());		
+		clienteForm.setTipo_via(b.orElse(""));	
+		
+		Optional<String> c = Optional.ofNullable(clienteForm.getProvincia_cliente());	
+		clienteForm.setProvincia_cliente(c.orElse(""));	
 		
 		posicionaCombos();
 		
@@ -446,16 +470,70 @@ public class ControllerCliente implements Serializable{
 	@GlobalCommand
 	public void buscarClienteRemitente(@BindingParam("cliente")ClienteBean cliente) {
 		
-		clienteForm.setAccion("traeClienteSeleccionado");
-		clienteForm.setRemitente(cliente.getNif());
-		clienteForm.setDvFactura(cliente.getCodigo());
+		ClienteForm remitente = new ClienteForm();
 		
-		clid.ingresoCliente(clienteForm, sess);
+		remitente.setAccion("traeClienteSeleccionado");
+		remitente.setNif_cliente_agregado(cliente.getNif());
+		remitente.setCodigo_cliente_agregado(cliente.getCodigo());		
 		
+		clid.ingresoCliente(remitente, sess);
+		
+		//asigno variables
 		clienteForm.setNombre_cliente_factura(cliente.getNombre() + " " + cliente.getApellido());
+		clienteForm.setRemitente(cliente.getNif());
+		clienteForm.setDvFactura(cliente.getDvnif());
+		
 		//bDisableinicial = true;
 		//bDisableinicialRut = true;
 		
+	}
+	
+	@NotifyChange({"clienteForm"})
+	@Command
+	public void buscarGiro() {
+		
+		Optional<String> g = Optional.ofNullable(clienteForm.getGiro());
+		Optional<String> dg= Optional.ofNullable(clienteForm.getDescripcionGiro());
+		
+		clienteForm.setGiro(g.orElse("").toUpperCase());
+		clienteForm.setDescripcionGiro(dg.orElse("").toUpperCase());	
+	
+		clienteForm.setAccion("busqueda");
+		clid.busquedaGiro(clienteForm, sess);
+		
+	}	
+	
+	@NotifyChange({"clienteForm"})
+	@Command
+	public void seleccionaGiro(@BindingParam("giro")GiroBean giro, @BindingParam("win")Popup win) {
+		
+		clienteForm.setGiro(giro.getCodigo());
+		clienteForm.setDescripcionGiro(giro.getDescripcion());
+		win.close();
+	}
+	
+	@NotifyChange({"clienteForm"})
+	@Command
+	public void buscarGiroAjax()
+	{
+	   String  giroID = clienteForm.getGiro().trim();      
+	   
+		if(!giroID.equals("")){
+			
+			clienteForm.setAccion("traeGiroSeleccionadoFactura");	
+			sess.setAttribute("giroID",clienteForm.getGiro().trim());
+			
+		   clid.traeGiroSeleccionadoFactura(clienteForm, sess);
+		   
+		   if(clienteForm.getGiro().equals("")) {			  
+			   Messagebox.show("El giro no existe.");
+			   clienteForm.setGiro("");
+			   clienteForm.setDescripcionGiro("");
+		   }	   	   
+		   
+	   }else{
+	   	Messagebox.show("Debe ingresar código de giro");
+	   }
 	}
 	
 	

@@ -53,7 +53,7 @@
 						<toolbarbutton image="/iconos/boleta.png" sclass="shrink24" onClick="@command('mostrarPagosBoletas')" tooltiptext="Mostrar Pagos y Boletas"/>
 						<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Lista de Albaranes"/>					
 				   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('abrirBuscarAlbaranes')" tooltiptext="Cargar Albaranes"/>
-				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrarVentanas',win=winAlbaranes)" tooltiptext="Cerrar"/>
+				   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrar_ventanas',win=winAlbaranes)" tooltiptext="Cerrar"/>
 				   	</div>
 
 					<div width="100%" height="100%">
