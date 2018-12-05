@@ -252,11 +252,13 @@ public class ControllerSearchProductPres implements Serializable {
 		if(grufam.isPresent())		
 			busquedaProductosForm.setGrupo (grupoFamiliaBean.getCodigo());		    	
 		else
-			busquedaProductosForm.setGrupo("0");
+			busquedaProductosForm.setGrupo("0");		
 		
+		//if(!codbus.isPresent()) busquedaProductosForm.setCodigoBusqueda("");
+		//if(!codbusbar.isPresent()) busquedaProductosForm.setCodigoBarraBusqueda("");
 		
-		if(!codbus.isPresent()) busquedaProductosForm.setCodigoBusqueda("");
-		if(!codbusbar.isPresent()) busquedaProductosForm.setCodigoBarraBusqueda("");
+		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").toUpperCase());
+		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").toUpperCase());
 		
 		
 	    busquedaProductosForm.setAccion("buscar");      	

@@ -10,10 +10,9 @@ import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 
 
 public class ControllerVisorGuia implements Serializable {
-
 	
-	private static final long serialVersionUID = 7151833775352526075L;
 	
+	private static final long serialVersionUID = -5521605095936321170L;
 	private SeleccionPagoForm seleccionPago;
 	
 	

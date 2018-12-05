@@ -6,34 +6,220 @@
 		<div height="100%" width="100%">			
 			
 			<div width="100%" style="background-color:black;color: white" height="40px">
-				<label value="@bind(vm.title)" />
+				<label value="Guia de despacho" />
 				<div style="float: right">					
 					<toolbarbutton image="/iconos/cancel.png" onClick="winVisorDocumento.detach()"/>		
 				</div>																			
 			</div>
 		
-			<div height="100%" width="100%">
-				<iframe id="reporte" height="100%" width="100%"	autohide="true" xmlns:x="xhtml" xmlns:zk="zk">
+			<div height="100%" width="100%" style="overflow:auto">
+				<zk id="reporte" height="100%" width="100%"	autohide="true" xmlns:n="native">
 				
-					<x:table width="850" border="0" align="center">
-						<x:tr>
+					<n:table width="850" border="0" align="center">
+						<n:tr>
 						
-						</x:tr>
-						<x:tr>
-							<x:td>
-								<x:table width="100%" border="0">
-									<x:tr>
-										<x:td>
-											<zk:label>prueba</zk:label>
-										</x:td>
-									</x:tr>								
-								</x:table>
-							</x:td>
-						</x:tr>					
-					</x:table>		
-				
-				
-				</iframe>
+						</n:tr>
+						<n:tr>
+							<n:td>
+								<n:table width="100%" border="0">
+									<n:tr>
+								      	<n:td width="40" height="20"></n:td>
+								        <n:td width="30" height="20"></n:td>
+								        <n:td height="20" valign="middle" colspan="2" >
+								        	<n:font size="6" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@bind(vm.seleccionPago.titulo)"/>
+								        	</n:font>
+								        </n:td>
+								    	<n:td height="20"></n:td>
+								    </n:tr>
+								    <n:tr height="50">
+								        <n:td colspan="4"></n:td>
+								    </n:tr>
+								    <n:tr>
+								      	<n:td width="40" height="20"></n:td>
+								        <n:td width="30" height="20"></n:td>
+								        <n:td height="20" valign="middle">
+								        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@bind(vm.seleccionPago.guia_fecha)"/>
+								        	</n:font>
+								        </n:td>
+								        <n:td height="20"></n:td>
+								    </n:tr>
+								    <n:tr>
+								        <n:td width="40"></n:td>
+								        <n:td colspan="2" width="600" valign="middle">
+								        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@bind(vm.seleccionPago.guia_cliente)"/>
+								        	</n:font>
+								        </n:td>
+								        <n:td valign="middle">
+								        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@bind(vm.seleccionPago.guia_rut)"/>
+								        	</n:font>
+								        </n:td>
+								    </n:tr>
+								    <n:tr>
+										<n:td width="40"></n:td>
+								        <n:td  colspan="2" width="600" valign="middle">
+								        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@bind(vm.seleccionPago.guia_direccion)"/>
+								        	</n:font>
+								        </n:td>
+								        <n:td valign="middle">
+								        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@bind(vm.seleccionPago.guia_comuna)"/>
+								        	</n:font>
+								        </n:td>
+								    </n:tr>
+								    <n:tr>
+										<n:td width="40"></n:td>
+										<n:td  colspan="2" width="600" valign="middle">
+											<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+												<label value="@bind(vm.seleccionPago.guia_giro)"/>
+											</n:font>
+										</n:td>
+								        <n:td></n:td>
+								    </n:tr>
+								    <n:tr height="80">
+								        <n:td colspan="4"></n:td>
+								    </n:tr>								
+								</n:table>
+							</n:td>
+						</n:tr>	
+						
+						<!-- DETALLE DE LA GUIA -->
+						<n:tr height="600" valign="top">
+						    <n:td>
+							  <n:table width="100%" border="0" >							         
+							       <div children="@load(vm.seleccionPago.guiaListaProductos)">
+							         <template name="children" var="prod">
+								      <n:tr height="20">
+								        <n:td valign="middle" width="20%">
+								        	<n:font  style="letter-spacing: 0.1cm; font-size:8px; font-family:Verdana, Geneva, sans-serif">								        		
+								        		<label value="@load(prod.codigo)"/>
+								        	</n:font>
+								        </n:td>
+								        <n:td valign="middle" width="60%">
+								        	<n:font  style="letter-spacing: 0.1cm; font-size:8px; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@load(prod.descripcion)"/>
+								        	</n:font>
+								        </n:td>
+								        <n:td valign="middle" width="10%">
+								        	<n:font  style="letter-spacing: 0.1cm; font-size:8px; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@load(prod.cantidad)"/>
+								        	</n:font>
+								        </n:td>
+								        <n:td valign="middle" width="10%">
+								        	<n:font  style="letter-spacing: 0.1cm; font-size:8px; font-family:Verdana, Geneva, sans-serif">
+								        		<label value="@load(prod.total)"/>
+								        	</n:font>
+								        </n:td>
+								      </n:tr>
+								     </template>
+								   </div>
+							   </n:table>	
+						    </n:td>
+						</n:tr>
+						<!-- FIN DETALLE DE LA GUIA -->
+						
+						<!-- PIE DE PAGINA -->
+						<n:tr>
+						   <n:td height="37">
+						    <n:table width="100%" border="0">
+						      <n:tr height="20">
+						        <n:td width="50%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="@load(vm.seleccionPago.guia_ticket)"/>
+						        	</n:font>
+						        </n:td>
+						        <n:td align="right" width="30%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="SUBTOTAL"/>
+						        	</n:font>
+						        </n:td>
+								<n:td align="left" valign="middle">
+									<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">										
+										<label value="@load(vm.seleccionPago.guia_subtotal)"/>
+									</n:font>
+								</n:td>
+						      </n:tr>
+						      <n:tr height="20">
+								<n:td width="50%"></n:td>
+						        <n:td align="right" width="30%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="DESCUENTO"/>
+						        	</n:font>
+						        </n:td>
+						        <n:td align="left" valign="middle">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="@load(vm.seleccionPago.guia_descuento)"/>
+						        	</n:font>
+						        </n:td>
+						      </n:tr>
+						      <n:tr>
+						      	<n:td width="50%"></n:td>
+						        <n:td align="right" width="30%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="TOTAL"/>
+						        	</n:font>
+						        </n:td>
+						        <n:td align="left" valign="middle">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="@load(vm.seleccionPago.guia_total)"/>
+						        	</n:font>
+						        </n:td>
+						      </n:tr>
+						      <n:tr>
+						      	<n:td width="50%">
+						      		<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						      			
+						      			<label value="@load(vm.seleccionPago.guia_pie_nombre)"/>
+						      		</n:font>
+						      	</n:td>
+						        <n:td align="right" width="30%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="@load(vm.seleccionPago.guia_convenio_titulo_diferencia)"/>
+						        	</n:font>
+						        </n:td>
+						        <n:td align="left" valign="middle">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        	
+						        		<label value="@load(vm.seleccionPago.guia_convenio_diferencia)"/>						        		
+						        	</n:font>
+						        </n:td>
+						      </n:tr>
+						      <n:tr>
+						      	<n:td width="50%">
+						      		<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						      			
+						      			<label value="@load(vm.seleccionPago.guia_pie_rut)"/>
+						      		</n:font>
+						      	</n:td>
+						        <n:td align="right" width="30%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="@load(vm.seleccionPago.guia_convenio_titulo_total_facturar)"/>
+						        	</n:font>
+						        </n:td>
+						        <n:td align="left" valign="middle" width="10%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">						        		
+						        		<label value="@load(vm.seleccionPago.guia_convenio_total_facturar)"/>
+						        	</n:font>
+						        </n:td>
+						      </n:tr>
+						      <n:tr>
+						      	<n:td width="50%"></n:td>
+						        <n:td align="right" width="30%">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+						        	</n:font>
+						        </n:td>
+						        <n:td align="left" valign="middle">
+						        	<n:font size="1" style="letter-spacing: 0.1cm; font-family:Verdana, Geneva, sans-serif">
+						        	</n:font>
+						        </n:td>
+						      </n:tr>
+						    </n:table>
+						   </n:td>
+						</n:tr>			
+										
+					</n:table>				
+				</zk>
 			</div>
 		</div>
 </window>

@@ -231,11 +231,26 @@ public class ControllerEncargos implements Serializable {
 	//==============================================
 	@NotifyChange({"ventaPedidoForm","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean","productoBean","fecha","fechaEntrega"})
 	@Command
-	public void nuevo_Pedido() {	
+	public void nuevo_Pedido() {
 		
+		String nif="";
+		String dvNif="";
+		
+		
+		Optional<String> oNif   = Optional.ofNullable(ventaPedidoForm.getNif());
+		Optional<String> oDvNif = Optional.ofNullable(ventaPedidoForm.getDvnif());	
+		
+		nif  = oNif.orElse("");
+		dvNif= oDvNif.orElse("");
 		
 		ventaPedidoForm = new VentaPedidoForm();		
 		productoBean = new ProductosBean();
+		
+		ventaPedidoForm.setNif(nif);
+		ventaPedidoForm.setDvnif(dvNif);
+		
+		if (!nif.equals(""))
+			buscarCliente();	
 		
 		ventaPedidoForm = ventaPedidoDispatchActions.nuevoFormulario(ventaPedidoForm, sess);
 		ventaPedidoForm.setListaProductos(new ArrayList<ProductosBean>());
