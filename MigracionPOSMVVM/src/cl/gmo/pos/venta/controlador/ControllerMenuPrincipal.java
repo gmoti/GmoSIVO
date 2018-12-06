@@ -102,8 +102,10 @@ public class ControllerMenuPrincipal implements Serializable{
 	        break; 
 	        
 		case "M2_4":	
+			objetos = new HashMap<String,Object>();
+			objetos.put("origen", "menu");
 			window = (Window)Executions.createComponents(
-	                "/zul/mantenedores/Albaran.zul", null, null);
+	                "/zul/mantenedores/Albaran.zul", null, objetos);
 			
 	        window.doModal();
 	        break; 

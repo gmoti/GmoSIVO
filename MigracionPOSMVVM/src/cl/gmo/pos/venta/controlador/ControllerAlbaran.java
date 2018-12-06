@@ -7,8 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
+
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -47,11 +50,11 @@ public class ControllerAlbaran implements Serializable{
 	
 	private DevolucionForm devolucionForm;
 	private DevolucionBean devolucionBean ;
-	private SeleccionPagoForm seleccionPagoForm;
-	private VentaPedidoForm ventaPedidoForm;
+	private SeleccionPagoForm seleccionPagoForm;	
 	private DevolucionDispatchActions devolucionDispatch;
 	private SeleccionPagoDispatchActions seleccionPagoDispatch;
 	private ClienteBean cliente;
+	private String origen;
 	
 	private String usuario;	
 	private String sucursalDes;	
@@ -75,17 +78,17 @@ public class ControllerAlbaran implements Serializable{
 	
 	
 	@Init	
-	public void inicial() {
+	public void inicial(@ExecutionArgParam("origen")String arg) {
 		
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
 		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
 		
 		sess.setAttribute("_Convenio","0");	
+		origen = arg;
 		
 		devolucionForm = new DevolucionForm();
 		devolucionBean = new DevolucionBean();
-		seleccionPagoForm = new SeleccionPagoForm();
-		ventaPedidoForm = new VentaPedidoForm();
+		seleccionPagoForm = new SeleccionPagoForm();		
 		devolucionDispatch = new DevolucionDispatchActions();
 		seleccionPagoDispatch = new SeleccionPagoDispatchActions();
 		
@@ -104,7 +107,10 @@ public class ControllerAlbaran implements Serializable{
 		fechaGarantia= new Date(System.currentTimeMillis());
 		disabledCampo=true;
 		
-		devolucionDispatch.cargaFormulario(devolucionForm, sess);		
+		if (arg.equals("encargo"))
+			devolucionDispatch.IngresaEntregaDesdePedido(devolucionForm, sess);
+		else
+			devolucionDispatch.cargaFormulario(devolucionForm, sess);		
 	}
 	
 	
@@ -454,8 +460,11 @@ public class ControllerAlbaran implements Serializable{
 
 			@Override
 			public void onEvent(Event e) throws Exception {				
-				if(  ((Integer) e.getData()).intValue() == Messagebox.YES) {					
+				if(  ((Integer) e.getData()).intValue() == Messagebox.YES) {	
 					
+					if (origen.equals("encargo"))
+						BindUtils.postGlobalCommand(null, null, "notificacionAlbaram", null);
+						
 					win.detach();
 				}					
 			}			

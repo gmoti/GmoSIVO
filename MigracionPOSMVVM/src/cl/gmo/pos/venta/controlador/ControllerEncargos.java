@@ -126,7 +126,7 @@ public class ControllerEncargos implements Serializable {
 	
 	//variables particulares de validaciones
 	private boolean descripcionFocus=false;
-	
+	private boolean encargoEntregado=false;
 	
 	@Init
 	public void inicial(@ExecutionArgParam("origen")String arg) {		
@@ -219,7 +219,7 @@ public class ControllerEncargos implements Serializable {
 		//inicializo descuento
 		dto_total_monto = ventaPedidoForm.getDescuento();
 		dto_total = ventaPedidoForm.getDtcoPorcentaje();
-		
+		encargoEntregado=false;
 		
 	}
 	
@@ -229,7 +229,7 @@ public class ControllerEncargos implements Serializable {
 	
 	//============ Nuevo Pedido ====================
 	//==============================================
-	@NotifyChange({"ventaPedidoForm","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean","productoBean","fecha","fechaEntrega"})
+	@NotifyChange({"ventaPedidoForm","encargoEntregado","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean","productoBean","fecha","fechaEntrega"})
 	@Command
 	public void nuevo_Pedido() {
 		
@@ -271,8 +271,9 @@ public class ControllerEncargos implements Serializable {
 		beanControlCombos.setComboTiposEnable("false");		
 		
 		beanControlBotones.setEnableListar("true");	
-		beanControlBotones.setEnableGrid("true");
+		beanControlBotones.setEnableGrid("false");
 		beanControlBotones.setEnableMulti("true");
+		encargoEntregado=false;
 		
 		creaItemSelecciona();
 		posicionCombo();
@@ -911,7 +912,7 @@ public class ControllerEncargos implements Serializable {
 	//=========== Recupera Encargo seleccionado======
 	//===============================================	
 		
-	@NotifyChange({"ventaPedidoForm","agenteBean","divisaBean","formaPagoBean","idiomaBean","fecha","fechaEntrega","tipoPedidoBean"})
+	@NotifyChange({"ventaPedidoForm","encargoEntregado","agenteBean","divisaBean","formaPagoBean","idiomaBean","fecha","fechaEntrega","tipoPedidoBean"})
 	@GlobalCommand
 	public void encargoSeleccionado(@BindingParam("arg")ArrayList<PedidosPendientesBean> arg,
 									@BindingParam("arg2")PedidosPendientesBean arg2) {				
@@ -919,8 +920,8 @@ public class ControllerEncargos implements Serializable {
 		try {
 			sess.setAttribute(Constantes.STRING_ACTION_CDG, arg2.getCdg());
 			ventaPedidoForm.setAccion(Constantes.STRING_ACTION_CARGA_PEDIDO_SELECCION);
-			ventaPedidoForm = ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			
-			
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			
+			//encargoEntregado=evaluaEntrega();
 			java.util.Date lFecha =  dt.parse(ventaPedidoForm.getFecha()); 
 			java.util.Date lFechaEntrega=  dt.parse(ventaPedidoForm.getFecha_entrega());
 			//ventaPedidoForm.getHora()
@@ -940,7 +941,7 @@ public class ControllerEncargos implements Serializable {
 	
 	//======= pago exitoso en venta pedido =======
 	
-	@NotifyChange({"ventaPedidoForm"})
+	@NotifyChange({"ventaPedidoForm","encargoEntregado"})
 	@GlobalCommand	
     public void creaPagoExitosoEncargo(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {
 		
@@ -979,7 +980,8 @@ public class ControllerEncargos implements Serializable {
 				
 		        window.doModal();	
 		        
-		        BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
+		        //encargoEntregado=evaluaEntrega();
+		        //BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
 				
 			}
 			
@@ -1499,20 +1501,25 @@ public class ControllerEncargos implements Serializable {
 	
 	public void posicionComboNuevo() {		
 		
-		Optional<AgenteBean> a = ventaPedidoForm.getListaAgentes().stream().filter(s -> ventaPedidoForm.getAgente().equals(s.getUsuario())).findFirst();		
-		agenteBean = a.get();	
+		try {
+			Optional<AgenteBean> a = ventaPedidoForm.getListaAgentes().stream().filter(s -> ventaPedidoForm.getAgente().equals(s.getUsuario())).findFirst();		
+			agenteBean = a.get();	
+			
+			Optional<DivisaBean> b = ventaPedidoForm.getListaDivisas().stream().filter(s -> ventaPedidoForm.getDivisa().equals(s.getId())).findFirst();
+			divisaBean = b.get();		
+			
+			Optional<IdiomaBean> d = ventaPedidoForm.getListaIdiomas().stream().filter(s -> ventaPedidoForm.getIdioma().equals(s.getId())).findFirst();
+			idiomaBean = d.get();	
+			
+			Optional<FormaPagoBean> e = ventaPedidoForm.getListaFormasPago().stream().filter(s -> ventaPedidoForm.getForma_pago().equals(s.getId())).findFirst();
+			formaPagoBean = e.get();	
+			
+			Optional<TipoPedidoBean> f = ventaPedidoForm.getListaTiposPedidos().stream().filter(s -> ventaPedidoForm.getTipo_pedido().equals(s.getCodigo())).findFirst();
+			tipoPedidoBean = f.get();
+		}catch(Exception e ) {
+			System.out.println("error posicionando combos:"+e.getMessage());
+		}
 		
-		Optional<DivisaBean> b = ventaPedidoForm.getListaDivisas().stream().filter(s -> ventaPedidoForm.getDivisa().equals(s.getId())).findFirst();
-		divisaBean = b.get();		
-		
-		Optional<IdiomaBean> d = ventaPedidoForm.getListaIdiomas().stream().filter(s -> ventaPedidoForm.getIdioma().equals(s.getId())).findFirst();
-		idiomaBean = d.get();	
-		
-		Optional<FormaPagoBean> e = ventaPedidoForm.getListaFormasPago().stream().filter(s -> ventaPedidoForm.getForma_pago().equals(s.getId())).findFirst();
-		formaPagoBean = e.get();	
-		
-		Optional<TipoPedidoBean> f = ventaPedidoForm.getListaTiposPedidos().stream().filter(s -> ventaPedidoForm.getTipo_pedido().equals(s.getCodigo())).findFirst();
-		tipoPedidoBean = f.get();
 	}
 	
 	
@@ -1603,22 +1610,29 @@ public class ControllerEncargos implements Serializable {
 			return;
 		}	
 		
-		try {
-			
-			devolucionForm = new DevolucionForm();
+		if (evaluaEntrega()) {			
+			return;
+		}
+		
+		
+		try {		
 			
 			ventaPedidoForm.setAccion("pedidoEntrega");
-			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			
-			devolucionForm = devolucionDispatchActions.IngresaEntregaDesdePedido(devolucionForm, sess);
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+				
+			objetos = new HashMap<String,Object>();			
+			objetos.put("origen", "encargo");
 			
-			//ejecuta devolucion.jsp			
-			objetos = new HashMap<String,Object>();		
-			objetos.put("devolucionForm",devolucionForm);
-			
-			Window windowBusquedaEncargo = (Window)Executions.createComponents(
+			/*Window windowBusquedaEncargo = (Window)Executions.createComponents(
 	                "/zul/encargos/MuestraAlbaran.zul", null, objetos);
 			
-			windowBusquedaEncargo.doModal(); 			
+			windowBusquedaEncargo.doModal(); 	*/	
+			
+			Window windowBusquedaEncargo = (Window)Executions.createComponents(
+	                "/zul/mantenedores/Albaran.zul", null, objetos);
+			
+			windowBusquedaEncargo.doModal();
+			
 			
 		} catch (Exception e) {
 			Messagebox.show("Error en pedido entrega","Error",Messagebox.OK,Messagebox.ERROR);
@@ -2065,12 +2079,15 @@ public class ControllerEncargos implements Serializable {
 		long campo = 0;
 		long descuento_max = 0;
 		String tipo="";
-		
 		objetos = new HashMap<String,Object>();
+		
+		campo = dcto;		
 		objetos.put("retorno","devuelveDescuento_totalMonto_Encargo");
 		
-		campo = dcto;
-		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
+		Optional<String> tp = Optional.ofNullable(ventaPedidoForm.getTipo_pedido());
+		
+		if (!tp.isPresent() || tp.get().equals(""))		
+			tipo = "0";	
 		
 		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
 			Messagebox.show("La venta esta cerrada, no es posible modificar");
@@ -2079,13 +2096,15 @@ public class ControllerEncargos implements Serializable {
 		
 		if (ventaPedidoForm.getBloquea().equals("bloquea")) {
 			Messagebox.show("Valor no puede ser mayor al monto total");			
-			ventaPedidoForm.setDescuento(dto_total_monto);
+			//ventaPedidoForm.setDescuento(dto_total_monto);
+			ventaPedidoForm.getListaProductos().get(index).setDescuento(0);
 			return;
 		}
 		
 		if ((campo < 0) || (campo > 100)) {
 			Messagebox.show("Valor debe estar entre 0 y 100");
-			ventaPedidoForm.setDtcoPorcentaje(Integer.valueOf(String.valueOf(dto_total)));
+			//ventaPedidoForm.setDtcoPorcentaje(Integer.valueOf(String.valueOf(dto_total)));
+			ventaPedidoForm.getListaProductos().get(index).setDescuento(0);
 			return;		
 		}
 		
@@ -2147,7 +2166,7 @@ public class ControllerEncargos implements Serializable {
 			if(bgdto.compareTo(descuento_autorizado)==1) {				
 				
 				Messagebox.show("El descuento mximo autorizado es de " + descuento_autorizado);
-				//document.ventaPedidoForm.submit();
+				ventaPedidoForm.setDescuento(0);
 				return;
 			}else {						
 				
@@ -2321,6 +2340,91 @@ public class ControllerEncargos implements Serializable {
 		ventaPedidoForm.setListaPromociones(newList4);	
 	}	
 	
+	
+	public boolean evaluaEntrega() {
+		
+		boolean entregado=false;		
+		
+		if (ventaPedidoForm.getFlujo().equals("modificar")) {
+			if (ventaPedidoForm.getPagadoTotal().equals("true")) {
+				if (ventaPedidoForm.getCerrado().equals("S"))
+						entregado=true;				
+				
+				if (!ventaPedidoForm.getCerrado().equals('S')) {
+					 if (ventaPedidoForm.getEntregado().equals("false"))
+						 entregado=false;
+					
+					 if (!ventaPedidoForm.getEntregado().equals("false"))
+						 entregado=true;					
+				}
+			}
+			
+			if (!ventaPedidoForm.getPagadoTotal().equals("true")) {
+				if (ventaPedidoForm.getPedido_costo_cero().equals("true")) {
+					if (ventaPedidoForm.getCerrado().equals("S"))
+						entregado=true;
+					
+					if (!ventaPedidoForm.getCerrado().equals("S")) {
+						if (ventaPedidoForm.getEntregado().equals("false"))
+							entregado=false;
+						
+						if (!ventaPedidoForm.getEntregado().equals("false"))
+							entregado=true;
+																	
+					}												
+				}
+				
+				if (!ventaPedidoForm.getPedido_costo_cero().equals("true"))
+					entregado=true;												
+			}
+		}								
+	
+		if (!ventaPedidoForm.getFlujo().equals("modificar")) {
+			if (ventaPedidoForm.getPagadoTotal().equals("true")) {
+				if (ventaPedidoForm.getCerrado().equals("S"))
+						entregado=true;				
+				
+				if (!ventaPedidoForm.getCerrado().equals('S')) {
+					 if (ventaPedidoForm.getEntregado().equals("false"))
+						 entregado=false;
+					
+					 if (!ventaPedidoForm.getEntregado().equals("false"))
+						 entregado=true;					
+				}
+			}
+			
+			if (!ventaPedidoForm.getPagadoTotal().equals("true")) {
+				if (ventaPedidoForm.getPedido_costo_cero().equals("true")) {
+					if (ventaPedidoForm.getCerrado().equals("S"))
+						entregado=true;
+					
+					if (!ventaPedidoForm.getCerrado().equals("S")) {
+						if (ventaPedidoForm.getEntregado().equals("false"))
+							entregado=false;
+						
+						if (!ventaPedidoForm.getEntregado().equals("false"))
+							entregado=true;
+																	
+					}												
+				}
+				
+				if (!ventaPedidoForm.getPedido_costo_cero().equals("true"))
+					entregado=true;												
+			}
+		}	
+		
+		return entregado;
+	}
+	
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@GlobalCommand
+	public void notificacionAlbaram() {
+		
+		//notifica desde el albaran
+	}	
+	
+	
 	//======================Getter and Setter============================
 	//===================================================================
 	public VentaPedidoForm getVentaPedidoForm() {
@@ -2419,7 +2523,6 @@ public class ControllerEncargos implements Serializable {
 		this.tipoPedidoBean = tipoPedidoBean;
 	}
 
-
 	public BeanControlCombos getBeanControlCombos() {
 		return beanControlCombos;
 	}
@@ -2461,7 +2564,6 @@ public class ControllerEncargos implements Serializable {
 		this.sucursalDes = sucursalDes;
 	}
 
-
 	public boolean iswArcliVisible() {
 		return wArcliVisible;
 	}
@@ -2470,17 +2572,20 @@ public class ControllerEncargos implements Serializable {
 		this.wArcliVisible = wArcliVisible;
 	}
 
-
 	public boolean isDescripcionFocus() {
 		return descripcionFocus;
 	}
 
-
 	public void setDescripcionFocus(boolean descripcionFocus) {
 		this.descripcionFocus = descripcionFocus;
 	}
-	
-	
-	
+
+	public boolean isEncargoEntregado() {
+		return encargoEntregado;
+	}
+
+	public void setEncargoEntregado(boolean encargoEntregado) {
+		this.encargoEntregado = encargoEntregado;
+	}	
 	
 }

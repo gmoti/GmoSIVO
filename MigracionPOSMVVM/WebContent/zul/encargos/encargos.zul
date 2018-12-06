@@ -32,6 +32,25 @@
 			 }				 
 			 
 			<!-- .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:none;text-shadow: none;}   -->
+			.button{
+		        font-size:10px;
+		        font-family:Verdana,Helvetica;
+		        font-weight:bold;
+		        color:white;
+		        background:#638cb5;
+		        border:0px;
+		        height:19px;
+		       }
+       
+			.button2{
+			        font-size:10px;
+			        font-family:Verdana,Helvetica;
+			        font-weight:bold;
+			        background-color:#809800;
+					color:#FFF;
+			        border:0px;
+			        height:19px;
+			       }
 		</style>
 		
 		<script><![CDATA[
@@ -217,79 +236,84 @@
 								<row><!-- fila 4 -->
 									<label value="No Sobre" />					    		
 					    			<textbox/>					
-									<cell/>
+									<cell/>	
 									
-									<zk if="${vm.flujo == 'modificar'}">
-										<zk if="${vm.pagadoTotal == 'true'}">
-											<zk if="${vm.cerrado == 'S'}">
-												//
+									<button label="@load(vm.ventaPedidoForm.entregado eq true?'Encargo entregado':'Entrega de encargos')" 
+											onClick="@command('pedidoEntrega')" 
+											style="@load(vm.ventaPedidoForm.entregado eq true?'background-color:green':'background-color:blue')"
+											disabled="@load(vm.ventaPedidoForm.entregado eq true?true:false)"  />																	
+									
+									<!-- 
+									<zk if="${vm.ventaPedidoForm.flujo == 'modificar'}">
+										<zk if="${vm.ventaPedidoForm.pagadoTotal == 'true'}">
+											<zk if="${vm.ventaPedidoForm.cerrado == 'S'}">
+												<button label="Encargo entregado1" sclass="button2" />
 											</zk>
-											<zk if="${vm.cerrado != 'S'}">
-												<zk if="${vm.entregado == 'false'}">
-													//
+											<zk if="${vm.ventaPedidoForm.cerrado != 'S'}">
+												<zk if="${vm.ventaPedidoForm.entregado == 'false'}">
+													<button label="Entrega de encargos2" onClick="@command('pedidoEntrega')" sclass="button"/>
 												</zk>
-												<zk if="${vm.entregado != 'false'}">
-													//
+												<zk if="${vm.ventaPedidoForm.entregado != 'false'}">
+													<button label="Encargo entregado3" sclass="button2" />
 												</zk>
 											</zk>
 										</zk>
 										
-										<zk if="${vm.pagadoTotal != 'true'}">
-											<zk if="${vm.pedido_costo_cero == 'true'}">
-												<zk if="${vm.cerrado == 'S'}">
-													//
+										<zk if="${vm.ventaPedidoForm.pagadoTotal != 'true'}">
+											<zk if="${vm.ventaPedidoForm.pedido_costo_cero == 'true'}">
+												<zk if="${vm.ventaPedidoForm.cerrado == 'S'}">
+													<button label="Encargo entregado4" sclass="button2" />
 												</zk>
-												<zk if="${vm.cerrado != 'S'}">
-													<zk if="${vm.entregado == 'false'}">
-														//
+												<zk if="${vm.ventaPedidoForm.cerrado != 'S'}">
+													<zk if="${vm.ventaPedidoForm.entregado == 'false'}">
+														<button label="Entrega de encargos5" onClick="@command('pedidoEntrega')" sclass="button"/>
 													</zk>
-													<zk if="${vm.entregado != 'false'}">
-														//
+													<zk if="${vm.ventaPedidoForm.entregado != 'false'}">
+														<button label="Encargo entregado6" sclass="button2" />
 													</zk>											
 												</zk>												
 											</zk>
-											<zk if="${vm.pedido_costo_cero != 'true'}">
-												//
+											<zk if="${vm.ventaPedidoForm.pedido_costo_cero != 'true'}">
+												<button label="Entrega de encargos7" sclass="button" />
 											</zk>								
 										</zk>
 									</zk>								
 									
-									<zk if="${vm.flujo != 'modificar'}">
-										<zk if="${vm.pagadoTotal == 'true'}">
-											<zk if="${vm.cerrado == 'S'}">
-												//
+									<zk if="${vm.ventaPedidoForm.flujo != 'modificar'}">
+										<zk if="${vm.ventaPedidoForm.pagadoTotal == 'true'}">
+											<zk if="${vm.ventaPedidoForm.cerrado == 'S'}">
+												<button label="Encargo entregado8" sclass="button2" />
 											</zk>
-											<zk if="${vm.cerrado != 'S'}">
-												<zk if="${vm.entregado == 'false'}">
-													//
+											<zk if="${vm.ventaPedidoForm.cerrado != 'S'}">
+												<zk if="${vm.ventaPedidoForm.entregado == 'false'}">
+													<button label="Entrega de encargos9" onClick="@command('pedidoEntrega')" sclass="button"/>
 												</zk>
-												<zk if="${vm.entregado != 'false'}">
-													//
+												<zk if="${vm.ventaPedidoForm.entregado != 'false'}">
+													<button label="Encargo entregado10" sclass="button2" />
 												</zk>
 											</zk>
 										</zk>
 										
-										<zk if="${vm.pagadoTotal != 'true'}">
-											<zk if="${vm.pedido_costo_cero == 'true'}">
-												<zk if="${vm.cerrado == 'S'}">
-													//
+										<zk if="${vm.ventaPedidoForm.pagadoTotal != 'true'}">
+											<zk if="${vm.ventaPedidoForm.pedido_costo_cero == 'true'}">
+												<zk if="${vm.ventaPedidoForm.cerrado == 'S'}">
+													<button label="Encargo entregado11" sclass="button2" />
 												</zk>
-												<zk if="${vm.cerrado != 'S'}">
-													<zk if="${vm.entregado == 'false'}">
-														//
+												<zk if="${vm.ventaPedidoForm.cerrado != 'S'}">
+													<zk if="${vm.ventaPedidoForm.entregado == 'false'}">
+														<button label="Entrega de encargos12" onClick="@command('pedidoEntrega')" sclass="button"/>
 													</zk>
-													<zk if="${vm.entregado != 'false'}">
-														//
+													<zk if="${vm.ventaPedidoForm.entregado != 'false'}">
+														<button label="Encargo entregado13" sclass="button2" />
 													</zk>											
 												</zk>												
 											</zk>
-											<zk if="${vm.pedido_costo_cero != 'true'}">
-												//
+											<zk if="${vm.ventaPedidoForm.pedido_costo_cero != 'true'}">
+												<button label="Entrega de encargos14" sclass="button" />
 											</zk>								
 										</zk>
-									</zk>
-									
-									<button label="Entrega de encargos" onClick="@command('pedidoEntrega')"/>							
+									</zk>								
+									 -->						
 									
 									<label value="Promocion" />
 									<combobox model="@load(vm.ventaPedidoForm.listaPromociones)" 
@@ -479,15 +503,15 @@
 											
 										<!-- Tipo de la grilla -->	
 										<zk if="${each.tipoFamilia =='C'}">
-											<textbox value="@load(each.tipo)" width="60px"/>
+											<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
 										</zk>
 										<zk if="${each.tipoFamilia !='C'}">
 											<zk if="${each.tipoFamilia =='L'}">
-												<textbox value="@load(each.tipo)" width="60px"/>
+												<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
 											</zk>
 											
 											<zk if="${each.tipoFamilia !='L'}">
-												<textbox value="@load(each.tipo)" width="60px" readonly="true"/>
+												<textbox width="60px" readonly="true"/> 
 											</zk>
 										</zk>	
 										<!-- Fin Tipo de la grilla -->							
@@ -679,6 +703,8 @@
 			</south>
 		</borderlayout>
 	</div>	
+	
+	<label value="@bind(vm.ventaPedidoForm.flujo)" visible="false"/>
 	
 </window>
 
