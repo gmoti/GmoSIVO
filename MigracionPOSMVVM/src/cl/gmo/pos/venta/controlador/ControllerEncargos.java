@@ -1881,12 +1881,20 @@ public class ControllerEncargos implements Serializable {
 		long descuento_max = 0;
 		long total = 0;
 		long dto = 0;
-		String tipo="";
+		String tipo="";		
+		objetos = new HashMap<String,Object>();
+		objetos.put("retorno","devuelveDescuento_totalMonto_Encargo");
 		
 		campo = ventaPedidoForm.getDescuento();
 		total = ventaPedidoForm.getSubTotal();
 		dto   = (campo * 100) / total;	
-		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
+		
+		Optional<String> tp = Optional.ofNullable(tipoPedidoBean.getCodigo());
+		
+		if (!tp.isPresent() || tp.get().equals(""))		
+			tipo = "0";
+		else
+			tipo = tp.get();
 		
 		
 		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
@@ -1895,8 +1903,11 @@ public class ControllerEncargos implements Serializable {
 		}	
 		
 		if (ventaPedidoForm.getBloquea().equals("bloquea")) {
-			Messagebox.show("Valor no puede ser mayor al monto total");			
-			ventaPedidoForm.setDescuento(dto_total_monto);
+			//Messagebox.show("Valor no puede ser mayor al monto total");			
+			//ventaPedidoForm.setDescuento(dto_total_monto);
+			
+			Messagebox.show("La venta esta bloqueda, no es posible modificar");
+			ventaPedidoForm.setDescuento(0);
 			return;
 		}		
 		
@@ -1915,19 +1926,19 @@ public class ControllerEncargos implements Serializable {
 						e.printStackTrace();
 					}
 					
-				}else {									
-					
+				}else {					
 					
 					sess.setAttribute("tipo", tipo);
 					
 					Window winAutoriza = (Window)Executions.createComponents(
-			                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+			                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
 					winAutoriza.doModal();					
 				}				
 				
 			}else {
 				Messagebox.show("Valor no puede ser mayor al monto total");
-				ventaPedidoForm.setDescuento(dto_total_monto);
+				//ventaPedidoForm.setDescuento(dto_total_monto);
+				ventaPedidoForm.setDescuento(0);
 				return;				
 			}	
 			
@@ -1952,14 +1963,15 @@ public class ControllerEncargos implements Serializable {
 						sess.setAttribute("tipo", tipo);
 						
 						Window winAutoriza = (Window)Executions.createComponents(
-				                "/zul/presupuestos/AutorizadorDescuento.zul", null, null);		
+				                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
 						winAutoriza.doModal();
 					}
 					
 					
 				}else {					
 					Messagebox.show("Valor no puede ser mayor al monto total");
-					ventaPedidoForm.setDescuento(dto_total_monto);
+					//ventaPedidoForm.setDescuento(dto_total_monto);
+					ventaPedidoForm.setDescuento(0);
 					return;
 				}			
 				
@@ -1979,10 +1991,16 @@ public class ControllerEncargos implements Serializable {
 		String tipo="";
 		
 		objetos = new HashMap<String,Object>();
-		objetos.put("retorno","devuelveDescuento_totalMonto_Encargo");
+		objetos.put("retorno","devuelveDescuento_totalDescuento_Encargo");
 		
 		campo = ventaPedidoForm.getDtcoPorcentaje();
-		tipo  = ventaPedidoForm.getTipo_pedido().equals("")? "0" : ventaPedidoForm.getTipo_pedido();
+		
+		Optional<String> tp = Optional.ofNullable(tipoPedidoBean.getCodigo());
+		
+		if (!tp.isPresent() || tp.get().equals(""))		
+			tipo = "0";
+		else
+			tipo = tp.get();
 		
 		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
 			Messagebox.show("La venta esta cerrada, no es posible modificar");
@@ -2019,13 +2037,13 @@ public class ControllerEncargos implements Serializable {
 			}else {
 				//autorizador				
 				
-				if (tipoPedidoBean != null) {
+				if (!tipo.equals("0")) {
 					
-					sess.setAttribute("tipo", tipo);
-					
+					sess.setAttribute("tipo", tipo);			
+											
 					Window winAutoriza = (Window)Executions.createComponents(
 			                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
-					winAutoriza.doModal();	
+					winAutoriza.doModal();								
 					
 				}else {
 					Messagebox.show("Debes seleccionar un tipo de Encargo");
@@ -2082,12 +2100,14 @@ public class ControllerEncargos implements Serializable {
 		objetos = new HashMap<String,Object>();
 		
 		campo = dcto;		
-		objetos.put("retorno","devuelveDescuento_totalMonto_Encargo");
+		objetos.put("retorno","devuelveDescuento_lineaMonto_Encargo");
 		
-		Optional<String> tp = Optional.ofNullable(ventaPedidoForm.getTipo_pedido());
+		Optional<String> tp = Optional.ofNullable(tipoPedidoBean.getCodigo());
 		
 		if (!tp.isPresent() || tp.get().equals(""))		
 			tipo = "0";	
+		else
+			tipo = tp.get();
 		
 		if (ventaPedidoForm.getEstado().equals("cerrado")) {			
 			Messagebox.show("La venta esta cerrada, no es posible modificar");
@@ -2121,17 +2141,10 @@ public class ControllerEncargos implements Serializable {
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}			
-		}else {
-			
-			/*indice = index;
-			descuento = campo;
-			document.ventaPedidoForm.sobre.focus();
-			var tipo = document.ventaPedidoForm.tipo_pedido.value;
-			var url = "<%=request.getContextPath()%>/SeleccionPago.do?method=cargaAutorizadorDescuento&tipo="+ tipo;
-			document.ventaPedidoForm.sobre.focus();		
-			showPopWin(url, 690, 130, devuelve_descuento, false);*/
+		}else {	
 			
 			sess.setAttribute("tipo", tipo);
+			sess.setAttribute("_IndexDescuento", index);
 			
 			Window winAutoriza = (Window)Executions.createComponents(
 	                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
@@ -2142,7 +2155,7 @@ public class ControllerEncargos implements Serializable {
 	}
 	
 	//===================== Retorno del autorizador =====================
-	//===================================================================
+	//===================================================================	
 	@NotifyChange({"ventaPedidoForm"})
 	@GlobalCommand
 	public void devuelveDescuento_totalMonto_Encargo(@BindingParam("valores")BeanGlobal valores) {
@@ -2151,11 +2164,10 @@ public class ControllerEncargos implements Serializable {
 		BigDecimal descuento_autorizado= BigDecimal.ZERO;
 		String usuario="";
 		long dto = 0;
-		BigDecimal bgdto = BigDecimal.ZERO;
+		BigDecimal bgdto = BigDecimal.ZERO;		
 		
-		dto = (ventaPedidoForm.getDescuento() * 100) / ventaPedidoForm.getSubTotal();
-		
-		bgdto = BigDecimal.valueOf(dto);
+		dto = (ventaPedidoForm.getDescuento() * 100) / ventaPedidoForm.getSubTotal();		
+		bgdto = BigDecimal.valueOf(dto);	
 		
 		acceso = (String)valores.getObj_1();
 		descuento_autorizado = (BigDecimal)valores.getObj_2();
@@ -2166,7 +2178,7 @@ public class ControllerEncargos implements Serializable {
 			if(bgdto.compareTo(descuento_autorizado)==1) {				
 				
 				Messagebox.show("El descuento mximo autorizado es de " + descuento_autorizado);
-				ventaPedidoForm.setDescuento(0);
+				ventaPedidoForm.setDescuento(0);				
 				return;
 			}else {						
 				
@@ -2177,19 +2189,117 @@ public class ControllerEncargos implements Serializable {
 					ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 				} catch (Exception e) {					
 					e.printStackTrace();
-				}
-				
+				}				
 			}
 			
 			
 		}else {			
-			
 			Messagebox.show("Usted no esta autorizado, para realizar este tipo de descuento");
-			ventaPedidoForm.setDescuento(0);
+			ventaPedidoForm.setDescuento(0);			
 			return;
 		}	
 		
 	}
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@GlobalCommand
+	public void devuelveDescuento_totalDescuento_Encargo(@BindingParam("valores")BeanGlobal valores) {
+		
+		String acceso="";
+		BigDecimal descuento_autorizado= BigDecimal.ZERO;
+		String usuario="";
+		BigDecimal descuento= BigDecimal.ZERO;
+		
+		acceso = (String)valores.getObj_1();
+		descuento_autorizado = (BigDecimal)valores.getObj_2();
+		usuario   = (String)valores.getObj_3();			
+		
+    	if (acceso.equals("true")) {	
+    		
+    		descuento = BigDecimal.valueOf(ventaPedidoForm.getDtcoPorcentaje());		
+			
+			if (descuento.compareTo(descuento_autorizado)==1) {
+				Messagebox.show("El descuento máximo autorizado es de " + descuento_autorizado);
+				ventaPedidoForm.setDtcoPorcentaje(0);
+				return;
+			}
+			else
+			{							
+				try {
+					ventaPedidoForm.setCantidad_descuento(Double.parseDouble(String.valueOf(descuento)));
+					ventaPedidoForm.setAccion("descuento_total");
+					ventaPedidoForm.setDescuento_autoriza(usuario);			
+					
+					ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}			
+			}
+		}
+		else
+		{
+			Messagebox.show("Usted no esta autorizado, para realizar este tipo de descuento");
+			ventaPedidoForm.setDtcoPorcentaje(0);
+		}
+		
+		
+	}
+	
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@GlobalCommand
+	public void devuelveDescuento_lineaMonto_Encargo(@BindingParam("valores")BeanGlobal valores) {
+				
+		String acceso="";
+		BigDecimal descuento_autorizado= BigDecimal.ZERO;
+		BigDecimal descuento_ingresado= BigDecimal.ZERO;
+		String usuario="";
+		int index = 0;
+		int comparacion=0;
+		
+		acceso 					= (String)valores.getObj_1();
+		descuento_autorizado 	= (BigDecimal)valores.getObj_2();
+		usuario   				= (String)valores.getObj_3();
+		index 					= (int)sess.getAttribute("_IndexDescuento");
+ 		
+    	if (acceso.equals("true")) {
+    		
+			//var descuento_ingresado = document.getElementById("cantidad").value;
+			descuento_ingresado = BigDecimal.valueOf(Double.parseDouble(String.valueOf(ventaPedidoForm.getListaProductos().get(index).getDescuento())));
+			
+			comparacion = descuento_ingresado.compareTo(descuento_autorizado);
+			
+			if (comparacion==1) {
+				Messagebox.show("El descuento máximo autorizado es de " + descuento_autorizado);				
+				ventaPedidoForm.getListaProductos().get(index).setDescuento(0);
+				return;
+			}
+			else
+			{				
+				try {
+					ventaPedidoForm.setAddProducto(String.valueOf(index));
+					ventaPedidoForm.setCantidad_descuento(ventaPedidoForm.getListaProductos().get(index).getDescuento());
+					ventaPedidoForm.setAccion("descuento_linea");
+					ventaPedidoForm.setDescuento_autoriza(usuario);
+					
+					ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}				
+			}
+		}
+		else
+		{
+			Messagebox.show("Usted no esta autorizado, para realizar este tipo de descuento");
+			ventaPedidoForm.getListaProductos().get(index).setDescuento(0);
+			return;
+		}
+		
+	}
+	//===================== Fin Retorno Autorizador =====================
+	
+	
 	
 	//===================== Valida grupo ================================
 	@NotifyChange({"ventaPedidoForm"})

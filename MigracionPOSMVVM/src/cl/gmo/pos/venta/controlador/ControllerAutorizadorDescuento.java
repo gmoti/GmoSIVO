@@ -12,6 +12,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.zhtml.Big;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.utils.Constantes;
@@ -28,25 +29,25 @@ public class ControllerAutorizadorDescuento implements Serializable {
 	private String user;
 	private String pass;
 	HashMap<String,Object> objetos;
+	private String tipo="";
+	private BigDecimal descuento = BigDecimal.ZERO;
 	
 	
 	@Init
 	public void inicial(@ExecutionArgParam("retorno")String retorno) {
 		
+		tipo = sess.getAttribute(Constantes.STRING_TIPO).toString();
 		user="";
 		pass="";
 		respuesta = retorno;
+		
 	}
 	
 	
 	@Command
 	public void autorizadesc(@BindingParam("win")Window win) {
-		
-		BigDecimal descuento;
-		String tipo="";
-		BeanGlobal bg = new BeanGlobal();
-		
-		tipo = sess.getAttribute(Constantes.STRING_TIPO).toString();		
+				
+		BeanGlobal bg = new BeanGlobal();			
 		
 		if (!tipo.equals(Constantes.STRING_CERO))
 		{
@@ -64,7 +65,7 @@ public class ControllerAutorizadorDescuento implements Serializable {
 		}
 		else
 		{
-			descuento = new VentaPedidoHelper().traeDecuento(user, pass, null);
+			/*descuento = new VentaPedidoHelper().traeDecuento(user, pass, null);
 			if(descuento.equals(new BigDecimal(-1))) {
 				 bg.setObj_1("false");
 				 bg.setObj_2(BigDecimal.ZERO);
@@ -73,9 +74,14 @@ public class ControllerAutorizadorDescuento implements Serializable {
 				 bg.setObj_1("false");
 				 bg.setObj_2(descuento);
 				 bg.setObj_3(user);
-			 }	
-		}	
-		
+			 }	*/
+			
+			Messagebox.show("Debes seleccionar un tipo de Encargo");
+			bg.setObj_1("false");
+			bg.setObj_2(BigDecimal.ZERO);
+			bg.setObj_3("");	
+			
+		}			
 		
 		objetos = new HashMap<String,Object>();		
 		objetos.put("valores", bg);		

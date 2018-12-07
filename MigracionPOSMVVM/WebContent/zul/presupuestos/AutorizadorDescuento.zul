@@ -38,7 +38,7 @@
 				<label value="Autorizador" style="float: left ;"/>
 				<toolbarbutton image="/iconos/cancel.png" 
 					sclass="shrink24" style="float: right" 
-					onClick="winAutorizadorDescuento.detach()"/>
+					onClick="winAutorizadorDescuento.detach()" visible="false"/>
 			</div>
 			
 			<grid sclass="MyGridRowHeight" width="100%" vflex="min">

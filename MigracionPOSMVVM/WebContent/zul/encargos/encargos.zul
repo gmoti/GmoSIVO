@@ -139,7 +139,26 @@
 									<textbox value="@load(vm.ventaPedidoForm.nombre_cliente)" width="250px" readonly="true"/>		
 						
 									<label value="fecha"/>
-									<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />					    			
+									
+									<if test="false"></if>
+									
+									<if test='@bind(vm.ventaPedidoForm.desde_presupuesto eq "false" ? "true" : "false")'>
+									
+									</if>
+									
+									<if test="@bind(vm.ventaPedidoForm.desde_presupuesto eq 'false'?true:false)">
+										<if test="@bind(vm.ventaPedidoForm.tiene_pagos eq 'false'?true:false)">
+											<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="false" />
+										</if>
+											
+										<if test="@bind(vm.ventaPedidoForm.tiene_pagos eq 'true'?true:false)">
+											<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />
+										</if>																		
+									</if>
+									
+									<if test="@bind(vm.ventaPedidoForm.desde_presupuesto eq 'true'?true:false)">
+										<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />
+									</if>					    			
 								</row>
 								
 								<row><!-- fila 2 -->
@@ -238,10 +257,10 @@
 					    			<textbox/>					
 									<cell/>	
 									
-									<button label="@load(vm.ventaPedidoForm.entregado eq true?'Encargo entregado':'Entrega de encargos')" 
+									<button label="@bind(vm.ventaPedidoForm.entregado eq true?'Encargo entregado':'Entrega de encargos')" 
 											onClick="@command('pedidoEntrega')" 
-											style="@load(vm.ventaPedidoForm.entregado eq true?'background-color:green':'background-color:blue')"
-											disabled="@load(vm.ventaPedidoForm.entregado eq true?true:false)"  />																	
+											style="@bind(vm.ventaPedidoForm.entregado eq true?'background-color:green':'background-color:blue')"
+											disabled="@bind(vm.ventaPedidoForm.entregado eq true?true:false)"  />																	
 									
 									<!-- 
 									<zk if="${vm.ventaPedidoForm.flujo == 'modificar'}">
