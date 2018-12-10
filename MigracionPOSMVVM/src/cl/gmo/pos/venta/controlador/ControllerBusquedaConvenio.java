@@ -39,17 +39,10 @@ public class ControllerBusquedaConvenio implements Serializable {
 	
 	HashMap<String,Object> objetos;
 	
-	@Wire
-	private Window winBusquedaConvenio;
-	
-	
 	@Init
-	public void inicial(@ContextParam(ContextType.VIEW) Component view,
-						@ExecutionArgParam("busquedaConvenios")BusquedaConveniosForm arg,
+	public void inicial(@ExecutionArgParam("busquedaConvenios")BusquedaConveniosForm arg,
 						@ExecutionArgParam("ventana")String arg2,
-						@ExecutionArgParam("origen")String arg3	) {
-		
-		Selectors.wireComponents(view, this, false);
+						@ExecutionArgParam("origen")String arg3	) {	
             
 		busquedaConveniosForm = new BusquedaConveniosForm();
 		busquedaConveniosForm = arg;
@@ -71,7 +64,8 @@ public class ControllerBusquedaConvenio implements Serializable {
 	
 	@NotifyChange({"busquedaConveniosForm"})
 	@Command
-	public void seleccionaConvenio(@BindingParam("arg")ConvenioBean convenio) {
+	public void seleccionaConvenio(@BindingParam("arg")ConvenioBean convenio,
+									@BindingParam("win")Window winBusquedaConvenio) {
 		
 		int index=0;
 		objetos = new HashMap<String,Object>();		
@@ -88,13 +82,13 @@ public class ControllerBusquedaConvenio implements Serializable {
 		//busquedaConveniosDispatchActions.selecciona_convenio(busquedaConveniosForm, sess);
 		objetos.put("busquedaConvenios",busquedaConveniosForm);
 		objetos.put("ventana",pVentana);
-		objetos.put("origen",pOrigen);
+		objetos.put("origen","busqueda");
 		objetos.put("win",winBusquedaConvenio);
 		
 		//se llama ventana convenio
-		Window window = (Window)Executions.createComponents(
+		Window winSeleccionaConvenio = (Window)Executions.createComponents(
                 "/zul/presupuestos/SeleccionaConvenio.zul", null, objetos);		
-        window.doModal();	
+		winSeleccionaConvenio.doModal();	
 		
 	}
 	

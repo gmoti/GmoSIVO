@@ -672,7 +672,13 @@ public class ControllerEncargos implements Serializable {
 		
 		Optional<String> cvn = Optional.ofNullable(ventaPedidoForm.getConvenio());
 		if(!cvn.isPresent())
-			ventaPedidoForm.setConvenio("");	
+			ventaPedidoForm.setConvenio("");
+		
+		//no modificar si tiene pagos efectuados
+		if(ventaPedidoForm.getTiene_pagos().equals("true")) {
+			Messagebox.show("El encargo tiene pagos realizados, no es posible modificarlo");
+			return;
+		}
 		
 		
 		if (ventaPedidoForm.getNombre_cliente().equals("")) {
@@ -1052,8 +1058,12 @@ public class ControllerEncargos implements Serializable {
 					//param1 : descripcion
 					//param2 : cdg
 					//param3 : isapre				
-					ventaPedidoForm.setConvenio_det((String)bg.getObj_1());				
-					busquedaConveniosDispatchActions.selecciona_convenio_cdg(busquedaConveniosForm, sess);
+					ventaPedidoForm.setConvenio_det((String)bg.getObj_1());					
+					busquedaConveniosDispatchActions.selecciona_convenio_cdg(busquedaConveniosForm, sess);	
+					
+					busquedaConveniosForm.setSel_convenio((String)bg.getObj_2());
+					busquedaConveniosForm.setSel_convenio_det((String)bg.getObj_1());
+					ventaPedidoForm.setIsapre((String)bg.getObj_3());
 					
 					objetos = new HashMap<String,Object>();		
 					objetos.put("busquedaConvenios",busquedaConveniosForm);
@@ -1067,7 +1077,7 @@ public class ControllerEncargos implements Serializable {
 					
 					
 				}else {				
-					Messagebox.show("Debe ingresar un cï¿½digo de convenio");			
+					Messagebox.show("Debe ingresar un código de convenio");			
 				}		
 			}else {
 				Messagebox.show("No se pueden modificar convenio, presupuesto esta cerrado");	
@@ -1100,9 +1110,29 @@ public class ControllerEncargos implements Serializable {
 		@GlobalCommand
 		public void respVentanaConvenioPedido(@BindingParam("busquedaConvenios")BusquedaConveniosForm convenio) {
 			
-			selConvenio="false";		
-			ventaPedidoForm.setConvenio(convenio.getSel_convenio());
-			ventaPedidoForm.setConvenio_det(convenio.getSel_convenio_det());		
+			/*document.ventaPedidoForm.forma_pago.value = valores[0];
+	 		document.ventaPedidoForm.convenio.value = valores[2];
+	 		if("" != valores[3])
+	 		{
+	 			document.ventaPedidoForm.convenio_det.value = valores[3];
+	 		}
+	 		document.ventaPedidoForm.convenio_ln.value = valores[4];
+	 		document.getElementById('accion').value = "cambio_convenio";
+        	document.ventaPedidoForm.submit();*/			
+			
+			try {
+				
+				selConvenio="false";		
+				ventaPedidoForm.setConvenio(convenio.getSel_convenio());
+				ventaPedidoForm.setConvenio_det(convenio.getSel_convenio_det());
+				
+				ventaPedidoForm.setAccion("cambio_convenio");
+				
+				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
 		}
 		
 		@NotifyChange({"ventaPedidoForm","selConvenio"})
@@ -1220,6 +1250,11 @@ public class ControllerEncargos implements Serializable {
 		double esfera = 0;
 		double cilindro= 0;
 		
+		
+		if(ventaPedidoForm.getTiene_pagos().equals("true")) {
+			Messagebox.show("El encargo tiene pagos realizados, no es posible modificarlo");
+			return;
+		}		
 		
 		//no viene la graduaciion
 		arg.setImporte(arg.getPrecio());
@@ -1661,6 +1696,7 @@ public class ControllerEncargos implements Serializable {
 	@Command
 	public void buscarConvenioAjax() {		
 		
+		Window winSeleccionaConvenio=new Window();
 		busquedaConveniosForm = new BusquedaConveniosForm();		
 		busquedaConveniosDispatchActions = new BusquedaConveniosDispatchActions();	
 		
@@ -1686,7 +1722,7 @@ public class ControllerEncargos implements Serializable {
 			}
 			
 			if (ventaPedidoForm.getConvenio().equals("")) {
-				Messagebox.show("debe ingresar un cï¿½digo de convenio");
+				Messagebox.show("debe ingresar un código de convenio");
 				return;
 			}			
 			
@@ -1701,24 +1737,32 @@ public class ControllerEncargos implements Serializable {
 				//param1 : descripcion
 				//param2 : cdg
 				//param3 : isapre				
-				ventaPedidoForm.setConvenio_det((String)bg.getObj_1());		
+				ventaPedidoForm.setConvenio_det((String)bg.getObj_1());	
+				ventaPedidoForm.setIsapre((String)bg.getObj_3());
 				
-				if(ventaPedidoForm.getConvenio_det().equals("undefined"))
+				if(ventaPedidoForm.getConvenio_det().equals(""))
 				{
 					ventaPedidoForm.setConvenio_det("");
 					ventaPedidoForm.setConvenio("");
+					ventaPedidoForm.setIsapre("N");
 				}	
 				
-				busquedaConveniosDispatchActions.selecciona_convenio_cdg(busquedaConveniosForm, sess);
+				busquedaConveniosDispatchActions.selecciona_convenio_cdg(busquedaConveniosForm, sess);	
+				
+				busquedaConveniosForm.setSel_convenio((String)bg.getObj_2());
+				busquedaConveniosForm.setSel_convenio_det((String)bg.getObj_1());
 				
 				objetos = new HashMap<String,Object>();		
 				objetos.put("busquedaConvenios",busquedaConveniosForm);
-				objetos.put("origen","pedido");
+				objetos.put("ventana","encargo");
+				objetos.put("origen","encargo");
+				objetos.put("win",winSeleccionaConvenio);		
 				
 				//se llama ventana convenio
-				Window window = (Window)Executions.createComponents(
-		                "/zul/presupuestos/SeleccionaConvenio.zul", null, objetos);		
-		        window.doModal();			
+				winSeleccionaConvenio = (Window)Executions.createComponents(
+		                "/zul/presupuestos/SeleccionaConvenio.zul", null, objetos);	
+					
+				winSeleccionaConvenio.doModal();			
 				
 				
 				
@@ -1735,24 +1779,31 @@ public class ControllerEncargos implements Serializable {
 				//param2 : cdg
 				//param3 : isapre				
 				ventaPedidoForm.setConvenio_det((String)bg.getObj_1());
+				ventaPedidoForm.setIsapre((String)bg.getObj_3());
 				
-				if(ventaPedidoForm.getConvenio_det().equals("undefined"))
+				if(ventaPedidoForm.getConvenio_det().equals(""))
 				{
 					ventaPedidoForm.setConvenio_det("");
 					ventaPedidoForm.setConvenio("");
+					ventaPedidoForm.setIsapre("N");
 				}				
 				
-				busquedaConveniosDispatchActions.selecciona_convenio_cdg(busquedaConveniosForm, sess);
+				busquedaConveniosDispatchActions.selecciona_convenio_cdg(busquedaConveniosForm, sess);	
+				
+				busquedaConveniosForm.setSel_convenio((String)bg.getObj_2());
+				busquedaConveniosForm.setSel_convenio_det((String)bg.getObj_1());
 				
 				objetos = new HashMap<String,Object>();		
 				objetos.put("busquedaConvenios",busquedaConveniosForm);
-				objetos.put("origen","pedido");
+				objetos.put("ventana","encargo");
+				objetos.put("origen","encargo");
+				objetos.put("win",winSeleccionaConvenio);
 				
 				//se llama ventana convenio
-				Window window = (Window)Executions.createComponents(
-		                "/zul/presupuestos/SeleccionaConvenio.zul", null, objetos);		
-		        window.doModal();
+				winSeleccionaConvenio = (Window)Executions.createComponents(
+		                "/zul/presupuestos/SeleccionaConvenio.zul", null, objetos);
 				
+				winSeleccionaConvenio.doModal();				
 				
 			} //flujo modificar
 			
@@ -1781,12 +1832,12 @@ public class ControllerEncargos implements Serializable {
 				objetos = new HashMap<String,Object>();		
 				objetos.put("busquedaConvenios",busquedaConveniosForm);
 				objetos.put("ventana","encargo");
-				objetos.put("origen","encargo");				
+				objetos.put("origen","busqueda");				
 				
 				//ventana convenio
-				Window window = (Window)Executions.createComponents(
+				Window winBusquedaConvenio = (Window)Executions.createComponents(
 		                "/zul/presupuestos/BusquedaConvenio.zul", null, objetos);		
-		        window.doModal();
+				winBusquedaConvenio.doModal();
 				
 			}else {
 				
@@ -1802,12 +1853,12 @@ public class ControllerEncargos implements Serializable {
 				objetos = new HashMap<String,Object>();		
 				objetos.put("busquedaConvenios",busquedaConveniosForm);
 				objetos.put("ventana","encargo");
-				objetos.put("origen","encargo");
+				objetos.put("origen","busqueda");
 				
 				//ventana convenio
-				Window window = (Window)Executions.createComponents(
+				Window winBusquedaConvenio = (Window)Executions.createComponents(
 		                "/zul/presupuestos/BusquedaConvenio.zul", null, objetos);		
-		        window.doModal();
+				winBusquedaConvenio.doModal();
 				
 			}else {				
 				Messagebox.show("Debe seleccionar un cliente, para agregar convenios");

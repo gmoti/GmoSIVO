@@ -106,7 +106,7 @@
 									<textbox value="@load(each.id)" readonly="true" width="100px"/>
 									<textbox value="@load(each.descripcion)" width="350px" readonly="true"/>									
 									<toolbarbutton image="/iconos/add.png"  width="50px"
-										onClick="@command('seleccionaConvenio',arg=each)"/>
+										onClick="@command('seleccionaConvenio',arg=each,win=winBusquedaConvenio)"/>
 								</row>
 							</template>
 						</grid>	

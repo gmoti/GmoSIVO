@@ -29,29 +29,24 @@ public class ControllerSeleccionaConvenio implements Serializable {
 	Session sess = Sessions.getCurrent();
 	
 	private BusquedaConveniosForm busquedaConveniosForm;
-	private BusquedaConveniosDispatchActions busquedaConveniosDispatchActions;
+	private BusquedaConveniosDispatchActions busquedaConveniosDispatch;
 	private ConvenioLnBean convenioLnBean;
 	
 	private String pVentana;
 	private String pOrigen;
-	
-	@Wire
-	private Window winSeleccionaConvenio;	
 	
 	private Window busquedaConvenio;
 	
 	HashMap<String,Object> objetos;
 	
 	@Init
-	public void inicial(@ContextParam(ContextType.VIEW) Component view,
-						@ExecutionArgParam("busquedaConvenios")BusquedaConveniosForm arg,
+	public void inicial(@ExecutionArgParam("busquedaConvenios")BusquedaConveniosForm arg,
 						@ExecutionArgParam("ventana")String arg2,
 						@ExecutionArgParam("origen")String arg3,
-						@ExecutionArgParam("win")Window arg4) {
-		
-		Selectors.wireComponents(view, this, false);
+						@ExecutionArgParam("win")Window arg4) {	
 		
 		busquedaConveniosForm = new BusquedaConveniosForm(); 
+		busquedaConveniosDispatch = new BusquedaConveniosDispatchActions();
 		convenioLnBean        = new ConvenioLnBean();
 		
 		busquedaConveniosForm = arg;
@@ -60,14 +55,12 @@ public class ControllerSeleccionaConvenio implements Serializable {
 		busquedaConvenio=arg4;
 		 
 		
-		if (pOrigen.equals("presupuesto")) {
-			busquedaConveniosDispatchActions = new BusquedaConveniosDispatchActions();		
-			busquedaConveniosDispatchActions.selecciona_convenio(busquedaConveniosForm, sess);
+		if (pVentana.equals("presupuesto") && pOrigen.equals("busqueda")) {					
+			busquedaConveniosDispatch.selecciona_convenio(busquedaConveniosForm, sess);
 		}
 		
-		if (pOrigen.equals("encargo")) {
-			busquedaConveniosDispatchActions = new BusquedaConveniosDispatchActions();		
-			busquedaConveniosDispatchActions.selecciona_convenio(busquedaConveniosForm, sess);
+		if (pVentana.equals("encargo") && pOrigen.equals("busqueda")) {				
+			busquedaConveniosDispatch.selecciona_convenio(busquedaConveniosForm, sess);
 		}
 		
 		
@@ -79,27 +72,40 @@ public class ControllerSeleccionaConvenio implements Serializable {
 									@BindingParam("index")int arg2) {
 		
 		convenioLnBean = arg;		
+		
+		/*busquedaConveniosForm.setSel_convenio(arg.get);
+		busquedaConveniosForm.setSel_convenio_det(arg);
+		busquedaConveniosForm.setNombre(arg);*/
+		
 		busquedaConveniosForm.setIndice(String.valueOf(arg2));
 		busquedaConveniosForm.setAccion("desplegar_familias");
-		busquedaConveniosDispatchActions.selecciona_convenio(busquedaConveniosForm, sess);
+		busquedaConveniosDispatch.selecciona_convenio(busquedaConveniosForm, sess);
 		
 	}
 	
 	@Command
-	public void aceptaConvenio() {
+	public void aceptaConvenio(@BindingParam("win")Window winSeleccionaConvenio) {
 		
 		objetos = new HashMap<String,Object>();	
-		objetos.put("busquedaConvenios",busquedaConveniosForm);
+		
+		
+		if(busquedaConveniosForm.getLista_formas_pago().size()<1) {
+			return;
+		}
+		
+		
+		objetos.put("busquedaConvenios",busquedaConveniosForm);	
 		
 		if (pVentana.equals("presupuesto")) {
 			
 			if (pOrigen.equals("presupuesto")) {
 				BindUtils.postGlobalCommand(null, null, "respVentanaConvenioPres", objetos);
 				winSeleccionaConvenio.detach();
-				busquedaConvenio.detach();
+				
 			}else {
 				BindUtils.postGlobalCommand(null, null, "respVentanaConvenioPres", objetos);
-				winSeleccionaConvenio.detach();				
+				winSeleccionaConvenio.detach();		
+				busquedaConvenio.detach();
 			}
 			
 		}else if (pVentana.equals("encargo")) {
@@ -107,10 +113,11 @@ public class ControllerSeleccionaConvenio implements Serializable {
 			if (pOrigen.equals("encargo")) {
 				BindUtils.postGlobalCommand(null, null, "respVentanaConvenioPedido", objetos);
 				winSeleccionaConvenio.detach();
-				busquedaConvenio.detach();
+				
 			}else {
 				BindUtils.postGlobalCommand(null, null, "respVentanaConvenioPedido", objetos);
 				winSeleccionaConvenio.detach();				
+				busquedaConvenio.detach();
 			}			
 		} 		
 	}

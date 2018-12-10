@@ -38,7 +38,7 @@
 					<div width="100%" vflex="min"  style="background-color:black;color: white">
 						<label value="Busqueda Productos" />
 						<div style="float: right">					
-							<toolbarbutton image="/iconos/cancel2.png" onClick="@command('cierraVentana')"/>		
+							<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cierraVentana')"/>		
 						</div>																			
 					</div>
 					
@@ -338,7 +338,7 @@
 			
 				<div width="100%">
 					<grid model="@bind(vm.busquedaProductosForm.listaGraduaciones)" 
-							fixedLayout="true" oddRowSclass="none"
+							fixedLayout="true" oddRowSclass="none" sclass="MyGridRowHeight"
 							width="100%" height="200px">
 						<columns>
 							<column width="110px" />
@@ -355,16 +355,16 @@
 						</columns>
 						<template name="model">							
 							<row>
-								<textbox value="@bind(each.fecha)" width="100px"/>
-								<textbox value="@bind(each.numero)" width="50px"/>
-								<textbox value="@bind(each.OD_esfera)" width="50px"/>
-								<textbox value="@bind(each.OD_cilindro)" width="50px"/>
-								<textbox value="@bind(each.OD_eje)" width="50px"/>
-								<textbox value="@bind(each.OD_adicion)" width="50px"/>
-								<textbox value="@bind(each.OI_esfera)" width="50px"/>
-								<textbox value="@bind(each.OI_cilindro)" width="50px"/>
-								<textbox value="@bind(each.OI_eje)" width="50px"/>
-								<textbox value="@bind(each.OI_adicion)" width="50px"/>	
+								<textbox value="@load(each.fecha)" width="100px" readonly="true"/>
+								<textbox value="@load(each.numero)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OD_esfera)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OD_cilindro)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OD_eje)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OD_adicion)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OI_esfera)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OI_cilindro)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OI_eje)" width="50px" readonly="true"/>
+								<textbox value="@load(each.OI_adicion)" width="50px" readonly="true"/>	
 								<toolbarbutton image="/iconos/add.png" sclass="shrink16"
 									onClick="@command('seleccionaGraduacion',codigo=each.codigo)" width="50px"/>					
 							</row>							

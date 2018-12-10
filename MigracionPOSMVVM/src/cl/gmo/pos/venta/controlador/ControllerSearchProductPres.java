@@ -29,9 +29,7 @@ import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
 public class ControllerSearchProductPres implements Serializable {
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -7360268478883882968L;
 	
 	Session sess = Sessions.getCurrent();
@@ -119,8 +117,8 @@ public class ControllerSearchProductPres implements Serializable {
 		busquedaProductosForm.setChk_cerca(false);
 		
 		//preload de graduaciones
-		//busquedaProductosForm.setAccion("buscar_graduacion");	
-		//busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
+		busquedaProductosForm.setAccion("buscar_graduacion");	
+		busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
 		
 	}
 	

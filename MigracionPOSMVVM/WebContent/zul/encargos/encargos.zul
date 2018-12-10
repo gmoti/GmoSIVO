@@ -140,25 +140,11 @@
 						
 									<label value="fecha"/>
 									
-									<if test="false"></if>
 									
-									<if test='@bind(vm.ventaPedidoForm.desde_presupuesto eq "false" ? "true" : "false")'>
+									<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" 
+										disabled="@bind(vm.ventaPedidoForm.desde_presupuesto eq 'true' or vm.ventaPedidoForm.tiene_pagos eq 'true')"/>
 									
-									</if>
-									
-									<if test="@bind(vm.ventaPedidoForm.desde_presupuesto eq 'false'?true:false)">
-										<if test="@bind(vm.ventaPedidoForm.tiene_pagos eq 'false'?true:false)">
-											<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="false" />
-										</if>
-											
-										<if test="@bind(vm.ventaPedidoForm.tiene_pagos eq 'true'?true:false)">
-											<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />
-										</if>																		
-									</if>
-									
-									<if test="@bind(vm.ventaPedidoForm.desde_presupuesto eq 'true'?true:false)">
-										<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" />
-									</if>					    			
+														    			
 								</row>
 								
 								<row><!-- fila 2 -->
@@ -202,7 +188,8 @@
 									</combobox>
 								
 									<label value="Hora" />
-									<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true"/>
+									<datebox value="@bind(vm.fecha)" format="hh:mm:ss" 
+										disabled="@bind(vm.ventaPedidoForm.desde_presupuesto eq 'true' or vm.ventaPedidoForm.tiene_pagos eq 'true')"/>
 								</row>
 								
 								<row><!-- fila 3 -->
@@ -574,27 +561,27 @@
 						</div>
 					</div>
 					
-					<div width="100%" height="15%" vflex="min" align="center">
+					<div width="100%" height="20%" vflex="min" align="center">
 						
-						<div width="100%">						
+						<div width="100%" vflex="min">						
 							<div width="730px" style="background-color:black;color: white;" align="left">
 								<label value="Graduacion del articulo" />
 							</div>
 						
 							<hbox>
-								<label value="Esfera" />
-								<doublebox value="@load(vm.productoBean.esfera)" width="75px" readonly="true" style="text-align:right"/>
+								<label value="Esfera"/>
+								<doublebox value="@load(vm.productoBean.esfera)" width="75px" readonly="true" style="text-align:right; vertical-align: middle"/>
 								<label value="Cilindro" />
-								<doublebox value="@load(vm.productoBean.cilindro)" width="75px" readonly="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.cilindro)" width="75px" readonly="true" style="text-align:right; vertical-align: middle"/>
 								<label value="Diametro" />
-								<doublebox value="@load(vm.productoBean.diametro)" width="75px" readonly="true" style="text-align:right"/>
+								<doublebox value="@load(vm.productoBean.diametro)" width="75px" readonly="true" style="text-align:right; vertical-align: middle"/>
 								
 								<label value="F.Grad" />
-								<textbox value="@load(vm.productoBean.fecha_graduacion)" width="75px" readonly="true" style="text-align:right"/>
+								<textbox value="@load(vm.productoBean.fecha_graduacion)" width="75px" readonly="true" style="text-align:right; vertical-align: middle"/>
 								<label value="No.Grad" />
-								<textbox value="@load(vm.productoBean.numero_graduacion)" width="75px" readonly="true" style="text-align:right"/>
+								<textbox value="@load(vm.productoBean.numero_graduacion)" width="75px" readonly="true" style="text-align:right; vertical-align: middle"/>
 								<label value="Ojo" />
-								<textbox value="@load(vm.productoBean.ojo)" width="75px" readonly="true" style="text-align:right"/>								
+								<textbox value="@load(vm.productoBean.ojo)" width="75px" readonly="true" style="text-align:right; vertical-align: middle"/>								
 							</hbox>
 						</div>						
 					</div>
@@ -722,8 +709,6 @@
 			</south>
 		</borderlayout>
 	</div>	
-	
-	<label value="@bind(vm.ventaPedidoForm.flujo)" visible="false"/>
 	
 </window>
 

@@ -114,7 +114,7 @@
 						<textbox value="@bind(vm.convenioLnBean.dto)" width="50px" disabled="true"/>
 						
 						<toolbarbutton image="/iconos/check.png" 
-							onClick="@command('aceptaConvenio')"  width="30px" sclass="shrink16"/>
+							onClick="@command('aceptaConvenio',win=winSeleccionaConvenio)"  width="30px" sclass="shrink16"/>
 						<toolbarbutton image="/iconos/cancel.png" 
 							onClick="winSeleccionaConvenio.detach()" width="30px" sclass="shrink16"/>
 						

@@ -70,7 +70,7 @@ public class BusquedaConveniosDispatchActions{
 		
 		global.setObj_1(Constantes.STRING_BLANCO);
 		global.setObj_2(Constantes.STRING_BLANCO);
-		global.setObj_2(Constantes.STRING_BLANCO);
+		global.setObj_3(Constantes.STRING_BLANCO);
 		
 		BusquedaConveniosForm formulario = (BusquedaConveniosForm)form;
 		//String cdg = request.getParameter("convenio");
@@ -92,7 +92,7 @@ public class BusquedaConveniosDispatchActions{
 			
 			global.setObj_1(convenio.getDescripcion().replace("°", " "));
 			global.setObj_2(convenio.getId());
-			global.setObj_2(convenio.getIsapre());			
+			global.setObj_3(convenio.getIsapre());			
 		}
 		
 		//JSONObject obj_convenio = JSONObject.fromObject(hm);
@@ -103,7 +103,7 @@ public class BusquedaConveniosDispatchActions{
 		return global;
 	}
 	
-	public void selecciona_convenio_cdg(BusquedaConveniosForm form, Session request) {
+	public BusquedaConveniosForm selecciona_convenio_cdg(BusquedaConveniosForm form, Session request) {
 		log.info("BusquedaConveniosDispatchActions:selecciona_convenio_cdg inicio inicio");
 		
 		BusquedaConveniosForm formulario = (BusquedaConveniosForm)form;
@@ -121,7 +121,7 @@ public class BusquedaConveniosDispatchActions{
 
 		log.info("BusquedaConveniosDispatchActions:selecciona_convenio_cdg fin");
 		//return mapping.findForward(Constantes.FORWARD_SELECCION);
-		return;
+		return formulario;
 	}
 	
 	
