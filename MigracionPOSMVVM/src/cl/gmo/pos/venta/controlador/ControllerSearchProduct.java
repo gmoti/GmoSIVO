@@ -152,8 +152,8 @@ public class ControllerSearchProduct implements Serializable{
 		//if(!codbus.isPresent()) busquedaProductosForm.setCodigoBusqueda("");
 		//if(!codbusbar.isPresent()) busquedaProductosForm.setCodigoBarraBusqueda("");
 		
-		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").toUpperCase());
-		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").toUpperCase());
+		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").toUpperCase().trim());
+		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").toUpperCase().trim());
 		
 		busquedaProductosForm.setAccion("buscar"); 
 		busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);

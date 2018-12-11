@@ -255,8 +255,8 @@ public class ControllerSearchProductPres implements Serializable {
 		//if(!codbus.isPresent()) busquedaProductosForm.setCodigoBusqueda("");
 		//if(!codbusbar.isPresent()) busquedaProductosForm.setCodigoBarraBusqueda("");
 		
-		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").toUpperCase());
-		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").toUpperCase());
+		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").toUpperCase().trim());
+		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").toUpperCase().trim());
 		
 		
 	    busquedaProductosForm.setAccion("buscar");      	
@@ -282,7 +282,16 @@ public class ControllerSearchProductPres implements Serializable {
      			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
 				return;
 			}
-		}			
+		}		
+		
+		if (isOjoDerecho()) {
+			busquedaProductosForm.setOjo("derecho");
+		}
+		
+		if(isOjoIzquierdo()) {
+			busquedaProductosForm.setOjo("izquierdo");
+		}
+		
 		
      	
      	//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	

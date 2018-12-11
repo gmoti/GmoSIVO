@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.utils.Constantes;
@@ -37,10 +38,15 @@ public class ControllerSearchProductoDirecto implements Serializable {
 	public void buscarProducto(@BindingParam("win")Window win) {
 		
 		ProductosBean producto;		
-		HashMap<String,Object> objetos = new HashMap<String,Object>();		
+		HashMap<String,Object> objetos = new HashMap<String,Object>();	
+		
+		if(cdg.equals("")) {
+			Messagebox.show("Debe indicar un código a buscar");
+			return;
+		}
 		
 		producto = PosProductosFacade.traeProducto(null, 1, sess.getAttribute(Constantes.STRING_SUCURSAL).toString(), "DIRECTA", getCdg());
-		objetos.put("arg",producto);		
+		objetos.put("producto",producto);		
 		
 		BindUtils.postGlobalCommand(null, null, "actProdGrid", objetos);
 		win.detach();

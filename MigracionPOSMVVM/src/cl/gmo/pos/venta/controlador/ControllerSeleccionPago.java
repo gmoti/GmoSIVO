@@ -59,6 +59,8 @@ public class ControllerSeleccionPago implements Serializable{
 	private Window ventanaActual= new Window();
 	private boolean isapreVisible=false;
 	private boolean pagarReadOnly=false;
+	private boolean focusFormaPago=false;
+	private boolean focusValorPagar=true;
 	
 	//variables adicionales para el manejo de jquery
 	private String convenio;
@@ -92,7 +94,8 @@ public class ControllerSeleccionPago implements Serializable{
 		origen            = (String)arg4;
 		
 		controlBotones.setEnableGenerico1("false");		
-		
+		focusFormaPago=false;
+		focusValorPagar=true;
 		
 		if (arg3 instanceof VentaPedidoForm) { 
 			ventaPedidoForm = (VentaPedidoForm)arg3;
@@ -711,7 +714,7 @@ public class ControllerSeleccionPago implements Serializable{
 	
 	
 	//validaciones sobre el pago
-	@NotifyChange({"seleccionPagoForm"})
+	@NotifyChange({"seleccionPagoForm","focusValorPagar","focusFormaPago"})
 	@Command
 	public void validaPago() {			
 		
@@ -726,11 +729,13 @@ public class ControllerSeleccionPago implements Serializable{
 			return;
 		}
 		seleccionPagoForm.setDiferencia(diferencia);
+		focusFormaPago=true;
+		focusValorPagar=false;
 		//this.setDiferencia_total(seleccionPagoForm.getDiferencia());
 	}
 	
 	
-	@NotifyChange({"seleccionPagoForm","disableDescuento"})
+	@NotifyChange({"seleccionPagoForm","disableDescuento","focusValorPagar","focusFormaPago"})
 	@Command
 	public void calculaTotalvtaDirecta() {	
 		
@@ -743,9 +748,10 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		if (seleccionPagoForm.getDescuento() != dto) {
 			
-			Double descuento_max = Double.parseDouble(String.valueOf(descuentoMaximo));			
+			Double descuento_max = Double.parseDouble(String.valueOf(descuentoMaximo));				
 			
-			if (dto <= descuento_max) {				
+		//	if (dto <= descuento_max) {		
+			if (seleccionPagoForm.getDescuento() <= descuento_max) {		
 				try {
 					
 					//seleccionPagoForm.setDescuento(dto);
@@ -755,6 +761,8 @@ public class ControllerSeleccionPago implements Serializable{
 					//se reajusta el monto a pagar
 					diferencia_total = seleccionPagoForm.getV_total();
 					seleccionPagoForm.setV_a_pagar(0);
+					focusValorPagar=true;
+					focusFormaPago=false;
 					
 				} catch (Exception e) {					
 					e.printStackTrace();
@@ -764,6 +772,8 @@ public class ControllerSeleccionPago implements Serializable{
 				
 				Messagebox.show("El descuento debe ser menor o igual al " + descuento_max + "%"); 
 				seleccionPagoForm.setDescuento(dto);
+				seleccionPagoForm.setV_total_parcial(this.sumaTotal);
+				seleccionPagoForm.setDiferencia(this.sumaTotal);
 			}			
 		}	
 		
@@ -1039,6 +1049,22 @@ public class ControllerSeleccionPago implements Serializable{
 
 	public void setPagarReadOnly(boolean pagarReadOnly) {
 		this.pagarReadOnly = pagarReadOnly;
+	}
+
+	public boolean isFocusFormaPago() {
+		return focusFormaPago;
+	}
+
+	public void setFocusFormaPago(boolean focusFormaPago) {
+		this.focusFormaPago = focusFormaPago;
+	}
+
+	public boolean isFocusValorPagar() {
+		return focusValorPagar;
+	}
+
+	public void setFocusValorPagar(boolean focusValorPagar) {
+		this.focusValorPagar = focusValorPagar;
 	}
 	
 	

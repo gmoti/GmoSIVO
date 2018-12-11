@@ -233,10 +233,9 @@ public class ControllerEncargos implements Serializable {
 	@Command
 	public void nuevo_Pedido() {
 		
-		String nif="";
+		/*String nif="";
 		String dvNif="";
-		
-		
+				
 		Optional<String> oNif   = Optional.ofNullable(ventaPedidoForm.getNif());
 		Optional<String> oDvNif = Optional.ofNullable(ventaPedidoForm.getDvnif());	
 		
@@ -250,9 +249,9 @@ public class ControllerEncargos implements Serializable {
 		ventaPedidoForm.setDvnif(dvNif);
 		
 		if (!nif.equals(""))
-			buscarCliente();	
+			buscarCliente();	*/
 		
-		ventaPedidoForm = ventaPedidoDispatchActions.nuevoFormulario(ventaPedidoForm, sess);
+		ventaPedidoDispatchActions.nuevoFormulario(ventaPedidoForm, sess);
 		ventaPedidoForm.setListaProductos(new ArrayList<ProductosBean>());
 		
 		fecha= new Date(System.currentTimeMillis());
@@ -1249,7 +1248,8 @@ public class ControllerEncargos implements Serializable {
 		double eje = 0;
 		double esfera = 0;
 		double cilindro= 0;
-		
+		int indice=0;
+		//cris_esp_seg="1";
 		
 		if(ventaPedidoForm.getTiene_pagos().equals("true")) {
 			Messagebox.show("El encargo tiene pagos realizados, no es posible modificarlo");
@@ -1276,6 +1276,14 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm.setDescripcion(tipo);			
 			
 			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
+			
+			//===============================================
+			//Clase manejadora de la respuesta de estados
+			//Simula las recarga de jsp
+			indice = ventaPedidoForm.getListaProductos().size();			
+			sess.setAttribute("productosBean", arg);			
+			ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
+			RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 			
 			
 			//valida segundo cristal
@@ -1315,7 +1323,7 @@ public class ControllerEncargos implements Serializable {
 				 
 				 if (cilindro==0) cilidroParse = "0"; else cilidroParse=String.valueOf(cilindro);
 				 if (esfera==0) esferaParse = "0"; else esferaParse=String.valueOf(esfera);
-				 if (eje==0) ejeParse = "0"; else ejeParse=String.valueOf(eje);
+				 if (eje==0) ejeParse = "0"; else ejeParse=String.valueOf((int)eje);
 				 
 				 String res= arg.getCod_barra() + "," + 
 						 segundoOjo + "," + tipo + "," + 
@@ -1334,11 +1342,22 @@ public class ControllerEncargos implements Serializable {
 
 					 if(cris_esp.equals("1")) {						 
 						 if(cris_esp_seg.equals("1")){
-							 ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+							ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+							 
+							indice = ventaPedidoForm.getListaProductos().size();			
+							sess.setAttribute("productosBean", (ProductosBean)ventaPedidoForm.getListaProductos().get(indice));			
+							ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
+							RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
+							 
 						 }
 					 }else {						 
-						 ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess); 
-					 }					 
+						ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess); 
+						 
+						indice = ventaPedidoForm.getListaProductos().size();			
+						sess.setAttribute("productosBean", (ProductosBean)ventaPedidoForm.getListaProductos().get(indice));			
+						ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
+						RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
+					 }				 
 					 
 				 }else {
 					 Messagebox.show("No hay cristales de la misma familia para la dioptria del ojo "+segundoOjo+".");
@@ -1346,24 +1365,31 @@ public class ControllerEncargos implements Serializable {
 				 }
 			
 			 } 		
+			 
+			 
+			 
+			 
+			actTotal(ventaPedidoForm.getListaProductos());		
+				
+			//===============================================
+			//Clase manejadora de la respuesta de estados
+			//Simula las recarga de struts
+			/*int indice = ventaPedidoForm.getListaProductos().size();			
+			
+			sess.setAttribute("productosBean", arg);
+			
+			ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
+			RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);*/
 			
 			
-		} catch (Exception e) {			
-			e.printStackTrace();
+		} catch (Exception e) {	
+			
+			Messagebox.show("Error no identificado:" + e.getMessage());
+			
+			e.printStackTrace();			
 		}	
 			
-		actTotal(ventaPedidoForm.getListaProductos());		
 		
-		//===============================================
-		//Clase manejadora de la respuesta de estados
-		//Simula las recarga de struts
-		int indice = ventaPedidoForm.getListaProductos().size();
-		
-		//sessiones
-		sess.setAttribute("productosBean", arg);
-		
-		ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
-		RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 		
 	}
 	
@@ -2407,7 +2433,7 @@ public class ControllerEncargos implements Serializable {
 			objetos.put("producto",producto);
 			objetos.put("index",index);
 			objetos.put("origen","PEDIDO");
-			objetos.put("busquedaProductos",busquedaProductosForm);
+			//objetos.put("busquedaProductos",busquedaProductosForm);
 			
 			Window windowAgregaSuplementoEnc = (Window)Executions.createComponents(
 	                "/zul/encargos/AgregaSuplemento.zul", null, objetos);

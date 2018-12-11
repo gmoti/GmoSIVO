@@ -56,7 +56,8 @@ public final class RespuestaEncargos implements Serializable {
 			case "producto_precio_especial":				
 				break;
 				
-			case "producto_con_suplemento_obligatorio":				
+			case "producto_con_suplemento_obligatorio":	
+				productoSuplementoObligatorio(ventaPedido,sess);
 				break;
 				
 			case "sg_autorizacion":				
@@ -166,6 +167,30 @@ public final class RespuestaEncargos implements Serializable {
                 "/zul/venta_directa/SeleccionPago.zul", null, objetos);
 		
 		windowPagoVentaDirecta.doModal();	
+		
+	}
+	
+	private static void productoSuplementoObligatorio(VentaPedidoForm ventaPedido, Session sess) {
+		
+		HashMap<String,Object> objetos;
+		ProductosBean producto;
+		int index=0;
+		
+		producto = (ProductosBean)sess.getAttribute("productosBean");
+		index = Integer.parseInt(ventaPedido.getAddProducto());
+				
+		objetos = new HashMap<String,Object>();		
+		objetos.put("producto",producto);
+		objetos.put("index",index);
+		objetos.put("origen","PEDIDO");
+		//objetos.put("busquedaProductos",busquedaProductosForm);
+		
+		Window windowAgregaSuplementoEnc = (Window)Executions.createComponents(
+                "/zul/encargos/AgregaSuplemento.zul", null, objetos);
+		
+		windowAgregaSuplementoEnc.doModal();
+		
+		
 		
 	}
 	

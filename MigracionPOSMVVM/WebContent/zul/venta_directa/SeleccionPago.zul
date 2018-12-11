@@ -170,7 +170,7 @@
 	     								
 	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onOK="@command('calculaTotalvtaDirecta')" 
+		     										onOk="@command('calculaTotalvtaDirecta')" 
 		     										style="text-align:right" width="100px" 
 		     										tooltiptext="Presione Enter para aceptar"/>
 		     								</zk>	
@@ -186,7 +186,7 @@
 	     								
 	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onOK="@command('calculaTotal')" 
+		     										onOk="@command('calculaTotal')" 
 		     										style="text-align:right" width="100px" 
 		     										tooltiptext="Presione Enter para aceptar"/>	
 		     								</zk>
@@ -202,7 +202,7 @@
 	     								
 	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onOK="@command('calculaTotal')" 
+		     										onOk="@command('calculaTotal')" 
 		     										style="text-align:right" width="100px" 
 		     										tooltiptext="Presione Enter para aceptar"/>
 		     								</zk>		
@@ -224,8 +224,9 @@
 	     							<row>	     							
 		     							<label value="Forma pago" />
 		     							<cell colspan="2" align="left">	
-		     								<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 
-		     										width="230px" selectedItem="@bind(vm.formaPagoBean)" placeholder="Selecciona forma pago">     								
+		     								<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 		     										 
+		     										selectedItem="@bind(vm.formaPagoBean)" 
+		     										placeholder="Selecciona forma pago" width="230px">     								
 			     								<template name='model'>
 			     									<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
 				     									<attribute name="style" if="${each.activo==true}">

@@ -57,7 +57,7 @@ public class ControllerAutorizadorDescuento implements Serializable {
 				 bg.setObj_2(BigDecimal.ZERO);
 				 bg.setObj_3("");				 
 			 }else {
-				 bg.setObj_1("false");
+				 bg.setObj_1("true");
 				 bg.setObj_2(descuento);
 				 bg.setObj_3(user);
 			 }			 

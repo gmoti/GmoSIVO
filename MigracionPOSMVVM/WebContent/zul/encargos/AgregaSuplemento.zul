@@ -88,7 +88,8 @@
 		    				<textbox value="@load(each.tratami)" width="75px" disabled="true"/>
 		    				<textbox value="@load(each.descripcion)" width="195px" disabled="true"/>
 		    				<textbox value="@load(each.valor)" width="50px" disabled="true"/>
-		    				<toolbarbutton image="/image/Remove_32x32.png" onClick="@command('eliminarSuplemento',index=forEachStatus.index)"/>		    				
+		    				<toolbarbutton image="/iconos/cancel.png" width="40px" sclass="shrink16" 
+		    					onClick="@command('eliminarSuplemento',index=forEachStatus.index)"/>		    				
 		    			</row>		    		
 		    		</template>		    		
 		    	</grid>

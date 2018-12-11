@@ -33,7 +33,7 @@ public class ControllerAgregaSuplemento implements Serializable {
 	private SuplementopedidoBean suplementopedidoBean;
 	
 	private ProductosBean productosBean;
-	private BusquedaProductosForm busquedaProductosForm;
+	//private BusquedaProductosForm busquedaProductosForm;
 	private SuplementosValores suplementosValores;
 	HashMap<String,Object> objetos;
 	
@@ -43,7 +43,7 @@ public class ControllerAgregaSuplemento implements Serializable {
 	@Init
 	public void inicial(@ExecutionArgParam("producto")ProductosBean producto,
 						@ExecutionArgParam("index")int index,
-						@ExecutionArgParam("busquedaProductos")BusquedaProductosForm busquedaProductos,
+						//@ExecutionArgParam("busquedaProductos")BusquedaProductosForm busquedaProductos,
 						@ExecutionArgParam("origen")String org) {
 		
 		productosBean = producto;
@@ -53,12 +53,11 @@ public class ControllerAgregaSuplemento implements Serializable {
 		//MULTIOFERTA: SI DE LA BUSQUEDA DE MULTIOFERTA
 		origen = org;
 		
-		busquedaProductosForm = busquedaProductos;
-		suplementosValores = new SuplementosValores();
-		
-		suplementoDispatchActions = new SuplementoDispatchActions();		
-		suplementosForm = new SuplementosForm();
-		suplementopedidoBean = new SuplementopedidoBean();
+		//busquedaProductosForm = busquedaProductos;
+		suplementosValores 			= new SuplementosValores();		
+		suplementoDispatchActions   = new SuplementoDispatchActions();		
+		suplementosForm 			= new SuplementosForm();
+		suplementopedidoBean 		= new SuplementopedidoBean();
 		
 		sess.setAttribute(Constantes.STRING_PRODUCTO,producto);
 		
