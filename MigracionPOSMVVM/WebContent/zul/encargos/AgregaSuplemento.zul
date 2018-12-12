@@ -1,8 +1,8 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winAgregaSuplemento" border="none" width="40%" height="40%" 
+<window  id="${arg.name}" border="none" width="40%" height="40%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAgregaSuplemento')">
-		
+		<!-- id="winAgregaSuplemento" -->
 		<style>
 			.MyGridRowHeight
 			    tr.z-row td.z-row-inner div.z-row-content{
@@ -35,7 +35,7 @@
 		    <div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Suplementos" />
 				<div style="float: right">				
-					<toolbarbutton image="/iconos/cancel.png" onClick="@command('cerrar',win=winAgregaSuplemento)" tooltiptext="Cerrar" sclass="shrink24"/>		
+					<toolbarbutton image="/iconos/cancel.png" onClick="@command('cerrar',win=self.parent.parent.parent.parent)" tooltiptext="Cerrar" sclass="shrink24"/>		
 				</div>																			
 			</div>
 
@@ -78,16 +78,16 @@
 		    
 		    	<grid model="@bind(vm.suplementosForm.listaSuplementos)">
 		    		<columns>
-		    			<column width="80px"/>
-		    			<column width="200px"/>
-		    			<column width="55px"/>
-		    			<column width="50px"/>
+		    			<column width="70px"/>
+		    			<column width="190px"/>
+		    			<column width="195px"/>
+		    			<column width="45px"/>
 		    		</columns>
 		    		<template name="model">		    		
 		    			<row>
-		    				<textbox value="@load(each.tratami)" width="75px" disabled="true"/>
-		    				<textbox value="@load(each.descripcion)" width="195px" disabled="true"/>
-		    				<textbox value="@load(each.valor)" width="50px" disabled="true"/>
+		    				<textbox value="@load(each.tratami)" width="65px" readonly="true"/>
+		    				<textbox value="@load(each.descripcion)" width="185px" readonly="true"/>
+		    				<textbox value="@load(each.valor)" width="190px" readonly="true"/>
 		    				<toolbarbutton image="/iconos/cancel.png" width="40px" sclass="shrink16" 
 		    					onClick="@command('eliminarSuplemento',index=forEachStatus.index)"/>		    				
 		    			</row>		    		

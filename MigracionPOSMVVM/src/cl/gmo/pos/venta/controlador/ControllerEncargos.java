@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -735,13 +736,13 @@ public class ControllerEncargos implements Serializable {
 					
 					if (valtienda) {					
 						
-		 				ventaPedidoForm.setAccion("ingresa_pedido");
+		 				ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
 		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 						
 					}else {
 						
-						ventaPedidoForm.setAccion("ingresa_pedido");
+						ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
 		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 					}		
@@ -771,7 +772,7 @@ public class ControllerEncargos implements Serializable {
 							break;
 						case 3:						
 			 				
-			 				ventaPedidoForm.setAccion("ingresa_pedido");
+			 				ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
 			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 							break;
@@ -799,7 +800,7 @@ public class ControllerEncargos implements Serializable {
 							
 						}else {
 							
-			 				ventaPedidoForm.setAccion("ingresa_pedido");
+			 				ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
 			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			 				
 			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 			 				}
@@ -1345,7 +1346,7 @@ public class ControllerEncargos implements Serializable {
 							ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 							 
 							indice = ventaPedidoForm.getListaProductos().size();			
-							sess.setAttribute("productosBean", (ProductosBean)ventaPedidoForm.getListaProductos().get(indice));			
+							sess.setAttribute("productosBean", (ProductosBean)ventaPedidoForm.getListaProductos().get(indice -1));			
 							ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
 							RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 							 
@@ -1354,7 +1355,7 @@ public class ControllerEncargos implements Serializable {
 						ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess); 
 						 
 						indice = ventaPedidoForm.getListaProductos().size();			
-						sess.setAttribute("productosBean", (ProductosBean)ventaPedidoForm.getListaProductos().get(indice));			
+						sess.setAttribute("productosBean", (ProductosBean)ventaPedidoForm.getListaProductos().get(indice -1));			
 						ventaPedidoForm.setAddProducto(String.valueOf(indice -1));
 						RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 					 }				 
@@ -1927,9 +1928,18 @@ public class ControllerEncargos implements Serializable {
 	@GlobalCommand
 	public void actulizaListaSuplementos(@BindingParam("suplementos")ArrayList<SuplementopedidoBean> suplementos,
 										 @BindingParam("producto")ProductosBean producto,
-										 @BindingParam("index")int index) {				
+										 @BindingParam("index")int index) {	
 		
-		ventaPedidoForm.getListaProductos().get(index).setListaSuplementos(suplementos);		
+		
+		try {
+			ventaPedidoForm.setAccion(Constantes.STRING_AGREGAR_SUPLEMENTOS);
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		//ventaPedidoForm.getListaProductos().get(index).setListaSuplementos(suplementos);		
 	} 	
 	
 	
@@ -2424,8 +2434,10 @@ public class ControllerEncargos implements Serializable {
 	public void seleccionTratamientos(@BindingParam("index")int index,
 									  @BindingParam("producto")ProductosBean producto) {
 		
+		Random rand = new Random();
+		
     	try {
-    		ventaPedidoForm.setAccion("ver_Suplementos");
+    		ventaPedidoForm.setAccion(Constantes.STRING_VER_SUPLEMENTOS);
         	ventaPedidoForm.setAddProducto(String.valueOf(index));
 			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 			
@@ -2433,6 +2445,7 @@ public class ControllerEncargos implements Serializable {
 			objetos.put("producto",producto);
 			objetos.put("index",index);
 			objetos.put("origen","PEDIDO");
+			objetos.put("name","win"+String.valueOf(rand.nextInt(1000)));
 			//objetos.put("busquedaProductos",busquedaProductosForm);
 			
 			Window windowAgregaSuplementoEnc = (Window)Executions.createComponents(

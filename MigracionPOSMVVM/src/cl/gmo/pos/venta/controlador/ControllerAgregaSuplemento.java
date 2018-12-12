@@ -1,6 +1,7 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.zkoss.bind.BindUtils;
@@ -74,15 +75,23 @@ public class ControllerAgregaSuplemento implements Serializable {
 		sess.setAttribute(Constantes.STRING_PRODUCTO, productosBean);
 		
 		suplementosForm.setSuplemento(suplementopedidoBean.getTratami());
-		suplementosForm.setValor(suplementosValores.getDescripcion());
+		suplementosForm.setValor(suplementopedidoBean.getValor());
+		suplementosForm.setSuplemento_desc(suplementopedidoBean.getDescripcion());
 		
 		suplementosForm.setAccion("agregar");
 		suplementoDispatchActions.agregar(suplementosForm, sess);	
 	}
 	
 	
+	@NotifyChange({"suplementosForm"})
 	@Command
-	public void cerrar(@BindingParam("win")Window win) {
+	public void cerrar(@BindingParam("win")Window win) {	
+		
+		sess.setAttribute(Constantes.STRING_PRODUCTO, (ProductosBean)productosBean);
+		sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS,(ArrayList<SuplementopedidoBean>)suplementosForm.getListaSuplementos());
+		
+		suplementosForm.setAccion("cerrar");
+		suplementoDispatchActions.agregar(suplementosForm, sess);	
 		
 		objetos = new HashMap<String,Object>();		
 		objetos.put("suplementos",suplementosForm.getListaSuplementos());
@@ -131,8 +140,13 @@ public class ControllerAgregaSuplemento implements Serializable {
 	@Command
 	public void recupera_suplemento() {
 		
-		suplementosForm.setSuplemento(suplementopedidoBean.getTratami());
-		suplementosForm.setSuplemento_desc(suplementopedidoBean.getDescripcion());
+		sess.setAttribute(Constantes.STRING_PRODUCTO, (ProductosBean)productosBean);
+		//sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS,(ArrayList<SuplementopedidoBean>)suplementosForm.getListaSuplementos());
+				
+		//suplementosForm.setSuplemento(suplementopedidoBean.getTratami());
+		//suplementosForm.setValor(suplementopedidoBean.getValor());
+		suplementosForm.setSuplemento_desc(suplementopedidoBean.getTratami());
+		
 		suplementosForm.setAccion("carga_valores");
 		suplementoDispatchActions.agregar(suplementosForm, sess);
 	}

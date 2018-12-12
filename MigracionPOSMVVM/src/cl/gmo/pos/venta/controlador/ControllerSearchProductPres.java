@@ -172,14 +172,14 @@ public class ControllerSearchProductPres implements Serializable {
 		if (tieneSuple) {		
 			seg_arm  = "2";
 		    cris_esp = "1";
-		    cris_esp_seg = "0";	
+		    cris_esp_seg = "1";	
 		    seg_cristal = true;
 		}else {
 			
 			if(familia.indexOf("8") !=-1 ){	   			
 		    	seg_arm = "2";
 		    	cris_esp= "2";
-		    	cris_esp_seg = "0";
+		    	cris_esp_seg = "1";
 		    	seg_cristal = true;
 		    }else{				    	 
 		    	 //$q("#seg_cristal",window.parent.document).val("");
@@ -189,16 +189,17 @@ public class ControllerSearchProductPres implements Serializable {
 		    	 seg_cristal = false;
 		    }
 			
-		}			
-		
-		objetos.put("producto",producto);
-		objetos.put("tipo",tipo);			
+		}						
 		
 		busquedaProductosForm.setTipofamilia(familiaBean.getTipo_fam());			
 		busquedaProductosForm.setCodigo_barras(producto.getCod_barra());			
 		
 		producto.setTipoFamilia(familiaBean.getTipo_fam());
-		producto.setGrupo("0");			
+		producto.setGrupo("0");	
+		producto.setTiene_suple((tieneSuple)?"true":"false");
+		
+		objetos.put("producto",producto);
+		objetos.put("tipo",tipo);
 		
 		winVisibleBusqueda="FALSE";			
 		

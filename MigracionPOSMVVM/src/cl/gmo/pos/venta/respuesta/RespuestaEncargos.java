@@ -2,6 +2,7 @@ package cl.gmo.pos.venta.respuesta;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
@@ -175,6 +176,7 @@ public final class RespuestaEncargos implements Serializable {
 		HashMap<String,Object> objetos;
 		ProductosBean producto;
 		int index=0;
+		Random rand = new Random();
 		
 		producto = (ProductosBean)sess.getAttribute("productosBean");
 		index = Integer.parseInt(ventaPedido.getAddProducto());
@@ -183,6 +185,7 @@ public final class RespuestaEncargos implements Serializable {
 		objetos.put("producto",producto);
 		objetos.put("index",index);
 		objetos.put("origen","PEDIDO");
+		objetos.put("name","win"+String.valueOf(rand.nextInt(1000)));
 		//objetos.put("busquedaProductos",busquedaProductosForm);
 		
 		Window windowAgregaSuplementoEnc = (Window)Executions.createComponents(
