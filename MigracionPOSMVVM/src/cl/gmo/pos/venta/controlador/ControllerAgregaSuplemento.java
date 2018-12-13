@@ -33,8 +33,7 @@ public class ControllerAgregaSuplemento implements Serializable {
 	private SuplementoDispatchActions suplementoDispatchActions;
 	private SuplementopedidoBean suplementopedidoBean;
 	
-	private ProductosBean productosBean;
-	//private BusquedaProductosForm busquedaProductosForm;
+	private ProductosBean productosBean;	
 	private SuplementosValores suplementosValores;
 	HashMap<String,Object> objetos;
 	
@@ -43,27 +42,25 @@ public class ControllerAgregaSuplemento implements Serializable {
 	
 	@Init
 	public void inicial(@ExecutionArgParam("producto")ProductosBean producto,
-						@ExecutionArgParam("index")int index,
-						//@ExecutionArgParam("busquedaProductos")BusquedaProductosForm busquedaProductos,
+						@ExecutionArgParam("index")int index,						
 						@ExecutionArgParam("origen")String org) {
-		
-		productosBean = producto;
-		ind = index;
 		
 		//PEDIDO: SI ES DE ENCARGO
 		//MULTIOFERTA: SI DE LA BUSQUEDA DE MULTIOFERTA
-		origen = org;
 		
-		//busquedaProductosForm = busquedaProductos;
+		productosBean = producto;
+		ind 		= index;	
+		origen	 	= org;		
+		
 		suplementosValores 			= new SuplementosValores();		
 		suplementoDispatchActions   = new SuplementoDispatchActions();		
 		suplementosForm 			= new SuplementosForm();
 		suplementopedidoBean 		= new SuplementopedidoBean();
 		
-		sess.setAttribute(Constantes.STRING_PRODUCTO,producto);
+		sess.setAttribute(Constantes.STRING_PRODUCTO, productosBean);
+		sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS, productosBean.getListaSuplementos());
 		
-		suplementoDispatchActions.carga(suplementosForm, sess);	
-	
+		suplementoDispatchActions.carga(suplementosForm, sess);		
 	}	
 	
 	
@@ -72,13 +69,14 @@ public class ControllerAgregaSuplemento implements Serializable {
 	public void enviar() {	
 		
 		sess.setAttribute(Constantes.STRING_ESTADO_FORM_SUPLEMENTOS, "formulario");
-		sess.setAttribute(Constantes.STRING_PRODUCTO, productosBean);
+		sess.setAttribute(Constantes.STRING_PRODUCTO, productosBean);		
+		//sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS, productosBean.getListaSuplementos());
 		
 		suplementosForm.setSuplemento(suplementopedidoBean.getTratami());
-		suplementosForm.setValor(suplementopedidoBean.getValor());
+		suplementosForm.setValor(suplementosValores.getCodigo());
 		suplementosForm.setSuplemento_desc(suplementopedidoBean.getDescripcion());
 		
-		suplementosForm.setAccion("agregar");
+		suplementosForm.setAccion(Constantes.STRING_AGREGAR);
 		suplementoDispatchActions.agregar(suplementosForm, sess);	
 	}
 	
@@ -87,14 +85,17 @@ public class ControllerAgregaSuplemento implements Serializable {
 	@Command
 	public void cerrar(@BindingParam("win")Window win) {	
 		
-		sess.setAttribute(Constantes.STRING_PRODUCTO, (ProductosBean)productosBean);
-		sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS,(ArrayList<SuplementopedidoBean>)suplementosForm.getListaSuplementos());
+		productosBean.setIndice(ind);
+		
+		
+		sess.setAttribute(Constantes.STRING_PRODUCTO, productosBean);		
+		//sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS, productosBean.getListaSuplementos());
 		
 		suplementosForm.setAccion("cerrar");
 		suplementoDispatchActions.agregar(suplementosForm, sess);	
 		
 		objetos = new HashMap<String,Object>();		
-		objetos.put("suplementos",suplementosForm.getListaSuplementos());
+		objetos.put("suplementos",sess.getAttribute(Constantes.STRING_LISTA_SUPLEMENTOS));
 		objetos.put("producto",productosBean);
 		objetos.put("index",ind);
 		
@@ -140,14 +141,14 @@ public class ControllerAgregaSuplemento implements Serializable {
 	@Command
 	public void recupera_suplemento() {
 		
-		sess.setAttribute(Constantes.STRING_PRODUCTO, (ProductosBean)productosBean);
+		//sess.setAttribute(Constantes.STRING_PRODUCTO, (ProductosBean)productosBean);
 		//sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS,(ArrayList<SuplementopedidoBean>)suplementosForm.getListaSuplementos());
 				
-		//suplementosForm.setSuplemento(suplementopedidoBean.getTratami());
-		//suplementosForm.setValor(suplementopedidoBean.getValor());
+		suplementosForm.setSuplemento(suplementopedidoBean.getTratami());
+		suplementosForm.setValor(suplementopedidoBean.getValor());
 		suplementosForm.setSuplemento_desc(suplementopedidoBean.getTratami());
 		
-		suplementosForm.setAccion("carga_valores");
+		suplementosForm.setAccion(Constantes.STRING_CARGA_VALORES);
 		suplementoDispatchActions.agregar(suplementosForm, sess);
 	}
 	

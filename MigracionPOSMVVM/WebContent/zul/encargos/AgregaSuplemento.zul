@@ -33,7 +33,7 @@
 		
 		<div>		    
 		    <div width="100%" style="background-color:black;color: white" height="40px">
-				<label value="Suplementos" />
+				<label value="Suplementos :: ${arg.descripcion}"  />
 				<div style="float: right">				
 					<toolbarbutton image="/iconos/cancel.png" onClick="@command('cerrar',win=self.parent.parent.parent.parent)" tooltiptext="Cerrar" sclass="shrink24"/>		
 				</div>																			
@@ -44,7 +44,7 @@
 					<label value="Seleccionar Suplemento" />
 					<combobox model="@bind(vm.suplementosForm.suplementos)" 
 							onChange="@command('recupera_suplemento')" 
-							selectedItem="@bind(vm.suplementopedidoBean)" placeholder="Seleccione">
+							selectedItem="@bind(vm.suplementopedidoBean)" placeholder="Seleccione" width="250px">
 						<template name="model">
 							<comboitem label="@load(each.descripcion)"/>
 						</template>						
@@ -52,7 +52,7 @@
 					<space/>
 					
 					<hbox>
-						<combobox model="@bind(vm.suplementosForm.lista_valores_suplementos)"  width="100px" 
+						<combobox model="@bind(vm.suplementosForm.lista_valores_suplementos)"  width="200px" 
 								selectedItem="@bind(vm.suplementosValores)">
 							<template name="model">
 								<comboitem label="@load(each.descripcion)"/>
@@ -78,16 +78,17 @@
 		    
 		    	<grid model="@bind(vm.suplementosForm.listaSuplementos)">
 		    		<columns>
-		    			<column width="70px"/>
-		    			<column width="190px"/>
-		    			<column width="195px"/>
+		    			<column width="65px"/>
+		    			<column width="205px"/>
+		    			<column width="65px"/>
 		    			<column width="45px"/>
 		    		</columns>
 		    		<template name="model">		    		
 		    			<row>
-		    				<textbox value="@load(each.tratami)" width="65px" readonly="true"/>
-		    				<textbox value="@load(each.descripcion)" width="185px" readonly="true"/>
-		    				<textbox value="@load(each.valor)" width="190px" readonly="true"/>
+		    				<textbox value="@load(each.tratami)" width="60px" readonly="true"/>
+		    				<textbox value="@load(each.descripcion)" width="200px" readonly="true"/>
+		    				<textbox value="@load(each.valor)" width="60px" readonly="true"/>
+		    				
 		    				<toolbarbutton image="/iconos/cancel.png" width="40px" sclass="shrink16" 
 		    					onClick="@command('eliminarSuplemento',index=forEachStatus.index)"/>		    				
 		    			</row>		    		

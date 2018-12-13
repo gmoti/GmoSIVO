@@ -86,7 +86,7 @@
 						
 						<div width="100%" vflex="min" style="text-align: right;" >
 							<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo" sclass="shrink24"/>
-							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Encargos" sclass="shrink24"/>
+							<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Listar Encargos" sclass="shrink24"/>
 							<toolbarbutton image="/iconos/lupa.png"  onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos" sclass="shrink24"/>
 							<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Encargo" sclass="shrink24"/>
 							
@@ -462,7 +462,7 @@
 											</zk>
 											<zk if="${each.familia != 'MUL'}">
 												<zk if="${each.prevtln == ''}">
-													<intbox value="@bind(each.cantidad)" width="80px" readonly="true" onBlur="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+													<intbox value="@bind(each.cantidad)" width="80px" readonly="false" onBlur="@command('actualiza_cantidad',index=forEachStatus.index ,producto=each)" style="text-align:right"/>
 												</zk>
 												<zk if="${each.prevtln != ''}">
 													<intbox value="@bind(each.cantidad)" width="80px" style="text-align:right" readonly="true"/>

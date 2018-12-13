@@ -4,13 +4,19 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.impl.BinderUtil;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.controlador.ventaDirecta.VentaPedidoDispatchActions;
+import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
 import cl.gmo.pos.venta.web.beans.ProductosBean;
 import cl.gmo.pos.venta.web.forms.BusquedaProductosForm;
@@ -54,7 +60,9 @@ public final class RespuestaEncargos implements Serializable {
 				Messagebox.show("Encargo Almacenado");
 				break;
 				
-			case "producto_precio_especial":				
+			case "producto_precio_especial":
+				productoPrecioEspecial(ventaPedido,sess);
+				
 				break;
 				
 			case "producto_con_suplemento_obligatorio":	
@@ -180,20 +188,54 @@ public final class RespuestaEncargos implements Serializable {
 		
 		producto = (ProductosBean)sess.getAttribute("productosBean");
 		index = Integer.parseInt(ventaPedido.getAddProducto());
+		
+		/*ventaPedido.setAccion(Constantes.STRING_VER_SUPLEMENTOS);
+		ventaPedido.setAddProducto(String.valueOf(index));
+		ventaPedido.IngresaVentaPedido(ventaPedido, sess);
+		sess.setAttribute(Constantes.STRING_PRODUCTO,producto);
+		sess.setAttribute(Constantes.STRING_LISTA_SUPLEMENTOS, producto.getListaSuplementos());*/
 				
 		objetos = new HashMap<String,Object>();		
 		objetos.put("producto",producto);
 		objetos.put("index",index);
 		objetos.put("origen","PEDIDO");
 		objetos.put("name","win"+String.valueOf(rand.nextInt(1000)));
-		//objetos.put("busquedaProductos",busquedaProductosForm);
+		objetos.put("descripcion", producto.getDescripcion()+"::"+producto.getOjo());
 		
 		Window windowAgregaSuplementoEnc = (Window)Executions.createComponents(
                 "/zul/encargos/AgregaSuplemento.zul", null, objetos);
 		
-		windowAgregaSuplementoEnc.doModal();
+		windowAgregaSuplementoEnc.doModal();		
+	}
+	
+	
+	private static void productoPrecioEspecial(VentaPedidoForm ventaPedido, Session sess) {		
 		
+		VentaPedidoDispatchActions VentaPedidoDispatch = new VentaPedidoDispatchActions();	
 		
+		Messagebox.show("¿desea aplicarlo?","El producto tiene precio especial",
+				Messagebox.YES|
+				Messagebox.NO,
+				Messagebox.QUESTION ,new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event e) throws Exception {				
+				if(  ((Integer) e.getData()).intValue() == Messagebox.YES) {
+					
+					ProductosBean producto;
+					int index=0;
+					
+					producto = (ProductosBean)sess.getAttribute("productosBean");
+					index 	 = Integer.parseInt(ventaPedido.getAddProducto());	
+					
+					sess.setAttribute(Constantes.STRING_PRODUCTO,String.valueOf(index));
+					ventaPedido.setAccion(Constantes.STRING_APLICA_PRECIO_ESPECIAL);
+					VentaPedidoDispatch.IngresaVentaPedido(ventaPedido, sess);
+					
+					BindUtils.postGlobalCommand(null, null, "notificacionRespuestaEncargo", null);
+				}					
+			}			
+		});		
 		
 	}
 	
