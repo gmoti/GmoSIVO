@@ -312,4 +312,25 @@ public class BusquedaProductosDispatchActions {
 		 //return mapping.findForward(ruta);
 		 return formulario;
     }
+
+	public boolean isBusqueda_avanzada() {
+		return busqueda_avanzada;
+	}
+
+	public void setBusqueda_avanzada(boolean busqueda_avanzada) {
+		this.busqueda_avanzada = busqueda_avanzada;
+	}
+
+	public boolean isBusqueda_avanzada_lentilla() {
+		return busqueda_avanzada_lentilla;
+	}
+
+	public void setBusqueda_avanzada_lentilla(boolean busqueda_avanzada_lentilla) {
+		this.busqueda_avanzada_lentilla = busqueda_avanzada_lentilla;
+	}
+    
+    
+    
+    
+    
 }

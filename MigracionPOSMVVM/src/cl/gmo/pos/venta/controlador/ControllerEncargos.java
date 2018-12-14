@@ -29,8 +29,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-
-
+import cl.gmo.pos.venta.controlador.general.BusquedaClientesDispatchActions;
 import cl.gmo.pos.venta.controlador.presupuesto.BusquedaConveniosDispatchActions;
 import cl.gmo.pos.venta.controlador.presupuesto.PresupuestoHelper;
 import cl.gmo.pos.venta.controlador.ventaDirecta.BusquedaProductosDispatchActions;
@@ -52,6 +51,7 @@ import cl.gmo.pos.venta.web.beans.ProductosBean;
 import cl.gmo.pos.venta.web.beans.PromocionBean;
 import cl.gmo.pos.venta.web.beans.SuplementopedidoBean;
 import cl.gmo.pos.venta.web.beans.TipoPedidoBean;
+import cl.gmo.pos.venta.web.forms.BusquedaClientesForm;
 import cl.gmo.pos.venta.web.forms.BusquedaConveniosForm;
 import cl.gmo.pos.venta.web.forms.BusquedaPedidosForm;
 import cl.gmo.pos.venta.web.forms.BusquedaProductosForm;
@@ -83,13 +83,14 @@ public class ControllerEncargos implements Serializable {
 	private VentaPedidoForm 		ventaPedidoForm;
 	private BusquedaProductosForm 	busquedaProductosForm;
 	private DevolucionForm 			devolucionForm;
-	private BusquedaConveniosForm busquedaConveniosForm;
+	private BusquedaConveniosForm 	busquedaConveniosForm;
+	private BusquedaClientesForm    busquedaClientesForm;
 	
-	private VentaPedidoDispatchActions 	ventaPedidoDispatchActions;
-	private DevolucionDispatchActions 	devolucionDispatchActions;
+	private VentaPedidoDispatchActions 		 ventaPedidoDispatchActions;
+	private DevolucionDispatchActions 		 devolucionDispatchActions;
 	private BusquedaProductosDispatchActions busquedaProductosDispatchActions;	
 	private BusquedaConveniosDispatchActions busquedaConveniosDispatchActions;
-	
+	private BusquedaClientesDispatchActions  busquedaClientesDispatchActions;
 	
 	private AgenteBean 		agenteBean;
 	private FormaPagoBean 	formaPagoBean;
@@ -130,20 +131,24 @@ public class ControllerEncargos implements Serializable {
 	private boolean encargoEntregado=false;
 	
 	@Init
-	public void inicial(@ExecutionArgParam("origen")String arg) {		
-
-		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);		
-		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
-		sucursal = sess.getAttribute(Constantes.STRING_SUCURSAL).toString();	
+	public void inicial(@ExecutionArgParam("origen")String arg) {	
+		
 		sess.setAttribute(Constantes.STRING_FORMULARIO, "PEDIDO");
+
+		usuario 	= (String)sess.getAttribute(Constantes.STRING_USUARIO);		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
+		sucursal 	= sess.getAttribute(Constantes.STRING_SUCURSAL).toString();			
 			
 		beanControlBotones = new BeanControlBotones();	
 		beanControlCombos  = new BeanControlCombos();
 		
-		ventaPedidoForm          = new VentaPedidoForm();
-		busquedaConveniosForm    = new BusquedaConveniosForm();
-		ventaPedidoDispatchActions = new VentaPedidoDispatchActions();
-		devolucionDispatchActions  = new DevolucionDispatchActions();
+		ventaPedidoForm          		= new VentaPedidoForm();
+		busquedaConveniosForm    		= new BusquedaConveniosForm();
+		busquedaClientesForm			= new BusquedaClientesForm();
+		
+		ventaPedidoDispatchActions 		= new VentaPedidoDispatchActions();
+		devolucionDispatchActions  		= new DevolucionDispatchActions();
+		busquedaClientesDispatchActions = new BusquedaClientesDispatchActions();
 		
 		cliente      = new ClienteBean();
 		productoBean = new ProductosBean();	
@@ -1179,32 +1184,30 @@ public class ControllerEncargos implements Serializable {
 		if(ventaPedidoForm.getNif().equals("")) {
 			Messagebox.show("Debe ingresar un nif");
 			return;
-		}
-		
+		}		
 		
 		try {			
 			
-			ventaPedidoForm.setEstaGrabado(2);
-			cliente = helper.traeClienteSeleccionado(ventaPedidoForm.getNif(),null);
+			sess.setAttribute("nif", ventaPedidoForm.getNif());
+			sess.setAttribute("pagina", "encargo");
+			
+			cliente = busquedaClientesDispatchActions.buscarClienteAjax(busquedaClientesForm, sess);			
 			
 			if (!cliente.getNif().equals("")) {			
 				
 				ventaPedidoForm.setNif(cliente.getNif());
 				ventaPedidoForm.setDvnif(cliente.getDvnif());
 				ventaPedidoForm.setNombre_cliente(cliente.getNombre() + " " + cliente.getApellido());
-				ventaPedidoForm.setCliente(cliente.getCodigo());
-				
-				GraduacionesBean graduacion = helper.traeUltimaGraduacionCliente(cliente.getCodigo());	
-				ventaPedidoForm.setGraduacion(graduacion);
+				ventaPedidoForm.setCliente(cliente.getCodigo());				
 				
 				sess.setAttribute("nombre_cliente",cliente.getNombre() + " " + cliente.getApellido());			
 				sess.setAttribute(Constantes.STRING_CLIENTE, cliente.getCodigo());
 	        	sess.setAttribute(Constantes.STRING_CLIENTE_VENTA, cliente.getCodigo());	        	
 	        	sess.setAttribute("NOMBRE_CLIENTE",cliente.getNombre() + " " + cliente.getApellido());	
 	        	
-	        	ventaPedidoForm.setAccion("agregarCliente");
-	        	//ventaPedidoForm.setFlujo(Constantes.STRING_FORMULARIO);  
+	        	ventaPedidoForm.setAccion(Constantes.STRING_AGREGAR_CLIENTES);	        	
 	        	ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+	        	
 	        	beanControlBotones.setEnableListar("false");
 	        	beanControlBotones.setEnableBuscar("false");
 	        	
@@ -1214,6 +1217,7 @@ public class ControllerEncargos implements Serializable {
 					
 			}else {
 				Messagebox.show("El cliente no existe");
+				ventaPedidoForm.setNif("");
 			}
 				
 			

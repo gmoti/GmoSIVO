@@ -28,6 +28,18 @@
 			}
 		</style>
 		
+		<script><![CDATA[
+	        function cierraDiv(objeto) {	        	
+	        	
+	        	//var estado =  zk.Widget.$(jq("$divCierra"));
+	        	
+	        	var estado = zk.Widget.$(jq('$divCierra')[0]);
+	        	
+	        	alert("cerrando el div " + estado);  
+	        	zk.Widget.$(jq('$divCierra')[0]).setVisible(false);
+	        }        
+    	]]></script>
+		
 		
 		<borderlayout>
 			<north >			
@@ -126,9 +138,9 @@
 							
 							<row>
 								<label value="Codigo Barra Producto" />
-								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" id="textSap"/>
 								
-								<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('despachador')"/>								
+								<button id="buttonCierra" image="/iconos/lupa2.png" label="Buscar" onClick="@command('despachador')"/>								
 							</row>
 
 						</rows>
@@ -137,61 +149,74 @@
 			</north>
 			
 			<center>
-				<div width="100%" height="100%">
+				<div width="100%" height="100%">	
 				
-					<div height="35%" visible="@bind(vm.verGraduacion)">	
-						<radiogroup id="ojos"/>
-						<!-- <radiogroup id="ojosLentillas"/>	 -->
+					<div width="100%" vflex="min" style="background-color:grey;color: white">							
+						<toolbarbutton image="/iconos/detalle.png" xmlns:w="client" w:onClick="cierraDiv(jq('$divCierra'))"
+							disabled="@bind(vm.verGraduacion eq 'true'?false:true)"
+							onClick="@command('cierraGraduacion')"
+							sclass="shrink16" style="float: right;"/>						
+																		
+					</div>		
 					
-						<div width="100%" style="background-color:black;color: white">
-							<label value="Seleccion por:" />													
-						</div>
-								
-						<grid sclass="MyGridRowHeight" oddRowSclass="none">						
-							<columns>
-								<column  hflex="2"/>
-								<column  hflex="1"/>
-								<column  hflex="1"/>
-								<column  hflex="1"/>
-								<column  hflex="1"/>
-								<column  hflex="1"/>
-								<column  hflex="1"/>
-							</columns>						
-												
-							<rows>
-								<row>
-									<cell colspan="1"/>
-									<cell colspan="1"/>	
-									<cell colspan="1"/>							
-									<label value="Esfera" />
-									<label value="Cilindro" />
-									<label value="Diametro" />
-									<cell colspan="1"/>
-								</row>
-								
-								<row>								
-									<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" value="derecho" />
-									<cell colspan="1"/>
-									<label value="O.D" />								
-									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
-									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
-									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
+					<div id="divCierra" height="35%" > <!-- visible="@bind(vm.cierraGraduacion)"> -->						
+				
+						<div height="35%" visible="@bind(vm.verGraduacion)" >	
+							
+							<radiogroup id="ojos"/>
+							<!-- <radiogroup id="ojosLentillas"/>	 -->											
+						
+							<div width="100%" vflex="min" style="background-color:black;color: white">
+								<label value="Seleccion por:" />																				
+							</div>
 									
-									<checkbox label="Cerca" checked="@bind(vm.busquedaProductosForm.chk_cerca)"/>
-								</row>
-								
-								<row>															
-									<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)" value="izquierdo"/>
-									<button image="/iconos/lupa2.png" label="Graduac." onClick="seleccionGraduaciones.open(self)" width="100px"/>	
-																
-									<label value="O.I" />
-									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
-									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
-									<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
-									<cell colspan="1"/>
-								</row>
-							</rows>
-						</grid>
+							<grid sclass="MyGridRowHeight" oddRowSclass="none">						
+								<columns>
+									<column  hflex="min"/>
+									<column  hflex="1" align="center"/>
+									<column  hflex="1"/>
+									<column  hflex="1"/>
+									<column  hflex="1"/>
+									<column  hflex="1"/>
+									<column  hflex="1"/>
+								</columns>						
+													
+								<rows>
+									<row>
+										<cell colspan="1"/>
+										<cell colspan="1"/>	
+										<cell colspan="1"/>							
+										<label value="Esfera" />
+										<label value="Cilindro" />
+										<label value="Diametro" />
+										<cell colspan="1"/>
+									</row>
+									
+									<row>								
+										<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" value="derecho" />
+										<!-- <cell colspan="1"/> -->
+										<label value="O.D"/>								
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
+										
+										<checkbox label="Cerca" checked="@bind(vm.busquedaProductosForm.chk_cerca)"/>
+									</row>
+									
+									<row>															
+										<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)" value="izquierdo"/>
+										<!--  <button image="/iconos/lupa2.png" label="Graduac." onClick="seleccionGraduaciones.open(self)" width="100px"/>-->																
+										<label value="O.I"/>
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
+										
+										<cell colspan="1"/>
+									</row>
+								</rows>
+							</grid>
+						</div>
+					
 					</div>
 					
 					<div height="40%" visible="true">
@@ -201,11 +226,11 @@
 							<label value="Codigo articulo" />	
 							<space width="80px"/>
 							<label value="Descripcion" />
-							<space width="190px"/>
+							<space width="200px"/>
 							<label value="Precio" />
-							<space width="15px"/>
+							<space width="55px"/>
 							<label value="Cantidad" />
-							<space width="15px"/>
+							<space width="40px"/>
 							<label value="Grupo" />
 							<space width="15px"/>
 							<label value="Ver tratami" />												
@@ -239,15 +264,15 @@
 						<div width="100%" style="background-color:black;color: white">
 							<space width="10px"/>
 							<label value="Articulo" />	
-							<space width="80px"/>
+							<space width="90px"/>
 							<label value="Descripcion" />
-							<space width="230px"/>
+							<space width="240px"/>
 							<label value="Precio Iva" />
-							<space width="15px"/>
+							<space width="35px"/>
 							<label value="Importe" />
-							<space width="20px"/>
+							<space width="40px"/>
 							<label value="Grupo" />
-							<space width="10px"/>
+							<space width="15px"/>
 							<label value="Estado" />												
 						</div>
 						

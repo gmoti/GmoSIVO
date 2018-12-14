@@ -224,11 +224,13 @@ public class ControllerSearchProductPres implements Serializable {
 		winVisibleBusqueda="FALSE";
 	}
 	
+
 	
-	
-	@NotifyChange("busquedaProductosForm")
+	@NotifyChange({"busquedaProductosForm","busquedaAvanzadaLentilla","busquedaAvanzada"})
 	@Command
 	public void despachador() {	
+		
+		//sess.setAttribute(Constantes.STRING_BUSQUEDA_AVANZADA_LENTILLA, false);
 		
 		Optional<String> fam    = Optional.ofNullable(familiaBean.getCodigo());
 		Optional<String> subfam = Optional.ofNullable(subFamiliaBean.getCodigo());
@@ -251,36 +253,35 @@ public class ControllerSearchProductPres implements Serializable {
 		if(grufam.isPresent())		
 			busquedaProductosForm.setGrupo (grupoFamiliaBean.getCodigo());		    	
 		else
-			busquedaProductosForm.setGrupo("0");		
-		
-		//if(!codbus.isPresent()) busquedaProductosForm.setCodigoBusqueda("");
-		//if(!codbusbar.isPresent()) busquedaProductosForm.setCodigoBarraBusqueda("");
+			busquedaProductosForm.setGrupo("0");	
 		
 		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").toUpperCase().trim());
 		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").toUpperCase().trim());
 		
-		
-	    busquedaProductosForm.setAccion("buscar");      	
+		//defino la accion a ejecutar
+		busquedaProductosForm.setAccion(Constantes.STRING_BUSCAR);
      		
  		if (busquedaAvanzada.equals("true")) {
      		if (!isOjoDerecho() && !isOjoIzquierdo()) {
      			
      			Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
      			busquedaProductosForm.setAccion("error");
-     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);					
+     			return;				
      		}
      		else {	     			
      			
      			busquedaProductosForm.setAccion("busqueda_graduada");
-     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	     			
+     			     			
      		}
  		}    		
 		
 		if (busquedaAvanzadaLentilla.equals("true")) {
+			
+			//sess.setAttribute(Constantes.STRING_BUSQUEDA_AVANZADA_LENTILLA, true);
+			
 			if (!isOjoDerecho() && !isOjoIzquierdo()) {
 				Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
-				busquedaProductosForm.setAccion("error");
-     			//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
+				busquedaProductosForm.setAccion("error");     			
 				return;
 			}
 		}		
@@ -291,14 +292,18 @@ public class ControllerSearchProductPres implements Serializable {
 		
 		if(isOjoIzquierdo()) {
 			busquedaProductosForm.setOjo("izquierdo");
-		}
-		
-		
+		}    	
      	
-     	//busquedaProductosForm = busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);	
      	//inicializo la busqueda
-     	busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
+     	busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());     	
      	busquedaProductosDispatchActions.buscar(busquedaProductosForm, sess);
+     	
+     	
+     	if(Boolean.parseBoolean(sess.getAttribute(Constantes.STRING_BUSQUEDA_AVANZADA_LENTILLA).toString())) {
+     		busquedaAvanzadaLentilla = "true";
+     	}    	
+     	
+     	
 	}
 	
 	
@@ -317,6 +322,12 @@ public class ControllerSearchProductPres implements Serializable {
 		
 		String codInicial="0";
 		
+		busquedaAvanzada="false";
+		busquedaAvanzadaLentilla="false";
+		
+		//busquedaProductosDispatchActions.setBusqueda_avanzada(false);
+		busquedaProductosDispatchActions.setBusqueda_avanzada_lentilla(false);
+		
 		try {
 			
 			//al cambiar el padre se limpia la busqueda previamente ejecutada			
@@ -328,6 +339,8 @@ public class ControllerSearchProductPres implements Serializable {
 			busquedaProductosForm.setCodigoBarraBusqueda("");
 			busquedaProductosForm.setCodigoBusqueda("");
 			// --->
+			
+			//busquedaProductosForm.setAccion(Constantes.STRING_FAMILIA);
 			
 			subFamiliaBeans = utilesDaoImpl.traeSubfamilias(familiaBean.getCodigo());
 			busquedaProductosForm.setListaSubFamilias(subFamiliaBeans);	
@@ -372,6 +385,8 @@ public class ControllerSearchProductPres implements Serializable {
 		
 		String codInicial="0";
 		
+		busquedaProductosDispatchActions.setBusqueda_avanzada_lentilla(false);
+		
 		//al cambiar el padre se limpia la busqueda previamente ejecutada			
 		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 		
@@ -398,6 +413,9 @@ public class ControllerSearchProductPres implements Serializable {
 	@NotifyChange({"busquedaProductosForm"})
 	@Command
 	public void cambiaGrupoFamilias() {
+		
+		busquedaProductosDispatchActions.setBusqueda_avanzada_lentilla(false);
+		
 		//al cambiar el padre se limpia la busqueda previamente ejecutada			
 		busquedaProductosForm.setListaProductos(new ArrayList<ProductosBean>());
 		busquedaProductosForm.setCodigoBarraBusqueda("");

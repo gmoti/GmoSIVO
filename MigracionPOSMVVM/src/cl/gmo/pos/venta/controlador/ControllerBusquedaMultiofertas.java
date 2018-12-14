@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,7 +53,8 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	private boolean ojoDerecho;
 	private boolean ojoIzquierdo;
 	private boolean cerca;
-	private String verGraduacion;
+	private String  verGraduacion;
+	private boolean cierraGraduacion;
 	
 	HashMap<String,Object> objetos;
 	private int indiceGral=0;
@@ -82,6 +84,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		ojoIzquierdo= false;
 		cerca = false;
 		verGraduacion="false";	
+		cierraGraduacion=false;
 		
 		busquedaProductosForm.setCodigoBusqueda("");
 		busquedaProductosForm.setCodigoBarraBusqueda("");
@@ -105,8 +108,8 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		busquedaProductosForm.setFamilia(fam.orElse("0"));
 		busquedaProductosForm.setSubFamilia(subfam.orElse("0"));
 		busquedaProductosForm.setGrupo(grufam.orElse("0"));
-		busquedaProductosForm.setCodigoBusqueda(codbus.orElse(""));
-		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse(""));			
+		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").trim());
+		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").trim());			
 		
 		if (tipoFamiliaBean.getCodigo().equals("C") || tipoFamiliaBean.getCodigo().equals("L")) {			
 			if (!ojoDerecho && !ojoIzquierdo) {				
@@ -251,11 +254,13 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			posicionaCombo(2);
 		}	
 		
-		if (tipoFamiliaBean.getCodigo().equals("C") || tipoFamiliaBean.getCodigo().equals("L"))
+		if (tipoFamiliaBean.getCodigo().equals("C") || tipoFamiliaBean.getCodigo().equals("L")) {
 			verGraduacion="true";
-		else
+		    cierraGraduacion=true;
+		}else {
 			verGraduacion="false";
-		
+			cierraGraduacion=false;
+		}
 	}
 	
 	
@@ -317,7 +322,9 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	@NotifyChange({"busquedaProductosForm"})
 	@Command
 	public void AgregarSuplementos(@BindingParam("producto")ProductosBean producto,
-								   @BindingParam("index")int index) {		
+								   @BindingParam("index")int index) {	
+		
+		Random rand = new Random();
 		
 		// verificar si tiene suplementos
 		busquedaProductosForm.setAccion("ver_Suplementos");		
@@ -342,7 +349,8 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			objetos.put("producto",producto);
 			objetos.put("index",index);
 			objetos.put("origen","MULTIOFERTA");
-			objetos.put("busquedaProductos",busquedaProductosForm);
+			objetos.put("name","win"+String.valueOf(rand.nextInt(1000)));
+			//objetos.put("busquedaProductos",busquedaProductosForm);
 			
 			Window windowAgregaSuplemento = (Window)Executions.createComponents(
 	                "/zul/encargos/AgregaSuplemento.zul", null, objetos);
@@ -417,6 +425,17 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		
 	}
 	
+	@NotifyChange({"cierraGraduacion"})
+	@Command
+	public void cierraGraduacion() {
+		
+		if (cierraGraduacion)
+			cierraGraduacion=false;
+		else
+			cierraGraduacion=true;
+	}
+	
+	
 	//======= metodos getter and setter =================
 
 	public BusquedaProductosForm getBusquedaProductosForm() {
@@ -489,6 +508,14 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 
 	public void setVerGraduacion(String verGraduacion) {
 		this.verGraduacion = verGraduacion;
+	}
+	
+	public boolean isCierraGraduacion() {
+		return cierraGraduacion;
+	}
+	
+	public void setCierraGraduacion(boolean cierraGraduacion) {
+		this.cierraGraduacion = cierraGraduacion;
 	}
 	
 
