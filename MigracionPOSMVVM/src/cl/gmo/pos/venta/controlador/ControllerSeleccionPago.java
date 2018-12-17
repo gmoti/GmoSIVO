@@ -651,7 +651,7 @@ public class ControllerSeleccionPago implements Serializable{
 		if(arg.equals("B")) {		
 			
 			try {
-				seleccionPagoForm.setAccion("valida_boleta");
+				seleccionPagoForm.setAccion(Constantes.STRING_VALIDA_BOLETA);
 				seleccionPagoForm.setTipo_doc('B');
 				
 				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);				
@@ -679,28 +679,55 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		if(arg.equals("G")) {		
 			
+			seleccionPagoForm.setTipo_doc('G');
+			seleccionPagoForm.setAccion(Constantes.STRING_IMPRIME_GUIA);				
+			
+			if (seleccionPagoForm.getTiene_documentos().equals("true")) {					
+				Messagebox.show(" Ya tiene documentos impresos. no es posible impimir guias.");
+				return;
+			}
+			
+			if (seleccionPagoForm.getNif().equals("")) {
+				Messagebox.show("Debe ingresar un rut (nif)");
+				return;
+			}	
+				
+			if(seleccionPagoForm.getRazon().equals("")) {
+				Messagebox.show("Debe ingresar una razón social");	
+				return;
+			}
+			
+			if(seleccionPagoForm.getDireccion().equals("")) {
+				Messagebox.show("Debe ingresar una direccion");
+				return;
+			}	
+				
+			if(seleccionPagoForm.getGiro_descripcion().equals("")) {
+				Messagebox.show("Debe seleccionar un giro");
+			    
+			}		
+						
+			if(seleccionPagoForm.getProvincia_descripcion().equals("")) {
+				Messagebox.show("Debe seleccionar una provincia");
+				return;	
+			}					
+				
+			
 			try {
-				seleccionPagoForm.setTipo_doc('G');
-				seleccionPagoForm.setAccion("imprime_guia");
-				
-				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);
-				
+				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);					
 				objetos = new HashMap<String,Object>();		
 				objetos.put("seleccionPago",seleccionPagoForm);
 				
-				//BindUtils.postGlobalCommand(null, null, "creaGuiaDespacho", objetos);			
-					
+				//BindUtils.postGlobalCommand(null, null, "creaGuiaDespacho", objetos);						
 				sess.setAttribute(Constantes.STRING_TIPO, "GUIA");
 				seleccionPagoDispatchActions.imprime_documento(seleccionPagoForm, sess);	
 				
-				//abre el visor de guia
-				
+				//abre el visor de guia					
 				Window window = (Window)Executions.createComponents(
 		                "/zul/reportes/VisorGuia.zul", null, objetos);
 				
-		        window.doModal();
-					
-				
+		        window.doModal();					
+			
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}

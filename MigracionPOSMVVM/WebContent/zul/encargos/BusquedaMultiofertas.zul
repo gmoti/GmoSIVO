@@ -29,14 +29,18 @@
 		</style>
 		
 		<script><![CDATA[
-	        function cierraDiv(objeto) {	        	
+	        function cierraDiv(objeto) {
 	        	
-	        	//var estado =  zk.Widget.$(jq("$divCierra"));
+	        	var div = zk.Widget.$('$divCierra');
 	        	
-	        	var estado = zk.Widget.$(jq('$divCierra')[0]);
+	        	if(div.isVisible())	        	
+	        		div.setVisible(false);
+	        	else
+	        		div.setVisible(true);
 	        	
-	        	alert("cerrando el div " + estado);  
-	        	zk.Widget.$(jq('$divCierra')[0]).setVisible(false);
+	        	//var estado = zk.Widget.$(jq('$divCierra')[0]);	        	
+	        	//alert("cerrando el div " + div);  
+	        	//zk.Widget.$(jq('$divCierra')[0]).setVisible(false);
 	        }        
     	]]></script>
 		
@@ -159,7 +163,7 @@
 																		
 					</div>		
 					
-					<div id="divCierra" height="35%" > <!-- visible="@bind(vm.cierraGraduacion)"> -->						
+					<div id="divCierra" height="35%" visible="false"> <!-- visible="@bind(vm.cierraGraduacion)"> -->						
 				
 						<div height="35%" visible="@bind(vm.verGraduacion)" >	
 							
