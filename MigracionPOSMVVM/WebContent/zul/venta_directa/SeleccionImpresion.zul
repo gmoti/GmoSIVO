@@ -36,9 +36,9 @@
 				</div>																			
 			</div>			
 			
-			<radiogroup selectedItem="@bind(vm.seleccion)" orient="vertical">
-				<radio label="Boleta" value="B"/>
-				<radio label="Guia despacho" value="G" visible="@bind(vm.visibleGuia)"/>
+			<radiogroup selectedItem="@bind(vm.seleccion)" orient="vertical">				
+				<radio label="Boleta" value="B" visible="@bind(vm.visibleBoleta)"/>						
+				<radio label="Guia despacho" value="G" visible="@bind(vm.visibleGuia)"/>				
 			</radiogroup>
 				
 			<div style="text-align: right;">				

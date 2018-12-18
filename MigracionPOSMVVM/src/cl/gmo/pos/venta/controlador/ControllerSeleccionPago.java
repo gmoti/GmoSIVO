@@ -546,6 +546,7 @@ public class ControllerSeleccionPago implements Serializable{
 			    	
 			    	objetos = new HashMap<String,Object>();		
 					objetos.put("origen",origen);
+					objetos.put("seleccionPagoForm",seleccionPagoForm);
 			    	
 			    	Window winSeleccionaPago = (Window)Executions.createComponents(
 			                "/zul/venta_directa/SeleccionImpresion.zul", null, objetos);
@@ -953,6 +954,7 @@ public class ControllerSeleccionPago implements Serializable{
 					
 					objetos = new HashMap<String,Object>();		
 					objetos.put("origen","PEDIDO");
+					objetos.put("seleccionPagoForm",seleccionPagoForm);
 					
 					//ventana de seleccion de impresion
 					Window winSeleccionaGenera = (Window)Executions.createComponents(
@@ -980,6 +982,7 @@ public class ControllerSeleccionPago implements Serializable{
 					
 					objetos = new HashMap<String,Object>();		
 					objetos.put("origen","DIRECTA");
+					objetos.put("seleccionPagoForm",seleccionPagoForm);
 					
 					//ventana de seleccion de impresion
 					Window winSelecciona = (Window)Executions.createComponents(

@@ -154,7 +154,7 @@
 			
 			<center>
 				<div width="100%" height="100%">	
-				
+				<!-- 
 					<div width="100%" vflex="min" style="background-color:grey;color: white">							
 						<toolbarbutton image="/iconos/detalle.png" xmlns:w="client" w:onClick="cierraDiv(jq('$divCierra'))"
 							disabled="@bind(vm.verGraduacion eq 'true'?false:true)"
@@ -162,8 +162,8 @@
 							sclass="shrink16" style="float: right;"/>						
 																		
 					</div>		
-					
-					<div id="divCierra" height="35%" visible="false"> <!-- visible="@bind(vm.cierraGraduacion)"> -->						
+				 -->	
+					<!-- <div id="divCierra" height="35%" visible="false"> -->  <!-- visible="@bind(vm.cierraGraduacion)"> -->						
 				
 						<div height="35%" visible="@bind(vm.verGraduacion)" >	
 							
@@ -221,7 +221,7 @@
 							</grid>
 						</div>
 					
-					</div>
+					<!-- </div> -->
 					
 					<div height="40%" visible="true">
 					

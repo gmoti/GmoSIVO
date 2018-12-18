@@ -9,6 +9,8 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zul.Window;
 
+import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
+
 
 
 public class ControllerSeleccionaImpresion implements Serializable {
@@ -19,16 +21,23 @@ public class ControllerSeleccionaImpresion implements Serializable {
 	private String seleccion;
 	HashMap<String,Object> objetos;
 	
-	private String visibleGuia="false";
+	private boolean visibleGuia=false;
+	private boolean visibleBoleta=false;
+	private SeleccionPagoForm seleccionPago;
 	
 	
 	@Init
-	public void inicial(@ExecutionArgParam("origen")String origen) {		
+	public void inicial(@ExecutionArgParam("origen")String origen, @ExecutionArgParam("seleccionPagoForm")SeleccionPagoForm seleccionPagoForm) {		
 		seleccion="X";			
 		
-		if (origen.equals("PEDIDO")) visibleGuia="true";
+		seleccionPago = seleccionPagoForm;
 		
-		if (origen.equals("DIRECTA")) visibleGuia="false";
+		
+		if (seleccionPago.getOrigen().equals("PEDIDO") && !seleccionPago.getSolo_boleta().equals("true")) 
+			visibleGuia=true;
+		
+		if (!seleccionPago.getSolo_guia().equals("true")) 
+			visibleBoleta=true;
 		
 	}
 	
@@ -50,12 +59,28 @@ public class ControllerSeleccionaImpresion implements Serializable {
 		this.seleccion = seleccion;
 	}
 
-	public String getVisibleGuia() {
+	public SeleccionPagoForm getSeleccionPago() {
+		return seleccionPago;
+	}
+
+	public void setSeleccionPago(SeleccionPagoForm seleccionPago) {
+		this.seleccionPago = seleccionPago;
+	}
+
+	public boolean isVisibleGuia() {
 		return visibleGuia;
 	}
 
-	public void setVisibleGuia(String visibleGuia) {
+	public void setVisibleGuia(boolean visibleGuia) {
 		this.visibleGuia = visibleGuia;
+	}
+
+	public boolean isVisibleBoleta() {
+		return visibleBoleta;
+	}
+
+	public void setVisibleBoleta(boolean visibleBoleta) {
+		this.visibleBoleta = visibleBoleta;
 	}	
 	
 	
