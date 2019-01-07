@@ -1,6 +1,6 @@
 <?page title="Seleccion de Pago" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winPagoVentaDirecta" border="none" height="50%" width="65%" 
+	<window id="winSeleccionPago" border="none" height="50%" width="65%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionPago')">	
 		
 		<style>
@@ -32,7 +32,7 @@
 				<label value="Seleccion de cobro" />
 				<div style="float: right">					
 					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
-						onClick="winPagoVentaDirecta.detach()"/>		
+						onClick="winSeleccionPago.detach()"/>		
 				</div>																			
 			</div>		
 			
@@ -89,7 +89,10 @@
 				<div style="float: right">	
 								
 					<toolbarbutton image="/iconos/save.png" sclass="shrink24" 
-							onClick="@command('pagarVenta',ventana=winPagoVentaDirecta)"/>
+							onClick="@command('pagarVenta',ventana=winSeleccionPago)"/>
+							
+					<!-- <toolbarbutton image="/iconos/save.png" sclass="shrink24" 
+							onClick="documentos.open(self)"/> -->		
 							
      				<toolbarbutton image="/iconos/printer.png" 
      						onClick="@command('generaBoleta')" sclass="shrink24" 
@@ -309,20 +312,25 @@
 		</popup>	
 		 -->
 		 
-		<popup id="documentos" width="400px"> 
+		<popup id="documentos" width="20%" height="20%"> 
 			<div width="100%">			
-				<div width="100%" style="background-color:black;color: white" height="40px">
-					<label value="Documentos" />
+				<div width="100%" hflex="min" style="background-color:black;color: white">
+					<label value="Seleccion documento" />
 					<div style="float: right">					
 						<toolbarbutton image="/iconos/cancel.png" onClick="documentos.close()" sclass="shrink16"/>		
 					</div>																			
 				</div>
 				
-				<div width="100%" height="100%">
-					<radio label="Boleta" />
-					<radio label="Guia de despacho"/>
+				<div width="100%" height="100%">				
+					<radiogroup selectedItem="@bind(vm.seleccion)" orient="vertical">				
+						<radio label="Boleta" value="B" visible="@bind(vm.visibleBoleta)"/>						
+						<radio label="Guia despacho" value="G" visible="@bind(vm.visibleGuia)"/>				
+					</radiogroup>
 					
-					<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="" />
+					<div style="text-align: right;">				
+						<button image="/iconos/check.png" sclass="shrink16" label="Acepta"
+						onClick="@command('selecciona', win=winSeleccionImpresion)"/>
+					</div>
 				</div>
 			</div>
 		</popup>

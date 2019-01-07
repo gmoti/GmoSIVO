@@ -48,6 +48,7 @@ public class ControllerSeleccionPago implements Serializable{
 	private Double dto = 0.0;
 	private Integer sumaTotal;
 	private Integer descuentoMaximo=0;
+	private String seleccion;
 	
 	private FormaPagoBean formaPagoBean;
 	private String disableDescuento;
@@ -66,7 +67,8 @@ public class ControllerSeleccionPago implements Serializable{
 	private String convenio;
 	private String isapre;		
 	private ArrayList<ProductosBean> listaProductos;
-	
+	private boolean visibleGuia=false;
+	private boolean visibleBoleta=false;
 	
 	@Init
 	public void inicio(@ExecutionArgParam("cliente")ClienteBean arg,
@@ -160,6 +162,14 @@ public class ControllerSeleccionPago implements Serializable{
 		if ((arg3 instanceof VentaPedidoForm) || (arg3 instanceof VentaDirectaForm)){			
 			postCarga(convenio, isapre, seleccionPagoForm.getDiferencia(), listaProductos);	
 		}
+		
+		
+		if (seleccionPagoForm.getOrigen().equals("PEDIDO") && !seleccionPagoForm.getSolo_boleta().equals("true")) 
+			visibleGuia=true;
+		
+		if (!seleccionPagoForm.getSolo_guia().equals("true")) 
+			visibleBoleta=true;
+		
 	}
 	
 	@NotifyChange({"seleccionPagoForm"})
@@ -1095,6 +1105,30 @@ public class ControllerSeleccionPago implements Serializable{
 
 	public void setFocusValorPagar(boolean focusValorPagar) {
 		this.focusValorPagar = focusValorPagar;
+	}
+
+	public String getSeleccion() {
+		return seleccion;
+	}
+
+	public void setSeleccion(String seleccion) {
+		this.seleccion = seleccion;
+	}
+
+	public boolean isVisibleGuia() {
+		return visibleGuia;
+	}
+
+	public void setVisibleGuia(boolean visibleGuia) {
+		this.visibleGuia = visibleGuia;
+	}
+
+	public boolean isVisibleBoleta() {
+		return visibleBoleta;
+	}
+
+	public void setVisibleBoleta(boolean visibleBoleta) {
+		this.visibleBoleta = visibleBoleta;
 	}
 	
 	
