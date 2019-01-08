@@ -4,6 +4,7 @@
  */
 package cl.gmo.pos.venta.web.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cl.gmo.pos.venta.utils.Constantes;
@@ -12,9 +13,11 @@ import cl.gmo.pos.venta.utils.Constantes;
  *
  * @author Advice70
  */
-public class ProductosBean {
+public class ProductosBean implements Serializable{
     
-    private String codigo;
+   
+	private static final long serialVersionUID = 8017841740872920680L;
+	private String codigo;
 	private int ident;
     private String cod_pedvtcb;
     private String montacb;

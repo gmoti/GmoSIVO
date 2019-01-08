@@ -4,13 +4,17 @@
  */
 package cl.gmo.pos.venta.web.beans;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Advice70
  */
-public class FormaPagoBean {
+public class FormaPagoBean implements Serializable{
     
-    private String id;
+   
+	private static final long serialVersionUID = 1552499422070973483L;
+	private String id;
     private String descripcion;
     private String texto;
     private boolean activo;

@@ -1,10 +1,13 @@
 package cl.gmo.pos.venta.web.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cl.gmo.pos.venta.utils.Constantes;
 
-public class PedidosPendientesBean {
+public class PedidosPendientesBean implements Serializable{
+	
+	private static final long serialVersionUID = -4942694797884025039L;
 	private String agente="";
 	private String fechaPedido="";
 	private String fechasEntragas="";

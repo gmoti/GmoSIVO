@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<window id="winVisorDocumento" border="none" width="80%" height="80%" position="center" closable="false" mode="modal" sizable="false"
+<window id="winVisorDocumento" border="none" width="80%" height="80%" position="center" closable="false" sizable="false"
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVisorGuia')">		
 		
 		
@@ -8,13 +8,13 @@
 			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Guia de despacho" />
 				<div style="float: right">					
-					<toolbarbutton image="/iconos/cancel.png" onClick="winVisorDocumento.detach()"/>		
+					<toolbarbutton image="/iconos/cancel.png" onClick="@command('cerrar',win=winVisorDocumento)"/>		
 				</div>																			
 			</div>
 		
 			<div height="100%" width="100%" style="overflow:auto">
-				<zk id="reporte" height="100%" width="100%"	autohide="true" xmlns:n="native">
-				
+				<!-- <zk id="reporte" height="100%" width="100%"	autohide="true" xmlns:n="native"> -->
+				<zk xmlns:n="native">
 					<n:table width="850" border="0" align="center">
 						<n:tr>
 						

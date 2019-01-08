@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -11,11 +12,15 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Popup;
 import org.zkoss.zul.Window;
+
 import cl.gmo.pos.venta.controlador.ventaDirecta.SeleccionPagoDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
@@ -70,6 +75,10 @@ public class ControllerSeleccionPago implements Serializable{
 	private boolean visibleGuia=false;
 	private boolean visibleBoleta=false;
 	
+	//popup
+	private Popup Numero_Documento;	
+	
+		
 	@Init
 	public void inicio(@ExecutionArgParam("cliente")ClienteBean arg,
 					   @ExecutionArgParam("pagoForm")SeleccionPagoForm arg2,
@@ -429,10 +438,10 @@ public class ControllerSeleccionPago implements Serializable{
 	
 	@NotifyChange({"seleccionPagoForm","formaPagoBean"})
 	@Command
-	public void pagarVenta(@BindingParam("ventana")Window ventana) {
-		
+	public void pagarVenta(@BindingParam("ventana")Window ventana, @BindingParam("msjPopup")Popup msjPopup) {
 		
 		ventanaActual = ventana;
+		Numero_Documento = msjPopup;
 		
 		if(!seleccionPagoForm.getOrigen().equals("ALBARAN_DEVOLUCION")) {
 			
@@ -688,7 +697,9 @@ public class ControllerSeleccionPago implements Serializable{
 		}	
 		
 		
-		if(arg.equals("G")) {		
+		if(arg.equals("G")) {	
+			
+			Optional<String> cadena;
 			
 			seleccionPagoForm.setTipo_doc('G');
 			seleccionPagoForm.setAccion(Constantes.STRING_IMPRIME_GUIA);				
@@ -697,32 +708,37 @@ public class ControllerSeleccionPago implements Serializable{
 				Messagebox.show(" Ya tiene documentos impresos. no es posible impimir guias.");
 				return;
 			}
-			
-			if (seleccionPagoForm.getNif().equals("")) {
+			/*
+			cadena = Optional.ofNullable(seleccionPagoForm.getNif());			
+			if ((cadena.orElse("").trim()).equals("")) {
 				Messagebox.show("Debe ingresar un rut (nif)");
 				return;
 			}	
 				
-			if(seleccionPagoForm.getRazon().equals("")) {
+			cadena = Optional.ofNullable(seleccionPagoForm.getRazon());
+			if ((cadena.orElse("").trim()).equals("")) {
 				Messagebox.show("Debe ingresar una razón social");	
 				return;
 			}
 			
-			if(seleccionPagoForm.getDireccion().equals("")) {
+			cadena = Optional.ofNullable(seleccionPagoForm.getDireccion());
+			if ((cadena.orElse("").trim()).equals("")) {
 				Messagebox.show("Debe ingresar una direccion");
 				return;
 			}	
 				
-			if(seleccionPagoForm.getGiro_descripcion().equals("")) {
+			cadena = Optional.ofNullable(seleccionPagoForm.getGiro_descripcion());
+			if ((cadena.orElse("").trim()).equals("")) {
 				Messagebox.show("Debe seleccionar un giro");
-			    
+				return;			    
 			}		
-						
-			if(seleccionPagoForm.getProvincia_descripcion().equals("")) {
+					
+			cadena = Optional.ofNullable(seleccionPagoForm.getProvincia_descripcion());
+			if ((cadena.orElse("").trim()).equals("")) {
 				Messagebox.show("Debe seleccionar una provincia");
 				return;	
 			}					
-				
+			*/	
 			
 			try {
 				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);					
@@ -731,25 +747,30 @@ public class ControllerSeleccionPago implements Serializable{
 				
 				//BindUtils.postGlobalCommand(null, null, "creaGuiaDespacho", objetos);						
 				sess.setAttribute(Constantes.STRING_TIPO, "GUIA");
-				seleccionPagoDispatchActions.imprime_documento(seleccionPagoForm, sess);	
+				seleccionPagoDispatchActions.imprime_documento(seleccionPagoForm, sess);
+				
+				ventanaActual.detach();				
 				
 				//abre el visor de guia					
 				Window window = (Window)Executions.createComponents(
-		                "/zul/reportes/VisorGuia.zul", null, objetos);
+		                "/zul/venta_directa/VisorGuia.zul", null, objetos);
 				
-		        window.doModal();					
+		        window.doModal();		        
+		        
 			
 			} catch (Exception e) {				
 				e.printStackTrace();
-			}
+			}		
 			
-			
-			ventanaActual.detach();
-		}
-		
-		
-	}		
+		}		
+	}	
 	
+	@GlobalCommand
+	public void numeroDocumento() {
+		System.out.println("en NumeroDocumento");
+		//Numero_Documento.open(400,400);
+		
+	}	
 	
 	//validaciones sobre el pago
 	@NotifyChange({"seleccionPagoForm","focusValorPagar","focusFormaPago"})
@@ -933,18 +954,14 @@ public class ControllerSeleccionPago implements Serializable{
 				
 			}		
 			
-		}
-		
-		
-		
-		
+		}		
 		
 	}
 	
 	
 	@NotifyChange({"seleccionPagoForm"})	
 	@Command
-	public void generaBoleta() {
+	public void generaBoleta() {	
 		
 		if (seleccionPagoForm.getTiene_pagos()==0) {			
 			Messagebox.show("No hay pagos, no es posible imprimir");
@@ -1013,7 +1030,7 @@ public class ControllerSeleccionPago implements Serializable{
 		}		
 		
 	}
-	
+		
     
 	
 	//getter and setter

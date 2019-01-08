@@ -1,9 +1,13 @@
 package cl.gmo.pos.venta.web.beans;
 
+import java.io.Serializable;
+
 import cl.gmo.pos.venta.utils.Constantes;
 
-public class PagoBean{
+public class PagoBean implements Serializable{
 	
+	
+	private static final long serialVersionUID = -8863089475959321711L;
 	private String cod_venta = "";
     private String forma_pago = ""; 
     private String detalle_forma_pago="";

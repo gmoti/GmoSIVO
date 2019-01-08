@@ -2,9 +2,13 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 
-import org.apache.commons.validator.UrlValidator;
+import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 
@@ -19,11 +23,18 @@ public class ControllerVisorGuia implements Serializable {
 	@Init
 	public void inicial(@ExecutionArgParam("seleccionPago")SeleccionPagoForm pago) {	
 		
-		seleccionPago = pago;
-		
+		seleccionPago = pago;		
 	}
-
-
+	
+	@Command
+	public void cerrar(@BindingParam("win")Window win) {			
+		
+		BindUtils.postGlobalCommand(null, null, "numeroDocumento", null);
+		
+		win.detach();
+		System.out.println("en cerrar");
+	}	
+	
 	public SeleccionPagoForm getSeleccionPago() {
 		return seleccionPago;
 	}

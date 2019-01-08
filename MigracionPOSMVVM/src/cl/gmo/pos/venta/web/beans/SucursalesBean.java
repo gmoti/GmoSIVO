@@ -4,12 +4,16 @@
  */
 package cl.gmo.pos.venta.web.beans;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Advise64
  */
-public class SucursalesBean {
-    private String sucursal="";
+public class SucursalesBean implements Serializable{
+   
+	private static final long serialVersionUID = -5115220267640134195L;
+	private String sucursal="";
     private String descripcion="";
     private String telefono="";
     private String tipo_boleta="";
