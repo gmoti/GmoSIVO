@@ -8,6 +8,8 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
@@ -33,7 +35,14 @@ public class ControllerVisorGuia implements Serializable {
 		
 		win.detach();
 		System.out.println("en cerrar");
-	}	
+	}
+	
+	@Command
+	public void imprimir(@BindingParam("reporte")Div reporte) {
+		
+		
+	}
+	
 	
 	public SeleccionPagoForm getSeleccionPago() {
 		return seleccionPago;

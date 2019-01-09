@@ -7,12 +7,13 @@
 			
 			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Guia de despacho" />
-				<div style="float: right">					
+				<div style="float: right">	
+					<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimir',reporte=reporte)"/>			
 					<toolbarbutton image="/iconos/cancel.png" onClick="@command('cerrar',win=winVisorDocumento)"/>		
 				</div>																			
 			</div>
 		
-			<div height="100%" width="100%" style="overflow:auto">
+			<div id="reporte" height="100%" width="100%" style="overflow:auto">
 				<!-- <zk id="reporte" height="100%" width="100%"	autohide="true" xmlns:n="native"> -->
 				<zk xmlns:n="native">
 					<n:table width="850" border="0" align="center">
@@ -219,7 +220,7 @@
 						</n:tr>			
 										
 					</n:table>				
-				</zk>
+				</zk> 
 			</div>
 		</div>
 </window>

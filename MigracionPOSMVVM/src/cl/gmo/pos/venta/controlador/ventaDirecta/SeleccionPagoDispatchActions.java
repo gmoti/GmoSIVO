@@ -120,8 +120,7 @@ public class SeleccionPagoDispatchActions{
 			
 			helper.TraeBoleta(formulario, session);
 						
-			session.setAttribute("SeleccionPagoForm", formulario);
-			
+			session.setAttribute("SeleccionPagoForm", formulario);			
 			
 			
 			//return mapping.findForward(Constantes.FORWARD_PAGO);

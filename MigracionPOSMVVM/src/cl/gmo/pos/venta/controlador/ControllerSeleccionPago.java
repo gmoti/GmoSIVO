@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.DefaultGlobalCommand;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
@@ -16,7 +17,8 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Popup;
 import org.zkoss.zul.Window;
@@ -749,13 +751,13 @@ public class ControllerSeleccionPago implements Serializable{
 				sess.setAttribute(Constantes.STRING_TIPO, "GUIA");
 				seleccionPagoDispatchActions.imprime_documento(seleccionPagoForm, sess);
 				
-				ventanaActual.detach();				
+				//ventanaActual.detach();				
 				
 				//abre el visor de guia					
-				Window window = (Window)Executions.createComponents(
-		                "/zul/venta_directa/VisorGuia.zul", null, objetos);
+				Window winVisorGuia = (Window)Executions.createComponents(
+		                "/zul/reportes/VisorGuia.zul", null, objetos);
 				
-		        window.doModal();		        
+				winVisorGuia.doModal();		        
 		        
 			
 			} catch (Exception e) {				
@@ -765,12 +767,61 @@ public class ControllerSeleccionPago implements Serializable{
 		}		
 	}	
 	
-	@GlobalCommand
+	
+	@GlobalCommand("numeroDocumento")
 	public void numeroDocumento() {
 		System.out.println("en NumeroDocumento");
-		//Numero_Documento.open(400,400);
 		
-	}	
+		objetos = new HashMap<String,Object>();		
+		objetos.put("seleccionPagoForm",seleccionPagoForm);
+		
+		//abre solicitud de numeros				
+		Window winNumDoc = (Window)Executions.createComponents(
+                "/zul/venta_directa/NumeroDocumento.zul", null, objetos);
+		
+		winNumDoc.doModal();		
+	}
+	
+	
+	@NotifyChange({"seleccionPagoForm"})
+	@GlobalCommand("retornoNumeroDocumento")
+	public void retornoNumeroDocumento(@BindingParam("num_documento")int num_documento, 
+									   @BindingParam("num_documento2")int num_documento2) {	
+		
+		
+		seleccionPagoForm.setNumero_boleta(num_documento);
+		seleccionPagoForm.setNumero_boleta_conf(num_documento2);		
+		
+		Messagebox.show("¿Impresión correcta?","", 
+				Messagebox.YES | 
+				Messagebox.NO, 
+				Messagebox.QUESTION, new EventListener<Event>() {
+			
+			@Override
+			public void onEvent(Event e) throws Exception {				
+					if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {								
+						
+						//de ser si	guardo el pago						
+						
+					}else {
+						
+						seleccionPagoForm.setSolo_boleta("false");
+						seleccionPagoForm.setSolo_guia("false");						
+						
+						objetos = new HashMap<String,Object>();		
+						objetos.put("origen","PEDIDO");
+						objetos.put("seleccionPagoForm",seleccionPagoForm);
+						
+						//ventana de seleccion de impresion
+						Window winSeleccionaGenera = (Window)Executions.createComponents(
+				                "/zul/venta_directa/SeleccionImpresion.zul", null, objetos);
+						winSeleccionaGenera.doModal();
+					}						
+				}
+		 });
+		
+	}
+	
 	
 	//validaciones sobre el pago
 	@NotifyChange({"seleccionPagoForm","focusValorPagar","focusFormaPago"})
