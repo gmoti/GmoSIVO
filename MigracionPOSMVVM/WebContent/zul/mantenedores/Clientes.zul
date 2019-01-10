@@ -151,7 +151,7 @@
 								disabled="@bind(vm.bDisableinicial)"/>
 						
 						<label value="Edad"/>
-						<textbox value="@bind(vm.clienteForm.edad)" width="60px"
+						<textbox value="@bind(vm.clienteForm.edad)" width="60px" readonly="true"
 								disabled="@bind(vm.bDisableinicial)"/>					
 					</row>
 					
@@ -325,15 +325,17 @@
 		</div>	
 	</div>
 	
-	<popup id="seleccionGiros" width="600px" height="400px">	
+	<popup id="seleccionGiros" width="600px" height="400px">
+		
 		<div width="100%" height="100%">
+		
 			<div width="100%" height="30px" style="background-color:black;color: white;">			   	
-			   	<label value="Busqueda de Giro Cliente" style="float: left;"/>				
-			</div>		
-			
-			<div width="100%" height="30px" style="background-color:black;color: white;" align="right">				
-		   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="seleccionGiros.close()"/>
-		   	</div>
+			   	<label value="Busqueda de Giro Cliente"/>
+			   	
+			   	<div style="float: right">				
+		   			<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="seleccionGiros.close()"/>
+		   		</div>		   				
+			</div>				
 		   	
 		   	<div>
 		   		<grid oddRowSclass="none" sclass="MyGridRowHeight">

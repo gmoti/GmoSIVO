@@ -1,6 +1,61 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <window id="winVisorDocumento" border="none" width="80%" height="80%" position="center" closable="false" sizable="false"
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVisorGuia')">		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVisorGuia')">
+		
+		<script><![CDATA[
+			function print(obj,id,height,width,style) { 
+				DispWin = window.open('', '', 'toolbar=no,memubar=no,scrollbars=yes,status=no,width='+width+'px,height='+height+"px'"); 
+				
+				DispWin.document.write('<html><head>'); 
+				if(style==true){
+					for(var i=0;i<document.styleSheets.length;i++){
+					    if(document.styleSheets[i].href != null)        {
+					        DispWin.document.write('<link rel="stylesheet" type="text/css" href="'+document.styleSheets[i].href+'">'); 
+					    }
+					}
+				}
+				
+				DispWin.document.write('</head>'); 
+				DispWin.document.write('<body>'); 
+				//DispWin.document.write('<p align="center"><input type="button" value="Close" onclick="window.close()"/>&nbsp&nbsp&nbsp&nbsp<input type="button" value="Print" onclick="print()"/></p>'); 
+				DispWin.document.write($(obj.$f(id)).formhtml()); 
+				DispWin.document.write('</body></html>'); 
+				DispWin.document.close(); 				
+				DispWin.print();			
+				DispWin.close();
+				
+			}			
+			
+			
+			(function($) {
+			      var oldHTML = $.fn.html;
+			
+			      $.fn.formhtml = function() {
+			        if (arguments.length) return oldHTML.apply(this,arguments);
+			        $("input,button", this).each(function() {
+			          this.setAttribute('value',this.value);    
+			          this.setAttribute('readonly',true);			          
+			        });
+			        $("textarea", this).each(function() {			          
+			          this.innerHTML = this.value;
+			        });
+			        $("input:radio,input:checkbox", this).each(function() {			         
+			          if (this.checked) this.setAttribute('checked', 'checked');
+			          else this.removeAttribute('checked');
+			        });
+			        $("option", this).each(function() {			          
+			          if (this.selected) this.setAttribute('selected', 'selected');
+			          else this.removeAttribute('selected');
+			        });
+			        return oldHTML.apply(this);
+			      };
+			
+			      //optional to override real .html() if you want
+			      // $.fn.html = $.fn.formhtml;
+			    })(jQuery);
+			
+			
+		]]></script>		
 		
 		
 		<div height="100%" width="100%">			
@@ -8,13 +63,21 @@
 			<div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Guia de despacho" />
 				<div style="float: right">	
-					<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimir',reporte=reporte)"/>			
+					<!-- <toolbarbutton image="/iconos/printer.png" xmlns:w='client' w:onClick="jq('$reporte').print()"/>	 -->
+					<toolbarbutton image="/iconos/printer.png" xmlns:w='client'>
+						<attribute w:name="onClick">
+            				print(this,'reporte',500,800,false);
+        				</attribute>					
+					</toolbarbutton>
+							
 					<toolbarbutton image="/iconos/cancel.png" onClick="@command('cerrar',win=winVisorDocumento)"/>		
 				</div>																			
 			</div>
 		
 			<div id="reporte" height="100%" width="100%" style="overflow:auto">
 				<!-- <zk id="reporte" height="100%" width="100%"	autohide="true" xmlns:n="native"> -->
+				
+				
 				<zk xmlns:n="native">
 					<n:table width="850" border="0" align="center">
 						<n:tr>
@@ -220,7 +283,8 @@
 						</n:tr>			
 										
 					</n:table>				
-				</zk> 
+				</zk>
+				
 			</div>
 		</div>
 </window>

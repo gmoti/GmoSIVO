@@ -788,9 +788,12 @@ public class ControllerSeleccionPago implements Serializable{
 	public void retornoNumeroDocumento(@BindingParam("num_documento")int num_documento, 
 									   @BindingParam("num_documento2")int num_documento2) {	
 		
+		objetos = new HashMap<String,Object>();	
 		
 		seleccionPagoForm.setNumero_boleta(num_documento);
-		seleccionPagoForm.setNumero_boleta_conf(num_documento2);		
+		seleccionPagoForm.setNumero_boleta_conf(num_documento2);
+		
+		objetos.put("seleccionPago",seleccionPagoForm);		
 		
 		Messagebox.show("¿Impresión correcta?","", 
 				Messagebox.YES | 
@@ -801,7 +804,12 @@ public class ControllerSeleccionPago implements Serializable{
 			public void onEvent(Event e) throws Exception {				
 					if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {								
 						
-						//de ser si	guardo el pago						
+						//de ser si	guardo el pago	
+						//Constantes.STRING_PAGO_EXITOSO						
+						
+						BindUtils.postGlobalCommand(null, null, "creaPagoExitosoEncargo", objetos);	
+						
+						ventanaActual.detach();
 						
 					}else {
 						
