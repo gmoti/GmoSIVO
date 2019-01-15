@@ -163,10 +163,7 @@ public class ControllerPresupuesto implements Serializable{
 	public void nuevoPresupuesto() {		
 		
 		fpagoDisable="False";
-		agenteDisable="False";
-		
-		//presupuestoForm = new PresupuestoForm();
-		//sess.setAttribute(Constantes.STRING_PRESUPUESTO, 0);
+		agenteDisable="False";		
 		
 		presupuestoDispatchActions.nuevoFormulario(presupuestoForm, sess);
 		
