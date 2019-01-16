@@ -170,19 +170,18 @@
 	     							
 	     							
 	     								<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		     								
-	     									<label value="Descuento(%)"/>
-	     								
+	     									<label value="Descuento(%)"/>	     									
+	     									
 	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onOk="@command('calculaTotalvtaDirecta')" 
-		     										style="text-align:right" width="100px" 
-		     										tooltiptext="Presione Enter para aceptar"/>
+		     										onBlur="@command('calculaTotalvtaDirecta')" 
+		     										style="text-align:right" width="100px"/>
 		     								</zk>	
 		     								
 		     								<zk if="${vm.seleccionPagoForm.tiene_pagos =='1'}">
 		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"
 		     										style="text-align:right" width="100px" readonly="true"/>
-		     								</zk>
+		     								</zk>		     								 
 										</zk>
 	     							
 	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">
@@ -190,7 +189,7 @@
 	     								
 	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onOk="@command('calculaTotal')" 
+		     										onBlur="@command('calculaTotal')" 
 		     										style="text-align:right" width="100px" 
 		     										tooltiptext="Presione Enter para aceptar"/>	
 		     								</zk>
@@ -206,7 +205,7 @@
 	     								
 	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onOk="@command('calculaTotal')" 
+		     										onBlur="@command('calculaTotal')" 
 		     										style="text-align:right" width="100px" 
 		     										tooltiptext="Presione Enter para aceptar"/>
 		     								</zk>		

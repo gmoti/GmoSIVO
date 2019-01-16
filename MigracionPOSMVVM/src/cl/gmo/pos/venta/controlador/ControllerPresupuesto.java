@@ -432,6 +432,8 @@ public class ControllerPresupuesto implements Serializable{
 	@Command
 	public void busquedaRapidaConvenio() {
 		
+		Window winSeleccionaConvenio=new Window();
+		
 		if(!presupuestoForm.getEstado().equals("cerrado")) {
 		
 			if (!presupuestoForm.getConvenio().equals("")) {				
@@ -442,18 +444,31 @@ public class ControllerPresupuesto implements Serializable{
 				//param1 : descripcion
 				//param2 : cdg
 				//param3 : isapre				
-				presupuestoForm.setConvenio_det((String)bg.getObj_1());				
+				presupuestoForm.setConvenio_det((String)bg.getObj_1());	
+				//presupuestoForm.setIsapre((String)bg.getObj_3());
+				
+				if(presupuestoForm.getConvenio_det().equals(""))
+				{
+					presupuestoForm.setConvenio_det("");
+					presupuestoForm.setConvenio("");
+					//presupuestoForm.setIsapre("N");
+				}
+				
 				busquedaConveniosDispatchActions.selecciona_convenio_cdg(busquedaConveniosForm, sess);
+				
+				busquedaConveniosForm.setSel_convenio((String)bg.getObj_2());
+				busquedaConveniosForm.setSel_convenio_det((String)bg.getObj_1());
 				
 				objetos = new HashMap<String,Object>();		
 				objetos.put("busquedaConvenios",busquedaConveniosForm);
 				objetos.put("ventana","presupuesto");
-				objetos.put("origen","convenio");
+				objetos.put("origen","presupuesto");
+				objetos.put("win",winSeleccionaConvenio);
 				
 				//se llama ventana convenio
-				Window window = (Window)Executions.createComponents(
+				 winSeleccionaConvenio = (Window)Executions.createComponents(
 		                "/zul/presupuestos/SeleccionaConvenio.zul", null, objetos);		
-		        window.doModal();		
+				winSeleccionaConvenio.doModal();		
 				
 				
 			}else {				
@@ -758,6 +773,68 @@ public class ControllerPresupuesto implements Serializable{
 	
 	@NotifyChange({"presupuestoForm"})
 	@Command
+	public void actualiza_descuento(@BindingParam("index")int index, @BindingParam("dcto")int dcto) {
+		
+		long campo = 0;
+		long descuento_max = 0;
+		String tipo="";
+		objetos = new HashMap<String,Object>();
+		
+		campo = dcto;		
+		objetos.put("retorno","devuelveDescuento_lineaMonto_Encargo");
+		
+		/*Optional<String> tp = Optional.ofNullable(tipoPedidoBean.getCodigo());
+		
+		if (!tp.isPresent() || tp.get().equals(""))		
+			tipo = "0";	
+		else
+			tipo = tp.get();*/
+		
+		if (presupuestoForm.getEstado().equals("cerrado")) {			
+			Messagebox.show("El Presupuesto esta cerrada, no es posible modificar");
+			return;
+		}	
+		
+		
+		
+		if ((campo < 0) || (campo > 100)) {
+			Messagebox.show("Valor debe estar entre 0 y 100");
+			//ventaPedidoForm.setDtcoPorcentaje(Integer.valueOf(String.valueOf(dto_total)));
+			presupuestoForm.getListaProductos().get(index).setDescuento(0);
+			return;		
+		}
+		
+		
+		descuento_max = presupuestoForm.getPorcentaje_descuento_max();
+		
+		if (campo <= descuento_max) {       	
+        	try {
+        		//document.getElementById('cantidad_descuento').value = campo.replace(',','.');	
+        		presupuestoForm.setCantidad_descuento(campo);
+        		presupuestoForm.setAccion("descuento_linea");
+        		presupuestoForm.setAddProducto(String.valueOf(index));
+        		presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}			
+		}else {	
+			
+			sess.setAttribute("tipo", tipo);
+			sess.setAttribute("_IndexDescuento", index);
+			
+			Window winAutoriza = (Window)Executions.createComponents(
+	                "/zul/presupuestos/AutorizadorDescuento.zul", null, objetos);		
+			winAutoriza.doModal();		
+			
+		}	
+		
+	}
+	
+	
+	
+	@NotifyChange({"presupuestoForm"})
+	@Command
 	public void actualiza_descuento_total_monto() {
 		
 		boolean compara=true;
@@ -795,8 +872,10 @@ public class ControllerPresupuesto implements Serializable{
 				
 				presupuestoForm.setAccion("descuento_total_monto");
 			    presupuestoForm.setCantidad_linea(Integer.parseInt(String.valueOf(campo)));			
-			    presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);				
-				
+			    presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+			    
+			    presupuestoForm.setDtcoPorcentaje(0);	
+			    presupuestoForm.setDescuento(0);
 			}else {
 				
 				//solicito autorizacion				
@@ -823,6 +902,9 @@ public class ControllerPresupuesto implements Serializable{
 					presupuestoForm.setAccion("descuento_total_monto");
 				    presupuestoForm.setCantidad_linea(Integer.parseInt(String.valueOf(campo)));			
 				    presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+				    
+				    presupuestoForm.setDtcoPorcentaje(0);
+				    presupuestoForm.setDescuento(0);
 					
 				}else {
 					
@@ -875,6 +957,9 @@ public class ControllerPresupuesto implements Serializable{
 	        		presupuestoForm.setCantidad_descuento(campo);
 	        		presupuestoForm.setAccion("descuento_total");					
 					presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+					
+					presupuestoForm.setDtcoPorcentaje(0);
+					presupuestoForm.setDescuento(0);
 				} catch (Exception e) {						
 					e.printStackTrace();
 				}		        	
@@ -901,6 +986,9 @@ public class ControllerPresupuesto implements Serializable{
 		        		presupuestoForm.setCantidad_descuento(campo);
 		        		presupuestoForm.setAccion("descuento_total");
 		        		presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+		        		
+		        		presupuestoForm.setDtcoPorcentaje(0);
+		        		presupuestoForm.setDescuento(0);
 					} catch (Exception e) {						
 						e.printStackTrace();
 					}		        	
@@ -917,6 +1005,33 @@ public class ControllerPresupuesto implements Serializable{
 			}			
 		}		
 	}
+	
+	//=====================Valida Descripcion ===========================
+		//===================================================================
+		@NotifyChange({"presupuestoForm"})
+		@Command
+		public void actualiza_descripcion(@BindingParam("index")int index, @BindingParam("producto")ProductosBean producto ) {
+			
+			if(producto.getDescripcion().equals("")) {			
+				Messagebox.show("Debe ingresar una descripcion del producto para continuar");
+				//descripcionFocus=true;
+				presupuestoForm.getListaProductos().get(index).setDescripcion("Agregar Descripcion");
+				return;
+			}else {			
+				
+				try {
+					presupuestoForm.setAccion("agrega_descripcion");
+					presupuestoForm.setAddProducto(String.valueOf(index));
+					presupuestoForm.setDescripcion(producto.getDescripcion());
+					
+					presupuestoDispatchActions.IngresaPresupuesto(presupuestoForm, sess);
+				} catch (Exception e) {				
+					e.printStackTrace();
+				}
+				
+			}	
+			
+		}	
 	
 	
 	//===================== Retorno del autorizador =====================

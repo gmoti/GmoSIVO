@@ -4,29 +4,30 @@
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerPresupuesto')">
 		
 		<style>
-		.MyGridRowHeight
-		    tr.z-row td.z-row-inner div.z-row-content{
-		        border:1px solid white;
-		        border-right:1px solid transparent;
-		        padding:0px;
-		        margin:0px;
-		}
-		
-		.shrink24 img {
-		  		vertical-align: middle;
-		  		border-style: none;
-		  		width: 24px;
-		  		height: 24px;
-		}
-				
-		.shrink16 img {
-		  		vertical-align: middle;
-		  		border-style: none;
-		  		width: 16px;
-		  		height: 16px;
-		}
-		
-		tr.z-row td.z-row-inner { border: none; }
+			.MyGridRowHeight
+			    tr.z-row td.z-row-inner div.z-row-content{
+			        border:1px solid white;
+			        border-right:1px solid transparent;
+			        padding:0px;
+			        margin:0px;
+			}
+			
+			.shrink24 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 24px;
+			  		height: 24px;
+			}
+					
+			.shrink16 img {
+			  		vertical-align: middle;
+			  		border-style: none;
+			  		width: 16px;
+			  		height: 16px;
+			}
+			
+			tr.z-row td.z-row-inner { border: none; }
+			<!-- .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent; !important} -->
 		</style>
 
 		<borderlayout>
@@ -323,11 +324,56 @@
 									<textbox value="@load(each.cod_barra)" width="150px" tooltiptext="Click para ver detalles" 
 											onClick="@command('actualizaDetalles',arg=each)" 
 											readonly="true"/>
-									<textbox value="@load(each.descripcion)" width="450px" readonly="true"/>
+											
+									<!-- Descripcion de la grilla -->
+									<zk if="${each.descripcion_manual !='true'}">
+										<textbox value="@bind(each.descripcion)" width="450px" readonly="true"/>
+									</zk>
+									
+									<zk if="${each.descripcion_manual =='true'}">																			
+										<textbox id="textbox${forEachStatus.index}" value="@bind(each.descripcion)" xmlns:w="client"
+											width="450px" readonly="false" 
+											onBlur="@command('actualiza_descripcion',index=forEachStatus.index,producto=each)" />
+										<!--  w:onBlur="emptyDescripcion(this)"/>	-->																						
+										
+									</zk>										
+									<!-- Fin Descripcion de la grilla -->											
+											
+									<!--  <textbox value="@load(each.descripcion)" width="450px" readonly="true"/>-->
 									<intbox value="@load(each.precio)"  width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<intbox value="@load(each.importe)" width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-									<intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
-									<doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right"/>
+									
+									<!-- Cantidad de la grilla -->
+									<zk if="${vm.presupuestoForm.cerrado=='true'}">
+										<intbox value="@bind(each.cantidad)" width="100px" style="text-align:right" readonly="true"/>
+									</zk>
+									
+									<zk if="${vm.presupuestoForm.cerrado !='true'}">
+										<zk if="${each.tiene_grupo=='true'}">
+											<intbox value="@bind(each.cantidad)" width="100px" style="text-align:right" readonly="true"/>
+										</zk>
+										
+										<zk if="${each.tiene_grupo !='true'}">
+											<intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+										</zk>
+									</zk>
+									<!-- Fin Cantidad de la grilla -->
+									
+									<!-- <intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/> -->
+									
+									<!-- Descuento de la grilla -->
+									<zk if="${each.familia=='MUL'}">
+										<doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right" readonly="true"/>										
+									</zk>
+									<zk if="${each.familia !='MUL'}">
+										<doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right" 
+												onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)"/>
+									</zk>
+									<!-- Fin Descuento de la grilla -->
+									
+									
+									<!-- <doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right" 
+												onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)"/> -->
 									
 									<toolbarbutton image="/iconos/cancel2.png" width="40px" 
 											onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>

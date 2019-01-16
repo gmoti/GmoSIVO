@@ -1077,7 +1077,7 @@ public class ControllerEncargos implements Serializable {
 					
 					objetos = new HashMap<String,Object>();		
 					objetos.put("busquedaConvenios",busquedaConveniosForm);
-					objetos.put("ventana","pedido");
+					objetos.put("ventana","encargo");
 					objetos.put("origen","convenio");
 					
 					//se llama ventana convenio
