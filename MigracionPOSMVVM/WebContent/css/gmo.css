@@ -3,12 +3,12 @@ Conjunto de estilos para la grid (ajuste de los espacios intermedios entre filas
 ajuste de las imagenes de la toolbar
 */
 .MyGridRowHeight
-    tr.z-row td.z-row-inner div.z-row-content{
-        border:1px solid white;
-        border-right:1px solid transparent;
-        padding:0px;
-        margin:0px;
-}
+        tr.z-row td.z-row-inner div.z-row-content{
+            border:1px solid white;
+            border-right:1px solid transparent;
+            padding:0px;
+            margin:0px;
+}   
 
 .shrink24 img {
   		vertical-align: middle;
@@ -22,4 +22,4 @@ ajuste de las imagenes de la toolbar
   		border-style: none;
   		width: 16px;
   		height: 16px;
-}
+}			

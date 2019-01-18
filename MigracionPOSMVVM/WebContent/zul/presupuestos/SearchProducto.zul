@@ -264,9 +264,9 @@
 						</div> 
 							
 						<div width="100%" vflex="max">
-										<!--  -->	
+										<!-- height="500px" style="overflow: scroll;" -->	
 							<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
-									sclass="MyGridRowHeight" width="100%" height="500px"
+									sclass="MyGridRowHeight" width="100%" height="450px" 
 									emptyMessage="Sin registros" fixedLayout="true" oddRowSclass="none">						
 							<columns>
 								<column width="120px"/>

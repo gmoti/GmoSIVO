@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language-addon>
 	<language-name>xul/html</language-name>
-	<stylesheet href="/css/myCssFile.css" type="text/css" ></stylesheet>
-	<stylesheet rel="stylesheet" href="/css/bootstrap.min.css"></stylesheet>
+	<stylesheet href="/css/gmo.css" type="text/css" ></stylesheet>
 	<stylesheet rel="stylesheet" href="/css/mCliente.css"></stylesheet>
 	<stylesheet rel="stylesheet" href="/css/font-awesome.min.css" ></stylesheet>
-	<javascript type="text/javascript" charset="UTF-8"  src="/js/bootstrap.min.js" />
+	
+	<!-- BootStrap 
+	<stylesheet rel="stylesheet" href="/Bootstrap/css/bootstrap.min.css"></stylesheet>-->
+	<stylesheet rel="stylesheet" href="/Bootstrap/css/bootstrap.css"></stylesheet>
+	<javascript type="text/javascript" charset="UTF-8"  src="/Bootstrap/js/bootstrap.min.js" />
 </language-addon>

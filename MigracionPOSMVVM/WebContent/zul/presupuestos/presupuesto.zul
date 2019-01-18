@@ -1,34 +1,7 @@
 <?page title="Presupuestos" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window id="winPresupuesto" border="none" width="100%" height="100%" 
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerPresupuesto')">
-		
-		<style>
-			.MyGridRowHeight
-			    tr.z-row td.z-row-inner div.z-row-content{
-			        border:1px solid white;
-			        border-right:1px solid transparent;
-			        padding:0px;
-			        margin:0px;
-			}
-			
-			.shrink24 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 24px;
-			  		height: 24px;
-			}
-					
-			.shrink16 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 16px;
-			  		height: 16px;
-			}
-			
-			tr.z-row td.z-row-inner { border: none; }
-			<!-- .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:transparent; !important} -->
-		</style>
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerPresupuesto')">	
 
 		<borderlayout>
 			<!-- Parte superior de la ventana -->
@@ -58,7 +31,7 @@
 					</div>
 					
 					<div width="100%" height="75%">					
-						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px" 
+						<grid width="100%" height="100%" style="padding:10px 0px 0px 0px" sclass="MyGridRowHeight"
 							fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column width="80px"/>
@@ -174,111 +147,7 @@
 								</row>
 							</rows>
 						</grid>
-					</div>
-					
-					<!-- 
-					<div width="100%" style="padding :5px 0px 0px 0px">					
-					   <hbox>
-					    <div width="300px">
-					    	<label value="Codigo" />
-					    	<space width="40px"/>
-					    	<textbox value="@bind(vm.presupuestoForm.codigo_suc)" width="30px" disabled="true" />
-					    	<textbox value="@bind(vm.presupuestoForm.codigo)" width="150px"	disabled="true" />
-					    </div>
-
-						<div width="350px">
-						    <label value="Cliente"/>						
-							<textbox value="@bind(vm.presupuestoForm.nif)" width="150px"/>
-							<textbox value="@load(vm.presupuestoForm.dvnif)" width="30px" disabled="true"/>								
-							<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente',arg=vm.presupuestoForm.nif)"  width="30px"/>	
-							<toolbarbutton image="/iconos/lupa2.png" width="30px"/>			
-						</div>
-						
-						<textbox value="@bind(vm.presupuestoForm.nombre_cliente)" width="250px" disabled="true"/>
-						<label value="fecha"/>
-						<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" disabled="true" />
-						</hbox>					
-					</div>	
-					
-					
-					<div width="100%" style="padding :5px 0px 0px 0px">
-						<hbox>						
-							<div width="300px">
-								<label value="Forma pago" />
-								<space width="5px"/>									
-								<combobox id="cbx_fpago" model="@bind(vm.presupuestoForm.listaFormasPago)" 
-									width="180px" selectedItem="@bind(vm.formaPagoBean)" 
-									disabled="@bind(vm.fpagoDisable)"
-									placeholder="Seleccione" 
-									constraint="no empty: Indique la forma de pago">
-								   <template name="model">
-									<comboitem label="@load(each.descripcion)"/>
-								   </template>	
-								</combobox>
-							</div>
-									
-							<div width="350px">			
-								<label value="Divisa" />							
-								<combobox id="cbx_divisa" model="@load(vm.presupuestoForm.listaDivisas)"  
-									width="180px" selectedItem="@bind(vm.divisaBean)" disabled="true" placeholder="Seleccione">
-								  <template name="model">
-									<comboitem label="@load(each.descripcion)" />
-								  </template>	
-								</combobox>
-							</div>
-							
-							<label value="Cambio" />
-							<textbox value="@bind(vm.presupuestoForm.cambio)" width="30px" disabled="true"/>					
-							
-							<space width="160px"></space>
-							<label value="Hora" />
-							<datebox value="@bind(vm.fecha)" format="hh:mm:ss" disabled="true"/>
-						</hbox>
-					</div>
-
-					
-					<div width="100%"
-						style="padding :5px 0px 0px 0px">
-						<hbox>
-							
-							<div width="300px">
-								<label value="Agente" />	
-								<space width="38px"/>									
-								<combobox id="cbx_agente" model="@bind(vm.presupuestoForm.listaAgentes)" 
-									width="180px" selectedItem="@bind(vm.agenteBean)" 
-									disabled="@bind(vm.agenteDisable)" 
-									placeholder="Seleccione"
-									constraint="no empty: Indique un agente">
-								  <template name="model">
-									<comboitem label="@load(each.usuario)" />
-								  </template>	
-								</combobox>
-							</div>
-							
-							<div width="350px">	
-								<label value="Idioma" />
-								<combobox id="cbx_idioma" model="@load(vm.presupuestoForm.listaIdiomas)" 
-									width="180px" selectedItem="@bind(vm.idiomaBean)" disabled="true" placeholder="Seleccione">
-								  <template name="model">
-									<comboitem label="@load(each.descripcion)" />
-								  </template>
-								</combobox>
-							</div>
-							
-							<checkbox label="Cerrado" checked="@load(vm.presupuestoForm.cerrado)" disabled="true"/>															
-							
-							<div width="450px">
-								<label value="Convenio" />	
-								<textbox value="@bind(vm.presupuestoForm.convenio)" width="80px" />
-								<textbox value="@bind(vm.presupuestoForm.convenio_det)" width="150px" disabled="true"/>
-								
-								<toolbarbutton image="/iconos/luparapida.png" onClick="@command('busquedaRapidaConvenio')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-								<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaConvenio')"  visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
-								<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')"/>	
-							</div>
-						</hbox>
-					</div>	 -->								
-								
+					</div>													
 				</div>
 			</north>
 

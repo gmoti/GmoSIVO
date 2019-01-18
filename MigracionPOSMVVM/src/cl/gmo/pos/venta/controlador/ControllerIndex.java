@@ -90,7 +90,7 @@ public class ControllerIndex implements Serializable{
 				
 				sess.setAttribute(Constantes.STRING_SUCURSAL, sucursalesBean.getSucursal());
 				sess.setAttribute(Constantes.STRING_NOMBRE_SUCURSAL, sucursalesBean.getDescripcion());
-				
+				// 
 				Window window = (Window)Executions.createComponents(
 		                "/zul/MenuPrincipal.zul", null, null);
 				
