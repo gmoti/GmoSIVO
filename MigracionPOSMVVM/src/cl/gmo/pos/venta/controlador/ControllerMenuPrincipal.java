@@ -53,7 +53,7 @@ public class ControllerMenuPrincipal implements Serializable{
 			//transacciones
 		case "M1_1":
 			window = (Window)Executions.createComponents(
-	                "/zul/venta_directa/VentaDirecta.zul", null, null);
+	                "/zul/venta_directa/VentaDirectaBS.zul", null, null);
 			window.doModal();
 	        break;
 			

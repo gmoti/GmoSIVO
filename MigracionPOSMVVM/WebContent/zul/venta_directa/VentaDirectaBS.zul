@@ -1,0 +1,254 @@
+<?page title="Venta Directa" contentType="text/html;charset=UTF-8"?>
+<window id="winVentaDirecta" border="normal" width="100%" height="100%" sclass="container-fluid" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVentaDirecta')">	
+	
+	<div sclass="container-fluid" visible="@bind(vm.controlBotones.enableGenerico1)">
+	
+		<div sclass="container-fluid">		
+			<div width="100%" height="25px" style="background-color:black;color: white">
+				<label value="VENTA DIRECTA" style="float: left ; font-weight: bold; font-size: 150%;"/>	
+				<div style="float: right">					
+					<label value="@load(vm.sucursalDes)"/>
+					<label value="::"/>
+					<label value="@load(vm.usuario)"/>	
+				</div>				
+			</div>	
+			
+			<div width="100%" height="40px" style="background-color:black;color: white;" align="right">
+				<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevaVenta')" disabled="@bind(vm.controlBotones.enableNew)" sclass="shrink24"/>
+	    		<toolbarbutton image="/iconos/money2.png" onClick="@command('pagoVenta')" disabled="@bind(vm.controlBotones.enablePagar)" sclass="shrink24"/>
+	    		<toolbarbutton image="/iconos/check.png" onClick="@command('grabaVenta')" disabled="@bind(vm.controlBotones.enableGrabar)" sclass="shrink24"/>
+	    		<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir')" sclass="shrink24"/>			    		    					
+			</div>	
+		</div>
+		
+		<div sclass="container-fluid">
+			<div sclass="row" style="background-color:white">
+			
+				<div sclass="col-lg-1">
+					<label value="Ticket" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-2">				
+					<textbox value="@load(vm.ventaDirectaForm.encabezado_ticket)" width="50px" readonly="true"/>
+					<textbox value="@bind(vm.ventaDirectaForm.numero_ticket)" width="100px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Cliente" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-5">
+					<textbox value="@bind(vm.ventaDirectaForm.nif)" width="100px"/> 
+					<textbox value="@bind(vm.ventaDirectaForm.dv)" width="20px" disabled="true"/>
+					<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.png" width="20px"/>
+					<toolbarbutton onClick="@command('buscarClienteGenerico')" image="/iconos/cliente_generico.png" width="20px"/>
+					<label value="@bind(vm.ventaDirectaForm.nombreCliente)" width="200px"/>
+				</div>
+		
+			</div>
+			
+			<div sclass="row" style="background-color:white">
+			
+				<div sclass="col-lg-1">
+					<label value="Caja" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<intbox value = "@load(vm.ventaDirectaForm.numero_caja)" readonly="true" width="60px"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<space/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Cajero" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-2">
+					<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)"  selectedItem="@bind(vm.agenteBean)"
+						disabled="true" placeholder="Seleccione">
+						<template name="model">
+					  		<comboitem label="@load(each.usuario)"/>
+					  	</template>								
+					</combobox>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Fecha" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<textbox value="@load(vm.ventaDirectaForm.fecha)" readonly="true" width="80px"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Hora" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<textbox value="@load(vm.ventaDirectaForm.hora)" readonly="true" width="80px"/>
+				</div>	
+					
+			</div>
+			
+			<div sclass="row" style="background-color:white">
+			
+				<div sclass="col-lg-1">
+					<label value="Tipo A" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<textbox value="@load(vm.ventaDirectaForm.tipoAlbaran)" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<space/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Agente" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-2">
+					<combobox model = "@load(vm.ventaDirectaForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
+							  disabled="true" placeholder="Seleccione">
+						<template name="model">
+					  		<comboitem label="@load(each.usuario)"/>
+					  	</template>								
+					</combobox>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Divisa" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<textbox value="@bind(vm.ventaDirectaForm.divisa)" width="100px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Cambio" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<textbox value="@bind(vm.ventaDirectaForm.cambio)" width="50px" readonly="true"/>
+				</div>		
+			</div>			
+		</div>
+		
+		<div sclass="container-fluid">
+			<!-- Encabezado de la grid -->
+			<div width="100%" height="10%" style="background-color:black;color: white;">
+		    	<space width="10px"/>
+				<label value="Codigo del articulo"/>
+				<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProductoDirecto')" disabled="@bind(vm.controlBotones.enableGrid)" />
+				<space width="30px"/>
+				<label value="Descripcion"/>
+				<space width="365px"/>
+				<label value="Precio"/>
+				<space width="100px"/>
+				<label value="Importe"/>
+				<space width="100px"/>
+				<label value="Cantidad"/>
+				<space width="90px"/>
+				<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.controlBotones.enableGrid)"/>		    
+		    </div>	
+		    
+		    <!-- Cuerpo de la grid -->
+		    <div width="100%" vflex="min">	
+				<grid model="@bind(vm.ventaDirectaForm.listaProductos)" selectedItem="@bind(vm.productoBean)" 
+					emptyMessage="Sin datos cargados" 
+					sclass="MyGridRowHeight"  width="100%" height="150px" 
+					style="overflow: scroll;" fixedLayout="true" oddRowSclass="none">									
+					
+					<columns>
+						<column hflex="1" />
+						<column hflex="2" />
+						<column hflex="1" />
+						<column hflex="1" />
+						<column hflex="1" />
+						<column hflex="1" />
+					</columns>
+					
+					<template name="model">
+						<row>
+							<textbox value="@load(each.cod_barra)" readonly="true"/>
+							<textbox value="@load(each.descripcion)" readonly="true" width="500px"/>
+							<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+							<intbox value="@bind(each.importe)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+							<intbox value="@bind(each.cantidad)" onChange="@command('actImporteGrid',arg=each)" style="text-align:right" format="#,###,##0" locale="it"/>								
+							
+							<toolbarbutton image="/iconos/cancel2.png" width="40px" 
+									onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
+						</row>					
+					</template>
+				</grid>
+			</div>	    	
+		</div>
+		
+		<div sclass="container-fluid">
+			<space width="800px"/>
+			<label value="Total " sclass="font-weight-bold"/>						
+			<intbox value="@bind(vm.ventaDirectaForm.sumaTotal)" readonly="true" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it"/>		
+		</div>
+		
+	</div><!-- contenedor principal -->		
+
+	
+		
+	<div sclass="container-fluid" visible="@bind(vm.controlBotones.enableGenerico2)" >
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white">
+			<label value="DATOS DE CAJA" style="float: left ; font-weight: bold; font-size: 150%;"/>	
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>				
+		</div>	
+					
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">			
+    		<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir')" sclass="shrink24"/>			    		    					
+		</div>	
+		
+		<div sclass="container-fluid"></div>
+			<div sclass="row" style="background-color:white">
+			
+				<div sclass="col-lg-1">
+					<label value="No de caja" />
+				</div>
+				
+				<div sclass="col-lg-1">
+					<combobox model="@bind(vm.ventaDirectaForm.listaCajas)" selectedItem="@bind(vm.cajaBean)">				
+						<template name="model">
+							<comboitem label="@load(each.descripcion)" />
+						</template>
+					</combobox>
+				</div>			
+			</div>
+			
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-1">
+					<label value="Cajero" />
+				</div>
+				<div sclass="col-lg-1">
+					<combobox model="@bind(vm.ventaDirectaForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)">
+						<template name="model">
+						<comboitem label="@load(each.usuario)" />
+						</template>
+					</combobox>
+				</div>
+			</div>
+			
+			<button label="Aceptar" onClick="@command('seleccionaCaja')" />
+			
+	</div>	<!-- fin -->	
+		
+		
+		
+		
+	
+	
+</window>
