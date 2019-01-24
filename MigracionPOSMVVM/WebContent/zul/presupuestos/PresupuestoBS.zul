@@ -1,0 +1,462 @@
+<?page title="Presupuestos" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winPresupuesto" border="none" width="100%" height="100%" sclass="container-fluid"
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerPresupuesto')">		
+		
+		<!-- Parte superior de la ventana-->
+			
+		<div sclass="container-fluid">
+			<div width="100%" height="25px" style="background-color:black;color: white">
+				<label value="PRESUPUESTO" style="float: left ; font-weight: bold; font-size: 150%;"/>	
+				<div style="float: right">					
+					<label value="@load(vm.sucursalDes)"/>
+					<label value="::"/>
+					<label value="@load(vm.usuario)"/>	
+				</div>				
+			</div>
+			
+			<div width="100%" height="40px" style="background-color:black;color: white">					
+				<div style="text-align: right;">													
+					<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevoPresupuesto')" disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Presupuesto" sclass="shrink24"/>
+					<toolbarbutton image="/iconos/printer.png" onClick="@command('imprimirPresupuesto')" disabled="@bind(vm.beanControlBotones.enablePrint)" tooltiptext="Imprimir Presupuesto" sclass="shrink24"/>
+					<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminar_Presupuesto')" disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Presupuesto" sclass="shrink24" />
+					<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaPresupuesto')" disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avanzada Presupuesto" sclass="shrink24"/>
+					<toolbarbutton image="/iconos/lista.png" onClick="@command('listar_detalles')" disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Listar Presupuestos" sclass="shrink24"/>
+					<toolbarbutton image="/iconos/transfer.png" onClick="@command('crearEncargo',win=winPresupuesto)" disabled="@bind(vm.beanControlBotones.enableGenerico1)" tooltiptext="Traspasar a Encargo" sclass="shrink24"/>
+					<toolbarbutton image="/iconos/check.png" onClick="@command('grabarPresupuesto')" disabled="@bind(vm.beanControlBotones.enableGrabar)" tooltiptext="Grabar Presupuesto" sclass="shrink24"/>
+					<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir', arg=winPresupuesto)" tooltiptext="Cerrar" sclass="shrink24"/>														
+				</div>						
+			</div>	
+		</div>
+		
+		<div sclass="container-fluid">
+			<!-- Row 1 -->
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-1">
+					<label value="Codigo" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-2">
+					<textbox value="@bind(vm.presupuestoForm.codigo_suc)" width="50px" readonly="true" />
+					<textbox value="@bind(vm.presupuestoForm.codigo)" width="100px"	readonly="true" />
+				</div>
+				
+				<div sclass="col-lg-1 col-md-1">
+					<label value="Cliente" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-5">
+					<textbox value="@bind(vm.presupuestoForm.nif)" width="100px"/>
+					<textbox value="@load(vm.presupuestoForm.dvnif)" width="50px" readonly="true"/>
+					<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px"/>	
+					<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaCliente')" width="30px"/>				
+					<label value="@bind(vm.presupuestoForm.nombre_cliente)" width="350px"/>
+				</div>				
+			</div>
+			
+			<!-- Row 2 -->
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-1">
+					<label value="Forma pago" />
+				</div>
+				
+				<div sclass="col-lg-2">
+					<combobox model="@bind(vm.presupuestoForm.listaFormasPago)" 
+						selectedItem="@bind(vm.formaPagoBean)" 
+						disabled="@bind(vm.fpagoDisable)"
+						placeholder="Seleccione" 
+						constraint="no empty: Indique la forma de pago">
+					   <template name="model">
+						<comboitem label="@load(each.descripcion)"/>
+					   </template>	
+					</combobox>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Divisa" />
+				</div>
+				
+				<div sclass="col-lg-2">
+					<combobox model="@load(vm.presupuestoForm.listaDivisas)"  
+						selectedItem="@bind(vm.divisaBean)" disabled="true" placeholder="Seleccione">
+					  <template name="model">
+						<comboitem label="@load(each.descripcion)" />
+					  </template>	
+					</combobox>	
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Cambio" />										
+					<textbox value="@bind(vm.presupuestoForm.cambio)" width="30px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-2">
+					<label value="Fecha"/>
+					<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" buttonVisible="false"/>										
+				</div>				
+				
+				<div sclass="col-lg-2">
+					<label value="Hora" />
+					<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true" buttonVisible="false"/>																				
+				</div>
+				
+						
+			</div>
+			
+			<!-- Row 3 -->
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-1">
+					<label value="Agente" />
+				</div>
+				
+				<div sclass="col-lg-2">
+					<combobox model="@bind(vm.presupuestoForm.listaAgentes)" 
+						selectedItem="@bind(vm.agenteBean)" 
+						disabled="@bind(vm.agenteDisable)" 
+						placeholder="Seleccione"
+						constraint="no empty: Indique un agente">
+					  <template name="model">
+						<comboitem label="@load(each.usuario)" />
+					  </template>	
+					</combobox>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Idioma" />
+				</div>
+				
+				<div sclass="col-lg-2">
+					<combobox model="@load(vm.presupuestoForm.listaIdiomas)" 
+						selectedItem="@bind(vm.idiomaBean)" disabled="true" placeholder="Seleccione">
+					  <template name="model">
+						<comboitem label="@load(each.descripcion)" />
+					  </template>
+					</combobox>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<checkbox label="Cerrado" checked="@load(vm.presupuestoForm.cerrado)" disabled="true"/>
+				</div>				
+				
+				<div sclass="col-lg-5">
+					<label value="Convenio"/>
+				
+					<textbox value="@bind(vm.presupuestoForm.convenio)" width="50px" />
+					<textbox value="@bind(vm.presupuestoForm.convenio_det)" width="100px" disabled="true"/>
+					
+					<toolbarbutton image="/iconos/luparapida.png" onClick="@command('busquedaRapidaConvenio')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" sclass="shrink16"/>
+					<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaConvenio')"  visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" sclass="shrink16"/>
+					<toolbarbutton image="/iconos/cancel.png" onClick="@command('eliminaConvenioSeleccionado')"  visible="@bind(vm.selConvenio eq 'false'? 'true':'false')" sclass="shrink16"/>
+				</div>
+			</div>	
+		</div>
+		
+		<!-- Centro de la ventana -->
+	
+		<div sclass="container-fluid">	
+			<!-- Encabezado de la grid -->
+			<div width="100%"   style="background-color:black;color:white; font-size: 6px;">
+				<space width="10px"/>
+				<label value="Articulo" />
+				<space width="100px"/>
+				<label value="Descripcion" />
+				<space width="380px"/>
+				<label value="Precio IVA" />
+				<space width="40px"/>
+				<label value="Importe" />
+				<space width="55px"/>
+				<label value="Cantidad" />
+				<space width="45px"/>
+				<label value="Descuento (%)" />
+				<space width="80px"/>							
+				<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" />
+			</div>	
+			
+			<div width="100%" vflex="min">
+				<grid model="@bind(vm.presupuestoForm.listaProductos)" fixedLayout="true" oddRowSclass="none" 
+						width="100%" height="150px"	
+						sclass="MyGridRowHeight" 
+						emptyMessage="Sin registros cargados">
+					<columns>
+						<column width="155px" />
+						<column width="455px" />
+						<column width="105px" />
+						<column width="105px"/>
+						<column width="105px" />
+						<column width="105px" />
+						<column width="45px" />
+					</columns>
+					<template name="model" >
+						<row>
+							<textbox value="@load(each.cod_barra)" width="150px" tooltiptext="Click para ver detalles" 
+									onClick="@command('actualizaDetalles',arg=each)" 
+									readonly="true"/>
+									
+							<!-- Descripcion de la grilla -->
+							<zk if="${each.descripcion_manual !='true'}">
+								<textbox value="@bind(each.descripcion)" width="450px" readonly="true"/>
+							</zk>
+							
+							<zk if="${each.descripcion_manual =='true'}">																			
+								<textbox id="textbox${forEachStatus.index}" value="@bind(each.descripcion)" xmlns:w="client"
+									width="450px" readonly="false" 
+									onBlur="@command('actualiza_descripcion',index=forEachStatus.index,producto=each)" />
+								<!--  w:onBlur="emptyDescripcion(this)"/>	-->																						
+								
+							</zk>										
+							<!-- Fin Descripcion de la grilla -->											
+									
+							<!--  <textbox value="@load(each.descripcion)" width="450px" readonly="true"/>-->
+							<intbox value="@load(each.precio)"  width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+							<intbox value="@load(each.importe)" width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+							
+							<!-- Cantidad de la grilla -->
+							<zk if="${vm.presupuestoForm.cerrado=='true'}">
+								<intbox value="@bind(each.cantidad)" width="100px" style="text-align:right" readonly="true"/>
+							</zk>
+							
+							<zk if="${vm.presupuestoForm.cerrado !='true'}">
+								<zk if="${each.tiene_grupo=='true'}">
+									<intbox value="@bind(each.cantidad)" width="100px" style="text-align:right" readonly="true"/>
+								</zk>
+								
+								<zk if="${each.tiene_grupo !='true'}">
+									<intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/>
+								</zk>
+							</zk>
+							<!-- Fin Cantidad de la grilla -->
+							
+							<!-- <intbox value="@bind(each.cantidad)" width="100px" onChange="@command('actImporteGrid',arg=each)" style="text-align:right"/> -->
+							
+							<!-- Descuento de la grilla -->
+							<zk if="${each.familia=='MUL'}">
+								<doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right" readonly="true"/>										
+							</zk>
+							<zk if="${each.familia !='MUL'}">
+								<doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right" 
+										onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)"/>
+							</zk>
+							<!-- Fin Descuento de la grilla -->
+							
+							
+							<!-- <doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right" 
+										onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)"/> -->
+							
+							<toolbarbutton image="/iconos/cancel2.png" width="40px" 
+									onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
+						</row>
+					</template>
+				</grid>
+			</div>
+		</div>
+		
+		<div align="center" sclass="container-fluid">
+			<div width="370px" style="background-color:black;color: white;">
+				<label value="Graduacion del articulo" />
+			</div>
+			
+			<div width="370px">
+				<hbox>
+					<label value="Esfera" />
+					<doublebox value="@load(vm.productoBean.esfera)" width="60px" readonly="true" style="text-align:right"/>
+					<label value="Cilindro" />
+					<doublebox value="@load(vm.productoBean.cilindro)" width="60px" readonly="true" style="text-align:right"/>
+					<label value="Diametro" />
+					<doublebox value="@load(vm.productoBean.diametro)" width="60px" readonly="true" style="text-align:right"/>
+				</hbox>
+			</div>		
+		</div>
+		
+		<!-- Parte inferior de la ventana -->
+		<div sclass="container-fluid">
+			<div vflex="min"  style="background-color:black;color: white">
+				<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>				
+			</div>
+		</div>
+		
+		<div sclass="container-fluid">
+		
+			<div sclass="row" style="background-color:white">		
+				<div sclass="col-lg-1">
+					<label value="Fecha" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<datebox value = "@load(vm.fecha)" format="dd/MM/yyyy" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-2">
+					<space/> 
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Esfera" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Cilindro" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Eje" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Adiccion" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<label value="Esfera Cerca" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1" align="right">
+					<label value="N/P" sclass="font-weight-bold"/>
+				</div>			
+			</div>
+		
+			<div sclass="row" style="background-color:white">
+		
+				<div sclass="col-lg-1">
+					<label value="Orden" sclass="font-weight-bold"/>
+				</div>
+			
+				<div sclass="col-lg-2">
+					<textbox value="@load(vm.presupuestoForm.graduacion.orden)"  width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1" align="right">
+					<label value="O.D" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OD_esfera)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OD_cilindro)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OD_eje)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OD_adicion)" width="60px" readonly="true"/>	
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OD_esfera_cerca)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OD_n)" width="60px" readonly="true" style="float: right;"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OD_p)" width="60px" readonly="true"/>
+				</div>		
+			</div>
+		
+			<div sclass="row" style="background-color:white">
+		
+				<div sclass="col-lg-1">
+					<label value="Doctor" sclass="font-weight-bold"/>
+				</div>
+			
+				<div sclass="col-lg-2">
+					<textbox value="@load(vm.presupuestoForm.graduacion.doctor)" width="250px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1" align="right">
+					<label value="O.I" sclass="font-weight-bold"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OI_esfera)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OI_cilindro)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OI_eje)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OI_adicion)" width="60px" readonly="true"/>	
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OI_esfera_cerca)" width="60px" readonly="true"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OI_n)" width="60px" readonly="true" style="float: right;"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<doublebox value="@load(vm.presupuestoForm.graduacion.OI_p)" width="60px" readonly="true"/>
+				</div>		
+			</div>						
+		</div>
+		
+		<div sclass="container-fluid">
+			<div vflex="min"  style="background-color:black;color: white">
+				<div width="100%" style="background-color:black;color: white"><label value="Totales"/></div>				
+			</div>
+		</div>
+		
+		
+		<div sclass="container-fluid">		
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-5">
+					<space/>
+				</div>		
+				<div sclass="col-lg-1">
+					<label value="Sub Total" sclass="font-weight-bold"/>
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Descuento" sclass="font-weight-bold"/>
+				</div>
+				<div sclass="col-lg-1">
+					<label value="% Desc" sclass="font-weight-bold"/>
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Total" sclass="font-weight-bold"/>
+				</div>			
+			</div>
+			
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-4" align="right">
+					<label value="Fecha de entrega" sclass="font-weight-bold"/>
+				</div>
+				<div sclass="col-lg-1">
+					<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy"/>
+				</div>
+				<div sclass="col-lg-1">
+					<intbox  value="@bind(vm.presupuestoForm.subTotal)" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
+				</div>
+				<div sclass="col-lg-1">
+					<intbox  value="@bind(vm.presupuestoForm.descuento)" onBlur="@command('actualiza_descuento_total_monto')" style="text-align:right"/>
+				</div>
+				<div sclass="col-lg-1">
+					<intbox  value="@bind(vm.presupuestoForm.dtcoPorcentaje)" onBlur="@command('actualiza_descuento_total')" style="text-align:right"/>
+				</div>
+				<div sclass="col-lg-1">
+					<intbox  value="@bind(vm.presupuestoForm.total)" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
+				</div>			
+			</div>
+			
+			<div sclass="row" style="background-color:white" >
+				<div sclass="col-lg-4" align="right">
+					<label value="Notas" sclass="font-weight-bold"/>
+				</div>
+				<div sclass="col-lg-5">
+					<textbox value="@bind(vm.presupuestoForm.nota)" width="525px" rows="2"/>
+				</div>			
+			</div>			
+		</div>
+		
+	</window>
+</zk>

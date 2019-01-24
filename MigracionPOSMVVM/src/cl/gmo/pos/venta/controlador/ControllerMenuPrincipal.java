@@ -61,7 +61,7 @@ public class ControllerMenuPrincipal implements Serializable{
 			objetos = new HashMap<String,Object>();
 			objetos.put("origen", "menu");
 			window = (Window)Executions.createComponents(
-	                "/zul/presupuestos/presupuesto.zul", null, objetos);			
+	                "/zul/presupuestos/PresupuestoBS.zul", null, objetos);			
 	        window.doModal();
 	        break;
 	        

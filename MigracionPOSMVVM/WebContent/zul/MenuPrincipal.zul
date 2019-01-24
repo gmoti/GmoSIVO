@@ -25,11 +25,11 @@
 		<menubar>
 			<menu label="Venta">
 				<menupopup>
-					<menuitem label="Venta Directa" onClick="@command('seleccionMenu',arg='M1_1')"/>
+					<menuitem label="Venta Directa" onClick="@command('seleccionMenu',arg='M1_1')" iconSclass="z-icon-money"/>
 					<menuseparator />
-					<menuitem label="Presupuestos" onClick="@command('seleccionMenu',arg='M1_2')"/>
+					<menuitem label="Presupuestos" onClick="@command('seleccionMenu',arg='M1_2')" iconSclass="z-icon-file-o"/>
 					<menuseparator />
-					<menuitem label="Encargos" onClick="@command('seleccionMenu',arg='M1_3')"/>
+					<menuitem label="Encargos" onClick="@command('seleccionMenu',arg='M1_3')" iconSclass="z-icon-reorder"/>
 					<menuseparator />
 					<menuitem label="Liberacion de encargos" onClick="@command('seleccionMenu',arg='M1_4')"/>
 				</menupopup>
@@ -37,27 +37,27 @@
 	
 			<menu label="Mantenedores">
 				<menupopup>			
-					<menuitem label="Clientes" onClick="@command('seleccionMenu',arg='M2_1')"/>
+					<menuitem label="Clientes" onClick="@command('seleccionMenu',arg='M2_1')" iconSclass="z-icon-user"/>
 					<menuseparator />
-					<menuitem label="Graduacion cliente" onClick="@command('seleccionMenu',arg='M2_2')"/>
+					<menuitem label="Graduacion cliente" onClick="@command('seleccionMenu',arg='M2_2')" iconSclass="z-icon-glass"/>
 					<menuseparator />
-					<menuitem label="Medico" onClick="@command('seleccionMenu',arg='M2_3')"/>
+					<menuitem label="Medico" onClick="@command('seleccionMenu',arg='M2_3')" iconSclass="z-icon-hospital"/>
 					<menuseparator />
 					<menuitem label="Albaran" onClick="@command('seleccionMenu',arg='M2_4')"/>
 					<menuseparator />
-					<menuitem label="Cambio de folio" onClick="@command('seleccionMenu',arg='M2_5')"/>
+					<menuitem label="Cambio de folio" onClick="@command('seleccionMenu',arg='M2_5')" iconSclass="z-icon-exchange"/>
 				</menupopup>
 			</menu>
 	
 			<menu label="Informes">
 				<menupopup>
-					<menuitem label="Listado Informe optico" onClick="@command('seleccionMenu',arg='M3_1')"/>
-					<menuitem label="Listado Total del dia" onClick="@command('seleccionMenu',arg='M3_2')"/>
-					<menuitem label="Listado de boletas" onClick="@command('seleccionMenu',arg='M3_3')"/>
-					<menuitem label="Listado de presupuestos" onClick="@command('seleccionMenu',arg='M3_4')"/>
-					<menuitem label="Listado de encargos pendientes de entrega" onClick="@command('seleccionMenu',arg='M3_5')"/>
-					<menuitem label="Busqueda general de articulos" onClick="@command('seleccionMenu',arg='M3_6')"/>
-					<menuitem label="Copia de guias y boletas" onClick="@command('seleccionMenu',arg='M3_7')"/>					
+					<menuitem label="Listado Informe optico" onClick="@command('seleccionMenu',arg='M3_1')" iconSclass="z-icon-print"/>
+					<menuitem label="Listado Total del dia" onClick="@command('seleccionMenu',arg='M3_2')" iconSclass="z-icon-print"/>
+					<menuitem label="Listado de boletas" onClick="@command('seleccionMenu',arg='M3_3')" iconSclass="z-icon-print"/>
+					<menuitem label="Listado de presupuestos" onClick="@command('seleccionMenu',arg='M3_4')" iconSclass="z-icon-print"/>
+					<menuitem label="Listado de encargos pendientes de entrega" onClick="@command('seleccionMenu',arg='M3_5')" iconSclass="z-icon-print"/>
+					<menuitem label="Busqueda general de articulos" onClick="@command('seleccionMenu',arg='M3_6')" iconSclass="z-icon-print"/>
+					<menuitem label="Copia de guias y boletas" onClick="@command('seleccionMenu',arg='M3_7')" iconSclass="z-icon-copy"/>					
 				</menupopup>
 			</menu>
 			
