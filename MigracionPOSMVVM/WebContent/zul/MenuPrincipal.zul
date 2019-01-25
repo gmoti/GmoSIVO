@@ -31,7 +31,7 @@
 					<menuseparator />
 					<menuitem label="Encargos" onClick="@command('seleccionMenu',arg='M1_3')" iconSclass="z-icon-reorder"/>
 					<menuseparator />
-					<menuitem label="Liberacion de encargos" onClick="@command('seleccionMenu',arg='M1_4')"/>
+					<menuitem label="Liberacion de encargos" onClick="@command('seleccionMenu',arg='M1_4')" iconSclass="z-icon-building"/>
 				</menupopup>
 			</menu>
 	
@@ -41,9 +41,9 @@
 					<menuseparator />
 					<menuitem label="Graduacion cliente" onClick="@command('seleccionMenu',arg='M2_2')" iconSclass="z-icon-glass"/>
 					<menuseparator />
-					<menuitem label="Medico" onClick="@command('seleccionMenu',arg='M2_3')" iconSclass="z-icon-hospital"/>
+					<menuitem label="Medico" onClick="@command('seleccionMenu',arg='M2_3')" iconSclass="z-icon-medkit"/>
 					<menuseparator />
-					<menuitem label="Albaran" onClick="@command('seleccionMenu',arg='M2_4')"/>
+					<menuitem label="Albaran" onClick="@command('seleccionMenu',arg='M2_4')" />
 					<menuseparator />
 					<menuitem label="Cambio de folio" onClick="@command('seleccionMenu',arg='M2_5')" iconSclass="z-icon-exchange"/>
 				</menupopup>

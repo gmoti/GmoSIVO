@@ -664,7 +664,7 @@
 			</div>
 			
 			<div sclass="col-lg-1">
-				<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy" width="150px"/>
+				<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy" width="100px"/>
 			</div>
 			
 			<div sclass="col-lg-1">

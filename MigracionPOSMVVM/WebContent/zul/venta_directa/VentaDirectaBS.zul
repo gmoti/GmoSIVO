@@ -38,11 +38,15 @@
 					<label value="Cliente" sclass="font-weight-bold"/>
 				</div>
 				
-				<div sclass="col-lg-5">
+				<div sclass="col-lg-3">
 					<textbox value="@bind(vm.ventaDirectaForm.nif)" width="100px"/> 
 					<textbox value="@bind(vm.ventaDirectaForm.dv)" width="20px" disabled="true"/>
 					<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.png" width="20px"/>
 					<toolbarbutton onClick="@command('buscarClienteGenerico')" image="/iconos/cliente_generico.png" width="20px"/>
+					
+				</div>
+				
+				<div sclass="col-lg-2">
 					<label value="@bind(vm.ventaDirectaForm.nombreCliente)" width="200px"/>
 				</div>
 		
@@ -160,17 +164,17 @@
 		    <div width="100%" vflex="min">	
 				<grid model="@bind(vm.ventaDirectaForm.listaProductos)" selectedItem="@bind(vm.productoBean)" 
 					emptyMessage="Sin datos cargados" 
-					sclass="MyGridRowHeight"  width="100%" height="150px" 
-					style="overflow: scroll;" fixedLayout="true" oddRowSclass="none">									
-					
-					<columns>
-						<column hflex="1" />
-						<column hflex="2" />
-						<column hflex="1" />
-						<column hflex="1" />
-						<column hflex="1" />
-						<column hflex="1" />
-					</columns>
+					sclass="MyGridRowHeight"  width="100%" height="250px" 
+					fixedLayout="true" oddRowSclass="none">									
+						
+						<columns >
+							<column hflex="1" />
+							<column hflex="2" />
+							<column hflex="1" />
+							<column hflex="1" />
+							<column hflex="1" />
+							<column hflex="1" />
+						</columns>
 					
 					<template name="model">
 						<row>

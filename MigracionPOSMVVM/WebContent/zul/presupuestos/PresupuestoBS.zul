@@ -51,7 +51,15 @@
 					<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px"/>	
 					<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaCliente')" width="30px"/>				
 					<label value="@bind(vm.presupuestoForm.nombre_cliente)" width="350px"/>
-				</div>				
+				</div>	
+				
+				<div sclass="col-lg-1">
+					<label value="Fecha"/>														
+				</div>	
+				
+				<div sclass="col-lg-1">
+					<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" buttonVisible="false"/>
+				</div>		
 			</div>
 			
 			<!-- Row 2 -->
@@ -87,20 +95,22 @@
 				
 				<div sclass="col-lg-1">
 					<label value="Cambio" />										
-					<textbox value="@bind(vm.presupuestoForm.cambio)" width="30px" readonly="true"/>
+					<textbox value="@bind(vm.presupuestoForm.cambio)" width="20px" readonly="true"/>
 				</div>
 				
 				<div sclass="col-lg-2">
-					<label value="Fecha"/>
-					<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" buttonVisible="false"/>										
+					<space/>
+					<!-- <label value="Fecha"/>
+					<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy" readonly="true" buttonVisible="false"/>	 -->									
 				</div>				
 				
-				<div sclass="col-lg-2">
-					<label value="Hora" />
-					<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true" buttonVisible="false"/>																				
+				<div sclass="col-lg-1">
+					<label value="Hora" />																								
 				</div>
 				
-						
+				<div sclass="col-lg-1">
+					<datebox value="@bind(vm.fecha)" format="hh:mm:ss" readonly="true" buttonVisible="false"/>	
+				</div>		
 			</div>
 			
 			<!-- Row 3 -->
@@ -282,7 +292,7 @@
 				</div>
 				
 				<div sclass="col-lg-1">
-					<datebox value = "@load(vm.fecha)" format="dd/MM/yyyy" readonly="true"/>
+					<datebox value = "@load(vm.fecha)" format="dd/MM/yyyy" readonly="true" buttonVisible="false"/>
 				</div>
 				
 				<div sclass="col-lg-2">
@@ -432,7 +442,7 @@
 					<label value="Fecha de entrega" sclass="font-weight-bold"/>
 				</div>
 				<div sclass="col-lg-1">
-					<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy"/>
+					<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy" width="100px"/>
 				</div>
 				<div sclass="col-lg-1">
 					<intbox  value="@bind(vm.presupuestoForm.subTotal)" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it" readonly="true"/>
@@ -453,7 +463,7 @@
 					<label value="Notas" sclass="font-weight-bold"/>
 				</div>
 				<div sclass="col-lg-5">
-					<textbox value="@bind(vm.presupuestoForm.nota)" width="525px" rows="2"/>
+					<textbox value="@bind(vm.presupuestoForm.nota)" width="530px" rows="2"/>
 				</div>			
 			</div>			
 		</div>
