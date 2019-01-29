@@ -1,0 +1,337 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<zk>
+<window id="winGraduacionClientes" border="none"  width="65%" height="65%" vflex="min" sclass="container-fluid"
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
+			
+	
+	<div sclass="container-fluid">    		
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<!-- <label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/> -->
+	   		<label value="${c:l('cliente.graduacion.graduacion.cliente')}" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>	
+		
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">					
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevaGraduacion')" tooltiptext="Nueva Graduación"/>
+			<toolbarbutton image="/iconos/presupuestos.jpg" sclass="shrink24" onClick="@command('ingresoPresupuesto',win=winGraduacionClientes)" tooltiptext="Ingreso de Presupuesto"/>
+			<toolbarbutton image="/iconos/foto.jpg" sclass="shrink24" onClick="@command('ingresoEncargo',win=winGraduacionClientes)" tooltiptext="Ingreso de Encargo"/>						
+			<toolbarbutton image="/iconos/contactologia.jpg" sclass="shrink24" onClick="@command('ingresoContactologia')" tooltiptext="Ingreso de Contactología"/>					
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('insertarGraduacion')" tooltiptext="Ingreso de Graduación"/>
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrar',win=winGraduacionClientes)" tooltiptext="Salir de Graduación"/>
+	   	</div>	
+	   	
+	   	<div width="100%" vflex="min">
+	   		<div style="float: left ;">
+	   			<label value="Cliente"/>
+	   			<textbox value="@bind(vm.graduacionesForm.nombre_cliente)" readonly="true"/>
+	   			<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('busquedaCliente')" />
+	   		</div>
+	   		
+	   		<div style="float: right ;">
+	   			<checkbox label="Diferente adiccion" checked="@bind(vm.graduacionesForm.diferenteAdd)"/> 
+	   		</div>				   	
+	   	</div>	
+	   	
+	   	<div width="100%" vflex="min" style="background-color:black;color: white;">
+	   		<label value="Graduacion"/>				   		
+	   	</div>	   	
+	</div>
+	
+	<div sclass="container-fluid" align="center">
+	
+		<!-- Row 1 -->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<space/>
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Esfera"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Cilindro"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Eje"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Cerca"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Adicion"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="DN/PL"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="DN/PC"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="AVSR"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<label value="AVCC"/>	
+			</div>
+		</div>
+		
+		<!-- Row 2 -->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="OD"/>				
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="##,##" locale="it" />			
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="##,##" locale="it" />				
+			</div>
+			<div sclass="col-lg-1">
+				<intbox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##" locale="it" />			
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="##,##" locale="it" />			
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="##,##" locale="it" />			
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="##,##" locale="it" />			
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" width="50px" format="##,##" locale="it" />			
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" width="50px" format="##,##" locale="it"/>			
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" width="50px" format="##,##" locale="it"/>
+			</div>
+		</div>
+		
+		<!-- Row 3 -->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Obs"/>			   						
+			</div>			
+			<div sclass="col-lg-6">
+				<textbox value="@bind(vm.graduacionesForm.OD_observaciones)" width="450px"/>
+			</div>			   					
+		</div>
+		
+		<!-- Row 4 -->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="OI"/>				
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="##,##" locale="it" />						   						
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="##,##" locale="it" />								   						
+			</div>
+			<div sclass="col-lg-1">
+				<intbox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##" locale="it" /> 						   						
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="##,##" locale="it" />								   						
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="##,##" locale="it" />							   						
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="##,##" locale="it" />							   						
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" width="50px" format="##,##" locale="it" />							   						
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" width="50px" format="##,##" locale="it"/>							   						
+			</div>
+			<div sclass="col-lg-1">
+				<doublebox value="@bind(vm.beanGraduaciones.OI_avcc)" width="50px" format="##,##" locale="it"/>			   						
+			</div>
+		</div>
+		
+		<!-- Row 5 -->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Obs"/>			   						
+			</div>			
+			<div sclass="col-lg-6">
+				<textbox value="@bind(vm.graduacionesForm.OI_observaciones)" width="450px"/>
+			</div>
+		</div>				
+	</div>	
+	
+	<div sclass="container-fluid">
+		<div width="100%" vflex="min" style="background-color:black;color: white;">
+	   		<label value="Historico"/>				   		
+		</div>
+		
+		<div width="100%" height="3px" style="color: white;" />
+	   		
+	</div>
+		
+	
+	<div  sclass="container-fluid">
+		<div width="100%" vflex="min" style="background-color:black;color: white">
+			<space width="5px"/>
+			<label value="Fecha"/>	
+			<space width="25px"/>
+			<label value="Nunero"/>	
+			<space width="35px"/>	
+			<label value="Detalle"/>
+			
+			<space width="300px"/>
+			<label value="Prisma"/>																														
+		</div>	
+	</div>			
+		
+	<div  sclass="container-fluid">	
+	
+		<hbox width="100%">								
+			<div width="100%" height="150px">
+				<grid model="@bind(vm.graduacionesForm.listaGraduaciones)" 
+						width="100%" height="125px" oddRowSclass="none">
+					<columns>
+						<column width="85px" />
+						<column width="50px" />
+						<column width="58px" />
+					</columns>
+					<template name="model">
+						<row>
+							<textbox value="@load(each.fecha)" width="80px" readonly="true"/>
+							<textbox value="@load(each.numero)" width="45px" readonly="true"/>
+							<button label="ver" onClick="@command('verGraduacion',graduacion=each)" width="50px"/>
+						</row>
+					</template>
+				</grid>					
+			</div>		
+			
+			<div width="100%" height="150px" >
+				<grid width="100%" height="125px" oddRowSclass="none">
+					<columns>
+						<column hflex="min" />
+						<column hflex="min" />
+						<column hflex="min" />
+						<column hflex="min" />
+						<column hflex="min" />
+					</columns>
+					<rows>
+						<row>
+							<cell/>
+							<label value="Cantidad"/>
+							<label value="Base"/>
+							<label value="Altura"/>
+							<label value="Tipo"/>											
+						</row>
+						
+						<row>
+							<label value="OD"/>
+							<combobox model="@bind(vm.graduacionesForm.listaCantidadOD)" 
+										selectedItem="@bind(vm.prismaCantidadOD)" 
+									 	width="100px">																								 	
+									 	
+								<template name="model">
+									<comboitem label="@load(each.descripcion)"/>
+								</template>
+							</combobox>
+							
+							<combobox model="@bind(vm.graduacionesForm.listaBaseOD)" 
+										selectedItem="@bind(vm.prismaBaseOD)" 
+										width="100px">													
+										
+								<template name="model">
+									<comboitem label="@load(each.descripcion)"/>
+								</template>
+							</combobox>
+							
+							<textbox value="@bind(vm.graduacionesForm.OD_altura)" width="100px"/>
+							<checkbox checked="@bind(vm.graduacionesForm.interna)"/>
+						</row>
+						
+						<row>
+							<label value="OI"/>
+							<combobox model="@bind(vm.graduacionesForm.listaCantidadOI)" 
+										selectedItem="@bind(vm.prismaCantidadOI)"
+										width="100px">													
+										
+								<template name="model">
+									<comboitem label="@load(each.descripcion)"/>
+								</template>
+							</combobox>
+							
+							<combobox model="@bind(vm.graduacionesForm.listaBaseOI)" 
+										selectedItem="@bind(vm.prismaBaseOI)" 
+										width="100px">													
+										
+								<template name="model">
+									<comboitem label="@load(each.descripcion)"/>
+								</template>
+							</combobox>
+							
+							<textbox value="@bind(vm.graduacionesForm.OI_altura)" width="100px"/>
+							<checkbox checked="@bind(vm.graduacionesForm.externa)"/>
+						</row>										
+					</rows>
+				</grid>
+			</div>	
+		</hbox>					
+	</div>
+		
+			
+			
+	<div width="100%" sclass="container-fluid">
+	
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Oftalmologo"/>	
+			</div>
+			<div sclass="col-lg-4">
+				<textbox value="@bind(vm.graduacionesForm.nifdoctor)" width="100px"/>								
+				<textbox value="@bind(vm.graduacionesForm.dvnifdoctor)" width="30px" readonly="true"/>
+				<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="@command('buscarDoctorAjax')" />
+				<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarMedico')" />
+				<toolbarbutton image="/iconos/nuevo.png" sclass="shrink16" onClick="" />	
+			</div>	
+			<div sclass="col-lg-5">
+				<label value="@load(vm.graduacionesForm.nombre_doctor)"/>	
+			</div>	
+		</div>	
+		
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Atendido por:"/>	
+			</div>
+			<div sclass="col-lg-3">
+				<combobox model="@bind(vm.graduacionesForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" width="140px">
+					<template name="model">
+						<comboitem label="@load(each.usuario)"/>
+					</template>								
+				</combobox>	
+			</div>
+			<div sclass="col-lg-3">
+				<label value="F.Emision:"/>
+				<datebox value="@bind(vm.fechaEmision)" format="dd/MM/yyyy" width="100px"/>
+			</div>
+			<div sclass="col-lg-4">
+				<label value="F.Prox.Revision"/>
+			<datebox value="@bind(vm.fechaProxRevision)" format="dd/MM/yyyy" width="100px"/>
+			</div>
+		</div>		
+	</div>					
+	
+	
+	
+</window>
+
+<script>
+function meterUpdate() {
+	alert("validacion");
+}
+</script>
+</zk>

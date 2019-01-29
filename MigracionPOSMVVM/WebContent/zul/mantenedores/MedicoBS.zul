@@ -1,0 +1,134 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:w="client"> 
+<window id="winMedico" border="none" width="55%" height="45%" sclass="container-fluid"
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMedico')  ">
+			
+	<style>	 
+		 .z-textbox{
+    		text-transform:uppercase;
+    		} 
+	</style>
+	
+	
+	<div sclass="container-fluid">
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+		   	<label value="MEDICOS" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>		
+		
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('ingresaMedico')" />
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winMedico.detach()" />
+	   	</div>	
+	</div>
+	
+	<div sclass="container-fluid">
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Código"/>				
+			</div>
+			<div sclass="col-lg-2">				
+				<textbox value="@bind(vm.medicoForm.codigo)" width="100px" readonly="true"/>
+			</div>
+			<div sclass="col-lg-5">
+				<label value="Rut" />							
+				<textbox value="@bind(vm.medicoForm.rut)" width="100px" onBlur="@command('retornaDv')" constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
+				<textbox value="@bind(vm.medicoForm.dv)" width="30px" readonly="true"/>
+				<toolbarbutton image="/iconos/lupa.png" width="50px" onClick="@command('buscarMedico')" sclass="shrink16"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Apellidos (*)"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.apellidos)" width="400px"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Nombres (*)"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.nombres)" width="400px"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Direccion"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.direccion)" width="500px"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Localidad"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.locali)" width="500px"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Provincia(*)"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<combobox model="@bind(vm.medicoForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)" 
+					placeholder="Seleccione">
+					<template name="model">
+						<comboitem label="@bind(each.descripcion)"/>
+					</template>						
+				</combobox>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Doctor Externo"/>					
+			</div>		
+			<div sclass="col-lg-1">				
+				<checkbox checked="@bind(vm.medicoForm.externo)"/>		
+			</div>	
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Telefono"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.tfno)" width="500px"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Fax"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.fax)" width="500px"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Email"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.email)" width="500px"/>
+			</div>
+		</div>
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-2">
+				<label value="Cód postal"/>						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.medicoForm.codpos)" width="500px"/>
+			</div>
+		</div>
+	
+	</div>	
+	
+	
+</window>
+</zk>
