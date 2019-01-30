@@ -1,0 +1,337 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window id="winAlbaranes" border="none" width="85%" height="65%" sclass="container-fluid" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAlbaran')  ">
+			
+			
+	<div sclass="container-fluid">	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="ALBARAN" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>		
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoAlbaran')" tooltiptext="Nueva Devolución"/>
+			<toolbarbutton image="/iconos/money2.png" sclass="shrink24" onClick="@command('pagarAlbaran')" tooltiptext="Totalizar Venta"/>
+			<toolbarbutton image="/iconos/delete.png" sclass="shrink24" onClick="@command('eliminarAlbaran')" tooltiptext="Eliminar Albaran"/>						
+			<toolbarbutton image="/iconos/boleta.png" sclass="shrink24" onClick="@command('mostrarPagosBoletas')" tooltiptext="Mostrar Pagos y Boletas"/>
+			<toolbarbutton image="/iconos/lista.png" sclass="shrink24" onClick="@command('mostrarListaAlbaranes')" tooltiptext="Lista de Albaranes"/>					
+	   		<toolbarbutton image="/iconos/lupa.png" sclass="shrink24" onClick="@command('abrirBuscarAlbaranes')" tooltiptext="Cargar Albaranes"/>
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrar_ventanas',win=winAlbaranes)" tooltiptext="Cerrar"/>
+	   	</div>		
+	</div>		
+	
+	
+	<div sclass="container-fluid">
+	
+		<!-- Row 1 (10)-->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Codigo"/>	
+			</div>
+			<div sclass="col-lg-4">
+				<textbox value="@bind(vm.devolucionForm.codigo1)" width="50px"/>
+				<textbox value="@bind(vm.devolucionForm.codigo2)" width="100px"/>
+				<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarAlbaranesDevo')" />
+			</div>
+			<div sclass="col-lg-2">
+				<label value="Fecha"/>	
+				<datebox value="@bind(vm.fechaActual)" 
+					format="dd/MM/yyyy" disabled="@bind(vm.disabledCampo)" width="100px"/>			
+			</div>			
+			<div sclass="col-lg-2">
+				<label value="Hora"/>	
+				<datebox value="@bind(vm.fechaActual)" 
+					format="hh:mm:ss" readonly="true" buttonVisible="false" disabled="@bind(vm.disabledCampo)" width="100px"/>			
+			</div>			
+			<div sclass="col-lg-2">
+				<radiogroup>
+					<radio label="Boleta" selected="true"/>
+					<radio label="Guia"/>
+				</radiogroup>				
+			</div>
+			
+		</div>
+		
+		<!-- Row 2 (10)-->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Cliente"/>														
+			</div>
+			<div sclass="col-lg-2">
+				<textbox value="@bind(vm.devolucionForm.nif)" width="100px" disabled="@bind(vm.disabledCampo)"/>
+				<textbox value="@bind(vm.devolucionForm.dvnif)" width="30px" disabled="@bind(vm.disabledCampo)"/>				
+			</div>
+			<div sclass="col-lg-2">
+				<checkbox label="Kodak" checked="@bind(vm.devolucionForm.kodak)" disabled="true"/>
+				<checkbox label="Entrega" checked="@bind(vm.devolucionForm.entrega)" disabled="true"/>				
+			</div>
+			<div sclass="col-lg-1">
+				<label value="T.Albaran"/>						
+			</div>
+			
+			<div sclass="col-lg-2">
+				<combobox model="@bind(vm.devolucionForm.listaTipoAlbaranes)" selectedItem="@bind(vm.tipoAlbaranBean)"
+						width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>															
+			</div>
+			
+			<div sclass="col-lg-1">
+				<space/>
+			</div>
+			
+			<div sclass="col-lg-2">
+				<textbox value="@bind(vm.devolucionForm.numero_boleta_guia)" width="100px" />
+				<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('cargarDatos')"/>
+			</div>
+		</div>
+		
+		<!-- Row 3 (8)-->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Idioma"/>				
+			</div>
+			<div sclass="col-lg-2">
+				<combobox model="@bind(vm.devolucionForm.listaIdiomas)" selectedItem="@bind(vm.idiomaBean)"
+							width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione"> 	
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>			
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Cambio"/>					
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.devolucionForm.cambio)"  width="50px" disabled="@bind(vm.disabledCampo)"/>				
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="Agente"/>				
+			</div>
+			
+			<div sclass="col-lg-2">					
+				<combobox model="@bind(vm.devolucionForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)"
+							width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">	
+					<template name="model">										
+						<comboitem label="@load(each.usuario)"/>
+					</template>
+				</combobox>
+			</div>
+		</div>
+		
+		<!-- Row 4 (12)-->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Divisa"/>					
+			</div>
+			<div sclass="col-lg-4">
+				<combobox model="@bind(vm.devolucionForm.listaDivisas)" selectedItem="@bind(vm.divisaBean)"
+							width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Montador"/>				
+			</div>
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.devolucionForm.montador)" width="100px" disabled="@bind(vm.disabledCampo)"/>				
+			</div>
+			<div sclass="col-lg-3">
+				<checkbox label="Facturado"/>
+				<textbox value="@bind(vm.devolucionForm.facturado_text)" width="100px" disabled="@bind(vm.disabledCampo)"/>
+			</div>
+		</div>
+		
+		<!-- Row 5 (11)-->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Motivo"/>					
+			</div>
+			<div sclass="col-lg-2">
+				<combobox model="@bind(vm.devolucionForm.lista_mot_devo)" selectedItem="@bind(vm.tipoMotivoDevolucionBean)"
+						width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>			
+			</div>
+			
+			<div sclass="col-lg-2">
+				<space/>				
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="F.Pago"/>				
+			</div>
+			<div sclass="col-lg-3">
+				<combobox model="@bind(vm.devolucionForm.listaFormasPago)" selectedItem="@bind(vm.formaPagoBean)"
+						width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>				
+			</div>
+			<div sclass="col-lg-2">
+				<label value="Dcto%"/>
+				<textbox value="@bind(vm.devolucionForm.dto)" width="50px" disabled="@bind(vm.disabledCampo)"/>
+			</div>
+		</div>
+		
+		<!-- Row 6 (11)-->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="F.Garantia"/>					
+			</div>
+			<div sclass="col-lg-2">
+				<datebox value="@bind(vm.fechaGarantia)" disabled="@bind(vm.disabledCampo)" format="dd/MM/yyyy"/>
+			</div>
+			<div sclass="col-lg-2">
+				<space/>				
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Convenio"/>
+			</div>
+			<div sclass="col-lg-2">
+				<combobox model="@bind(vm.devolucionForm.listaConvenios)" selectedItem="@bind(vm.convenioBean)"
+						width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>				
+			</div>
+			<div sclass="col-lg-3">
+				<label value="Importe pendiente cobro"/>			
+				<textbox value="@bind(vm.devolucionForm.importePend)" width="100px" disabled="@bind(vm.disabledCampo)"/>
+			</div>
+		</div>
+		
+		<!-- Row 7 (10)-->
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<label value="Direccion cliente"/>			
+			</div>
+			<div sclass="col-lg-4">
+				<textbox value="@bind(vm.devolucionForm.direccion)" width="300px" disabled="@bind(vm.disabledCampo)"/>				
+			</div>
+			<div sclass="col-lg-2">
+				<label value="Nro. Direc.cliente"/>			
+				<textbox value="@bind(vm.devolucionForm.direccion_cli)" width="50px" disabled="@bind(vm.disabledCampo)"/>			
+			</div>
+			<div sclass="col-lg-3">
+				<label value="Comuna cliente"/>				
+				<combobox model="@bind(vm.devolucionForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)"
+						width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">										
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>
+			</div>
+		</div>		
+	</div>
+	
+	
+	<div sclass="container-fluid">
+		<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
+			<space width="10px"/>
+			<label value="Articulo"/>
+			<space width="100px"/>
+			<label value="Descripcion" />
+			<space width="175px"/>
+			<label value="Subalm" />
+			
+			<space width="50px"/>					
+			<label value="Precio IVA" />
+			<space width="70px"/>						
+			<label value="Dcto (%)" />
+			<space width="30px"/>
+			<label value="Cantidad" />
+			
+			<space width="60px"/>						
+			<label value="Importe" />
+			<space width="70px"/>
+			<label value="Encargo Venta" />						
+		</div>
+	</div>
+	
+	<div sclass="container-fluid">
+		<div width="100%" height="100%">
+			<grid model="@bind(vm.devolucionForm.lista_productos)" 
+					width="100%" height="250px" oddRowSclass="none">
+				
+				<columns style="background-color:black;color: white;">
+					<column  width="105px" />
+					<column  width="275px"/>
+					<column  width="105px"/>
+					<column  width="105px"/>
+					<column  width="105px"/>
+					<column  width="105px"/>
+					<column  width="105px"/>
+					<column  width="105px"/>
+				</columns>
+				
+				<template name="model">
+					<row>
+						<textbox value="@bind(each.cod_barra)" readonly="true" width="100px"/>
+						<textbox value="@bind(each.descripcion)" readonly="true" width="270px"/>
+						<textbox value="@bind(each.subAlm)" readonly="true" width="100px"/>
+						<textbox value="@bind(each.precio)" readonly="true" width="100px"/>
+						<textbox value="@bind(each.descuento)" readonly="true" width="100px"/>
+						<textbox value="@bind(each.cantidad)" readonly="true" width="100px"/>
+						<textbox value="@bind(each.precio_costo)" readonly="true" width="100px"/>
+						<textbox value="@bind(each.identpedalbaran)" readonly="true" width="100px"/>
+					</row>
+				</template>
+			</grid>
+		</div>	
+	</div>		
+		
+	<popup id="ListaAlbaranes" width="45%" height="65%">	
+		<div width="100%" height="100%">
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="Busqueda de Albaram" style="float: left"/>
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="ListaAlbaranes.clone()" style="float: right"/>			
+		</div>	
+	
+		<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
+			<space width="10px"/>
+			<label value="Agente"/>
+			<space width="40px"/>
+			<label value="Codigo" />
+			<space width="100px"/>
+			<label value="Fecha Albaran" />			
+			<space width="20px"/>					
+			<label value="Hora" />
+			<space width="20px"/>						
+			<label value="NIF" />									
+		</div>
+		
+		<div width="100%" height="100%">
+			<grid >
+				<columns>
+					<column label=""/>
+					<column label=""/>
+				</columns>
+				<rows>
+					<row>	
+					</row>
+				</rows>
+			</grid>	
+		</div>
+	</div>
+	
+	
+	
+	</popup>
+	
+	
+</window>
