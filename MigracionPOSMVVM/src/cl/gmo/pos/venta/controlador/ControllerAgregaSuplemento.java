@@ -1,7 +1,6 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.zkoss.bind.BindUtils;
@@ -19,7 +18,6 @@ import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.ProductosBean;
 import cl.gmo.pos.venta.web.beans.SuplementopedidoBean;
 import cl.gmo.pos.venta.web.beans.SuplementosValores;
-import cl.gmo.pos.venta.web.forms.BusquedaProductosForm;
 import cl.gmo.pos.venta.web.forms.SuplementosForm;
 
 

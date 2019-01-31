@@ -19,7 +19,6 @@ import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.PresupuestosBean;
 import cl.gmo.pos.venta.web.forms.BusquedaPresupuestosForm;
-import cl.gmo.pos.venta.web.forms.PresupuestoForm;
 
 
 public class ControllerBuscarPresupuesto implements Serializable{

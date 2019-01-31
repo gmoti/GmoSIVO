@@ -2,7 +2,9 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
@@ -16,6 +18,7 @@ import cl.gmo.pos.venta.controlador.general.MenuDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.SucursalesBean;
 import cl.gmo.pos.venta.web.forms.MenuForm;
+import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
 import cl.gmo.pos.venta.web.forms.UsuarioForm;
 
 
@@ -110,14 +113,25 @@ public class ControllerIndex implements Serializable{
 	
 	@NotifyChange({"usuarioForm"})
 	@Command
-	public void usuarioUpper(){
-		
-		usuarioForm.setNombreUsuario(usuarioForm.getNombreUsuario().toUpperCase());
-		
-		
+	public void usuarioUpper(){		
+		usuarioForm.setNombreUsuario(usuarioForm.getNombreUsuario().toUpperCase());	
 	}
 	
 	
+	@NotifyChange({"divVisibleLogin","divVisibleIndex"})
+	@GlobalCommand
+	public void cierraMenu(@BindingParam("indice")int indice) {
+		
+		if (indice==0) {
+			divVisibleLogin="true";
+			divVisibleIndex="false";
+		}
+		
+		if (indice==1) {
+			divVisibleLogin="false";
+			divVisibleIndex="true";
+		}	
+	}	
 
 	public UsuarioForm getUsuarioForm() {
 		return usuarioForm;

@@ -3,6 +3,7 @@ package cl.gmo.pos.venta.controlador;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -13,7 +14,6 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.utils.Constantes;
@@ -29,6 +29,7 @@ public class ControllerMenuPrincipal implements Serializable{
 	private String usuario;
 	private String sucursal;
 	private String sucursalDes;
+		
 	
 	@Init
 	public void inicial(@ContextParam(ContextType.VIEW) Component view) {
@@ -183,15 +184,22 @@ public class ControllerMenuPrincipal implements Serializable{
 	@Command
 	public void seleccionMenuEspecial(@BindingParam("arg")String arg, @BindingParam("win")Window win ) {
 		
+		objetos = new HashMap<String,Object>();
+		
+		
 		switch (arg) {
 		
 		case "M4_1":
 			
+			objetos.put("indice",1);
+			BindUtils.postGlobalCommand(null, null, "cierraMenu", objetos);
 			win.detach();	        			
 			break;
 			
 		case "M4_2":
 			
+			objetos.put("indice",0);
+			BindUtils.postGlobalCommand(null, null, "cierraMenu", objetos);
 			win.detach();			
 			break;	
 		

@@ -33,13 +33,11 @@ import cl.gmo.pos.venta.web.beans.DevolucionBean;
 import cl.gmo.pos.venta.web.beans.DivisaBean;
 import cl.gmo.pos.venta.web.beans.FormaPagoBean;
 import cl.gmo.pos.venta.web.beans.IdiomaBean;
-
 import cl.gmo.pos.venta.web.beans.ProvinciaBean;
 import cl.gmo.pos.venta.web.beans.TipoAlbaranBean;
 import cl.gmo.pos.venta.web.beans.TipoMotivoDevolucionBean;
 import cl.gmo.pos.venta.web.forms.DevolucionForm;
 import cl.gmo.pos.venta.web.forms.SeleccionPagoForm;
-import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
 public class ControllerAlbaran implements Serializable{
 	
@@ -196,7 +194,7 @@ public class ControllerAlbaran implements Serializable{
 			devolucionDispatch.cargaFormulario(devolucionForm, sess);			
 		}		
 		
-		String val_letras = "/^[A-Z a-z—Ò. ]{3,50}$/";	
+		//String val_letras = "/^[A-Z a-z—Ò. ]{3,50}$/";	
 		/*
 		if(!Pattern.matches(val_letras, devolucionForm.getDireccion())) {
 			Messagebox.show("Debe Ingresar una direcciÛn de cliente v·lida.");

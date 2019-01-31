@@ -15,7 +15,6 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.controlador.presupuesto.PresupuestoDispatchActions;
-import cl.gmo.pos.venta.web.beans.PresupuestosBean;
 import cl.gmo.pos.venta.web.forms.PresupuestoForm;
 
 

@@ -9,6 +9,7 @@ import java.sql.Connection;
 public interface ConexionFactory {
     
     public static final ConexionFactory INSTANCE = new ConexionGMO();
+    
 	
 	public Connection getConexion();
     

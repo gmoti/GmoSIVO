@@ -4,27 +4,6 @@
 		 position="center"  mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaEncargo')">
 		
-		<style>
-			.MyGridRowHeight tr.z-row td.z-row-inner div.z-row-content{
-			border:1px solid white; border-right:1px solid transparent;
-			padding:0px; margin:0px; }
-
-			.shrink24 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 24px;
-			  		height: 24px;
-			}
-					
-			.shrink16 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 16px;
-			  		height: 16px;
-			 }
-			 tr.z-row td.z-row-inner { border: none; } 	
-		</style>
-		
 		
 		<div width="100%" height="100%">			
 			<div width="100%" style="background-color:black;color: white" height="40px">

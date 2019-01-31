@@ -2,9 +2,7 @@ package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -402,7 +400,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 	@NotifyChange({"busquedaProductosForm"})
 	private void actualiza_grupo(int indexmulti, int index) {
 		
-		ProductosBean pb = busquedaProductosForm.getListaProductos().get(index);
+		//ProductosBean pb = busquedaProductosForm.getListaProductos().get(index);
 		String [] grupos = new String[busquedaProductosForm.getListaProductos().size()];
 		int i = 0;
 		

@@ -4,14 +4,11 @@
 <window id="winClientes" border="none" width="75%" vflex="min" sclass="container-fluid"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')  ">
 
-	<style>
-		
+	<style>		
 		.z-textbox{
     		text-transform:uppercase;
     	} 
 	</style>
-	
-	
 	
 	<script><![CDATA[
         function upperValid(cadena) {
@@ -86,250 +83,246 @@
     
     <div sclass="container-fluid">    	
 		
-		<!-- Form Principal -->
+		<!-- Form Principal -->	
 		
+		<!-- Row 1 -->
+		<div sclass="row" style="background-color:white">
 		
-		
-			<!-- Row 1 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Codigo"/>
-				</div>
-				<div sclass="col-lg-3">
-					<intbox value="@bind(vm.clienteForm.codigo)" readonly="true" disabled="@bind(vm.bDisableinicialRut)"/>
-				</div>
-				<div sclass="col-lg-1">
-					<label value="Rut"/>
-				</div>
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.rut)" onBlur="@command('validarRut',persona='cliente')"
-						width="100px" disabled="@bind(vm.bDisableinicialRut)"
-						constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
-						
-					<textbox value="@bind(vm.clienteForm.dv)" 
-						width="30px" readonly="true" />
-						
-					<toolbarbutton image="/iconos/luparapida.png" 
-						sclass="shrink16" onClick="@command('buscar')" disabled="@bind(vm.bDisableinicialRut)"/>
-						
-					<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaCliente',retorno='buscarClienteCliente')"
-						sclass="shrink16" disabled="@bind(vm.bDisableinicialRut)"/>
-				</div>	
-				
-				<div sclass="col-lg-1">
-					<label value="F.Nac(*)"/>
-				</div>
-				
-				<div sclass="col-lg-3">
-					<datebox value="@bind(vm.fechaNac)" format="dd/MM/yyyy" 
-							readonly="@bind(vm.bfechaNac eq 'true'?'true':'false')" 
-							buttonVisible="@bind(vm.bfechaNac eq 'true'?'false':'true')" disabled="@bind(vm.bDisableinicial)"/>
-					<checkbox checked="@bind(vm.bfechaNac)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>
-						
-    		</div>
-    		
-    		<!-- Row 2 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Apellidos(*)"/><!-- w:onBlur="upperValid(this)" -->
-				</div>		
-				
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.apellidos)" 
-								disabled="@bind(vm.bDisableinicial)"/>
-				</div>
-				
-				<div sclass="col-lg-1">
-					<label value="Edad"/>
-				</div>
-				
-				<div sclass="col-lg-1">
-					<textbox value="@bind(vm.clienteForm.edad)" width="60px" readonly="true"
-								disabled="@bind(vm.bDisableinicial)"/>
-				</div>					
-    		</div>
-    		
-    		<!-- Row 3 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Nombres(*)"/>
-				</div>		
-				
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.nombres)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>
-				
-				<div sclass="col-lg-1">
-					<label value="Agente"/>
-				</div>	
-				
-				<div sclass="col-lg-2">
-					<combobox model="@bind(vm.clienteForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
-						placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)" width="160px">
-						<template name="model">
-							<comboitem label="@load(each.usuario)"/>
-						</template>
-					</combobox>
-				</div>
-    		</div>
-    		
-    		<!-- Row 4 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Tipo via"/>
-				</div>
-				
-				<div sclass="col-lg-3">
-					<combobox model="@bind(vm.clienteForm.listaTipoVia)" selectedItem="@bind(vm.tipoViaBean)" 
-							placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)">
-						<template name="model">
-							<comboitem label="@load(each.descripcion)"/>
-						</template>
-					</combobox>
-				</div>
-				
-				<div sclass="col-lg-1">
-					<label value="Direccion(*)"/>
-				</div>
-				
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.via)"  
-						readonly="@bind(vm.bDireccion eq 'true'?'true':'false')" 
-						disabled="@bind(vm.bDisableinicial)"/>
-					<checkbox checked="@bind(vm.bDireccion)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>				
-				
-				<div sclass="col-lg-1">
-					<label value="Numero(*)"/>
-				</div>	
-				
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.numero)" 
-						readonly="@bind(vm.bNumero eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)" width="50px"/>
-					<checkbox checked="@bind(vm.bNumero)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>		
-    		</div>
-    		
-    		<!-- Row 5 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Localidad"/>
-				</div>	
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.localidad)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>
-				<div sclass="col-lg-1">
-					<label value="Provincia(*)"/>
-				</div>
-				<div sclass="col-lg-3">
-					<combobox model="@bind(vm.clienteForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)"
-						readonly="@bind(vm.bProvincia eq 'true'?'true':'false')" 
-						placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)" width="160px">
-						<template name="model">
-							<comboitem label="@bind(each.descripcion)"/>
-						</template>
-					</combobox>
-					<checkbox checked="@bind(vm.bProvincia)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>
-				<div sclass="col-lg-1">
-					<label value="Bloque/dpto"/>
-				</div>
-				<div sclass="col-lg-1">
-					<textbox value="@bind(vm.clienteForm.bloque)" disabled="@bind(vm.bDisableinicial)" width="50px"/>
-				</div>		
-    		</div>
-    		
-    		<!-- Row 6 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Cod.Postal"/>
-				</div>
-				
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.cod_postal)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>
-				
-				<div sclass="col-lg-1">
-					<label value="Contacto"/>
-				</div>
-				
-				<div sclass="col-lg-1">
-					<textbox value="@bind(vm.clienteForm.contacto)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>							
-    		</div>
-    		
-    		<!-- Row 7 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Email(*)"/>
-				</div>		
-				
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.email)" 
-						readonly="@bind(vm.bEmail eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
-					<checkbox checked="@bind(vm.bEmail)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>
-				
-				<div sclass="col-lg-1">
-					<label value="Telefono(*)"/>
-				</div>
-				
-				<div sclass="col-lg-3">
-					<combobox model="@bind(vm.modelo)" width="50px" readonly="@bind(vm.bTelefono eq 'true'?'true':'false')" 
-						disabled="@bind(vm.bDisableinicial)" 
-						selectedItem="@load(vm.clienteForm.cod_telefono)" onAfterRender="self.setSelectedIndex(0)"/>								
+			<div sclass="col-lg-1">
+				<label value="Codigo"/>
+			</div>
+			<div sclass="col-lg-3">
+				<intbox value="@bind(vm.clienteForm.codigo)" readonly="true" disabled="@bind(vm.bDisableinicialRut)"/>
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Rut"/>
+			</div>
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.rut)" onBlur="@command('validarRut',persona='cliente')"
+					width="100px" disabled="@bind(vm.bDisableinicialRut)"
+					constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
 					
-					<textbox value="@bind(vm.clienteForm.telefono)" width="100px"
-						readonly="@bind(vm.bTelefono eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
-					<checkbox checked="@bind(vm.bTelefono)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>	
-				
-				<div sclass="col-lg-1">
-					<label value="Sexo"/>
-				</div>
-				
-				<div sclass="col-lg-3">
-					<radiogroup selectedItem="@bind(vm.clienteForm.sexo)" disabled="@bind(vm.bDisableinicial)">
-						<radio label="Hombre" value="H"/>
-						<radio label="Mujer" value="M"/>
-						<radio label="Institucion" value="I"/>
-					</radiogroup>
-				</div>
-    		</div>
-    		
-    		<!-- Row 8 -->
-			<div sclass="row" style="background-color:white">
-			
-				<div sclass="col-lg-1">
-					<label value="Profesion"/>
-				</div>
+				<textbox value="@bind(vm.clienteForm.dv)" 
+					width="30px" readonly="true" />
 					
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.profesion)" 
-								disabled="@bind(vm.bDisableinicial)"/>
-				</div>
+				<toolbarbutton image="/iconos/luparapida.png" 
+					sclass="shrink16" onClick="@command('buscar')" disabled="@bind(vm.bDisableinicialRut)"/>
+					
+				<toolbarbutton image="/iconos/lupa.png" onClick="@command('busquedaCliente',retorno='buscarClienteCliente')"
+					sclass="shrink16" disabled="@bind(vm.bDisableinicialRut)"/>
+			</div>	
+			
+			<div sclass="col-lg-1">
+				<label value="F.Nac(*)"/>
+			</div>
+			
+			<div sclass="col-lg-3">
+				<datebox value="@bind(vm.fechaNac)" format="dd/MM/yyyy" 
+						readonly="@bind(vm.bfechaNac eq 'true'?'true':'false')" 
+						buttonVisible="@bind(vm.bfechaNac eq 'true'?'false':'true')" disabled="@bind(vm.bDisableinicial)"/>
+				<checkbox checked="@bind(vm.bfechaNac)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+					
+   		</div>
+   		
+   		<!-- Row 2 -->
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-1">
+				<label value="Apellidos(*)"/><!-- w:onBlur="upperValid(this)" -->
+			</div>		
+			
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.apellidos)" 
+							disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="Edad"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.clienteForm.edad)" width="60px" readonly="true"
+							disabled="@bind(vm.bDisableinicial)"/>
+			</div>					
+   		</div>
+   		
+   		<!-- Row 3 -->
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-1">
+				<label value="Nombres(*)"/>
+			</div>		
+			
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.nombres)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="Agente"/>
+			</div>	
+			
+			<div sclass="col-lg-2">
+				<combobox model="@bind(vm.clienteForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" 
+					placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)" width="160px">
+					<template name="model">
+						<comboitem label="@load(each.usuario)"/>
+					</template>
+				</combobox>
+			</div>
+   		</div>
+   		
+   		<!-- Row 4 -->
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-1">
+				<label value="Tipo via"/>
+			</div>
+			
+			<div sclass="col-lg-3">
+				<combobox model="@bind(vm.clienteForm.listaTipoVia)" selectedItem="@bind(vm.tipoViaBean)" 
+						placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)">
+					<template name="model">
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="Direccion(*)"/>
+			</div>
+			
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.via)"  
+					readonly="@bind(vm.bDireccion eq 'true'?'true':'false')" 
+					disabled="@bind(vm.bDisableinicial)"/>
+				<checkbox checked="@bind(vm.bDireccion)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>				
+			
+			<div sclass="col-lg-1">
+				<label value="Numero(*)"/>
+			</div>	
+			
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.numero)" 
+					readonly="@bind(vm.bNumero eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)" width="50px"/>
+				<checkbox checked="@bind(vm.bNumero)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>		
+   		</div>
+   		
+   		<!-- Row 5 -->
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-1">
+				<label value="Localidad"/>
+			</div>	
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.localidad)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Provincia(*)"/>
+			</div>
+			<div sclass="col-lg-3">
+				<combobox model="@bind(vm.clienteForm.listaProvincia)" selectedItem="@bind(vm.provinciaBean)"
+					readonly="@bind(vm.bProvincia eq 'true'?'true':'false')" 
+					placeholder="Seleccione" disabled="@bind(vm.bDisableinicial)" width="160px">
+					<template name="model">
+						<comboitem label="@bind(each.descripcion)"/>
+					</template>
+				</combobox>
+				<checkbox checked="@bind(vm.bProvincia)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+			<div sclass="col-lg-1">
+				<label value="Bloque/dpto"/>
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.clienteForm.bloque)" disabled="@bind(vm.bDisableinicial)" width="50px"/>
+			</div>		
+   		</div>
+   		
+   		<!-- Row 6 -->
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-1">
+				<label value="Cod.Postal"/>
+			</div>
+			
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.cod_postal)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="Contacto"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.clienteForm.contacto)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>							
+   		</div>
+   		
+   		<!-- Row 7 -->
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-1">
+				<label value="Email(*)"/>
+			</div>		
+			
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.email)" 
+					readonly="@bind(vm.bEmail eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+				<checkbox checked="@bind(vm.bEmail)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="Telefono(*)"/>
+			</div>
+			
+			<div sclass="col-lg-3">
+				<combobox model="@bind(vm.modelo)" width="50px" readonly="@bind(vm.bTelefono eq 'true'?'true':'false')" 
+					disabled="@bind(vm.bDisableinicial)" 
+					selectedItem="@load(vm.clienteForm.cod_telefono)" onAfterRender="self.setSelectedIndex(0)"/>								
 				
-				<div sclass="col-lg-1">
-					<label value="Movil(*)"/>
-				</div>
+				<textbox value="@bind(vm.clienteForm.telefono)" width="100px"
+					readonly="@bind(vm.bTelefono eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+				<checkbox checked="@bind(vm.bTelefono)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>	
+			
+			<div sclass="col-lg-1">
+				<label value="Sexo"/>
+			</div>
+			
+			<div sclass="col-lg-3">
+				<radiogroup selectedItem="@bind(vm.clienteForm.sexo)" disabled="@bind(vm.bDisableinicial)">
+					<radio label="Hombre" value="H"/>
+					<radio label="Mujer" value="M"/>
+					<radio label="Institucion" value="I"/>
+				</radiogroup>
+			</div>
+   		</div>
+   		
+   		<!-- Row 8 -->
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-1">
+				<label value="Profesion"/>
+			</div>
 				
-				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.clienteForm.telefono_movil)" 
-							readonly="@bind(vm.bMovil eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
-					<checkbox checked="@bind(vm.bMovil)" disabled="@bind(vm.bDisableinicial)"/>
-				</div>		
-    		</div>
-    	</div>    
-    
-   
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.profesion)" 
+							disabled="@bind(vm.bDisableinicial)"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<label value="Movil(*)"/>
+			</div>
+			
+			<div sclass="col-lg-3">
+				<textbox value="@bind(vm.clienteForm.telefono_movil)" 
+						readonly="@bind(vm.bMovil eq 'true'?'true':'false')" disabled="@bind(vm.bDisableinicial)"/>
+				<checkbox checked="@bind(vm.bMovil)" disabled="@bind(vm.bDisableinicial)"/>
+			</div>		
+   		</div>
+    </div>  
     
     <div sclass="container-fluid">
     	<div width="100%" vflex="min" style="background-color:black;color: white;">

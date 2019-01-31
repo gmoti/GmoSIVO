@@ -2,57 +2,8 @@
 <zk>
 <window id="winBuscaProductoDirecto"  border="none" width="500px" height="110px" 
 		position="center" mode="modal" sizable="false" 		
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductoDirecto')">
-		
-		<style>
-			.MyGridRowHeight
-			    tr.z-row td.z-row-inner div.z-row-content{
-			        border:1px solid white;
-			        border-right:1px solid transparent;
-			        padding:0px;
-			        margin:0px;
-			}
-					
-			.shrink24 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 24px;
-			  		height: 24px;
-			}
-					
-			.shrink16 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 16px;
-			  		height: 16px;
-			 }
-			 
-			 tr.z-row td.z-row-inner { 
-			 		border: none; 
-			 }				 
-			 
-			<!-- .z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:none;text-shadow: none;}   -->
-			.button{
-		        font-size:10px;
-		        font-family:Verdana,Helvetica;
-		        font-weight:bold;
-		        color:white;
-		        background:#638cb5;
-		        border:0px;
-		        height:19px;
-		       }
-       
-			.button2{
-			        font-size:10px;
-			        font-family:Verdana,Helvetica;
-			        font-weight:bold;
-			        background-color:#809800;
-					color:#FFF;
-			        border:0px;
-			        height:19px;
-			       }
-		</style>
-		
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProductoDirecto')">		
+				
 		<div width="100%" vflex="min" >
 		
 			<div width="100%" style="background-color:black;color: white;">

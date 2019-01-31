@@ -5,23 +5,15 @@ package cl.gmo.pos.venta.controlador;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-
-import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.AMedia;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Window;
 import cl.gmo.pos.venta.reporte.nuevo.ListadoTotalDiaDAOImpl;
 import cl.gmo.pos.venta.reporte.nuevo.ReportesHelper;
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.web.beans.ListasTotalesDiaBean;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 
 public class ControllerListadoTotalDia implements Serializable{
@@ -50,7 +42,7 @@ public class ControllerListadoTotalDia implements Serializable{
 	
 	@Init
 	public void inicial()  { 		
-		fecha = new Date(System.currentTimeMillis());
+		//fecha = new Date(System.currentTimeMillis());
 		listadoTotalDiasImpl = new ListadoTotalDiaDAOImpl();
 		reportesHelper = new ReportesHelper();	
 		

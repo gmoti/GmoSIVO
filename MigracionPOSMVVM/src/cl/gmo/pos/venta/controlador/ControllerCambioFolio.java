@@ -57,8 +57,8 @@ public class ControllerCambioFolio implements Serializable {
 		respuesta = validaDesdeHasta(desdeGuia, hastaGuia, "Guia");
 		
 		
-		int desdeBoleta = cambioFolioForm.getDesdeBoleta();
-		int hastaBoleta = cambioFolioForm.getHastaBoleta();
+		//int desdeBoleta = cambioFolioForm.getDesdeBoleta();
+		//int hastaBoleta = cambioFolioForm.getHastaBoleta();
 		
 		if(respuesta){
 			respuesta = validaDesdeHasta(desdeGuia, hastaGuia, "Boleta");

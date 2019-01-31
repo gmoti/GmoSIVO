@@ -18,7 +18,7 @@ public class ConexionGMO implements ConexionFactory{
     public Connection getConexion() {
     
     	
-		Connection con = null;
+		/*Connection con = null;
     	String usuario="gmo";
     	String pass="249gmo.,";
     	String driver="oracle.jdbc.driver.OracleDriver";
@@ -35,22 +35,23 @@ public class ConexionGMO implements ConexionFactory{
     		
     		 System.out.println("Error de conexion");
     	}
-    	return con;
+    	return con;*/
     	 
-    	/*Connection con = null; 
-        try{
-         
-        DataSource dataSource = null;
-              InitialContext context = null;
-              context = new InitialContext();
-              dataSource = (DataSource) context.lookup("jdbc/gmo");
-              con = dataSource.getConnection();
+    	Connection con = null; 
+    	DataSource dataSource = null;
+    	InitialContext context = null;
+    	
+        try{       	
+        	context = new InitialContext();
+        	dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/gmodb");
+        	con = dataSource.getConnection();
+              
          }catch(SQLException e){
              e.printStackTrace();
          }catch(NamingException e){
         	 e.printStackTrace();
          }
-         return con;*/
+         return con;
     }
 
     
