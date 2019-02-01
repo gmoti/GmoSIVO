@@ -152,9 +152,9 @@
 				<label value="Descripcion"/>
 				<space width="365px"/>
 				<label value="Precio"/>
-				<space width="100px"/>
+				<space width="50px"/>
 				<label value="Importe"/>
-				<space width="100px"/>
+				<space width="50px"/>
 				<label value="Cantidad"/>
 				<space width="90px"/>
 				<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.controlBotones.enableGrid)"/>		    
@@ -168,22 +168,33 @@
 					fixedLayout="true" oddRowSclass="none">									
 						
 						<columns >
-							<column hflex="1" />
-							<column hflex="2" />
-							<column hflex="1" />
-							<column hflex="1" />
-							<column hflex="1" />
-							<column hflex="1" />
+							<column width="125px" />
+							<column width="455px" />
+							<column width="105px" />
+							<column width="105px" />
+							<column width="105px" />
+							<column width="45px" />
+							<column width="45px" />
 						</columns>
 					
 					<template name="model">
 						<row>
-							<textbox value="@load(each.cod_barra)" readonly="true"/>
-							<textbox value="@load(each.descripcion)" readonly="true" width="500px"/>
-							<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-							<intbox value="@bind(each.importe)" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-							<intbox value="@bind(each.cantidad)" onChange="@command('actImporteGrid',arg=each)" style="text-align:right" format="#,###,##0" locale="it"/>								
+							<textbox value="@load(each.cod_barra)" readonly="true" width="120px"/>
+							<textbox value="@load(each.descripcion)" readonly="true" width="450px"/>
+							<intbox value="@load(each.precio)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="100px"/>
+							<intbox value="@bind(each.importe)" readonly="true" style="text-align:right" format="#,###,##0" locale="it" width="100px"/>
+															
 							
+							<!-- Cantidad de la grilla -->
+							<zk if="${each.familia=='MUL'}">
+								<intbox value="@bind(each.cantidad)" style="text-align:right" format="#,###,##0" locale="it" readonly="true" width="100px"/>
+							</zk>
+							<zk if="${each.familia != 'MUL'}">
+								<intbox value="@bind(each.cantidad)" onChange="@command('actImporteGrid',arg=each)" style="text-align:right" format="#,###,##0" locale="it" width="100px"/>
+							</zk>							
+							<!-- fin cantidad de la grilla -->
+							
+							<cell width="40px" />
 							<toolbarbutton image="/iconos/cancel2.png" width="40px" 
 									onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
 						</row>					
@@ -193,7 +204,7 @@
 		</div>
 		
 		<div sclass="container-fluid">
-			<space width="800px"/>
+			<space width="750px"/>
 			<label value="Total " sclass="font-weight-bold"/>						
 			<intbox value="@bind(vm.ventaDirectaForm.sumaTotal)" readonly="true" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it"/>		
 		</div>

@@ -1283,7 +1283,7 @@ public class ControllerEncargos implements Serializable {
 			ventaPedidoForm.setOjo(arg.getOjo());
 			ventaPedidoForm.setDescripcion(tipo);			
 			
-			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
+			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);		
 			
 			//===============================================
 			//Clase manejadora de la respuesta de estados

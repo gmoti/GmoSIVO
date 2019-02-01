@@ -16,15 +16,12 @@
 						</div>																			
 					</div>
 					
-					<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none" width="100%">
-						<columns>
-							<column width="180px"/>
-							<column width="305px"/>
-							<column width="100px"/>
-						</columns>
-						<rows>
-							<row>
-								<label value="Familia de Productos" />								
+					<div sclass="container-fluid">
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Familia de Productos" />
+							</div>
+							<div sclass="col-lg-2">
 								<combobox
 									model="@load(vm.busquedaProductosForm.listaFamilias)"
 									selectedItem="@bind(vm.familiaBean)"
@@ -38,11 +35,14 @@
 											label="@load(each.descripcion)" />
 									</template>
 								</combobox>
-								<space/>
-							</row>
-
-							<row>
-								<label value="Sub-familia de Productos" />								
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Sub-familia de Productos" />
+							</div>
+							<div sclass="col-lg-2">
 								<combobox
 									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
 									selectedItem="@bind(vm.subFamiliaBean)"
@@ -56,11 +56,14 @@
 											label="@load(each.descripcion)" />
 									</template>
 								</combobox>
-								<space/>
-							</row>
-
-							<row>
-								<label value="Grupo de Productos" />								
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Grupo de Productos" />									
+							</div>
+							<div sclass="col-lg-2">
 								<combobox
 									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
 									selectedItem="@bind(vm.grupoFamiliaBean)"
@@ -74,26 +77,115 @@
 											label="@load(each.descripcion)" />
 									</template>
 								</combobox>
-								<space/>
-							</row>
-
-							<row>
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
 								<label value="Código de Producto SAP" />								
+							</div>
+							<div sclass="col-lg-3">
 								<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
-								<space/>	
-							</row>
-
-							<row>
-								<label value="Codigo Barra Producto" />														
-								<cell colspan="1" style="padding:0px 0px 0px 0px">							
-									<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
-									<space width="10px"/>
-									<button image="/iconos/lupa2.png"
-										label="Buscar" onClick="@command('despachador')" />
-								</cell> 
-							</row>
-						</rows>
-					</grid>											
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Codigo Barra Producto" />	
+							</div>
+							<div sclass="col-lg-3">
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)"/>
+							</div>	
+							<div sclass="col-lg-1">
+								<button image="/iconos/lupa2.png" 
+									label="Buscar"  
+									onClick="@command('despachador')" />
+							</div>				
+						</div>						
+					</div>	
+					
+					<!-- 
+					<div width="100%" vflex="min">
+						<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none" width="100%">
+							<columns>
+								<column width="180px"/>
+								<column width="305px"/>
+								<column width="100px"/>
+							</columns>
+							<rows>
+								<row>
+									<label value="Familia de Productos" />								
+									<combobox
+										model="@load(vm.busquedaProductosForm.listaFamilias)"
+										selectedItem="@bind(vm.familiaBean)"
+										onSelect="@command('cargaSubFamilias')"
+										placeholder="SELECCIONAR"
+										onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
+										width="300px">
+	
+										<template name='model'>
+											<comboitem
+												label="@load(each.descripcion)" />
+										</template>
+									</combobox>
+									<space/>
+								</row>
+	
+								<row>
+									<label value="Sub-familia de Productos" />								
+									<combobox
+										model="@load(vm.busquedaProductosForm.listaSubFamilias)"
+										selectedItem="@bind(vm.subFamiliaBean)"
+										onSelect="@command('cargaGrupoFamilias')"
+										placeholder="SELECCIONAR"
+										onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
+										width="300px">
+	
+										<template name='model'>
+											<comboitem
+												label="@load(each.descripcion)" />
+										</template>
+									</combobox>
+									<space/>
+								</row>
+	
+								<row>
+									<label value="Grupo de Productos" />								
+									<combobox
+										model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
+										selectedItem="@bind(vm.grupoFamiliaBean)"
+										onSelect="@command('cambiaGrupoFamilias')"
+										placeholder="SELECCIONAR"
+										onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
+										width="300px">
+	
+										<template name='model'>
+											<comboitem
+												label="@load(each.descripcion)" />
+										</template>
+									</combobox>
+									<space/>
+								</row>
+	
+								<row>
+									<label value="Código de Producto SAP" />								
+									<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
+									<space/>	
+								</row>
+	
+								<row>
+									<label value="Codigo Barra Producto" />														
+									<cell colspan="1" style="padding:0px 0px 0px 0px">							
+										<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
+										<space width="10px"/>
+										<button image="/iconos/lupa2.png"
+											label="Buscar" onClick="@command('despachador')" />
+									</cell> 
+								</row>
+							</rows>
+						</grid>
+					</div>												
+					 -->
 				</div>	
 					
 			</north>
@@ -247,7 +339,7 @@
 								<column width="300px"/>
 								<column width="80px" />
 								<column width="60px" />
-								<column width="60px" /> 
+								<column width="32px" /> 
 							</columns>						
 							<template name="model">							
 								<row>
@@ -255,7 +347,7 @@
 									<textbox value="@load(each.descripcion)" width="300px" readonly="true"/>  
 									<doublebox value="@load(each.precio)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
 									<textbox value="@load(each.grupo)" width="60px" readonly="true"/> 
-									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',producto=each)" width="50px"/>									
+									<toolbarbutton image="/iconos/add.png" onClick="@command('seleccionaProducto',producto=each)" width="30px"/>									
 								</row>							
 							</template>
 							</grid>						

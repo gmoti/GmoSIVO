@@ -8,6 +8,7 @@
 		<borderlayout vflex="min">
 			<north vflex="min">
 				<div width="100%" vflex="min">	
+				
 					<div width="100%" vflex="min" style="background-color:black;color: white">
 						<label value="Busqueda Productos" />
 						<div style="float: right">					
@@ -15,6 +16,91 @@
 						</div>																			
 					</div>	
 					
+					<div sclass="container-fluid">
+					
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Familia de Productos" />
+							</div>
+							<div sclass="col-lg-2">
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaFamilias)"
+									selectedItem="@bind(vm.familiaBean)"
+									onSelect="@command('cargaSubFamilias')"
+									placeholder="SELECCIONAR"
+									onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
+									width="300px">
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Sub-familia de Productos" />
+							</div>
+							<div sclass="col-lg-2">
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
+									selectedItem="@bind(vm.subFamiliaBean)"
+									onSelect="@command('cargaGrupoFamilias')"
+									placeholder="SELECCIONAR"
+									onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
+									width="300px">
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Grupo de Productos" />									
+							</div>
+							<div sclass="col-lg-2">
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
+									selectedItem="@bind(vm.grupoFamiliaBean)"
+									placeholder="SELECCIONAR"
+									onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
+									width="300px">
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Código de Producto SAP" />								
+							</div>
+							<div sclass="col-lg-3">
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
+							</div>					
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Codigo Barra Producto" />	
+							</div>
+							<div sclass="col-lg-3">
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
+							</div>	
+							<div sclass="col-lg-1">
+								<button image="/iconos/lupa2.png" width="100px"
+										label="Buscar" onClick="@command('despachador')" />
+							</div>				
+						</div>						
+					</div>					
+					
+					<!-- 
 					<grid sclass="MyGridRowHeight" width="100%" fixedLayout="true" oddRowSclass="none">
 						<columns>							
 							<column hflex="min"/>
@@ -90,7 +176,7 @@
 								</cell>	
 							</row>
 						</rows>
-					</grid>				
+					</grid>	 -->			
 				</div>			
 				
 			</north>

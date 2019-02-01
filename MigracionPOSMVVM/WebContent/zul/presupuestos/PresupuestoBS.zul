@@ -170,11 +170,11 @@
 				<label value="Articulo" />
 				<space width="100px"/>
 				<label value="Descripcion" />
-				<space width="380px"/>
+				<space width="410px"/>
 				<label value="Precio IVA" />
 				<space width="40px"/>
 				<label value="Importe" />
-				<space width="55px"/>
+				<space width="65px"/>
 				<label value="Cantidad" />
 				<space width="45px"/>
 				<label value="Descuento (%)" />
@@ -194,6 +194,7 @@
 						<column width="105px"/>
 						<column width="105px" />
 						<column width="105px" />
+						<column width="45px" />
 						<column width="45px" />
 					</columns>
 					<template name="model" >
@@ -251,6 +252,8 @@
 							
 							<!-- <doublebox value="@bind(each.descuento)" width="100px" format="##.###0" style="text-align:right" 
 										onBlur="@command('actualiza_descuento',index=forEachStatus.index,dcto=each.descuento)"/> -->
+							
+							<cell width="40px" />
 							
 							<toolbarbutton image="/iconos/cancel2.png" width="40px" 
 									onClick="@command('deleteItem',arg=each)" tooltiptext="Eliminar producto"/>
@@ -316,7 +319,7 @@
 				</div>
 				
 				<div sclass="col-lg-1">
-					<label value="Esfera Cerca" sclass="font-weight-bold"/>
+					<label value="Esf.Cerca" sclass="font-weight-bold"/>
 				</div>
 				
 				<div sclass="col-lg-1" align="right">

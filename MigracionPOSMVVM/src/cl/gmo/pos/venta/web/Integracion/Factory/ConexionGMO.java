@@ -1,13 +1,10 @@
 package cl.gmo.pos.venta.web.Integracion.Factory;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import org.apache.log4j.Logger;
 
 /**
  *

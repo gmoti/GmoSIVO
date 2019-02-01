@@ -256,19 +256,19 @@
 			<label value="Articulo"/>
 			<space width="80px"/>
 			<label value="Descripcion" />
-			<space width="200px"/>
+			<space width="290px"/>
 			<label value="Precio IVA" />
 			<space width="15px"/>							
 			
 			<label value="Cantidad" />
-			<space width="15px"/>						
+			<space width="25px"/>						
 			<label value="Descuento(%)" />
 			<space width="15px"/>
 			<label value="Importe" />
-			<space width="15px"/>
+			<space width="25px"/>
 			
 			<label value="Grupo" />
-			<space width="15px"/>
+			<space width="25px"/>
 			<label value="Estado" />
 			<space width="40px"/>
 			<label value="Tipo" />
@@ -276,10 +276,10 @@
 			<label value="Ver" />																				
 			<space width="20px"/>
 			<label value="Multi" />
-			<space width="50px"/>
+			<space width="40px"/>
 			
-			<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" disabled="@bind(vm.beanControlBotones.enableMulti)" width="40px" tooltiptext="Busqueda multioferta"/>
-			<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.beanControlBotones.enableGrid)" width="40px" tooltiptext="Agregar productos"/>												
+			<toolbarbutton image="/iconos/multi.png" onClick="@command('busca_multi')" disabled="@bind(vm.beanControlBotones.enableMulti)" width="30px" tooltiptext="Busqueda multioferta"/>
+			<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" disabled="@bind(vm.beanControlBotones.enableGrid)" width="30px" tooltiptext="Agregar productos"/>												
 		</div>	
 		
 		<div width="100%" vflex="min">
@@ -296,13 +296,13 @@
 					<column width="85px" />
 					
 					<column width="65px" />								
-					<column width="85px" />
+					<column width="75px" />
 					<column width="65px" />
 					
 					<column width="45px" />								
 					<column width="45px" />
 					<column width="45px" />
-					<column width="45px" />
+					
 				</columns>
 				<template name="model">
 					<row>
@@ -404,7 +404,7 @@
 						</zk>
 						<!-- Fin Grupo de la grilla -->
 						
-						<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="80px"/>	
+						<label value="@bind(each.estado eq '0'?'Vendido':(each.estado eq '1'?'Liberado':'Recepcionado'))" width="70px"/>	
 							
 						<!-- Tipo de la grilla -->	
 						<zk if="${each.tipoFamilia =='C'}">
@@ -429,7 +429,8 @@
 						<zk if="${each.tiene_suple != 'true'}">
 							<toolbarbutton image="/iconos/add.png" width="40px" visible="true"/>	
 						</zk>	
-						<!-- Suplementos de la grilla -->									
+						<!-- Suplementos de la grilla -->					
+													
 						
 						<!-- Multiofertas de la grilla -->
 						<zk if="${each.familia == 'MUL'}">
@@ -439,9 +440,8 @@
 						<zk if="${each.familia != 'MUL'}">
 							<toolbarbutton image="/iconos/add.png" width="40px" visible="false"/>  
 						</zk>
-						<!-- Fin Multiofertas de la grilla -->
-							
-						<space width="40px" />
+						<!-- Fin Multiofertas de la grilla -->						
+						
 							
 						<!-- Delete de la grilla -->
 						<zk if="${each.familia == 'MUL'}">
@@ -520,7 +520,7 @@
 			</div>
 			
 			<div sclass="col-lg-1">
-				<label value="Esfera Cerca" sclass="font-weight-bold"/>
+				<label value="Esf.Cerca" sclass="font-weight-bold"/>
 			</div>
 			
 			<div sclass="col-lg-1" align="right">
