@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winBusquedaMultiofertas" border="none" width="65%" 
-		height="80%" position="center" closable="false" mode="modal" sizable="false" 		
+<window id="winBusquedaMultiofertas" border="none" width="65%" height="70%" 
+		position="center" closable="false" mode="modal" sizable="false" 		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaMultiofertas')">
 		
 		
@@ -23,11 +23,11 @@
     	]]></script>
 		
 		
-		<borderlayout>
-			<north >			
-				<div width="100%" height="30%">						
+		<!-- <borderlayout vflex="min">
+			<north vflex="min">	 -->		
+				<div width="100%" vflex="min">											
 					
-					<div width="100%" style="background-color:black;color: white" height="40px">
+					<div width="100%" vflex="min" style="background-color:black;color: white">
 						<label value="BUSQUEDA PRODUCTOS MULTIOFERTAS" />
 						<div style="float: right">					
 							<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" 
@@ -35,6 +35,115 @@
 						</div>																			
 					</div>
 					
+					<div sclass="container-fluid">
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Tipo de familia" />
+							</div>
+							<div sclass="col-lg-3">
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaTipoFamilia)"
+									selectedItem="@bind(vm.tipoFamiliaBean)"
+									onSelect="@command('manejoComboBox',accion='tipofamilia')" placeholder="SELECCIONE"
+									onRightClick="@command('comboSetNull',objetoBean=vm.tipoFamiliaBean)"									
+									width="290px">					
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+							</div>							
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Familias de productos multiofertas" />
+							</div>
+							<div sclass="col-lg-3">
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaFamilias)"
+									selectedItem="@bind(vm.familiaBean)"
+									onSelect="@command('manejoComboBox',accion='familia')"
+									placeholder="SELECCIONE"
+									onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
+									width="290px">
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+							</div>						
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Sub-familia de Productos" />							
+							</div>
+							<div sclass="col-lg-3">
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaSubFamilias)"
+									selectedItem="@bind(vm.subFamiliaBean)"
+									onSelect="@command('manejoComboBox',accion='subfamilia')"
+									placeholder="SELECCIONE"
+									onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
+									width="290px">
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+							</div>
+							<div sclass="col-lg-1">
+							
+							</div>
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Grupo de Productos" />							
+							</div>
+							<div sclass="col-lg-3">
+								<combobox
+									model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
+									selectedItem="@bind(vm.grupoFamiliaBean)"
+									placeholder="SELECCIONE"
+									onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
+									width="290px">
+
+									<template name='model'>
+										<comboitem
+											label="@load(each.descripcion)" />
+									</template>
+								</combobox>
+							</div>						
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Código de Producto SAP" />
+							</div>
+							<div sclass="col-lg-3">
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
+							</div>						
+						</div>
+						
+						<div sclass="row" style="background-color:white">
+							<div sclass="col-lg-4">
+								<label value="Codigo Barra Producto" />							
+							</div>
+							<div sclass="col-lg-3">
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)"/>
+							</div>
+							<div sclass="col-lg-1">
+								<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('despachador')"/>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 
 					<grid sclass="MyGridRowHeight" oddRowSclass="none">
 						<columns>
 							<column width="300px" />
@@ -126,11 +235,13 @@
 							</row>
 
 						</rows>
-					</grid>										
+					</grid>	
+					 -->
+														
 				</div>					
-			</north>
+			<!-- </north>
 			
-			<center>
+			<center> -->
 				<div width="100%" height="100%">	
 				<!-- 
 					<div width="100%" vflex="min" style="background-color:grey;color: white">							
@@ -143,7 +254,7 @@
 				 -->	
 					<!-- <div id="divCierra" height="35%" visible="false"> -->  <!-- visible="@bind(vm.cierraGraduacion)"> -->						
 				
-						<div height="35%" visible="@bind(vm.verGraduacion)" >	
+						<div vflex="min" visible="@bind(vm.verGraduacion)" >	<!--height="35%"  -->
 							
 							<radiogroup id="ojos"/>
 							<!-- <radiogroup id="ojosLentillas"/>	 -->											
@@ -151,7 +262,73 @@
 							<div width="100%" vflex="min" style="background-color:black;color: white">
 								<label value="Seleccion por:" />																				
 							</div>
+							
+							<div sclass="container-fluid">
+								<div sclass="row" style="background-color:white">
+									<div sclass="col-lg-1">
+										<space/>
+									</div>
+									<div sclass="col-lg-1">
+										<space/>
+									</div>
+									<div sclass="col-lg-1">
+										<space/>
+									</div>
+									<div sclass="col-lg-2">
+										<label value="Esfera" />										
+									</div>
+									<div sclass="col-lg-2">
+										<label value="Cilindro" />										
+									</div>
+									<div sclass="col-lg-2">
+										<label value="Diametro" />
+									</div>
+									<div sclass="col-lg-1">
+										<space/>
+									</div>
+								</div>
+								
+								<div sclass="row" style="background-color:white">
+									<div sclass="col-lg-2">
+										<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" value="derecho" />
+									</div>
+									<div sclass="col-lg-1">
+										<label value="O.D"/>
+									</div>
+									<div sclass="col-lg-2">
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>										
+									</div>
+									<div sclass="col-lg-2">
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>										
+									</div>
+									<div sclass="col-lg-2">
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_diametro)" readonly="true"/>
+									</div>
+									<div sclass="col-lg-2">
+										<checkbox label="Cerca" checked="@bind(vm.busquedaProductosForm.chk_cerca)"/>
+									</div>									
+								</div>
+								
+								<div sclass="row" style="background-color:white">
+									<div sclass="col-lg-2">
+										<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)" value="izquierdo"/>
+									</div>
+									<div sclass="col-lg-1">
+										<label value="O.I"/>
+									</div>
+									<div sclass="col-lg-2">
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
+									</div>
+									<div sclass="col-lg-2">
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
+									</div>
+									<div sclass="col-lg-2">
+										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_diametro)" readonly="true"/>
+									</div>
 									
+								</div>
+							</div>
+							<!-- 		
 							<grid sclass="MyGridRowHeight" oddRowSclass="none">						
 								<columns>
 									<column  hflex="min"/>
@@ -176,7 +353,7 @@
 									
 									<row>								
 										<radio label="Ojo Derecho" radiogroup="ojos" checked="@bind(vm.ojoDerecho)" value="derecho" />
-										<!-- <cell colspan="1"/> -->
+										
 										<label value="O.D"/>								
 										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_esfera)" readonly="true"/>
 										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OD_cilindro)" readonly="true"/>
@@ -187,7 +364,7 @@
 									
 									<row>															
 										<radio label="Ojo Izquierdo" radiogroup="ojos" checked="@bind(vm.ojoIzquierdo)" value="izquierdo"/>
-										<!--  <button image="/iconos/lupa2.png" label="Graduac." onClick="seleccionGraduaciones.open(self)" width="100px"/>-->																
+																										
 										<label value="O.I"/>
 										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_esfera)" readonly="true"/>
 										<doublebox width="80px" value="@load(vm.busquedaProductosForm.graduacion.OI_cilindro)" readonly="true"/>
@@ -197,11 +374,13 @@
 									</row>
 								</rows>
 							</grid>
+							 -->
+							
 						</div>
 					
 					<!-- </div> -->
 					
-					<div height="40%" visible="true">
+					<div vflex="min" visible="true"> <!-- height="40%" -->
 					
 						<div width="100%" style="background-color:black;color: white">
 							<space width="10px"/>
@@ -219,7 +398,7 @@
 						</div>
 						
 						<grid model="@bind(vm.busquedaProductosForm.listaProductosMultioferta)" 
-									sclass="MyGridRowHeight" height="120px" emptyMessage="Sin registros">
+									sclass="MyGridRowHeight" height="85px" emptyMessage="Sin registros">
 							<columns>
 								<column width="150px" />
 								<column width="300px" />
@@ -242,8 +421,8 @@
 						</grid>
 					</div>	
 					
-					<div height="45%" visible="true">					
-						<div width="100%" style="background-color:black;color: white">
+					<div vflex="1" visible="true"><!-- height="50%" -->					
+						<div width="100%" vflex="min" style="background-color:black;color: white">
 							<space width="10px"/>
 							<label value="Articulo" />	
 							<space width="90px"/>
@@ -259,7 +438,7 @@
 						</div>
 						
 						<grid model="@bind(vm.busquedaProductosForm.listaProductos)" 
-								sclass="MyGridRowHeight" height="150px" emptyMessage="Sin registros">
+								sclass="MyGridRowHeight" height="150px" emptyMessage="Sin registros"><!--height="180px"  -->
 							<columns>
 								<column width="150px" />
 								<column width="300px" />
@@ -284,8 +463,8 @@
 					</div>					
 							
 				</div>					
-			</center>		
-		</borderlayout>
+			<!-- </center>		
+		</borderlayout> -->
 		<!--                      popup de graduaciones  -->
 		<popup id="seleccionGraduaciones" width="800px">		
 			<div width="100%">
