@@ -1088,7 +1088,28 @@ public class ControllerSeleccionPago implements Serializable{
 		}		
 		
 	}
+	
+	
+	@Command
+	public void pagoEmpleados(@BindingParam("pop")Popup pop) {
 		
+		System.out.println(formaPagoBean.getId());
+		
+		if(formaPagoBean.getId().equals("8")) {
+			
+			pop.open("before_start","Before Start");
+		}	
+	}
+	
+	
+	
+	@Command
+	public void validaEmpleados(@BindingParam("pop")Popup pop) {
+		
+		
+		
+		
+	}
     
 	
 	//getter and setter

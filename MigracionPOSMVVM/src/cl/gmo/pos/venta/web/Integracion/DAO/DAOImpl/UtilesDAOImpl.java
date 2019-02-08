@@ -4799,14 +4799,16 @@ public MenuBean llenaMenu(String usuario) throws Exception {
 	    	con = ConexionFactory.INSTANCE.getConexion();
 	    	
 	    	String cdg[] = codigo.split(",");  
-	    	System.out.println("{call SP_VALIDA_PROMO_PARES("+cdg[0]+","+cdg[1]+",:z)}");
-			cs = con.prepareCall("{call SP_VALIDA_PROMO_PARES(?,?,?)}");
+	    	System.out.println("{call SP_VALIDA_PROMO_PARES("+cdg[0]+","+cdg[1]+","+cdg[2]+","+cdg[3]+",:z)}");
+			cs = con.prepareCall("{call SP_VALIDA_PROMO_PARES(?,?,?,?,?)}");
 			cs.setString(1, cdg[0]);
 			cs.setString(2, cdg[1]);
-			cs.registerOutParameter(3, Types.VARCHAR);
+			cs.setString(3, cdg[2]);
+			cs.setString(4, cdg[3]);
+			cs.registerOutParameter(5, Types.VARCHAR);
 			cs.execute(); 
 			
-			valor = (String) ((cs.getObject(3).toString() != null) && (cs.getObject(3).toString() != "")  ?  cs.getObject(3).toString(): 0);
+			valor = (String) ((cs.getObject(5).toString() != null) && (cs.getObject(5).toString() != "")  ?  cs.getObject(5).toString(): 0);
 			
 		} catch (Exception e) {
 			log.error("UtilesDAOImpl:valida_armazon_pcombo error controlado",e);
@@ -4965,4 +4967,51 @@ public MenuBean llenaMenu(String usuario) throws Exception {
 			return valor;
 	 }
 	
+	
+	/**
+	 *@Fecha 20190206
+	 *@author LMARIN
+	 *@title articulosPromoSanValentin
+	 *@param String producto
+	 *@param String local
+	 *@return int
+	 */
+	public int articulosPromoSanValentin(String producto,String local)  throws Exception {
+		log.info("UtilesDAOImpl:articulosPromoSanValentin inicio");
+		int valor = 0;
+	    Connection con = null;
+	    CallableStatement cs = null;
+	     try {
+	    	log.info("UtilesDAOImpl:articulosPromoSanValentin conectando base datos");
+	    	con = ConexionFactory.INSTANCE.getConexion();
+	    	
+	    	System.out.println("{call SP_DESCUENTO_PRODUCTOS("+producto+","+local+",:z)}");
+			cs = con.prepareCall("{call SP_DESCUENTO_PRODUCTOS(?,?,?)}");
+			cs.setString(1,producto);
+			cs.setString(2,local);
+			cs.registerOutParameter(3, Types.INTEGER);
+			cs.execute(); 
+			
+			valor = cs.getInt(3); 
+			
+		} catch (Exception e) {
+			log.error("UtilesDAOImpl:validacion_encargo_fpago error controlado",e);
+	        throw new Exception("Error en DAO, al SP_DESCUENTO_PRODUCTOS ejecutar SP: SP_DESCUENTO_PRODUCTOS"); 
+		} finally {
+	        try{
+	         if (null != cs){
+	        	 log.warn("UtilesDAOImpl:articulosPromoSanValentin cierre CallableStatement");
+	             cs.close();
+	         }           
+	         if (null != con){
+	        	 log.warn("UtilesDAOImpl:articulosPromoSanValentin cierre Connection");
+		    	   con.close();
+	           } 
+	         
+	     }catch(Exception e){
+	    	 log.error("UtilesDAOImpl:articulosPromoSanValentin error", e);
+	     }
+		}
+		return valor;
+	}
 }

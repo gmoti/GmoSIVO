@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winListaAlbaranes" border="none" width="45%" height="65%" 
+<window id="winListaAlbaranes" border="none" width="45%" height="45%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListaAlbaranes')">
 			
 			

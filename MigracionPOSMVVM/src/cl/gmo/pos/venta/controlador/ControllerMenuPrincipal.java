@@ -40,9 +40,7 @@ public class ControllerMenuPrincipal implements Serializable{
 		
 		usuario = (String)sess.getAttribute(Constantes.STRING_USUARIO);
 		sucursal = (String)sess.getAttribute(Constantes.STRING_SUCURSAL);
-		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);
-		
-		
+		sucursalDes = (String)sess.getAttribute(Constantes.STRING_NOMBRE_SUCURSAL);		
 	}
 	
 	

@@ -1139,6 +1139,13 @@ public class PosUtilesFacade{
 	      valor = utilDao.validaEstadoLiberado(encargo);
 	      return valor;
     }
+    
+    public static int articulosPromoSanValentin(String producto,String local) throws Exception {
+		int valor = 0;
+		UtilesDAOImpl utiles = new UtilesDAOImpl();
+		valor = utiles.articulosPromoSanValentin(producto,local);
+		return valor;
+	}
  
 }
 

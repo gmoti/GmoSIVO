@@ -3583,6 +3583,25 @@ public class VentaPedidoHelper extends Utils{
 		}
 	}
 	
+	public void actualizaProductosPromoSanValentin(VentaPedidoForm formulario,String local) throws Exception {
+		System.out.println("PASO actualizaProductosPromoCombo VPH");
+
+		log.info("VentaPedidoHelper:actualizaProductosPromoCombo inicio");
+		this.tarifica_Pedido(formulario);
+		if (null != formulario.getListaProductos() && formulario.getListaProductos().size() > Constantes.INT_CERO) {
+		
+			for (int i = Constantes.INT_CERO; i < formulario.getListaProductos().size(); i++) {
+				log.info("VentaPedidoHelper:actualizaProductosPromoCombo entrando ciclo for");
+				ProductosBean prod = formulario.getListaProductos().get(i);
+				if (Constantes.STRING_BLANCO.equals(prod.getPrevtln())) {
+					System.out.println("actualizaProductosPromoSanValentin");
+					this.aplicaDescuentoSanValentin(prod,formulario.getListaProductos(),local);
+				}
+				formulario.getListaProductos().set(i, prod);
+			}
+		}
+	}
+	
 	public ArrayList<ProductosBean> validaCristal(String ojo, String tipo_fam, String familia, String subfamilia, String grupo,
 	           String descripcion, String codigoBusqueda, String codigoBarraBusqueda, String local,double cilindro,double esfera,int eje) throws Exception {
 		 

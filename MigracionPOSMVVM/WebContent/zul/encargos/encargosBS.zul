@@ -231,6 +231,7 @@
 				<combobox model="@load(vm.ventaPedidoForm.listaPromociones)" 
 						  placeholder="Seleccione"
 						  selectedItem="@bind(vm.promocionBean)"
+						  onSelect="@command('seleccionaPromocion')"
 						  onRightClick="@command('comboSetNull',objetoBean=vm.promocionBean)"
 						  disabled="@bind(vm.beanControlCombos.comboPromoEnable)">
 				  <template name="model">
@@ -240,7 +241,7 @@
 			</div>
 			
 			<div sclass="col-lg-2" align="center">
-				<button label="Cupon" onClick="@command('validaCupon')"/>			
+				<button label="Cupon" onClick="@command('ingresaCupon',pop=popCupon)"/>	<!-- onClick="@command('validaCupon')" -->		
 			</div>
 			
 		</div>		
@@ -705,4 +706,24 @@
 			</div>		
 		</div>		
 	</div>		
+	
+	<!-- Ventana popup -->
+	
+	<popup id="popCupon" width="220px" height="130px">
+		<div width="100%" height="25px" style="background-color:black; color: white">
+			<label value="Ingresa Cupon" style="float: left ;" sclass="font-weight-bold" />
+			<toolbarbutton image="/iconos/cancel.png" onClick="popCupon.close()" sclass="shrink16" style="float: right"/>						
+		</div>
+	
+		<div style="padding-top: 20px ">
+			<label value="Nro. de Cupon:"/>
+			<textbox value="@bind(vm.ventaPedidoForm.numero_cupon)"/>
+		</div>
+		
+		<div style="float: right">
+			<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="@command('validaCupon',pop=popCupon)"/>
+		</div>
+	</popup>
+	
+	
 </window>

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Popup;
 import org.zkoss.zul.Window;
 
 import cl.gmo.pos.venta.controlador.general.BusquedaClientesDispatchActions;
@@ -1770,20 +1772,64 @@ public class ControllerEncargos implements Serializable {
 		
 	}
 	
-	@NotifyChange({"ventaPedidoForm"})
+	
 	@Command
-	private void validaCupon() {
+	public void ingresaCupon(@BindingParam("pop")Popup pop) {
 		
+		try {		
+			if (ventaPedidoForm.getListaProductos().size() < 1) {
+				Messagebox.show("Debes agregar articulos para usar cupones de DTO.");
+				return;
+			}	
+		}catch (Exception e) {
+			Messagebox.show("Debes agregar articulos para usar cupones de DTO.");
+			return;
+		}
 		
-		try {
-			ventaPedidoDispatchActions.abre_valida_cupon();
+		pop.open(400,400);
+		
+		/*try {
+			ventaPedidoDispatchActions.abre_valida_cupon();		
+			
 		} catch (Exception e) {
 			Messagebox.show("Error en validacion de cupon","Error",Messagebox.OK,Messagebox.ERROR);
 			e.printStackTrace();
 		}				
-		
+		*/
 	}	
 	
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void validaCupon(@BindingParam("pop")Popup pop) {
+		
+		List<String> trio = null;
+		List<String> sor_trio = null;
+		String estado="";
+		
+		if (ventaPedidoForm.getNumero_cupon().equals(""))
+			return;		
+		
+		for(ProductosBean pb: ventaPedidoForm.getListaProductos()) {			
+			if((pb.getFamilia().equals("M") ||  pb.getFamilia().equals("C") || pb.getFamilia().equals("G"))){				
+				trio.add(pb.getFamilia());		    	
+		    } 
+		}
+		
+		
+		try {
+			estado = ventaPedidoDispatchActions.valida_cupon(ventaPedidoForm, sess);
+			
+			
+			
+			
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+		
+		pop.close();
+	}	
 	
 	//============== Convenios ================
 	@NotifyChange({"ventaPedidoForm"})
@@ -2699,6 +2745,324 @@ public class ControllerEncargos implements Serializable {
 	public void notificacionRespuestaEncargo() {		
 		BindUtils.postNotifyChange(null, null, ControllerEncargos.this, "ventaPedidoForm");
 	}
+	
+	
+	//-----Evalua Promociones ------
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void seleccionaPromocion() throws Exception {
+		
+		String promocion=null;	
+		
+		String familia = "";
+		String grupo = "";
+		String grupfam = "";
+		String cod = "";
+		int indice = 0;
+		int pos=0;		
+		List<String> trio= new ArrayList<String>();		
+		int dto = 0;
+		int data= 0;
+		
+		promocion = promocionBean.getId();		
+		ventaPedidoForm.setPromocion(promocion);
+		
+		switch (promocion) {
+			case "PPTG":
+				
+				for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {
+					
+					familia = pb.getTipoFamilia();
+					grupo	= pb.getGrupo();
+					grupfam	= pb.getGrupoFamilia();
+					
+					if((familia.equals("M") ||  familia.equals("C") || familia.equals("G") || grupfam.equals("MUL"))){						
+						trio.add(familia);	 			    	
+	 			    }    
+
+	 			    if(familia.equals("G")){
+	 			    	pos = indice;
+	 			    }					
+					
+					indice++;					
+				}		
+				
+				//var sor_trio = trio.sort();
+		 		//var dto = $j("#promocion").html().replace(/[^0-9]/g, '');
+				String dtoAux = ventaPedidoForm.getPromocion().replace("/[^0-9]/g", "");
+				
+				try {
+					dto = Integer.parseInt(dtoAux);
+				}catch(Exception e) {
+					dto=0;
+				}
+				
+		 		
+		 		   
+	 		   if(trio.size() == 4 || trio.size() == 2){
+	 			   
+	 			  ventaPedidoForm.setAccion("descuento_linea");
+	 			  ventaPedidoForm.setAddProducto(String.valueOf(pos));
+	 			  ventaPedidoForm.setCantidad_descuento(dto);	
+	 			  
+	 			 ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);		 		   		
+	 			   
+	 		   }else{
+	 			   Messagebox.show("La promoción sólo es aplicable al encargo  compuesto por un tíro y una gafa.");
+	 		   }				
+				
+				break;
+				
+			case "PCOM":
+				
+				for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {
+				
+					familia = pb.getTipoFamilia();
+					cod = pb.getCod_barra();
+					
+					if(familia.equals("M")) {
+						
+						ventaPedidoForm.setNumero_cupon(cod);
+						data = ventaPedidoDispatchActions.valida_promocombo(ventaPedidoForm, sess);
+						
+						if(data==1) {
+							
+							ventaPedidoForm.setAccion("aplica_dtocombo");
+							ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+							
+						}else if (data==2) {
+							Messagebox.show("El armazon no esta en la promocion, no se puede aplicar el descuento.");
+						}else {
+							Messagebox.show("No se puede aplicar la promocion.(G)");
+						}					
+						
+					}
+					
+				}
+				
+				break;	
+				
+			case "PPAR":
+				
+				int sumgrupo1=0;
+				int sumgrupo2=0;
+				int sumgrupo3=0;
+				int sumgrupo4=0;
+				int sumgrupo5=0;
+				int[] sumarr = new int[5];
+				String[] arm_arr = null;
+				String[] posicion = null;
+				String[] arm_arrAux = new String[100];
+				String[] posicionAux = new String[100];
+				int c=0,a=0;
+				int precio=0;
+				String result="";
+				
+				for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {					
+					familia = pb.getTipoFamilia();
+					grupo = pb.getGrupo();
+					//grupfam = pb.getGrupoFamilia();
+					grupfam = pb.getFamilia();
+					
+					if(familia.equals("G") || familia.equals("M") || grupfam.equals("MUL")) {
+						//arm_arr.add(pb.getCod_barra()+","+grupo);
+						arm_arrAux[a] = pb.getCod_barra()+","+grupo;
+						a++;
+					}
+				}
+				
+				arm_arr = new String[a];
+				String cadena="";
+				
+				for (int i=0 ; i < a; i++ ) {
+					arm_arr[i] = arm_arrAux[i];					
+				}		
+				
+				cadena = Arrays.deepToString(arm_arr).replaceAll("[\\[\\]]", "");				
+				cadena = cadena.replace(" ", "");
+				
+				ventaPedidoForm.setValor_comodin(cadena);
+				
+				try {
+					result = ventaPedidoDispatchActions.valida_promo_pares(ventaPedidoForm, sess);
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				String[] temp = result.split("_");
+				
+				if(Integer.parseInt(temp[1]) >= 2 ){
+					for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {
+						
+						grupo = pb.getGrupo();
+						
+		 	    	    if(grupo.equals("1")){
+		 	    			sumgrupo1 +=  pb.getPrecio();
+		 	    			sumarr[1] = sumgrupo1;
+		 	    			
+		 	    		}else if(grupo.equals("2")){
+		 	    			sumgrupo2 +=  pb.getPrecio();
+		 	    			sumarr[2] = sumgrupo2;
+		 	    
+		 	    		}else if(grupo.equals("3")){
+		 	    			sumgrupo3 +=  pb.getPrecio();
+		 	    			sumarr[3] = sumgrupo3;
+		 	    		
+		 	    		}else if(grupo.equals("4")){
+		 	    			sumgrupo4 +=  pb.getPrecio();
+		 	    			sumarr[4] = sumgrupo4;
+		 	    			
+		 	    		}else if(grupo.equals("5")){
+		 	    			sumgrupo5 +=  pb.getPrecio();
+		 	    			sumarr[5] = sumgrupo5;
+		 	    	
+		 	    		}
+				
+					}
+					
+					for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {
+						
+						//familia = pb.getFamilia();
+						familia = pb.getTipoFamilia();
+						grupo = pb.getGrupo();
+						//grupfam = pb.getGrupoFamilia();
+						grupfam = pb.getFamilia();
+						precio = pb.getPrecio();
+						
+						if((familia.equals("G") && grupo.equals("0")) || grupfam.equals("MUL")){
+							
+							//posicion.add(precio+"."+grupo+indice);
+							posicionAux[c]=precio+"."+grupo+indice;
+	 		    			c++;
+	 		         	}
+	 		         	
+	 		         	if(familia.equals("G") && !grupo.equals("0")){
+	 		         		
+	 		         		posicionAux[c]=sumarr[Integer.parseInt(grupo)]+"."+grupo+indice;
+	 		         		//posicion.add(sumarr[Integer.parseInt(grupo)]+"."+grupo+indice);	 		         		   		    			
+	 		    			c++;
+	 		         	}						 		         							 		         							 		         							 		    
+	 		       		
+	 		         	if(familia.equals("M")){
+	 		         		
+	 		         		posicionAux[c]=sumarr[Integer.parseInt(grupo)]+"."+grupo+indice;
+	 		         		//posicion.add(sumarr[Integer.parseInt(grupo)]+"."+grupo+indice);	 		         		    		    			
+	 		    			c++;
+	 		         	}
+					}
+					
+					
+					posicion = new String[c];
+					
+					
+					for(int i=0;i<c;i++) {
+						posicion[i] = posicionAux[i];
+					}
+					
+					
+					
+					/*pos.sort(function(a,b){return b-a});*/
+					String p = posicion[posicion.length -1];
+					String[] posdesc = p.split("\\.");
+					
+	 			 	//String[] posdesc = posicion[posicion.length -1].split(".");
+	 			 	
+	 			 	ventaPedidoForm.setNumero_cupon(temp[0]+"_"+posdesc[1]);
+	 			 	ventaPedidoForm.setAccion("aplica_dtopromopar");
+	 			 	ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);   	
+		            
+		            
+		            //$j.cookie("des_seg_armazon","777");
+				}else {
+					
+					Messagebox.show("Promoción no aplicable a los productos seleccionados.");
+					
+				}				
+				
+				break;	
+				
+			case "BFDY":	
+				
+				String combo="";
+				indice = 0;
+				
+				for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {				
+					familia = pb.getTipoFamilia();
+					combo += familia.trim();
+				}
+				
+				for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {	
+					
+					familia = pb.getTipoFamilia();
+					grupfam = pb.getGrupoFamilia();
+					
+					if (sucursal.substring(0,1).equals("R")) {
+						
+						if(combo.equals("MCC") || combo.equals("CCM") || combo.equals("GCC") || combo.equals("CCG")){
+							
+							ventaPedidoForm.setAccion("descuento_total");
+							ventaPedidoForm.setCantidad_descuento(20);
+							ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+				        	
+		      		   }else{
+			      		 	if(!pb.getSubFamilia().equals("TEC")){
+					      	   if(!pb.getPromopar().equals("0")){
+						           if(familia.equals("M") ||  familia.equals("G")  || grupfam.equals("MUL")){
+						        	   
+						        	   ventaPedidoForm.setAccion("descuento_linea");
+						        	   ventaPedidoForm.setAddProducto(String.valueOf(indice));
+						        	   ventaPedidoForm.setCantidad_descuento(Double.parseDouble(pb.getPromopar()));	
+						        	   ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+						        			
+						       	   }
+					      	   	}
+						  	 }
+		      		   }
+					}
+					
+					if( sucursal.substring(0,1).equals("T") || sucursal.substring(0,1).equals("V") ){
+				      	 if(!pb.getSubFamilia().equals("TEC")){
+					      	   if(!pb.getPromopar().equals("0")){
+					      		 if(familia.equals("M") ||  familia.equals("G")  || grupfam.equals("MUL")){
+		
+					      			ventaPedidoForm.setAccion("descuento_linea");
+					      			ventaPedidoForm.setAddProducto(String.valueOf(indice));
+					      			ventaPedidoForm.setCantidad_descuento(Double.parseDouble(pb.getPromopar()));	
+						        	ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+						        			
+						       	   }
+					      	   }
+						 }
+		      	    }		
+					
+					
+					indice++;					
+				}
+				
+				
+				break;	
+			
+			case "SVAN":				
+				
+	            ventaPedidoForm.setAccion("san_valentin");	
+	        	ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+	        	
+	        	break;
+				
+			default:
+				
+				ventaPedidoForm.setAccion("aplica_descuento_promocion");	
+	        	ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+	        	
+		}
+		
+		
+		
+		
+		
+	}	
 	
 	
 	//======================Getter and Setter============================

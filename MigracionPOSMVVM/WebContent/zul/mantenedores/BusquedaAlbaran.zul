@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<window id="winBusquedaAlbaran" border="none" width="45%" height="65%" 
+<window id="winBusquedaAlbaran" border="none" width="45%" height="50%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaAlbaran')">
 			
 	
@@ -13,6 +13,56 @@
 				</div>																			
 			</div>
 			
+			<div sclass="container-fluid">
+				<div sclass="row" style="background-color:white">
+					<div sclass="col-lg-3">
+						<label value="Codigo Albaran"/>
+					</div>
+					<div sclass="col-lg-4">
+						<textbox value="@bind(vm.devolucionForm.codigo1)" width="30px"/>
+						<textbox value="@bind(vm.devolucionForm.codigo2)" width="100px"/>
+					</div>
+				</div>
+				<div sclass="row" style="background-color:white">
+					<div sclass="col-lg-3">
+						<label value="Rut del Cliente"/>							
+					</div>
+					<div sclass="col-lg-2">
+						<textbox value="@bind(vm.devolucionForm.nif)" width="150px"/>
+					</div>
+				</div>
+				<div sclass="row" style="background-color:white">
+					<div sclass="col-lg-3">
+						<label value="Fecha Albaran"/>							
+					</div>
+					<div sclass="col-lg-2">
+						<datebox value="@bind(vm.fechaAlbaran)" width="150px" format="dd/MM/yyyy"/>
+					</div>
+				</div>
+				<div sclass="row" style="background-color:white">
+					<div sclass="col-lg-3">
+						<label value="Agente"/>							
+					</div>
+					<div sclass="col-lg-2">
+						<combobox model="@bind(vm.devolucionForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)" width="150px">
+							<template name="model">
+								<comboitem label="@load(each.usuario)"/>
+							</template>							
+						</combobox>
+					</div>
+				</div>
+				<div sclass="row" style="background-color:white">
+					<div sclass="col-lg-3">
+						<space/>
+					</div>
+					<div sclass="col-lg-1">
+						<button label="Buscar" onClick="@command('buscarAlbaranes')" 
+									image="/iconos/lupa.png" width="100px" sclass="shrink16"/>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 
 			<div width="100%" vflex="min">
 				<grid width="100%" vflex="min" oddRowSclass="none">
 					<columns>
@@ -54,7 +104,8 @@
 						</row>
 					</rows>
 				</grid>
-			</div>
+			</div> 
+			-->
 
 			<div width="100%" vflex="min" style="background-color:black;color: white">
 				<space width="20px"/>

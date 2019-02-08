@@ -3420,6 +3420,48 @@ public class Utils {
 			
 		}	
 	}
+	
+	
+	/*
+	 * AUTHOR : LMARIN
+	 * FECHA : 20190204
+	 * 
+	 */
+	public void aplicaDescuentoSanValentin(ProductosBean prod,ArrayList<ProductosBean> listaProd,String local) throws Exception {
+		
+		int dto = 0,total=0, dtobd= 0;
+		String cadena = "";
+		
+		if(local.contains("T")){
+			System.out.println("SAN CALENTIN ==>  TIPOFAMILIA ==> "+prod.getTipoFamilia()+" FAMILIA==>"+prod.getFamilia()+" local ==>"+local+" SUBFAM==>"+prod.getSubFamilia());
+			if((prod.getTipoFamilia().equals("M") || prod.getTipoFamilia().equals("G")) && prod.getDescuento() <= 0){
+				if(prod.getImporte() >= 89900 && prod.getImporte() <= 109900) {
+					dto = 15;
+				}else if(prod.getImporte() >= 119900 && prod.getImporte() <= 139900) {
+					dto = 20;
+				}else if(prod.getImporte() >= 149900) {
+					dto = 25;
+				}
+			
+			}
+		}else if(local.contains("V")) {
+			if(prod.getFamilia().equals("SOC") && prod.getDescuento() <= 0 && (prod.getSubFamilia().equals("ANT") || prod.getSubFamilia().equals("OKY") || prod.getSubFamilia().equals("RBN") || prod.getSubFamilia().equals("VOG"))){
+					dto = 25;
+			}
+		}else if(local.contains("R") || local.contains("S")) {
+			//System.out.println("R O S ==> "+prod.getCod_barra()+" "+prod.getCod_articulo());
+			//cadena = local.contains("R") ? "RBN":"SGH";
+			dtobd = PosUtilesFacade.articulosPromoSanValentin(prod.getCod_barra(), local);
+			
+		}
+		
+		prod.setDescuento(dto);
+		total = prod.getImporte() - (int)Math.round(((prod.getImporte() * (dto)) / 100));
+		prod.setImporte(total-dtobd);
+	}
+	
+	
+	
 	/**
 	 *@AUTHOR :LMARIN
 	 *@DESC: Metodo que envia la venta en tiempo real

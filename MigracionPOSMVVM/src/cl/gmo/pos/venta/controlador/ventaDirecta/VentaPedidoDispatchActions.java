@@ -786,6 +786,14 @@ public class VentaPedidoDispatchActions {
 			helper.actualizaProductosPromoPar(formulario,String.valueOf(varpromopar[1].charAt(0)),String.valueOf(varpromopar[1].charAt(1)),varpromopar[0]);	
 			helper.tarifica_Pedido(formulario);
 		}
+		
+		//PROMO SAN VALENTIN
+		if (Constantes.STRING_SAN_VALENTIN.equals(formulario.getAccion())) 
+		{
+			helper.actualizaProductosPromoSanValentin(formulario,local);	
+			helper.tarifica_Pedido(formulario);
+		}	
+		
 		//LIBERACION DE GARANTIAS
 		if (Constantes.STRING_LIBERA_GARANTIAS.equals(formulario.getAccion())) 
 		{

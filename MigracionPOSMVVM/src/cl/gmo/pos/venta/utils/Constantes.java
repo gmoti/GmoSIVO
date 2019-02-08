@@ -150,6 +150,8 @@ public class Constantes {
 	public static final String STRING_CARGA_GRUPOS ="carga_grupos";
 	public static final String STRING_ENCARGO_PADRE = "encargo_padre";
 	public static final String STRING_LIBERA_GARANTIAS = "libera_garantias";
+	public static final String STRING_CLI_INTER = "cliente_inter";
+	public static final String STRING_SAN_VALENTIN="san_valentin";
 	
 	//PRESUPUESTO
 	public static final String STRING_CERRADO = "cerrado";

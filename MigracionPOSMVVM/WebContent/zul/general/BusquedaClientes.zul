@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk >
-<window id="winBusquedaClientes" border="none" width="40%" height="55%" 
+<window id="winBusquedaClientes" border="none" width="40%" height="50%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaClientes')">
 		
 		
