@@ -364,11 +364,11 @@
 		
 			<div style="padding-top: 20px ">
 				<label value="Rut:"/>
-				<textbox value=""/>
+				<textbox value="@bind(vm.rut)" />
 			</div>
 			
 			<div style="float: right">
-				<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="@command('validaEmpleados')"/>
+				<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="@command('validaEmpleados',pop=descuentoEmpleados)"/>
 			</div>
 		</popup>
 		

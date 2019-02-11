@@ -79,6 +79,8 @@ public class ControllerSeleccionPago implements Serializable{
 	//popup
 	private Popup Numero_Documento;	
 	
+	//
+	String rut;
 		
 	@Init
 	public void inicio(@ExecutionArgParam("cliente")ClienteBean arg,
@@ -108,6 +110,8 @@ public class ControllerSeleccionPago implements Serializable{
 		controlBotones.setEnableGenerico1("false");		
 		focusFormaPago=false;
 		focusValorPagar=true;
+		
+		rut="";
 		
 		if (arg3 instanceof VentaPedidoForm) { 
 			ventaPedidoForm = (VentaPedidoForm)arg3;
@@ -1097,20 +1101,110 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		if(formaPagoBean.getId().equals("8")) {
 			
-			pop.open("before_start","Before Start");
+			pop.open("overlap","overlap");
 		}	
 	}
 	
 	
-	
+	@NotifyChange({"seleccionPagoForm","rut","formaPagoBean"})
 	@Command
 	public void validaEmpleados(@BindingParam("pop")Popup pop) {
 		
+		String data="";
+		String[] data_t;
+		String desp="";
+		Integer sumt=0;
 		
+		String nif = rut;
+		String nif_f[] = nif.indexOf("-") != -1 ? rut.split("-"): "1-9".split("-");
 		
+		//if( dv(nif_f[0]) == nif_f[1]){
+		if (validarRut(nif_f[0]).equals(nif_f[1].trim())) {
+		
+			try {
+				
+				/*seleccionPagoForm.setSerie(serie);
+				seleccionPagoForm.setNif(nif);
+				seleccionPagoForm.setV_a_pagar(v_a_pagar);*/
+				
+				seleccionPagoForm.setNif(nif_f[0]);
+				
+				data=seleccionPagoDispatchActions.valida_usuario_vp(seleccionPagoForm, sess);
+				
+				data_t = data.split("_");
+				desp = data_t[0];
+				sumt =  seleccionPagoForm.getV_total_parcial();
+				
+				switch (data_t[1]) {
+				case "1":
+					
+					seleccionPagoForm.setRut_vs(nif_f[0]);
+					seleccionPagoForm.setMonto_des_vs(desp);
+					pop.close();
+					break;
+					
+				case "2":
+					Messagebox.show("El usuario ingresado no se encuentra vigente.");
+					pop.close();
+					break;	
+				
+				case "3":
+					Messagebox.show("El usuario ingresado no aplica para Venta Personal.");	
+					pop.close();
+					break;
+					
+				case "4":
+					Messagebox.show("El monto permitido para cancelar con la forma de pago venta personal ,\nes menor a su maximo Disponible.\nMonto disponible: $"+desp);
+				  	//$("#forma_pago",window.parent.document).val("0");	
+					pop.close();
+					break;	
+	
+				default:
+					Messagebox.show("Problema con el usuario, favor contactarse con la MDA");
+			  		//$("#forma_pago",window.parent.document).val("0");
+					break;
+				}
+				
+				
+				
+			} catch (Exception e) {			
+				e.printStackTrace();
+			}
+		}else {
+			
+			Messagebox.show("El rut "+nif+" no es valido,favor ingresa un rut valido \nRecuerda que el rut debe tener  guion (-) y digito verificador.");
+			formaPagoBean = null;
+		}
 		
 	}
-    
+	
+	private String validarRut(String nif) {
+		
+		int rutAux,m,s = 0;		
+		String rut;		
+		
+		rut = nif;
+		rut =  rut.toUpperCase();
+		rut = rut.replace(".", "");
+		rut = rut.replace("-", "");
+		rutAux = Integer.parseInt(rut);	
+		 
+		m = 0; s = 1;
+		
+		for (; rutAux != 0; rutAux /= 10) {
+			s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
+		}		 
+		
+		return String.valueOf((char) (s != 0 ? s + 47 : 75)).trim();
+	}
+	
+	@Command
+	public void cierraValidaEmpleados(@BindingParam("pop")Popup pop) {
+		
+		
+		
+		
+	}    
 	
 	//getter and setter
 	//==============================
@@ -1226,8 +1320,13 @@ public class ControllerSeleccionPago implements Serializable{
 	public void setVisibleBoleta(boolean visibleBoleta) {
 		this.visibleBoleta = visibleBoleta;
 	}
-	
-	
 
+	public String getRut() {
+		return rut;
+	}
+
+	public void setRut(String rut) {
+		this.rut = rut;
+	}
 	
 }

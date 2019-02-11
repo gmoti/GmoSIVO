@@ -2961,7 +2961,7 @@ public class ControllerEncargos implements Serializable {
 						posicion[i] = posicionAux[i];
 					}
 					
-					
+					Arrays.sort(posicion);
 					
 					/*pos.sort(function(a,b){return b-a});*/
 					String p = posicion[posicion.length -1];
