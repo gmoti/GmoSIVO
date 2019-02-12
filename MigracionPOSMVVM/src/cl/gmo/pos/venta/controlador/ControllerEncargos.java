@@ -1803,26 +1803,330 @@ public class ControllerEncargos implements Serializable {
 	@Command
 	public void validaCupon(@BindingParam("pop")Popup pop) {
 		
-		List<String> trio = null;
-		List<String> sor_trio = null;
-		String estado="";
+		String[] trio = new String[100];
+		String[] sor_trio;
+		String[] datos;
 		
-		if (ventaPedidoForm.getNumero_cupon().equals(""))
-			return;		
+		String estado="";
+		String trio_temp="";
+		int a=0;
+		
+		if (ventaPedidoForm.getNumero_cupon().equals("")) {
+			Messagebox.show("Debes Ingresar un cupon.");
+			return;	
+		}
+				
 		
 		for(ProductosBean pb: ventaPedidoForm.getListaProductos()) {			
 			if((pb.getFamilia().equals("M") ||  pb.getFamilia().equals("C") || pb.getFamilia().equals("G"))){				
-				trio.add(pb.getFamilia());		    	
+				trio[a] = pb.getFamilia();
+				a++;
 		    } 
 		}
+		
+		sor_trio = new String[a];
+		
+		for (int i=0 ; i<a ; i++)			
+			sor_trio[i] = trio[i];		
+		
+		Arrays.sort(sor_trio);
 		
 		
 		try {
 			estado = ventaPedidoDispatchActions.valida_cupon(ventaPedidoForm, sess);
 			
+			datos = estado.split("_");
 			
-			
-			
+			if(datos[1] != "0"){
+				  
+				if(sor_trio.length == 3 || sor_trio.length == 1 ){
+					
+			  		trio_temp = sor_trio[0]+sor_trio[1]+sor_trio[2];
+
+			  		if(sor_trio.length == 3){
+
+			  			if(trio_temp.equals("CCM")){
+			  				//bloque 1 switch
+			  				switch(datos[0]){	
+							  
+					  	 	 case "1":	
+					  	 		 
+					  	 		Messagebox.show("Deseas confirmar el uso del cupon ?","Recuerda que al confirmar el cupon ya no podra ser utilizado", 
+										Messagebox.YES | 
+										Messagebox.NO, 
+										Messagebox.QUESTION, new EventListener<Event>() {			
+									@Override
+									public void onEvent(Event e) throws Exception {				
+											if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {
+												
+												//$('#numero_cupon',window.parent.document).val(cupon);
+												//$.cookie("cupon",cupon);
+												sess.setAttribute("cupon",ventaPedidoForm.getNumero_cupon());
+												//window.parent.postValida_cupon();
+												ventaPedidoForm.setAccion("aplica_cupon");
+												ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);										    	
+											}
+										}
+								});
+						  	 	
+						  	 break;	
+						  	 
+					  	 	 case "2":	
+					  	 		   Messagebox.show("El cupon ya no se encuentra vigente.");
+					  	 		   sess.setAttribute("cupon","");							  	 	   						 					  	 	 												
+						  	 break;	
+						  	 
+						  	 case "3":	
+						  		  Messagebox.show("El cupon ya fue utilizado, no es posible volver a utilizarlo.");
+						  		  sess.setAttribute("cupon","");			 					  	 	 												
+						  	 break;	
+						  	
+						  	 case "4":	
+						  		   Messagebox.show("El cupon no es valido.");
+						  		   sess.setAttribute("cupon","");						 					  	 	 												
+						  	 break;	
+						  	 
+						  	 case "5":	
+						  		 
+						  		Messagebox.show("Deseas confirmar el uso del cupon ? . El monto disponible para descuento es de :" + datos[1],
+						  				"Recuerda que al confirmar el cupon ya no podra ser utilizado", 
+										Messagebox.YES | 
+										Messagebox.NO, 
+										Messagebox.QUESTION, new EventListener<Event>() {			
+									@Override
+									public void onEvent(Event e) throws Exception {				
+											if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {												
+												//$('#numero_cupon',window.parent.document).val(cupon);
+												//$.cookie("cupon",cupon);
+												sess.setAttribute("cupon",ventaPedidoForm.getNumero_cupon());
+												//window.parent.postValida_cupon();
+												ventaPedidoForm.setAccion("aplica_cupon");
+												ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+											}
+										}
+								});							  		 
+						  							 					  	 	 												
+						  	 break;	
+						  	 
+						  	 case "6":	
+						  		   Messagebox.show("El beneficio optico ya fue utilizado, no es posible realizar el descuento.");
+						  		   sess.setAttribute("cupon","");	
+						  	 break;
+						  	 
+						  	 case "7":	
+						  		   Messagebox.show("El beneficio optico ya fue utilizado, no es posible realizar el descuento.");
+						  		   sess.setAttribute("cupon","");	
+						  	 break;
+						  	 
+						  	 case "8":	
+						  		   Messagebox.show("El beneficio optico ya fue utilizado, no es posible realizar el descuento.");
+						  		   sess.setAttribute("cupon","");	
+						  	 break;
+						  	 
+						  	 case "100":	
+						  		   Messagebox.show("No es posible aplicar el cupon, el encargo ya posee un cupon asociado.");
+						  		   sess.setAttribute("cupon","");	
+						  	 break;
+						  	 
+						  	 default:
+							  	   Messagebox.show("Error , favor contactarse con MDA");
+							  	   sess.setAttribute("cupon","");
+						  	 break;
+			  				}
+			  			}else{
+			  				Messagebox.show("El encargo no corresponde a un trio optico valido, no se puede aplicar el cupon de descuento.");
+			  			}//trio_temp.equals("CCM")
+
+			  		}else{
+
+			  			trio_temp = sor_trio[0];
+			  			
+			  			if(sor_trio.length==1 && trio_temp.equals("G")){
+			  				//bloque 2 switch	
+			  				
+			  				 switch(datos[0]){					  	 
+					  	 	 case "1":	
+					  	 		 
+					  	 		Messagebox.show("Deseas confirmar el uso del cupon ?","Recuerda que al confirmar el cupon ya no podra ser utilizado", 
+										Messagebox.YES | 
+										Messagebox.NO, 
+										Messagebox.QUESTION, new EventListener<Event>() {			
+									@Override
+									public void onEvent(Event e) throws Exception {				
+											if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {												
+												//$('#numero_cupon',window.parent.document).val(cupon);
+												//$.cookie("cupon",cupon);
+												sess.setAttribute("cupon",ventaPedidoForm.getNumero_cupon());
+												//window.parent.postValida_cupon();
+												ventaPedidoForm.setAccion("aplica_cupon");
+												ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+											}
+										}
+								}); 
+					  	 		
+						  	 break;		
+						  	 
+					  	 	 case "2":	
+					  	 		   Messagebox.show("El cupon ya no se encuentra vigente.");
+					  	 		   sess.setAttribute("cupon","");						 					  	 	 												
+						  	 break;	
+						  	 
+						  	 case "3":	
+						  		  Messagebox.show("El cupon ya fue utilizado, no es posible volver a utilizarlo.");
+						  		  sess.setAttribute("cupon","");					 					  	 	 												
+						  	 break;	
+						  	
+						  	 case "4":	
+						  		   Messagebox.show("El cupon no es valido.");
+						  		   sess.setAttribute("cupon","");						 					  	 	 												
+						  	 break;	
+						  	 
+						  	 case "5":	
+						  		 
+						  		Messagebox.show("Deseas confirmar el uso del cupon ? . El monto disponible para descuento es de :" + datos[1],
+						  				"Recuerda que al confirmar el cupon ya no podra ser utilizado", 
+										Messagebox.YES | 
+										Messagebox.NO, 
+										Messagebox.QUESTION, new EventListener<Event>() {			
+									@Override
+									public void onEvent(Event e) throws Exception {				
+											if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {
+												
+												//$('#numero_cupon',window.parent.document).val(cupon);
+												//$.cookie("cupon",cupon);
+												sess.setAttribute("cupon",ventaPedidoForm.getNumero_cupon());
+												//window.parent.postValida_cupon();
+												ventaPedidoForm.setAccion("aplica_cupon");
+												ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+											}
+										}
+								});						 					  	 	 												
+						  	 break;	
+						  	 
+						  	 case "6":	
+						  		   Messagebox.show("El beneficio optico ya fue utilizado, no es posible realizar el descuento.");
+						  		   sess.setAttribute("cupon","");
+						  	 break;
+						  	 
+						  	 case "7":	
+						  		   Messagebox.show("No es posible usar el cupon de descuento \n,el usuario asociado al encargo no califica para Beneficio Optico GMO.");
+						  		   sess.setAttribute("cupon","");	
+						  	 break;
+						  	 
+						  	 case "8":	
+						  		   Messagebox.show("No es posible usar el cupon de descuento \n,el usuario asociado al encargo no se encuentra vigente \n , No aplica para Beneficio Optico GMO.");
+						  		   sess.setAttribute("cupon","");		
+						  	 break;
+						  	 
+						  	 case "100":	
+						  		   Messagebox.show("No es posible aplicar el cupon, el encargo ya posee un cupon asociado.");
+						  		   sess.setAttribute("cupon","");		
+						  	 break;
+						  	 
+						  	 default:
+						  		   Messagebox.show("Error , favor contactarse con MDA");
+						  		   sess.setAttribute("cupon","");
+						  	 break;
+			  				}
+			  				
+						}else{
+							Messagebox.show("El cupon a utilizar esta asociado al Beneficio Optico GMO \n ,solo es aplicable a un trio optico o Gafa solar.(2)");
+						}//sor_trio.length==1 && trio_temp.equals("G")
+			  		}//sor_trio.length == 3
+							
+				}else{
+					Messagebox.show("El cupon a utilizar esta asociado al Beneficio Optico GMO \n ,solo es aplicable a un trio optico o Gafa solar.(1)");
+			  	}//sor_trio.length == 3 || sor_trio.length == 1 
+
+			}else{
+					
+				//bloque 3 switch	
+				switch(datos[0]){					  	 
+		  	 	 case "1":	
+		  	 		 
+		  	 		Messagebox.show("Deseas confirmar el uso del cupon ?","Recuerda que al confirmar el cupon ya no podra ser utilizado", 
+							Messagebox.YES | 
+							Messagebox.NO, 
+							Messagebox.QUESTION, new EventListener<Event>() {			
+						@Override
+						public void onEvent(Event e) throws Exception {				
+								if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {									
+									//$('#numero_cupon',window.parent.document).val(cupon);
+									//$.cookie("cupon",cupon);
+									sess.setAttribute("cupon",ventaPedidoForm.getNumero_cupon());
+									//window.parent.postValida_cupon();
+									ventaPedidoForm.setAccion("aplica_cupon");
+									ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+								}
+							}
+					});
+			  	 	
+			  	 break;
+			  	 
+		  	 	 case "2":	
+		  	 		   Messagebox.show("El cupon ya no se encuentra vigente.");
+		  	 		   sess.setAttribute("cupon","");						 					  	 	 												
+			  	 break;
+			  	 
+			  	 case "3":	
+			  		  Messagebox.show("El cupon ya fue utilizado, no es posible volver a utilizarlo.");
+			  		  sess.setAttribute("cupon","");					 					  	 	 												
+			  	 break;	
+			  	
+			  	 case "4":	
+			  		   Messagebox.show("El cupon no es valido.");
+			  		   sess.setAttribute("cupon","");						 					  	 	 												
+			  	 break;
+			  	 
+			     case "5":	
+			    	 
+			    	 Messagebox.show("Deseas confirmar el uso del cupon ? . El monto disponible para descuento es de :" + datos[1],
+				  				"Recuerda que al confirmar el cupon ya no podra ser utilizado", 
+								Messagebox.YES | 
+								Messagebox.NO, 
+								Messagebox.QUESTION, new EventListener<Event>() {			
+							@Override
+							public void onEvent(Event e) throws Exception {				
+									if( ((Integer) e.getData()).intValue() == Messagebox.YES ) {
+										
+										//$('#numero_cupon',window.parent.document).val(cupon);
+										//$.cookie("cupon",cupon);
+										sess.setAttribute("cupon",ventaPedidoForm.getNumero_cupon());
+										//window.parent.postValida_cupon();
+										ventaPedidoForm.setAccion("aplica_cupon");
+										ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+									}
+								}
+						});				
+		  	 	    
+			  	 break;	
+			  	 
+			  	 case "6":	
+			  		   Messagebox.show("El beneficio optico ya fue utilizado, no es posible realizar el descuento.");
+			  		   sess.setAttribute("cupon","");	
+			  	 break;
+			  	 
+			  	 case "7":	
+			  		   Messagebox.show("No es posible usar el cupon de descuento \n,el usuario asociado al encargo no califica para Beneficio Optico GMO.");
+			  		   sess.setAttribute("cupon","");
+			  	 break;
+			  	 
+			  	 case "8":	
+			  		   Messagebox.show("No es posible usar el cupon de descuento \n,el usuario asociado al encargo no se encuentra vigente \n , No aplica para Beneficio Optico GMO.");
+			  		   sess.setAttribute("cupon","");		
+			  	 break;
+			  	 
+			  	 case "100":	
+			  		   Messagebox.show("No es posible aplicar el cupon de descuento, el encargo ya posee un cupon asociado.");
+			  		   sess.setAttribute("cupon","");		
+			  	 break;
+			  	 
+			  	 default:
+			  		   Messagebox.show("Error , favor contactarse con MDA");
+			  		   sess.setAttribute("cupon","");
+			  	 break;
+				}			
+			}//datos[1] != "0")		
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
@@ -1830,6 +2134,9 @@ public class ControllerEncargos implements Serializable {
 		
 		pop.close();
 	}	
+	
+	
+	
 	
 	//============== Convenios ================
 	@NotifyChange({"ventaPedidoForm"})

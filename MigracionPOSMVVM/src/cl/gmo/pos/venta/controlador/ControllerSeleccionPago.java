@@ -62,6 +62,7 @@ public class ControllerSeleccionPago implements Serializable{
 	private String origen;
 	private String fecha=null;
 	private BeanControlBotones controlBotones;
+	private FormaPagoBean formaPagoBeanNew;
 	
 	private Window ventanaActual= new Window();
 	private boolean isapreVisible=false;
@@ -184,6 +185,14 @@ public class ControllerSeleccionPago implements Serializable{
 		if (!seleccionPagoForm.getSolo_guia().equals("true")) 
 			visibleBoleta=true;
 		
+		//forma de pago en 0
+		formaPagoBeanNew = new FormaPagoBean();
+		
+		formaPagoBeanNew.setDescripcion("Forma Pago");
+		formaPagoBeanNew.setId("0");
+		
+		seleccionPagoForm.getListaFormasPago().add(0, formaPagoBeanNew);
+		formaPagoBean = formaPagoBeanNew;
 	}
 	
 	@NotifyChange({"seleccionPagoForm"})
@@ -520,7 +529,7 @@ public class ControllerSeleccionPago implements Serializable{
 					Messagebox.show("El monto a pagar debe ser mayor a cero");
 				}
 			}else {
-				if (formaPagoBean.getId().equals("")) {					
+				if (formaPagoBean.getId().equals("") || formaPagoBean.getId().equals("0")) {					
 					Messagebox.show("Debe ingresar una forma de pago");
 					correcto = 0;
 				}else {
@@ -595,20 +604,24 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		//Se muven los bean de los combos a el Form
 		
-		Optional<FormaPagoBean> fpb = Optional.ofNullable(formaPagoBean);
+		if (formaPagoBean.getId().equals("") || formaPagoBean.getId().equals("0")) {
+			Messagebox.show("Debe ingresar una forma de pago");
+			return;
+		}
 		
-		if(fpb.isPresent())		
-			seleccionPagoForm.setForma_pago(formaPagoBean.getId());
-		else
-			seleccionPagoForm.setForma_pago("0");
+		//Optional<FormaPagoBean> fpb = Optional.ofNullable(formaPagoBean);
+		
+		//if(fpb.isPresent())		
+		seleccionPagoForm.setForma_pago(formaPagoBean.getId());
+		//else
+		//	seleccionPagoForm.setForma_pago("0");
 		
 		if (seleccionPagoForm.getEstado().equals("PAGADO_TOTAL")) {
 			Messagebox.show("No hay saldos pendientes por pagar");
 			correcto = 0;
 		}
 		else
-		{
-			
+		{			
 			if (seleccionPagoForm.getV_a_pagar() == 0) {
 				if(seleccionPagoForm.getDescuento() != 100)
 				{
@@ -1101,7 +1114,7 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		if(formaPagoBean.getId().equals("8")) {
 			
-			pop.open("overlap","overlap");
+			pop.open("600px","600px");
 		}	
 	}
 	
@@ -1136,33 +1149,37 @@ public class ControllerSeleccionPago implements Serializable{
 				sumt =  seleccionPagoForm.getV_total_parcial();
 				
 				switch (data_t[1]) {
-				case "1":
+					case "1":
+						
+						seleccionPagoForm.setRut_vs(nif_f[0]);
+						seleccionPagoForm.setMonto_des_vs(desp);
+						pop.close();
+						break;
+						
+					case "2":
+						Messagebox.show("El usuario ingresado no se encuentra vigente.");
+						pop.close();
+						formaPagoBean = formaPagoBeanNew;
+						break;	
 					
-					seleccionPagoForm.setRut_vs(nif_f[0]);
-					seleccionPagoForm.setMonto_des_vs(desp);
-					pop.close();
-					break;
-					
-				case "2":
-					Messagebox.show("El usuario ingresado no se encuentra vigente.");
-					pop.close();
-					break;	
-				
-				case "3":
-					Messagebox.show("El usuario ingresado no aplica para Venta Personal.");	
-					pop.close();
-					break;
-					
-				case "4":
-					Messagebox.show("El monto permitido para cancelar con la forma de pago venta personal ,\nes menor a su maximo Disponible.\nMonto disponible: $"+desp);
-				  	//$("#forma_pago",window.parent.document).val("0");	
-					pop.close();
-					break;	
-	
-				default:
-					Messagebox.show("Problema con el usuario, favor contactarse con la MDA");
-			  		//$("#forma_pago",window.parent.document).val("0");
-					break;
+					case "3":
+						Messagebox.show("El usuario ingresado no aplica para Venta Personal.");	
+						pop.close();
+						formaPagoBean = formaPagoBeanNew;
+						break;
+						
+					case "4":
+						Messagebox.show("El monto permitido para cancelar con la forma de pago venta personal ,\nes menor a su maximo Disponible.\nMonto disponible: $"+desp);
+					  	//$("#forma_pago",window.parent.document).val("0");	
+						pop.close();
+						formaPagoBean = formaPagoBeanNew;
+						break;	
+		
+					default:
+						Messagebox.show("Problema con el usuario, favor contactarse con la MDA");
+				  		//$("#forma_pago",window.parent.document).val("0");
+						formaPagoBean = formaPagoBeanNew;
+						break;
 				}
 				
 				
@@ -1173,7 +1190,7 @@ public class ControllerSeleccionPago implements Serializable{
 		}else {
 			
 			Messagebox.show("El rut "+nif+" no es valido,favor ingresa un rut valido \nRecuerda que el rut debe tener  guion (-) y digito verificador.");
-			formaPagoBean = null;
+			formaPagoBean = formaPagoBeanNew;
 		}
 		
 	}
@@ -1198,11 +1215,12 @@ public class ControllerSeleccionPago implements Serializable{
 		return String.valueOf((char) (s != 0 ? s + 47 : 75)).trim();
 	}
 	
+	@NotifyChange({"formaPagoBean"})
 	@Command
 	public void cierraValidaEmpleados(@BindingParam("pop")Popup pop) {
 		
-		
-		
+		pop.close();
+		formaPagoBean = formaPagoBeanNew;
 		
 	}    
 	

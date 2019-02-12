@@ -208,7 +208,8 @@
 		     								<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 		     										 
 		     										selectedItem="@bind(vm.formaPagoBean)" 
 		     										placeholder="Selecciona forma pago" width="230px" 
-		     										onSelect="@command('pagoEmpleados',pop=descuentoEmpleados)">     								
+		     										onSelect="@command('pagoEmpleados',pop=descuentoEmpleados)">
+		     										    								
 			     								<template name='model'>
 			     									<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
 				     									<attribute name="style" if="${each.activo==true}">
@@ -351,15 +352,15 @@
 			</div>		
 		</popup>
 		
-		<popup id="Confirmacion" > 
-		
+		<popup id="Confirmacion">	
 		
 		</popup>
 		
-		<popup id="descuentoEmpleados" width="220px" height="130px">
+		<popup id="descuentoEmpleados" width="220px" height="130px">		
+			
 			<div width="100%" height="25px" style="background-color:black; color: white">
 				<label value="Ingresa Rut" style="float: left ;" sclass="font-weight-bold" />
-				<toolbarbutton image="/iconos/cancel.png" onClick="descuentoEmpleados.close()" sclass="shrink16" style="float: right"/>						
+				<toolbarbutton image="/iconos/cancel.png" onClick="@command('cierraValidaEmpleados',pop=descuentoEmpleados)" sclass="shrink16" style="float: right"/>						
 			</div>
 		
 			<div style="padding-top: 20px ">
@@ -370,9 +371,6 @@
 			<div style="float: right">
 				<toolbarbutton image="/iconos/check.png" sclass="shrink16" onClick="@command('validaEmpleados',pop=descuentoEmpleados)"/>
 			</div>
-		</popup>
-		
-		 
-		 
+		</popup>		 
 	</window>	
 </zk>
