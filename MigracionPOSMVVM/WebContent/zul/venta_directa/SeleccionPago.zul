@@ -1,281 +1,297 @@
 <?page title="Seleccion de Pago" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winSeleccionPago" border="none" height="50%" width="65%" 
+	<window id="winSeleccionPago" border="none" height="42%" width="65%" sclass="container-fluid"
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionPago')">	
 		
 		
-		<div width="100%" height="40%" vflex="min">
 		
-			<div width="100%" height="20%" style="background-color:black;color: white">
-				<label value="Seleccion de cobro" />
-				<div style="float: right">					
-					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
-						onClick="winSeleccionPago.detach()"/>		
-				</div>																			
-			</div>		
-			
-			<div width="100%" height="80%"> 
-				<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none"  
-					height="100%" width="100%">   
-     			
-     				<columns>
-     					<column width="100px"/>
-     					<column width="250px"/>
-     					<column width="100px"/>
-     					<column width="250px"/>
-     				</columns>
-
-     				<rows>
-     					<row>
-     						<label value="Fecha" />
-     						<textbox value="@load(vm.seleccionPagoForm.fecha)" readonly="true"/>    						
-     						<label value="Mro. de serie" />
-     						<textbox value="@load(vm.seleccionPagoForm.serie)" readonly="true"/>     						
-     					</row>
-
-     					<row>
-     						<label value="Nif" />
-     						<textbox value="@load(vm.seleccionPagoForm.nif)" readonly="true"/>
-     						<label value="Razon Social" />
-     						<textbox value="@load(vm.seleccionPagoForm.razon)" readonly="true"/>
-     					</row>
-
-     					<row>
-     						<label value="Direccion" />
-     						<textbox value="@load(vm.seleccionPagoForm.direccion)" readonly="true"/>
-     						<label value="Provincia" />
-     						<textbox value="@load(vm.seleccionPagoForm.provincia_descripcion)" readonly="true"/>
-     					</row>
-
-     					<row>
-     						<label value="Poblacion" />
-     						<textbox value="@load(vm.seleccionPagoForm.poblacion)" readonly="true"/>
-     						<label value="Giro" />
-     						<textbox value="@load(vm.seleccionPagoForm.giro_descripcion)" readonly="true"/>
-     					</row>
-     				</rows>
-     			</grid>	
-			
-			</div>	
-		</div>
-		
-		
-		<div width="100%" height="60%">		
-			
-			<div width="100%" height="15%" style="background-color:black;color: white">
-				<label value="Cobro" />
-				<div style="float: right">	
-								
-					<toolbarbutton image="/iconos/save.png" sclass="shrink24" 
-							onClick="@command('pagarVenta',ventana=winSeleccionPago, msjPopup=Numero_Documento)"/>
-							
-					<!-- <toolbarbutton image="/iconos/save.png" sclass="shrink24" 
-							onClick="documentos.open(self)"/> -->		
-							
-     				<toolbarbutton image="/iconos/printer.png" 
-     						onClick="@command('generaBoleta')" 
-     						sclass="shrink24" 
-     						disabled="@bind(vm.seleccionPagoForm.origen eq 'ALBARAN_DEVOLUCION'?'true':'false')"/>	
-     					
-				</div>																			
+	<div sclass="container-fluid">
+		<div width="100%" vflex="min" style="background-color:black;color: white">
+			<label value="Seleccion de cobro" />
+			<div style="float: right">					
+				<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+					onClick="winSeleccionPago.detach()"/>		
+			</div>																			
+		</div>		
+	</div>	
+	
+	<div sclass="container-fluid">
+		<div sclass="row" style="background-color:white">		
+			<div sclass="col-lg-2">
+				<label value="Fecha" />				
 			</div>
-			
-			<div width="100%" height="85%">
-			
-				<borderlayout height="100%" width="100%">				
-     				<west width="60%" >
-     					<div width="100%" height="100%">
-	     					<grid sclass="MyGridRowHeight" 
-	     							height="100%" width="100%" 
-	     							fixedLayout="true" oddRowSclass="none">
-	     						<columns>
-	     							<column hflex="min"/>
-	     							<column hflex="min"/>
-	     							<column hflex="min"/>
-	     							<column hflex="min"/>
-	     							<column hflex="min"/>
-	     						</columns>	
-	     							
-	     						<rows>
-	     							<row>
-	     								<label value="Valor total a pago" />
-	     								<intbox value="@bind(vm.seleccionPagoForm.v_total_parcial)" 
-	     										width="100px" readonly="true" 
-	     										style="text-align:right" format="#,###,##0" locale="it"/>
-	     										
-	     								<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		
-	     									<intbox value="@bind(vm.sumaTotal)" 
-	     										width="100px" readonly="true" 
-	     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
-	     								</zk>
-	     								
-	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">		
-	     									<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
-	     										width="100px" readonly="true" 
-	     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
-	     								</zk>
-	     								
-	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">		
-	     									<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
-	     										width="100px" readonly="true" 
-	     										style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
-	     								</zk>
-	     										
-	     								<cell/>		
-	     								<cell/>	     								
-	     							</row>
-	     							<row>
-	     								<label value="Valor a pagar" />
-	     								<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)"
-	     									onBlur="@command('validaPago')" focus="true" readonly="@bind(vm.pagarReadOnly)"
-	     									width="100px" style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
-	     									
-	     								<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
-	     								<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" 
-	     										format="#,###,##0" locale="it" width="100px" 
-	     										visible="@bind(vm.controlBotones.enableGenerico1)" readonly="true" />
-	     								<cell/>		
-	     							</row>
-	     							<row>
-	     								<!-- 
-	     								<label value="Descuento(%)" visible="@bind(vm.disableDescuento)"/>
-	     								
-	     								<textbox value="@bind(vm.seleccionPagoForm.descuento)" 
-	     									width="100px" 
-	     									visible="@bind(vm.disableDescuento)" 
-	     									onOK="@command('calculaTotalvtaDirecta')" 
-	     									style="text-align:right" tooltiptext="Presione Enter para aceptar"/> -->
-	     							
-	     							
-	     								<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		     								
-	     									<label value="Descuento(%)"/>	     									
-	     									
-	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
-		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onBlur="@command('calculaTotalvtaDirecta')" 
-		     										style="text-align:right" width="100px"/>
-		     								</zk>	
-		     								
-		     								<zk if="${vm.seleccionPagoForm.tiene_pagos =='1'}">
-		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"
-		     										style="text-align:right" width="100px" readonly="true"/>
-		     								</zk>		     								 
-										</zk>
-	     							
-	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">
-	     									<label value="Descuento(%)"/>
-	     								
-	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
-		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onBlur="@command('calculaTotal')" 
-		     										style="text-align:right" width="100px" 
-		     										tooltiptext="Presione Enter para aceptar"/>	
-		     								</zk>
-		     								
-		     								<zk if="${vm.seleccionPagoForm.tiene_pagos =='1'}">
-		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"
-		     										style="text-align:right" width="100px" readonly="true"/>
-		     								</zk>		     								
-	     								</zk>
-	     								
-	     								<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">
-	     									<label value="Descuento(%)"/>
-	     								
-	     									<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
-		     									<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
-		     										onBlur="@command('calculaTotal')" 
-		     										style="text-align:right" width="100px" 
-		     										tooltiptext="Presione Enter para aceptar"/>
-		     								</zk>		
-	     								</zk>	
-	     									
-	     								<cell/>	
-	     								<cell/>	
-	     								<cell/>		
-	     							</row>
-	     							<row>
-	     								<label value="Diferencia" />
-	     								<intbox id="diferencia" 
-	     									value="@bind(vm.seleccionPagoForm.diferencia)" 
-	     									width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>	     								
-	     								<cell/>	
-	     								<cell/>	
-	     								<cell/>	
-	     							</row>
-	     							<row>	     							
-		     							<label value="Forma pago" />
-		     							<cell colspan="2" align="left">	
-		     								<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 		     										 
-		     										selectedItem="@bind(vm.formaPagoBean)" 
-		     										placeholder="Selecciona forma pago" width="230px" 
-		     										onSelect="@command('pagoEmpleados',pop=descuentoEmpleados)">
-		     										    								
-			     								<template name='model'>
-			     									<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
-				     									<attribute name="style" if="${each.activo==true}">
-															color: RED;
-														</attribute>  
-													</comboitem>	
-			     								</template>	   									
-		     								</combobox>
-		     							</cell>	
-		     							<cell/>	
-		     							<cell/>	
-	     							</row>
-	     							<row visible="@bind(vm.isapreVisible)">	     							
-		     							<label value="N° Doc Isapre"/>
-		     							<textbox value="@bind(vm.seleccionPagoForm.n_isapre)"  width="100px"/>
-		     							<cell/>	
-		     							<cell/>	
-	     							</row>
-	     						</rows>
-	     					</grid>
-     					</div>
-     				</west>
-     				
-     				<east width="40%" >
-     				
-     					<div width="100%" height="100%">
-     					
-     						<div width="100%" height="15%" style="background-color:black;color: white;">
-     							<space width="10px"/>
-     							<label value="Fecha"/>
-     							<space width="40px"/>
-     							<label value="Forma pago"/>
-     							<space width="30px"/>
-     							<label value="Monto"/>     							
-     						</div>     					
-     					     				
-     					    <div width="100%" height="100%"> 				
-		     					<grid model="@bind(vm.seleccionPagoForm.listaPagos)" 
-		     							emptyMessage="Sin datos cargados"   
-										sclass="MyGridRowHeight" width="100%" height="100%" 
-										fixedLayout="true" oddRowSclass="none">	 
-									<columns>
-										<column width="85px"/>
-										<column width="85px"/>
-										<column width="85px"/>
-										<column width="55px"/>
-									</columns>									    						
-		     						<template name="model">     							
-	     								<row>
-		     								<textbox value="@load(each.fecha)" width="80px" readonly="true"/>
-		     								<textbox value="@load(each.detalle_forma_pago)" width="80px" readonly="true"/>
-		     								<intbox value="@load(each.cantidad)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
-		     								<button image="/iconos/cancel.png" sclass="shrink16" width="50px"
-		     									onClick="@command('deleteItemAutoriza',arg=each)" disabled="true"/>
-	     								</row>     							
-		     						</template>
-		     					</grid>
-	     					</div>
-     					</div>
-     					    					
-     				</east>     				
-     			</borderlayout>		
-     				
-			</div>				
+			<div sclass="col-lg-1">
+				<textbox value="@load(vm.seleccionPagoForm.fecha)" readonly="true"/>
+			</div>
+			<div sclass="col-lg-2">
+				<space/>
+			</div>		
+			<div sclass="col-lg-2">
+				<label value="No.de serie" />
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@load(vm.seleccionPagoForm.serie)" readonly="true"/>
+			</div>
 		</div>
 		
+		<div sclass="row" style="background-color:white">		
+			<div sclass="col-lg-2">
+				<label value="Nif" />
+			</div>
+			<div sclass="col-lg-3">
+				<textbox value="@load(vm.seleccionPagoForm.nif)" readonly="true" />
+			</div>
+			<div sclass="col-lg-2">
+				<label value="Razon Social" />
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@load(vm.seleccionPagoForm.razon)" readonly="true"/>
+			</div>
+		</div>	
+		
+		<div sclass="row" style="background-color:white">		
+			<div sclass="col-lg-2">
+				<label value="Direccion" />     						
+			</div>
+			<div sclass="col-lg-3">
+				<textbox value="@load(vm.seleccionPagoForm.direccion)" readonly="true"/>     						
+			</div>
+			<div sclass="col-lg-2">
+				<label value="Provincia" />     						
+			</div>
+			<div sclass="col-lg-1">
+				<textbox value="@load(vm.seleccionPagoForm.provincia_descripcion)" readonly="true"/>
+			</div>
+		</div>
+		
+		<div sclass="row" style="background-color:white">		
+			<div sclass="col-lg-2">
+				<label value="Poblacion" />     						
+			</div>
+			<div sclass="col-lg-3">
+				<textbox value="@load(vm.seleccionPagoForm.poblacion)" readonly="true"/>
+     						
+			</div>
+			<div sclass="col-lg-2">
+				<label value="Giro" />     						
+			</div>
+			<div sclass="col-lg-5">
+				<textbox value="@load(vm.seleccionPagoForm.giro_descripcion)" readonly="true"/>
+			</div>
+		</div>
+	</div>
+	
+	<div sclass="container-fluid">
+		<div width="100%" vflex="min" style="background-color:black;color: white">
+			<label value="Cobro" />
+			<div style="float: right">	
+							
+				<toolbarbutton image="/iconos/save.png" sclass="shrink24" 
+						onClick="@command('pagarVenta',ventana=winSeleccionPago, msjPopup=Numero_Documento)"/>						
+						
+   				<toolbarbutton image="/iconos/printer.png" 
+   						onClick="@command('generaBoleta')" 
+   						sclass="shrink24" 
+   						disabled="@bind(vm.seleccionPagoForm.origen eq 'ALBARAN_DEVOLUCION'?'true':'false')"/>    					
+			</div>																			
+		</div>	
+	</div>
+	
+	
+	<div height="4px" width="100%"/>
+	
+	
+	<div sclass="container-fluid">
+		<div width="100%" height="15%" style="background-color:grey;color: black;">			
+			<space width="490px"/>
+			<label value="Fecha" sclass="font-weight-bold"/>
+			<space width="40px"/>
+			<label value="Forma pago" sclass="font-weight-bold"/>
+			<space width="30px"/>
+			<label value="Monto" sclass="font-weight-bold"/>     							
+		</div>
+	</div>
+	
+	<div sclass="container-fluid">
+	
+		<div width="60%" height="150px" style="float:left">
+		
+			<grid sclass="MyGridRowHeight" 
+					height="100%" width="100%" 
+					fixedLayout="true" oddRowSclass="none">
+				<columns>
+					<column hflex="min"/>
+					<column hflex="min"/>
+					<column hflex="min"/>
+					<column hflex="min"/>
+					<column hflex="min"/>
+				</columns>	
+	     							
+				<rows>
+					<row>
+						<label value="Valor total a pago" />
+						<intbox value="@bind(vm.seleccionPagoForm.v_total_parcial)" 
+								width="100px" readonly="true" 
+								style="text-align:right" format="#,###,##0" locale="it"/>
+								
+						<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		
+							<intbox value="@bind(vm.sumaTotal)" 
+								width="100px" readonly="true" 
+								style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
+						</zk>
+						
+						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">		
+							<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
+								width="100px" readonly="true" 
+								style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
+						</zk>
+						
+						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">		
+							<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
+								width="100px" readonly="true" 
+								style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
+						</zk>
+								
+						<cell/>		
+						<cell/>	     								
+					</row>
+					<row>
+						<label value="Valor a pagar" />
+						<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)"
+							onBlur="@command('validaPago')" focus="true" readonly="@bind(vm.pagarReadOnly)"
+							width="100px" style="text-align:right" tooltiptext="Presione Enter para aceptar"/>
+							
+						<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
+						<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" 
+								format="#,###,##0" locale="it" width="100px" 
+								visible="@bind(vm.controlBotones.enableGenerico1)" readonly="true" />
+						<cell/>		
+					</row>
+					<row>
+						<!-- 
+						<label value="Descuento(%)" visible="@bind(vm.disableDescuento)"/>
+						
+						<textbox value="@bind(vm.seleccionPagoForm.descuento)" 
+							width="100px" 
+							visible="@bind(vm.disableDescuento)" 
+							onOK="@command('calculaTotalvtaDirecta')" 
+							style="text-align:right" tooltiptext="Presione Enter para aceptar"/> -->
+					
+					
+						<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		     								
+							<label value="Descuento(%)"/>	     									
+							
+							<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
+								<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
+									onBlur="@command('calculaTotalvtaDirecta')" 
+									style="text-align:right" width="100px"/>
+							</zk>	
+							
+							<zk if="${vm.seleccionPagoForm.tiene_pagos =='1'}">
+								<textbox value="@bind(vm.seleccionPagoForm.descuento)"
+									style="text-align:right" width="100px" readonly="true"/>
+							</zk>		     								 
+						</zk>
+					
+						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">
+							<label value="Descuento(%)"/>
+						
+							<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
+								<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
+									onBlur="@command('calculaTotal')" 
+									style="text-align:right" width="100px" 
+									tooltiptext="Presione Enter para aceptar"/>	
+							</zk>
+							
+							<zk if="${vm.seleccionPagoForm.tiene_pagos =='1'}">
+								<textbox value="@bind(vm.seleccionPagoForm.descuento)"
+									style="text-align:right" width="100px" readonly="true"/>
+							</zk>		     								
+						</zk>
+						
+						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">
+							<label value="Descuento(%)"/>
+						
+							<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
+								<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
+									onBlur="@command('calculaTotal')" 
+									style="text-align:right" width="100px" 
+									tooltiptext="Presione Enter para aceptar"/>
+							</zk>		
+						</zk>	
+							
+						<cell/>	
+						<cell/>	
+						<cell/>		
+					</row>
+					<row>
+						<label value="Diferencia" />
+						<intbox id="diferencia" 
+							value="@bind(vm.seleccionPagoForm.diferencia)" 
+							width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>	     								
+						<cell/>	
+						<cell/>	
+						<cell/>	
+					</row>
+					<row>	     							
+						<label value="Forma pago" />
+						<cell colspan="2" align="left">	
+							<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 		     										 
+									selectedItem="@bind(vm.formaPagoBean)" 
+									placeholder="Selecciona forma pago" width="230px" 
+									onSelect="@command('pagoEmpleados',pop=descuentoEmpleados)">
+									    								
+								<template name='model'>
+									<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
+ 									<attribute name="style" if="${each.activo==true}">
+							color: RED;
+						</attribute>  
+					</comboitem>	
+								</template>	   									
+							</combobox>
+						</cell>	
+						<cell/>	
+						<cell/>	
+					</row>
+					<row visible="@bind(vm.isapreVisible)">	     							
+						<label value="N° Doc Isapre"/>
+						<textbox value="@bind(vm.seleccionPagoForm.n_isapre)"  width="100px"/>
+						<cell/>	
+						<cell/>	
+					</row>
+				</rows>
+			</grid>		
+		</div>
+		
+		<div width="40%" height="150px" style="float:right" align="center">	
+					     				
+		    <div width="100%" height="100%"> 				
+				<grid model="@bind(vm.seleccionPagoForm.listaPagos)" 
+						emptyMessage="Sin datos cargados"   
+						sclass="MyGridRowHeight" width="100%" height="150px" 
+						fixedLayout="true" oddRowSclass="none">	 
+				<columns>
+					<column width="85px"/>
+					<column width="85px"/>
+					<column width="85px"/>
+					<column width="35px"/>
+				</columns>									    						
+					<template name="model">     							
+						<row>
+							<textbox value="@load(each.fecha)" width="80px" readonly="true"/>
+							<textbox value="@load(each.detalle_forma_pago)" width="80px" readonly="true"/>
+							<intbox value="@load(each.cantidad)" width="80px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+							<toolbarbutton image="/iconos/cancel.png" sclass="shrink16" width="30px"
+								onClick="@command('deleteItemAutoriza',arg=each)" disabled="true"/>
+						</row>     							
+					</template>
+				</grid>
+ 			</div>
+		</div>
+	</div>
+	
+	
+				
 		<!-- 
 		Ventanas popup para operaciones adicionales en el pago
 		//

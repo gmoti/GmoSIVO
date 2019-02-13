@@ -1114,7 +1114,9 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		if(formaPagoBean.getId().equals("8")) {
 			
-			pop.open("600px","600px");
+			pop.open(pop,"600px, 600px");
+			
+			//n("600px","600px");
 		}	
 	}
 	
