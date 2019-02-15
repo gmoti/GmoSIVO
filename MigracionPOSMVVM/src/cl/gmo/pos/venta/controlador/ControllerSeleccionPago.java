@@ -402,18 +402,48 @@ public class ControllerSeleccionPago implements Serializable{
 	 	}
 	 	
 	 	
+	 	//valida ip
+	 	String data="";
 	 	
-	 	
-	 	
-	 	
-	 	
-	 	
-	 	
-	 	
-	 	
-	 	
-	 	
-	 	
+	 	try {
+	 		
+	 		//seleccionPagoForm.setIp(ip);
+	 		//seleccionPagoForm.setLocal(local);
+	 		
+	 		data = seleccionPagoDispatchActions.valida_ip(seleccionPagoForm, sess).trim();
+	 		
+	 		switch (data.trim()) {	 		
+	 		case "P":
+ 				//
+	 			break;
+			case "S":
+				//COBRO TERMINAL SECUNDARIO
+				i=0;
+				for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {					
+					if(!data.equals("1") && !data.equals("OA") && !data.equals("OASD")){
+						seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+			  		}
+					i++;
+				}
+				
+				break;	
+
+			default:
+				//COBRO TERMINAL SECUNDARIO
+				i=0;
+				for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {					
+					if(!data.equals("1") && !data.equals("OA") && !data.equals("OASD")){
+						seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
+			  		}
+					i++;
+				}				
+				
+				break;
+			}
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
 	 	
 	 	
 	 	

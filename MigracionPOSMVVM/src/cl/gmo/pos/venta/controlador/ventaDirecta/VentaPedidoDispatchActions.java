@@ -42,6 +42,7 @@ public class VentaPedidoDispatchActions {
 
 	public VentaPedidoForm cargaInicial(VentaPedidoForm formulario, String local, Session session)
 	{
+		Utils util = new Utils();
 		log.info("VentaPedidoDispatchActions:cargaInicial  inicio");
 		formulario.setListaFormaPago(helper.traeFormasPago());
 		formulario.setListaAgentes(helper.traeAgentes(local));
@@ -61,6 +62,8 @@ public class VentaPedidoDispatchActions {
 		session.setAttribute("DTOWEB","0");
 		session.setAttribute("se_encargo_padre","");	
 		session.setAttribute("se_cupon","");
+		
+		formulario.setIp(util.retornaIp(session));
 		
 
 		helper.traeDatosFormulario(formulario, session);
@@ -628,6 +631,16 @@ public class VentaPedidoDispatchActions {
 			    if(session.getAttribute(Constantes.STRING_TIPO_DOCUMENTO).toString().trim().equals("B")){
 					if(!folio[0].equals("0")){	
 				    	spagoform.setNumero_boleta(Integer.parseInt(folio[1]));
+				    	
+				    	//Cambio para operar TransBank
+				    	/*for(PagoBean p : listaPagos) { 
+				    		if(p.getForma_pago().equals("3") || p.getForma_pago().equals("4") || p.getForma_pago().equals("5") || p.getForma_pago().equals("6") || p.getForma_pago().equals("7") 
+				    		  || p.getForma_pago().equals("2") || p.getForma_pago().equals("DIN") || p.getForma_pago().equals("HITES") || p.getForma_pago().equals("PARIS") || p.getForma_pago().equals("PREST")
+				    		  || p.getForma_pago().equals("RIPLE") || p.getForma_pago().equals("11") ){    
+				    				utils.creaFicheroTbk(p.getCantidad(),folio[1].trim());
+				    		}
+			    		}*/
+				    	
 				    	out = helper.genera_datos_belec("BOLETA-1", spagoform, folio[1], session);
 				    	res = res +"_"+out;	
 				    	

@@ -861,6 +861,45 @@ public class SeleccionPagoDispatchActions{
 		  //return null;
 		  //return mapping.findForward(Constantes.STRING_ACTION_VALIDA__CUPON);
     }
+	 
+	 
+	 /**
+	  * AUTHOR : LMARIN
+	  * VALIDA IP
+	  * FECHA 20190103
+     */
+	 public String valida_ip(SeleccionPagoForm form, Session request) throws Exception
+     {		  
+		  SeleccionPagoForm formulario = (SeleccionPagoForm)form;	
+		  String estado = "";
+		  estado = helper.valida_ip(formulario);
+		  System.out.println("validaip ==> "+estado);
+		  //response.getWriter().print(estado);	
+		  return estado;
+		  //return null;
+		  //return mapping.findForward(Constantes.STRING_ACTION_VALIDA__CUPON);
+     }
+	 
+	 
+	 /**
+	  * AUTHOR : LMARIN
+	  * VALIDA IP
+	  * FECHA 20190103
+     */
+	 public boolean creaTxtTbk(SeleccionPagoForm form,Session request) throws Exception
+     {
+		  
+		  SeleccionPagoForm formulario = (SeleccionPagoForm)form;	
+		  boolean estado = false;
+		  estado = helper.generaTxtTbk(String.valueOf(formulario.getValortbk()));
+		  //HttpSession session  = request.getSession(true);
+		  //Session session  = request.getSession(true);
+		  request.setAttribute(Constantes.STRING_DOCUMENTO,"0");
+		  //System.out.println("creaTxtTbk ==> "+estado+"<===>"+formulario.getValortbk());
+		  //response.getWriter().print(estado);
+		  return estado;
+		  //return null;
+     } 
 	
 	
 }

@@ -158,12 +158,17 @@ public class VentaPedidoForm extends GenericForm{
 	private String venta_seguro;
 	
 	//LMARIN 20180220
-	private String numero_cupon=Constantes.STRING_BLANCO;
-	
+	private String numero_cupon=Constantes.STRING_BLANCO;	
 
 	private String muestra_ftaller;	
 	private String valor_comodin;
 	private String segCris;
+	
+	private String dni_pas;
+	private String  nombre_internacional;
+	private String nacionalidad;
+	private String email_inter;
+	private String ip;
 	
 	
 	public VentaPedidoForm(){
@@ -1145,6 +1150,44 @@ public class VentaPedidoForm extends GenericForm{
 	public void setSegCris(String segCris) {
 		this.segCris = segCris;
 	}
-
 	
+	public String getDni_pas() {
+		return dni_pas;
+	}
+
+	public void setDni_pas(String dni_pas) {
+		this.dni_pas = dni_pas;
+	}
+
+	public String getNombre_internacional() {
+		return nombre_internacional;
+	}
+
+	public void setNombre_internacional(String nombre_internacional) {
+		this.nombre_internacional = nombre_internacional;
+	}
+
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+	public String getEmail_inter() {
+		return email_inter;
+	}
+
+	public void setEmail_inter(String email_inter) {
+		this.email_inter = email_inter;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}	
 }

@@ -1139,4 +1139,28 @@ public class SeleccionPagoHelper extends Utils{
 	        throw new Exception("VebntaPedidoHelper: valida_usuario_vp");
 	    }
 	}
+	
+	public String valida_ip(SeleccionPagoForm formulario)  throws Exception{
+		
+		String valor = "";
+		try {
+	        valor = PosUtilesFacade.valida_ip(formulario.getIp(),formulario.getLocal());
+	        return valor;
+
+	    }catch (Exception e){
+	        e.printStackTrace();
+	        throw new Exception("VentaPedidoHelper: valida_ip");
+	    }
+	}
+	
+	public boolean generaTxtTbk(String monto) {
+		
+		boolean valor = false;
+		
+		Utils util = new Utils();
+		valor = util.creaFicheroTbk(String.valueOf(util.numeroAleatorio())+".txt",monto,String.valueOf(util.numeroAleatorio()));
+		
+		return valor;
+	}
+	
 }

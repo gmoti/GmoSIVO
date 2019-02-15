@@ -8,7 +8,9 @@ package cl.gmo.pos.venta.utils;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -21,8 +23,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -45,6 +50,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 
 import cl.gmo.pos.venta.web.beans.AgenteBean;
@@ -3949,4 +3955,64 @@ public class Utils {
 		return num_letras;
 	} 	
    
+	//Cambios para operar TransBank
+	
+	public String retornaIp(Session request) {
+		 String remoteAddr = "";
+		 
+		 remoteAddr = Executions.getCurrent().getRemoteAddr();
+
+        /*if (request != null) {
+            //remoteAddr = request.getHeader("X-FORWARDED-FOR"); //Buscar sustituto de getHeadr
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }*/
+
+        return remoteAddr;		
+	}
+	
+	public Map<String, String> getRequestHeadersInMap(Session request) {
+
+	        Map<String, String> result = new HashMap<>();
+
+	        /*Enumeration headerNames = request.getHeaderNames(); //buscar equivalente
+	        
+	        while (headerNames.hasMoreElements()) {
+	            String key = (String) headerNames.nextElement();
+	            String value = request.getHeader(key);
+	            System.out.println(key+"<==>"+value);
+	            result.put(key, value);
+	        }*/
+
+	        return result;
+	 }
+
+	public boolean creaFicheroTbk(String nombre_archivo,String monto,String boleta) {
+		boolean ret = false;
+		String msjtbk = monto+"|"+boleta;
+		try {
+			File file = new File("C:\\ct_transbank\\entrada\\"+nombre_archivo);
+			ret = file.createNewFile();
+			if(file.exists()) {
+				FileWriter fw = new FileWriter(file,true);
+				PrintWriter pw = new PrintWriter(fw);
+				pw.println(msjtbk);
+				fw.flush();
+				pw.flush();
+				
+				fw.close();
+				pw.close();
+			
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			ret = false;
+		}
+		return ret;
+	}
+
+	
+	
+	
 }

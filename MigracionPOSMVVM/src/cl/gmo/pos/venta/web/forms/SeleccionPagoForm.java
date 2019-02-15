@@ -138,6 +138,14 @@ public class SeleccionPagoForm{
 
 
 	private String monto_des_vs= Constantes.STRING_BLANCO;
+	
+	private String local = Constantes.STRING_BLANCO;
+	
+	private String ip = Constantes.STRING_BLANCO;
+	
+	private String vouchertbk = Constantes.STRING_BLANCO;
+
+	private String valortbk = Constantes.STRING_BLANCO;
 
 
 	public SeleccionPagoForm() {
@@ -962,5 +970,45 @@ public class SeleccionPagoForm{
 	public void setMonto_des_vs(String monto_des_vs) {
 		this.monto_des_vs = monto_des_vs;
 	}
+	
+	public String getLocal() {
+		return local;
+	}
+
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
+
+
+	public String getIp() {
+		return ip;
+	}
+
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+
+	public String getVouchertbk() {
+		return vouchertbk;
+	}
+
+
+	public void setVouchertbk(String vouchertbk) {
+		this.vouchertbk = vouchertbk;
+	}
+
+
+	public String getValortbk() {
+		return valortbk;
+	}
+
+
+	public void setValortbk(String valortbk) {
+		this.valortbk = valortbk;
+	}
+
 	
 }

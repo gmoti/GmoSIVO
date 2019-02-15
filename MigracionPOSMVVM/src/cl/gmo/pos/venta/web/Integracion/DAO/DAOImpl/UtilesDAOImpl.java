@@ -5014,4 +5014,44 @@ public MenuBean llenaMenu(String usuario) throws Exception {
 		}
 		return valor;
 	}
+	
+	
+	public String valida_ip(String ip,String local)  throws Exception {
+		log.info("UtilesDAOImpl:valida_usuario_vp inicio");
+		String valor = "";
+	    Connection con = null;
+	    CallableStatement cs = null;
+	     try {
+	    	log.info("UtilesDAOImpl:valida_usuario_vpconectando base datos");
+	    	con = ConexionFactory.INSTANCE.getConexion();
+	    	
+	    	System.out.println("{call SP_VALIDA_IP("+ip+","+local+",:z)}");
+			cs = con.prepareCall("{call SP_VALIDA_IP(?,?,?)}");
+			cs.setString(1,ip);
+			cs.setString(2,local);
+			cs.registerOutParameter(3, Types.VARCHAR);
+			cs.execute(); 
+			
+			valor = (cs.getObject(3).toString() != null) && (cs.getObject(3).toString() != "")  ? cs.getObject(3).toString(): "";
+			
+		} catch (Exception e) {
+			log.error("UtilesDAOImpl:traeDescuentoCupon error controlado",e);
+	        throw new Exception("Error en DAO, SP_VALIDA_IP ejecutar SP: SP_VALIDA_IP"); 
+		} finally {
+	        try{
+	         if (null != cs){
+	        	 log.warn("UtilesDAOImpl:valida_ip cierre CallableStatement");
+	             cs.close();
+	         }           
+	         if (null != con){
+	        	 log.warn("UtilesDAOImpl:valida_ip cierre Connection");
+		    	   con.close();
+	           } 
+	         
+	     }catch(Exception e){
+	    	 log.error("UtilesDAOImpl:valida_ip error", e);
+	     }
+		}
+		return valor;
+	}
 }

@@ -1146,6 +1146,20 @@ public class PosUtilesFacade{
 		valor = utiles.articulosPromoSanValentin(producto,local);
 		return valor;
 	}
+    
+    public static String valida_ip(String ip,String local)  throws Exception{
+		
+		String valor = "";
+		try{
+	        UtilesDAOImpl utilDao = new UtilesDAOImpl();
+	        valor = utilDao.valida_ip(ip,local);
+	        return valor;
+
+	    }catch (Exception e){
+	        e.printStackTrace();
+	        throw new Exception("PosUtilesFacade: valida_ip");
+	    }
+	} 
  
 }
 
