@@ -881,25 +881,7 @@ public class SeleccionPagoDispatchActions{
      }
 	 
 	 
-	 /**
-	  * AUTHOR : LMARIN
-	  * VALIDA IP
-	  * FECHA 20190103
-     */
-	 public boolean creaTxtTbk(SeleccionPagoForm form,Session request) throws Exception
-     {
-		  
-		  SeleccionPagoForm formulario = (SeleccionPagoForm)form;	
-		  boolean estado = false;
-		  estado = helper.generaTxtTbk(String.valueOf(formulario.getValortbk()));
-		  //HttpSession session  = request.getSession(true);
-		  //Session session  = request.getSession(true);
-		  request.setAttribute(Constantes.STRING_DOCUMENTO,"0");
-		  //System.out.println("creaTxtTbk ==> "+estado+"<===>"+formulario.getValortbk());
-		  //response.getWriter().print(estado);
-		  return estado;
-		  //return null;
-     } 
+	 
 	
 	
 }

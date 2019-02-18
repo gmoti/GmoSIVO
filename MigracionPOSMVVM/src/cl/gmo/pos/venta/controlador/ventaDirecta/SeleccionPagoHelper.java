@@ -1153,14 +1153,6 @@ public class SeleccionPagoHelper extends Utils{
 	    }
 	}
 	
-	public boolean generaTxtTbk(String monto) {
-		
-		boolean valor = false;
-		
-		Utils util = new Utils();
-		valor = util.creaFicheroTbk(String.valueOf(util.numeroAleatorio())+".txt",monto,String.valueOf(util.numeroAleatorio()));
-		
-		return valor;
-	}
+	
 	
 }

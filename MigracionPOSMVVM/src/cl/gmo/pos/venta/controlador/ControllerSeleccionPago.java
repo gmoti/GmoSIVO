@@ -78,10 +78,11 @@ public class ControllerSeleccionPago implements Serializable{
 	private boolean visibleBoleta=false;
 	
 	//popup
-	private Popup Numero_Documento;	
-	
+	private Popup Numero_Documento;		
 	//
 	String rut;
+	private String 	sucursal;
+	private String  sIP="";
 		
 	@Init
 	public void inicio(@ExecutionArgParam("cliente")ClienteBean arg,
@@ -89,6 +90,8 @@ public class ControllerSeleccionPago implements Serializable{
 					   @ExecutionArgParam("ventaOrigenForm")Object arg3,
 					   @ExecutionArgParam("origen")String arg4) {			
 		
+		
+		sucursal 	= sess.getAttribute(Constantes.STRING_SUCURSAL).toString();	
 		convenio="";
 		isapre="N";		
 		listaProductos= new ArrayList<ProductosBean>();
@@ -134,7 +137,7 @@ public class ControllerSeleccionPago implements Serializable{
 			
 			Optional<String> isp = Optional.ofNullable(isapre);
 			isapre= isp.orElse("N");
-			
+			sIP=ventaPedidoForm.getIp();
 		}
 		
 		if (arg3 instanceof VentaDirectaForm) { 
@@ -153,7 +156,8 @@ public class ControllerSeleccionPago implements Serializable{
 			/* =============================== */
 			convenio = "0";
 			isapre   = "N";
-			listaProductos = ventaDirectaForm.getListaProductos();			
+			listaProductos = ventaDirectaForm.getListaProductos();
+			//sIP=ventaDirectaForm.getIp();
 		}
 		
 		if (arg3 instanceof DevolucionForm) { 
@@ -407,8 +411,8 @@ public class ControllerSeleccionPago implements Serializable{
 	 	
 	 	try {
 	 		
-	 		//seleccionPagoForm.setIp(ip);
-	 		//seleccionPagoForm.setLocal(local);
+	 		seleccionPagoForm.setIp(sIP);
+	 		seleccionPagoForm.setLocal(sucursal);
 	 		
 	 		data = seleccionPagoDispatchActions.valida_ip(seleccionPagoForm, sess).trim();
 	 		
@@ -420,7 +424,7 @@ public class ControllerSeleccionPago implements Serializable{
 				//COBRO TERMINAL SECUNDARIO
 				i=0;
 				for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {					
-					if(!data.equals("1") && !data.equals("OA") && !data.equals("OASD")){
+					if(!fpb.getId().equals("1") && !fpb.getId().equals("OA") && !fpb.getId().equals("OASD")){
 						seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
 			  		}
 					i++;
@@ -432,7 +436,7 @@ public class ControllerSeleccionPago implements Serializable{
 				//COBRO TERMINAL SECUNDARIO
 				i=0;
 				for(FormaPagoBean fpb : seleccionPagoForm.getListaFormasPago()) {					
-					if(!data.equals("1") && !data.equals("OA") && !data.equals("OASD")){
+					if(!fpb.getId().equals("1") && !fpb.getId().equals("OA") && !fpb.getId().equals("OASD")){
 						seleccionPagoForm.getListaFormasPago().get(i).setActivo(true);
 			  		}
 					i++;

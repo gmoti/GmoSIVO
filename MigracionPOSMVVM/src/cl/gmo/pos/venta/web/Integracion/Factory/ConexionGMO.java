@@ -15,7 +15,7 @@ public class ConexionGMO implements ConexionFactory{
     
     public Connection getConexion() {
     
-    	
+    	/*
 		Connection con = null;
     	String usuario="gmo";
     	String pass="249gmo.,";
@@ -34,8 +34,8 @@ public class ConexionGMO implements ConexionFactory{
     		 System.out.println("Error de conexion");
     	}
     	return con;
-    	 
-    	/*jndi
+    	 */
+    	/*jndi*/
     	Connection con = null; 
     	DataSource dataSource = null;
     	InitialContext context = null;
@@ -50,7 +50,7 @@ public class ConexionGMO implements ConexionFactory{
          }catch(NamingException e){
         	 e.printStackTrace();
          }
-         return con;*/
+         return con;
     }
 
     

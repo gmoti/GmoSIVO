@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.math.RoundingMode;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -3958,11 +3960,15 @@ public class Utils {
 	//Cambios para operar TransBank
 	
 	public String retornaIp(Session request) {
-		 String remoteAddr = "";
-		 
-		 remoteAddr = Executions.getCurrent().getRemoteAddr();
+		 String remoteAddr = "";		
+				
+		 //X-Real-IP 
+		 //X-FORWARDED-FOR
+		remoteAddr = Executions.getCurrent().getHeader("X-Real-IP");
+		
+		//remoteAddr = "10.216.3.13";
 
-        /*if (request != null) {
+        /*if (remoteAddr != null) {
             //remoteAddr = request.getHeader("X-FORWARDED-FOR"); //Buscar sustituto de getHeadr
             if (remoteAddr == null || "".equals(remoteAddr)) {
                 remoteAddr = request.getRemoteAddr();
@@ -3988,9 +3994,11 @@ public class Utils {
 	        return result;
 	 }
 
-	public boolean creaFicheroTbk(String nombre_archivo,String monto,String boleta) {
+	public boolean creaFicheroTbk(int monto,String boleta) {
 		boolean ret = false;
+		String nombre_archivo = boleta+".txt";
 		String msjtbk = monto+"|"+boleta;
+		System.out.println(nombre_archivo+"<===>"+msjtbk);
 		try {
 			File file = new File("C:\\ct_transbank\\entrada\\"+nombre_archivo);
 			ret = file.createNewFile();

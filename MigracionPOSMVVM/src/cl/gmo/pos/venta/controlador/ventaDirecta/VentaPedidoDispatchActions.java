@@ -633,13 +633,13 @@ public class VentaPedidoDispatchActions {
 				    	spagoform.setNumero_boleta(Integer.parseInt(folio[1]));
 				    	
 				    	//Cambio para operar TransBank
-				    	/*for(PagoBean p : listaPagos) { 
+				    	for(PagoBean p : listaPagos) { 
 				    		if(p.getForma_pago().equals("3") || p.getForma_pago().equals("4") || p.getForma_pago().equals("5") || p.getForma_pago().equals("6") || p.getForma_pago().equals("7") 
 				    		  || p.getForma_pago().equals("2") || p.getForma_pago().equals("DIN") || p.getForma_pago().equals("HITES") || p.getForma_pago().equals("PARIS") || p.getForma_pago().equals("PREST")
 				    		  || p.getForma_pago().equals("RIPLE") || p.getForma_pago().equals("11") ){    
 				    				utils.creaFicheroTbk(p.getCantidad(),folio[1].trim());
 				    		}
-			    		}*/
+			    		}
 				    	
 				    	out = helper.genera_datos_belec("BOLETA-1", spagoform, folio[1], session);
 				    	res = res +"_"+out;	
