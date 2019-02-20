@@ -3960,13 +3960,23 @@ public class Utils {
 	//Cambios para operar TransBank
 	
 	public String retornaIp(Session request) {
-		 String remoteAddr = "";		
+		 String remoteAddr = "";
+		 
+		 InetAddress addr;
+		 String ipAddress = "";
 				
-		 //X-Real-IP 
-		 //X-FORWARDED-FOR
-		remoteAddr = Executions.getCurrent().getHeader("X-Real-IP");
-		
+		//X-Real-IP 
+		//X-FORWARDED-FOR
+		//remoteAddr = Executions.getCurrent().getHeader("X-Real-IP");		
 		//remoteAddr = "10.216.3.13";
+		 
+		 try {
+			addr 	  = InetAddress.getLocalHost();
+			ipAddress = addr.getHostAddress();
+			remoteAddr= ipAddress;
+		} catch (UnknownHostException e) {			
+			e.printStackTrace();
+		}
 
         /*if (remoteAddr != null) {
             //remoteAddr = request.getHeader("X-FORWARDED-FOR"); //Buscar sustituto de getHeadr

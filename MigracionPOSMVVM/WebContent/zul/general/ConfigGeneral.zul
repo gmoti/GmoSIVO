@@ -1,0 +1,58 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winConfigGeneral" border="none" width="85%" height="65%" sclass="container-fluid" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerConfigGeneral')">
+
+	<div sclass="container-fluid">	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="Configuración General" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>		
+	
+		
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
+			<!-- <toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoAlbaran')" tooltiptext="Nueva Devolución"/> -->
+			<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winConfigGeneral.detach()" tooltiptext="Cerrar"/>
+	   	</div>	
+	   	 
+	</div>
+	
+	<div sclass="container-fluid">
+	
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-3">
+				<label value="Dirección Impresión Boletas"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.ipBoleta)"/>
+			</div>
+			
+		</div>
+		
+		<div sclass="row" style="background-color:white">
+		
+			<div sclass="col-lg-3">
+				<label value="Dirección Impresión Notas"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<textbox value="@bind(vm.ipNota)"/>
+			</div>
+		
+		</div>	
+		
+		<div sclass="row" style="background-color:white">
+			<div sclass="col-lg-1">
+				<button label="Grabar"/>
+			</div>
+		</div>
+		
+	</div>
+
+</window>

@@ -282,8 +282,7 @@ public class ControllerVentaDirecta implements Serializable{
 	@GlobalCommand	
     public void creaPagoExitoso(@BindingParam("seleccionPago")SeleccionPagoForm seleccionPago) {	
 		
-		String boleta="";
-		
+		String boleta="";		
 		
 		ventaDirectaForm.setAccion(Constantes.STRING_PAGO_EXITOSO);			
 		sess.setAttribute(Constantes.STRING_TICKET, ventaDirectaForm.getEncabezado_ticket() + "/" + ventaDirectaForm.getNumero_ticket());
@@ -300,34 +299,54 @@ public class ControllerVentaDirecta implements Serializable{
             if (ventaDirectaForm.getEstado_boleta().contains("TRUE") || ventaDirectaForm.getEstado_boleta().contains("true")) {
 				
 				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente.");
-			}else {
+			}else {				
 				
-				
-				String valor[] =  ventaDirectaForm.getEstado_boleta().split("_");
-				
-				//http://10.216.4.24/39 66666666-6 1.pdf
-				//http://10.216.4.24/39%2066666666-6%203.pdf
+				String tmp[] =  ventaDirectaForm.getEstado_boleta().split("_");
 				
 				String url ="http://10.216.4.24/39 " + 
-							ventaDirectaForm.getNif().trim() + "-" + ventaDirectaForm.getDv().trim() + " " + valor[1].trim()+".pdf";
-							
+							ventaDirectaForm.getNif().trim() + 
+							"-" + ventaDirectaForm.getDv().trim() + 
+							" " + tmp[1].trim()+".pdf";
+						
+				/*
+				if(tmp[0].equals("0") || tmp[2].equals("true")){
+					
+					Messagebox.show("Error: No se pudo generar la boleta, favor revisar el modulo de reimpresión de Boletas.");
+					return;
+				}else if(tmp[0].equals("1") && tmp[2].equals("false")){
+					
+					objetos = new HashMap<String,Object>();
+					objetos.put("documento",url);
+					objetos.put("titulo","Venta Directa");
+					
+					Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
+			        window.doModal();	
+			        
+			        this.nuevaVenta();
+			        controlBotones.setEnableGenerico1("false");
+			        controlBotones.setEnableGenerico2("true");
+					
+					
+				}else if(tmp[0].equals("2") && tmp[2].equals("false")){
+					
+					
+					
+				}	*/
 				
+				//original
 				
 				objetos = new HashMap<String,Object>();
 				objetos.put("documento",url);
 				objetos.put("titulo","Venta Directa");
 				
-				Window window = (Window)Executions.createComponents(
-		                "/zul/reportes/VisorDocumento.zul", null, objetos);
-				
+				Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
 		        window.doModal();	
 		        
 		        this.nuevaVenta();
 		        controlBotones.setEnableGenerico1("false");
 		        controlBotones.setEnableGenerico2("true");
-		        
-		        //BindUtils.postGlobalCommand(null, null, "nuevaVenta", null);
-		        
+				
+				
 				
 			}
 			

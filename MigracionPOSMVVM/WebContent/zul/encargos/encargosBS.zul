@@ -31,7 +31,9 @@
 		</div>
 		
 		<div width="100%" height="40px" style="background-color:black;color: white">					
-			<div style="text-align: right;">											
+			<div style="text-align: right;">
+														
+				<toolbarbutton image="/iconos/cliente_inter16.png" onClick="@command('cliente_Internacional',pop=popClienteInternacional)"  disabled="" tooltiptext="Cliente Internacional" sclass="shrink24"/>										
 				<toolbarbutton image="/iconos/nuevo.png" onClick="@command('nuevo_Pedido')"  disabled="@bind(vm.beanControlBotones.enableNew)" tooltiptext="Nuevo Encargo" sclass="shrink24"/>
 				<toolbarbutton image="/iconos/lista.png" onClick="@command('cargaPedidoCliente')"  disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Listar Encargos" sclass="shrink24"/>
 				<toolbarbutton image="/iconos/lupa.png"  onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos" sclass="shrink24"/>
@@ -725,5 +727,291 @@
 		</div>
 	</popup>
 	
+	
+	<popup id="popClienteInternacional" width="350px" height="200px">
+		<div width="100%" height="25px" style="background-color:black; color: white">
+			<label value="Cliente Internacional" style="float: left ;" sclass="font-weight-bold" />
+			<toolbarbutton image="/iconos/cancel.png" onClick="popClienteInternacional.close()" sclass="shrink16" style="float: right"/>						
+		</div>
+	
+		<div sclass="container-fluid">
+	
+			<div sclass="row" style="background-color:white">		
+				<div sclass="col-lg-4">
+					<label value="DNI/PASAPORTE"/>
+				</div>
+				<div sclass="col-lg-2">
+					<textbox value="@bind(vm.ventaPedidoForm.dni_pas)"/>
+				</div>
+			</div>
+			<div sclass="row" style="background-color:white">		
+				<div sclass="col-lg-4">
+					<label value="Nombre"/>
+				</div>
+				<div sclass="col-lg-2">
+					<textbox value="@bind(vm.ventaPedidoForm.nombre_internacional)"/>
+				</div>
+			</div>
+			<div sclass="row" style="background-color:white">		
+				<div sclass="col-lg-4">
+					<label value="Email"/>
+				</div>
+				<div sclass="col-lg-2">
+					<textbox value="@bind(vm.ventaPedidoForm.email_inter)"/>
+				</div>
+			</div>
+			<div sclass="row" style="background-color:white">		
+				<div sclass="col-lg-4">
+					<label value="País"/>
+				</div>
+				<div sclass="col-lg-2">
+				
+					<combobox selectedItem="@bind(vm.ventaPedidoForm.nacionalidad)">
+						<comboitem  value="0" label="Selecciona País"/>
+					<comboitem  value="AD" label="Andorra"/>
+					<comboitem  value="AE" label="Emiratos Arabes"/>
+					<comboitem  value="AF" label="Afghanistan"/>
+					<comboitem  value="AG" label="Antigua y Barbuda"/>
+					<comboitem  value="AI" label="Anguilla"/>
+					<comboitem  value="AL" label="Albania"/>
+					<comboitem  value="AM" label="Armenia"/>
+					<comboitem  value="AN" label="Antillas Holandesas"/>
+					<comboitem  value="AO" label="Angola"/>
+					<comboitem  value="AR" label="Argentina"/>
+					<comboitem  value="AS" label="Samoa (American)"/>
+					<comboitem  value="AT" label="Austria"/>
+					<comboitem  value="AU" label="Australia"/>
+					<comboitem  value="AW" label="Aruba"/>
+					<comboitem  value="AZ" label="Azerbaiyan"/>
+					<comboitem  value="BA" label="Bosnia y Herzegovina"/>
+					<comboitem  value="BB" label="Barbados"/>
+					<comboitem  value="BD" label="Bangladesh"/>
+					<comboitem  value="BE" label="Belgica"/>
+					<comboitem  value="BF" label="Burkina Faso"/>
+					<comboitem  value="BG" label="Bulgaria"/>
+					<comboitem  value="BH" label="Bahrain"/>
+					<comboitem  value="BI" label="Burundi"/>
+					<comboitem  value="BJ" label="Benin"/>
+					<comboitem  value="BM" label="Bermuda"/>
+					<comboitem  value="BN" label="Brunei"/>
+					<comboitem  value="BO" label="Bolivia"/>
+					<comboitem  value="BQ" label="Bonaire San Eustaquio y Saba"/>
+					<comboitem  value="BR" label="Brasil"/>
+					<comboitem  value="BS" label="Bahamas"/>
+					<comboitem  value="BT" label="Butan"/>
+					<comboitem  value="BW" label="Botswana"/>
+					<comboitem  value="BY" label="Bielorrusia"/>
+					<comboitem  value="BZ" label="Belize"/>
+					<comboitem  value="CA" label="Canada"/>
+					<comboitem  value="CC" label="Islas Cocos (Keeling)"/>
+					<comboitem  value="CF" label="Republica Central Africana"/>
+					<comboitem  value="CG" label="Congo"/>
+					<comboitem  value="CH" label="Suiza"/>
+					<comboitem  value="CI" label="Costa de Marfil"/>
+					<comboitem  value="CK" label="Islas Cook"/>
+					<comboitem  value="CL" label="Chile"/>
+					<comboitem  value="CM" label="Camerun"/>
+					<comboitem  value="CN" label="China"/>
+					<comboitem  value="CO" label="Colombia"/>
+					<comboitem  value="CR" label="Costa Rica"/>
+					<comboitem  value="CS" label="Serbia y Montenegro"/>
+					<comboitem  value="CU" label="Cuba"/>
+					<comboitem  value="CV" label="Cabo Verde"/>
+					<comboitem  value="CX" label="Christmas Island"/>
+					<comboitem  value="CY" label="Chipre"/>
+					<comboitem  value="CZ" label="Republica Checa"/>
+					<comboitem  value="DE" label="Alemania"/>
+					<comboitem  value="DJ" label="Djibouti"/>
+					<comboitem  value="DK" label="Dinamarca"/>
+					<comboitem  value="DM" label="Dominica"/>
+					<comboitem  value="DO" label="Republica Dominicana"/>
+					<comboitem  value="DZ" label="Argelia"/>
+					<comboitem  value="EC" label="Ecuador"/>
+					<comboitem  value="EE" label="Estonia"/>
+					<comboitem  value="EG" label="Egipto"/>
+					<comboitem  value="ER" label="Eritrea"/>
+					<comboitem  value="ES" label="Espantilde;a"/>
+					<comboitem  value="ET" label="Etiopia"/>
+					<comboitem  value="FI" label="Finlandia"/>
+					<comboitem  value="FJ" label="Fiji"/>
+					<comboitem  value="FK" label="Islas Falkland"/>
+					<comboitem  value="FM" label="Micronesia"/>
+					<comboitem  value="FO" label="Islas Faroe"/>
+					<comboitem  value="FR" label="Francia"/>
+					<comboitem  value="GA" label="Gabon"/>
+					<comboitem  value="GB" label="Gran Bretantilde;a"/>
+					<comboitem  value="GD" label="Grenada"/>
+					<comboitem  value="GE" label="Georgia"/>
+					<comboitem  value="GF" label="Guiana Francesa"/>
+					<comboitem  value="GH" label="Ghana"/>
+					<comboitem  value="GI" label="Gibraltar"/>
+					<comboitem  value="GL" label="Greenland"/>
+					<comboitem  value="GM" label="Gambia"/>
+					<comboitem  value="GN" label="Guinea"/>
+					<comboitem  value="GP" label="Guadalupe"/>
+					<comboitem  value="GQ" label="Guinea Ecuatorial"/>
+					<comboitem  value="GR" label="Grecia"/>
+					<comboitem  value="GT" label="Guatemala"/>
+					<comboitem  value="GU" label="Guam"/>
+					<comboitem  value="GW" label="Guinea Bissau"/>
+					<comboitem  value="GY" label="Guyana"/>
+					<comboitem  value="HK" label="Hong Kong"/>
+					<comboitem  value="HN" label="Honduras"/>
+					<comboitem  value="HR" label="Croacia"/>
+					<comboitem  value="HT" label="Haiti"/>
+					<comboitem  value="HU" label="Hungria"/>
+					<comboitem  value="ID" label="Indonesia"/>
+					<comboitem  value="IE" label="Irlanda"/>
+					<comboitem  value="IL" label="Israel"/>
+					<comboitem  value="IN" label="India"/>
+					<comboitem  value="IQ" label="Irak"/>
+					<comboitem  value="IR" label="Iran"/>
+					<comboitem  value="IS" label="Islandia"/>
+					<comboitem  value="IT" label="Italia"/>
+					<comboitem  value="JM" label="Jamaica"/>
+					<comboitem  value="JO" label="Jordania"/>
+					<comboitem  value="JP" label="Japon"/>
+					<comboitem  value="KE" label="Kenya"/>
+					<comboitem  value="KH" label="Camboya"/>
+					<comboitem  value="KI" label="Kiribati"/>
+					<comboitem  value="KM" label="Islas Comoro"/>
+					<comboitem  value="KN" label="San Cristobal y Nieves"/>
+					<comboitem  value="KP" label="Corea del Norte"/>
+					<comboitem  value="KR" label="Corea del Sur"/>
+					<comboitem  value="KW" label="Kuwait"/>
+					<comboitem  value="KY" label="Islas Caiman"/>
+					<comboitem  value="KZ" label="Kazakhstan"/>
+					<comboitem  value="LA" label="Laos"/>
+					<comboitem  value="LB" label="Libano"/>
+					<comboitem  value="LC" label="Santa Lucia"/>
+					<comboitem  value="LI" label="Liechtenstein"/>
+					<comboitem  value="LK" label="Sri Lanka"/>
+					<comboitem  value="LL" label="Islas Malvinas"/>
+					<comboitem  value="LR" label="Liberia"/>
+					<comboitem  value="LS" label="Lesotho"/>
+					<comboitem  value="LT" label="Lituania"/>
+					<comboitem  value="LU" label="Luxemburgo"/>
+					<comboitem  value="LV" label="Latvia"/>
+					<comboitem  value="LY" label="Libia"/>
+					<comboitem  value="MA" label="Marruecos"/>
+					<comboitem  value="MC" label="Monaco"/>
+					<comboitem  value="MD" label="Moldavia"/>
+					<comboitem  value="ME" label="Montenegro"/>
+					<comboitem  value="MG" label="Madagascar"/>
+					<comboitem  value="MH" label="Islas Marshall"/>
+					<comboitem  value="MK" label="Macedonia"/>
+					<comboitem  value="ML" label="Mali"/>
+					<comboitem  value="MM" label="Myanmar"/>
+					<comboitem  value="MN" label="Mongolia"/>
+					<comboitem  value="MO" label="Macao"/>
+					<comboitem  value="MP" label="Islas Mariana del Norte"/>
+					<comboitem  value="MQ" label="Martinica"/>
+					<comboitem  value="MR" label="Mauritania"/>
+					<comboitem  value="MS" label="Montserrat"/>
+					<comboitem  value="MT" label="Malta"/>
+					<comboitem  value="MU" label="Mauritius"/>
+					<comboitem  value="MV" label="Maldivas"/>
+					<comboitem  value="MW" label="Malawi"/>
+					<comboitem  value="MX" label="Mexico"/>
+					<comboitem  value="MY" label="Malasia"/>
+					<comboitem  value="MZ" label="Mozambique"/>
+					<comboitem  value="NA" label="Namibia"/>
+					<comboitem  value="NC" label="New Caledonia"/>
+					<comboitem  value="NE" label="Niger"/>
+					<comboitem  value="NF" label="Isla Norfolk"/>
+					<comboitem  value="NG" label="Nigeria"/>
+					<comboitem  value="NI" label="Nicaragua"/>
+					<comboitem  value="NL" label="Holanda"/>
+					<comboitem  value="NO" label="Noruega"/>
+					<comboitem  value="NP" label="Nepal"/>
+					<comboitem  value="NR" label="Nauru"/>
+					<comboitem  value="NU" label="Niue"/>
+					<comboitem  value="NZ" label="Nueva Zelandia"/>
+					<comboitem  value="OM" label="Oman"/>
+					<comboitem  value="PA" label="Panama"/>
+					<comboitem  value="PE" label="Peru"/>
+					<comboitem  value="PF" label="Polinesia Francesa"/>
+					<comboitem  value="PG" label="Papua Nueva Guinea"/>
+					<comboitem  value="PH" label="Filipinas"/>
+					<comboitem  value="PK" label="Pakistan"/>
+					<comboitem  value="PL" label="Polonia"/>
+					<comboitem  value="PM" label="Saint Pierre and Miquelon"/>
+					<comboitem  value="PN" label="Pitcairn Islands"/>
+					<comboitem  value="PR" label="Puerto Rico"/>
+					<comboitem  value="PT" label="Portugal"/>
+					<comboitem  value="PW" label="Palau"/>
+					<comboitem  value="PY" label="Paraguay"/>
+					<comboitem  value="QA" label="Qatar"/>
+					<comboitem  value="RE" label="Reunion"/>
+					<comboitem  value="RO" label="Rumania"/>
+					<comboitem  value="RS" label="Serbia"/>
+					<comboitem  value="RU" label="Rusia"/>
+					<comboitem  value="RW" label="Rwanda"/>
+					<comboitem  value="SA" label="Arabia Saudita"/>
+					<comboitem  value="SB" label="Solomon Islands"/>
+					<comboitem  value="SC" label="Seychelles"/>
+					<comboitem  value="SD" label="Sudan"/>
+					<comboitem  value="SE" label="Suecia"/>
+					<comboitem  value="SG" label="Singapore"/>
+					<comboitem  value="SH" label="Saint Helena"/>
+					<comboitem  value="SI" label="Eslovenia"/>
+					<comboitem  value="SK" label="Eslovaquia"/>
+					<comboitem  value="SL" label="Sierra Leone"/>
+					<comboitem  value="SM" label="San Marino"/>
+					<comboitem  value="SN" label="Senegal"/>
+					<comboitem  value="SO" label="Somalia"/>
+					<comboitem  value="SR" label="Surinam"/>
+					<comboitem  value="ST" label="Sao Tome and Principe"/>
+					<comboitem  value="SV" label="El Salvador"/>
+					<comboitem  value="SY" label="Siria"/>
+					<comboitem  value="SZ" label="Swaziland"/>
+					<comboitem  value="TC" label="Islas Turcos y Caicos"/>
+					<comboitem  value="TD" label="Chad"/>
+					<comboitem  value="TG" label="Togo"/>
+					<comboitem  value="TH" label="Tailandia"/>
+					<comboitem  value="TJ" label="Tadzhikistan"/>
+					<comboitem  value="TL" label="Timor Oriental"/>
+					<comboitem  value="TM" label="Turkmenistan"/>
+					<comboitem  value="TN" label="Tunisia"/>
+					<comboitem  value="TO" label="Tonga"/>
+					<comboitem  value="TR" label="Turquia"/>
+					<comboitem  value="TT" label="Trinidad y Tobago"/>
+					<comboitem  value="TV" label="Tuvalu"/>
+					<comboitem  value="TW" label="Taiwan"/>
+					<comboitem  value="TZ" label="Tanzania"/>
+					<comboitem  value="UA" label="Ucrania"/>
+					<comboitem  value="UG" label="Uganda"/>
+					<comboitem  value="US" label="Estados Unidos"/>
+					<comboitem  value="UY" label="Uruguay"/>
+					<comboitem  value="UZ" label="Uzbekistan"/>
+					<comboitem  value="VA" label="Ciudad del Vaticano"/>
+					<comboitem  value="VC" label="Saint Vincent and Grenadines"/>
+					<comboitem  value="VE" label="Venezuela"/>
+					<comboitem  value="VG" label="Islas Virgenes Britanicas"/>
+					<comboitem  value="VI" label="Islas Virgenes de los Estados Unidos"/>
+					<comboitem  value="VN" label="Vietnam"/>
+					<comboitem  value="VU" label="Vanuatu"/>
+					<comboitem  value="WF" label="Wallis and Futuna Islands"/>
+					<comboitem  value="WK" label="Wake Island"/>
+					<comboitem  value="WS" label="Samoa (Western)"/>
+					<comboitem  value="YE" label="Yemen"/>
+					<comboitem  value="YU" label="Serbia"/>
+					<comboitem  value="ZA" label="Sudafrica"/>
+					<comboitem  value="ZM" label="Zambia"/>
+					<comboitem  value="ZR" label="Zaire"/>
+					<comboitem  value="ZW" label="Zimbabwe"/>					
+					</combobox>
+				</div>
+			</div>
+			<div sclass="row" style="background-color:white">		
+				<div sclass="col-lg-2">
+					<button label="Ingresar" onClick="@command('actualiza_Cliente_Internacional')"/>
+				</div>				
+			</div>
+		</div>		
+	
+		
+		
+	</popup>
 	
 </window>

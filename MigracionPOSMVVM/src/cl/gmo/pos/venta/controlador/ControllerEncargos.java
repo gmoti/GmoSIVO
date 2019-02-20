@@ -164,7 +164,7 @@ public class ControllerEncargos implements Serializable {
 		agenteDisable="True";	
 		selConvenio = "true";
 		ventaPedidoForm.setPromocion("0");
-		ventaPedidoForm.setConvenio("");
+		ventaPedidoForm.setConvenio("");		
 		
 		fecha= new Date(System.currentTimeMillis());
 		fechaEntrega= new Date(System.currentTimeMillis());		
@@ -232,6 +232,30 @@ public class ControllerEncargos implements Serializable {
 	
 	//===================== Acciones de la ToolBar ======================
 	//===================================================================
+	
+	//============ Cliente Internacional ===========
+	//==============================================
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void cliente_Internacional(@BindingParam("pop")Popup pop) {
+		
+		if(!ventaPedidoForm.getNif().equals("")){
+			if(!ventaPedidoForm.getCodigo_suc().equals("")){
+  				//showPopWin('<%=request.getContextPath()%>/VentaPedido.do?method=cliente_inter', 440, 180,null,false);	
+				pop.open(pop);
+			}else{
+				  Messagebox.show("Debes agregar un nuevo encargo.");
+			}		  
+		  }else{
+			  Messagebox.show("Debes asociar al cliente generico primero");			  
+		  }	
+	}	
+	
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void actualiza_Cliente_Internacional() {
+		System.out.println("pais:" + ventaPedidoForm.getNacionalidad());
+	}
 	
 	//============ Nuevo Pedido ====================
 	//==============================================
@@ -980,24 +1004,46 @@ public class ControllerEncargos implements Serializable {
 				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente.");
 			}else {
 				
-				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");
-				
-				//http://10.216.4.24/39%2066666666-6%201.pdf	
+				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");					
 				
 				String url ="http://10.216.4.24/39 " + 
-						ventaPedidoForm.getNif().trim() + "-" + ventaPedidoForm.getDvnif().trim() + " " + valor[1].trim()+".pdf";			
+						ventaPedidoForm.getNif().trim() + 
+						"-" + ventaPedidoForm.getDvnif().trim() + 
+						" " + valor[1].trim()+".pdf";	
 				
+				/*
+				if(tmp[0].equals("0") || tmp[2].equals("true")){
+					
+					Messagebox.show("Error: No se pudo generar la boleta, Inténtelo nuevamente.");
+					return;
+				}else if(tmp[0].equals("1") && tmp[2].equals("false")){
+					
+					objetos = new HashMap<String,Object>();
+					objetos.put("documento",url);
+					objetos.put("titulo","Venta Directa");
+					
+					Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
+			        window.doModal();	
+			        
+			        this.nuevaVenta();
+			        controlBotones.setEnableGenerico1("false");
+			        controlBotones.setEnableGenerico2("true");
+					
+					
+				}else if(tmp[0].equals("2") && tmp[2].equals("false")){
+					
+					
+					
+				}	*/		
+				
+				
+				//original
 				objetos = new HashMap<String,Object>();
 				objetos.put("documento",url);
 				objetos.put("titulo","Encargo");
 				
-				Window window = (Window)Executions.createComponents(
-		                "/zul/reportes/VisorDocumento.zul", null, objetos);
-				
-		        window.doModal();	
-		        
-		        //encargoEntregado=evaluaEntrega();
-		        //BindUtils.postGlobalCommand(null, null, "accionNuevoPedido", null);
+				Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
+		        window.doModal();		        
 				
 			}
 			
@@ -1229,7 +1275,14 @@ public class ControllerEncargos implements Serializable {
 	
 	
 	@Command
-	public void buscaProducto() {		
+	public void buscaProducto() {
+		
+		if (ventaPedidoForm.getNif().equals("") || ventaPedidoForm.getNif().equals("0") || ventaPedidoForm.getCliente().equals("")) {
+			Messagebox.show("El encargo no tiene un cliente asociado aun");
+			return;
+		} 
+		
+		
 		
 		if (bWin) {
 			objetos = new HashMap<String,Object>();
@@ -3533,6 +3586,7 @@ public class ControllerEncargos implements Serializable {
 
 	public void setEncargoEntregado(boolean encargoEntregado) {
 		this.encargoEntregado = encargoEntregado;
-	}	
+	}
+
 	
 }

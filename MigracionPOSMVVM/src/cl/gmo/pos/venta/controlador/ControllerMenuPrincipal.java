@@ -173,6 +173,15 @@ public class ControllerMenuPrincipal implements Serializable{
 	        window.doModal();			
 			break;	
 			
+		case "M5_1":
+			
+			window = (Window)Executions.createComponents(
+	                "/zul/general/ConfigGeneral.zul", null, null);
+			
+	        window.doModal();			
+			break;	
+			
+			
 
 		default:
 			break;
