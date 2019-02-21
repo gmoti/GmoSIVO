@@ -1020,7 +1020,7 @@ public class ControllerEncargos implements Serializable {
 					
 					objetos = new HashMap<String,Object>();
 					objetos.put("documento",url);
-					objetos.put("titulo","Venta Directa");
+					objetos.put("titulo","Encargo");
 					
 					Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
 			        window.doModal();	

@@ -308,7 +308,7 @@ public class ControllerVentaDirecta implements Serializable{
 							"-" + ventaDirectaForm.getDv().trim() + 
 							" " + tmp[1].trim()+".pdf";
 						
-				/*
+				
 				if(tmp[0].equals("0") || tmp[2].equals("true")){
 					
 					Messagebox.show("Error: No se pudo generar la boleta, favor revisar el modulo de reimpresión de Boletas.");
@@ -329,13 +329,25 @@ public class ControllerVentaDirecta implements Serializable{
 					
 				}else if(tmp[0].equals("2") && tmp[2].equals("false")){
 					
+					Messagebox.show("!ATENCIÓN¡ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+					
+					objetos = new HashMap<String,Object>();
+					objetos.put("documento",url);
+					objetos.put("titulo","Venta Directa");
+					
+					Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
+			        window.doModal();	
+			        
+			        this.nuevaVenta();
+			        controlBotones.setEnableGenerico1("false");
+			        controlBotones.setEnableGenerico2("true");
 					
 					
-				}	*/
+				}	
 				
 				//original
 				
-				objetos = new HashMap<String,Object>();
+				/*objetos = new HashMap<String,Object>();
 				objetos.put("documento",url);
 				objetos.put("titulo","Venta Directa");
 				
@@ -344,7 +356,7 @@ public class ControllerVentaDirecta implements Serializable{
 		        
 		        this.nuevaVenta();
 		        controlBotones.setEnableGenerico1("false");
-		        controlBotones.setEnableGenerico2("true");
+		        controlBotones.setEnableGenerico2("true");*/
 				
 				
 				

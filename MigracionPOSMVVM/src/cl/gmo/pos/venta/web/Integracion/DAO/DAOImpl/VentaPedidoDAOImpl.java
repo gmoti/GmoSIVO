@@ -2070,5 +2070,52 @@ public class VentaPedidoDAOImpl implements VentaPedidoDAO{
 	}
 	
 	
+	public void insertaCliente_inter(VentaPedidoBean ped, String local) throws Exception {
+		log.info("VentaPedidoDAOImpl:insertaPedido inicio");
+		Connection con = null;
+		CallableStatement st = null;
+		
+		try{
+			log.info("VentaPedidoDAOImpl:insertaPedido conectando base datos");
+			con = ConexionFactory.INSTANCE.getConexion();
+			
+			System.out.println("exec SP_VTA_INS_CLI_INTER("+ped.getCdg()+","+ped.getDni_pas()+","+ped.getNombre_inter()+","+ped.getNacionalidad()+","+ped.getEmail_inter()+");");
+			
+			String sql = "{call SP_VTA_INS_CLI_INTER(?,?,?,?,?)}";
+			st = con.prepareCall(sql);
+			st.setString(1, ped.getCdg());
+			st.setString(2, ped.getDni_pas());
+			st.setString(3, ped.getNombre_inter());
+			st.setString(4, ped.getNacionalidad());
+			st.setString(5, ped.getEmail_inter());
+	
+			st.execute();
+			
+			
+			
+		}catch(SQLException ex){
+			log.error("VentaPedidoDAOImpl:insertaCliente_inter error controlado",ex);
+			throw new Exception("Error en DAO: SP_VTA_INS_CLI_INTER");
+		}finally {
+            try{
+                if (null != st){
+                	log.warn("VentaPedidoDAOImpl:insertaCliente_inter cierre CallableStatement");
+                	st.close();
+                }              
+                if (null != con){
+                	log.warn("VentaPedidoDAOImpl:insertaCliente_inter cierre Connection");
+ 		    	   con.close();
+ 	           } 
+            }catch(Exception e){
+            	log.error("VentaPedidoDAOImpl:insertaCliente_inter error", e);
+
+            }
+        }
+		
+		
+	}
+
+	
+	
 	
 }

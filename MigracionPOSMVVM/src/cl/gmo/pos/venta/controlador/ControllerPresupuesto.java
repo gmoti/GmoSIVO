@@ -376,6 +376,9 @@ public class ControllerPresupuesto implements Serializable{
 					}
 			});				
 			
+		}else {
+			Messagebox.show("No se puede eliminar, el presupuesto esta cerrado");
+			
 		}		
 		
 	}

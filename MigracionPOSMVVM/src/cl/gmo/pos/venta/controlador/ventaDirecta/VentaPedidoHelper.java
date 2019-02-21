@@ -3612,4 +3612,17 @@ public class VentaPedidoHelper extends Utils{
 	}
 	
 	
+	public void insertaCliente_inter(VentaPedidoForm ven,String local) throws Exception{
+		VentaPedidoDAOImpl impl = new VentaPedidoDAOImpl();
+		VentaPedidoBean vbean = new VentaPedidoBean();
+		vbean.setDni_pas(ven.getDni_pas());
+		vbean.setNombre_inter(ven.getNombre_internacional());
+		vbean.setNacionalidad(ven.getNacionalidad());
+		vbean.setEmail_inter(ven.getEmail_inter());
+		vbean.setCdg(ven.getCdg());
+		
+		impl.insertaCliente_inter(vbean,local);
+	}
+	
+	
 }

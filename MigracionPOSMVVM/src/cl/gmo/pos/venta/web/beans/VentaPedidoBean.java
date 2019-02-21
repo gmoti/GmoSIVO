@@ -108,6 +108,12 @@ public class VentaPedidoBean {
 	private String numero_cupon;
 
 	private int ftaller;
+	
+	//cliente internacional
+	private String 	dni_pas;
+	private String  nombre_inter;
+	private String  nacionalidad;
+	private String  email_inter;
 
 	public String getConTriosValidos() {
 		return conTriosValidos;
@@ -761,6 +767,38 @@ public class VentaPedidoBean {
 
 	public void setFtaller(int ftaller) {
 		this.ftaller = ftaller;
+	}
+	
+	public String getDni_pas() {
+		return dni_pas;
+	}
+
+	public void setDni_pas(String dni_pas) {
+		this.dni_pas = dni_pas;
+	}
+
+	public String getNombre_inter() {
+		return nombre_inter;
+	}
+
+	public void setNombre_inter(String nombre_inter) {
+		this.nombre_inter = nombre_inter;
+	}
+
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+	public String getEmail_inter() {
+		return email_inter;
+	}
+
+	public void setEmail_inter(String email_inter) {
+		this.email_inter = email_inter;
 	}
 
 }

@@ -871,6 +871,15 @@ public class VentaPedidoDispatchActions {
 					formulario.setEncargo_padre(session.getAttribute("se_encargo_padre").toString());	
 					formulario.setNumero_cupon(session.getAttribute("se_cupon").toString());	
 					helper.ingresaPedido(formulario, local);
+					
+					//SE INGRESA CLIENTE INTERNACIONAL
+					try {
+						if(!formulario.getNombre_internacional().equals("") && !formulario.getDni_pas().equals("")){
+								helper.insertaCliente_inter(formulario, local);
+						}
+					} catch (Exception e) {
+						System.out.println("EXCEPCION INGRESO CLIENTE INTERNACIONAL ===>"+e.getMessage());
+					}
 										
 					agentePago = formulario.getAgente();
 					boolean hay_multioferta = false;

@@ -1,36 +1,69 @@
 <?page title="Busqueda Presupuesto" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winBuscarPresupuesto"  border="normal" width="40%" height="50%" 
+	<window id="winBuscarPresupuesto"  border="normal" width="40%" height="45%" 
 		position="center"  mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBuscarPresupuesto')">
-
-		<style>
-			.MyGridRowHeight
-			    tr.z-row td.z-row-inner div.z-row-content{
-			        border:1px solid white;
-			        border-right:1px solid transparent;
-			        padding:0px;
-			        margin:0px;
-			}
+		
+		
+		
+		<div style="background-color:black;color: white" width="100%" vflex="min">
+			<label value="Selecciona Presupuesto"/> 	
+			<div style="float: right">			
+				<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"	onClick="winBuscarPresupuesto.detach()"/>							
+			</div>				
+		</div>
+		
+		<div sclass="container-fluid">			
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-4">
+					<label value="Codigo Presupuesto"/>							
+				</div>
+				<div sclass="col-lg-2">
+					<textbox value="@bind(vm.busquedaPresupuestos.presupuesto)" width="200px"/>
+				</div>
+			</div>
 			
-			.shrink24 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 24px;
-			  		height: 24px;
-			}
-					
-			.shrink16 img {
-			  		vertical-align: middle;
-			  		border-style: none;
-			  		width: 16px;
-			  		height: 16px;
-			}
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-4">
+					<label value="Rut de Cliente"/>							
+				</div>
+				<div sclass="col-lg-2">
+					<textbox value="@bind(vm.busquedaPresupuestos.cliente)" width="200px" />
+				</div>
+			</div>
 			
-			tr.z-row td.z-row-inner { border: none; }
-		</style>
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-4">
+					<label value="Fecha Presupuesto"/>							
+				</div>
+				<div sclass="col-lg-2">
+					<datebox value="@bind(vm.fecha)" format="dd/MM/yyyy"/>
+				</div>
+			</div>
+			
+			<div sclass="row" style="background-color:white">
+				<div sclass="col-lg-4">
+					<label value="Agente"/>							
+				</div>
+				<div sclass="col-lg-4">
+					<combobox model="@bind(vm.busquedaPresupuestos.lista_agentes)" 
+						selectedItem="@bind(vm.agenteBean)" disabled="true" width="150px">
+						<template name="model">
+							<comboitem label="@load(each.usuario)"/>
+						</template>
+					</combobox>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<button label="Buscar" onClick="@command('buscarPresupuesto')" 
+									image="/iconos/lupa.png" width="100px" sclass="shrink16"/>
+				</div>
+			</div>
+		</div>	
+		
+		
 
-		<div>			
+		<!-- <div>			
 			<div style="background-color:black;color: white" width="100%" vflex="min">
 				<label value="Selecciona Presupuesto"/> 	
 				<div style="float: right">			
@@ -79,7 +112,7 @@
 						
 					</rows>
 				</grid>
-			</div>				
+			</div>	 -->			
 			
 			<div width="100%" vflex="min" style="background-color:black;color: white">	
 				<space width="5px"/>		
@@ -115,7 +148,7 @@
 					</template>
 				</grid>
 			</div>
-		</div>
+		<!-- </div> -->
 
 	</window>
 </zk>
