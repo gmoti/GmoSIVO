@@ -181,6 +181,13 @@ public class ControllerMenuPrincipal implements Serializable{
 	        window.doModal();			
 			break;	
 			
+		case "M5_2":
+			
+			window = (Window)Executions.createComponents(
+	                "/zul/general/ReprocesaXML.zul", null, null);
+			
+	        window.doModal();			
+			break;	
 			
 
 		default:

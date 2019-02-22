@@ -3487,7 +3487,7 @@ public class Utils {
    	 *@DESC: Metodo que genera el XML que consume el Aeropuerto
    	 *@DATE: 20180328
    	 */
-    public void generaXMLAeropuerto(SeleccionPagoForm spago,String foliocl, Session session) throws Exception {
+    public void generaXMLAeropuerto(SeleccionPagoForm spago,String foliocl,Session session) throws Exception {
        	
 	       	DocumentBuilderFactory doc_fac = DocumentBuilderFactory.newInstance();
 	       	DocumentBuilder doc_buil = doc_fac.newDocumentBuilder();
@@ -3500,20 +3500,29 @@ public class Utils {
 	   		
 	       	Utils util = new Utils();
 	       	Properties prop = util.leeConfiguracion();
-	       	String ruta_abs= "",ruta_abs_res ="",rzns="OPTICAS GMO CHILE S.A SUNGLASS HUT",bupla="",cdgsii="";
+	       	String ruta_abs= "",ruta_abs_res ="",rzns="OPTICAS GMO CHILE S.A SUNGLASS HUT",bupla="",cdgsii="",terminal="";
 	       			
 	       	//RUTA XML
 	       	if(tienda[0].trim().equals("S064")) {//S064
 	       		ruta_abs = prop.getProperty("liberacion.rutaXml3").trim();
 	       		ruta_abs_res = prop.getProperty("liberacion.rutaXml4").trim();
 	       		bupla = "0434";
+	       		terminal ="434";
 	       		cdgsii ="081160165";
 	       	}else if(tienda[0].trim().equals("S035")){//S035
 	       		ruta_abs = prop.getProperty("liberacion.rutaXml1").trim();
 	       		ruta_abs_res = prop.getProperty("liberacion.rutaXml2").trim();
 	       		bupla = "0394";
+	       		terminal ="394";
 	       		cdgsii ="079085778";
+	       	}else if(tienda[0].trim().equals("S070")){//S070
+	       		ruta_abs = prop.getProperty("liberacion.rutaXml5").trim();
+	       		ruta_abs_res = prop.getProperty("liberacion.rutaXml6").trim();
+	       		bupla = "0215";
+	       		terminal ="001";
+	       		cdgsii ="519000";
 	       	}
+	       	
 	       	String rutaXml1 = ruta_abs;
 	       	String rutaXml2 = ruta_abs_res;
 	       	
@@ -3587,13 +3596,14 @@ public class Utils {
 	   		xmlres +="        <CIUDADRECEP> </CIUDADRECEP>";
 	   		xmlres +="      </RECEPTOR>";
 	   		xmlres +="    </ENCABEZADO>";
-	   		xmlres +="  <DETALLE>";
+	   		//xmlres +="  <DETALLE>";
 	   		
 	   		for(ProductosBean p:listProductos) {
 	   			
 	   				int tot= (int)((p.getPrecio() * p.getCantidad())/1.19);
 	   				String dto_prod = (!p.getDto().equals("") && p.getDto() != null)? p.getDto():"0";
-	   				String descrip = (String) ((p.getDescripcion().length() > 30) ? p.getDescripcion().substring(0,29):p.getDescripcion());
+	   				String descrip = (String) ((p.getDescripcion().length() > 24) ? p.getDescripcion().substring(0,24):p.getDescripcion());
+	   				xmlres +="  <DETALLE>";
 	   				xmlres +="      <NROLINDET>"+a+"</NROLINDET>";
 	   				xmlres +="      <CDGITEM>";
 	   				xmlres +="        <ZCANT>"+p.getCantidad()+"</ZCANT>";
@@ -3606,9 +3616,10 @@ public class Utils {
 	   				xmlres +="        <DESCUENTOMONTO>"+dto_prod+"</DESCUENTOMONTO>";
 	   				xmlres +="        <ZIMAD>0</ZIMAD>";
 	   				xmlres +="      </CDGITEM>";
+	   				xmlres +="  </DETALLE>";
 	   				a++;
 	   		}		
-	   		xmlres +="    </DETALLE>";
+	   		//xmlres +="    </DETALLE>";
 	   		xmlres +="    <TOTALES>";
 	   		xmlres +="      <MNTNETO>"+String.valueOf(siva)+"</MNTNETO>";
 	   		xmlres +="      <TASAIVA>19</TASAIVA>";
@@ -3626,6 +3637,7 @@ public class Utils {
 	   		xmlres +="      <MONTO_ESCRITO> </MONTO_ESCRITO>";
 	   		xmlres +="      <REFER> </REFER>";
 	   		xmlres +="      <NETO>"+siva+"</NETO>";
+	   		xmlres +="		<ESPECIFICACIONES></ESPECIFICACIONES>"; 
 	   		xmlres +="    </PARAMETROS>";
 	   		xmlres +="  </DOCUMENTO>";
 	   		xmlres +="</TRANSACCION>";
@@ -3637,7 +3649,7 @@ public class Utils {
 	   		    builder = factory.newDocumentBuilder();  
 	   		    Document doc = builder.parse(new InputSource(new StringReader(xmlres)));  
 	
-	   			String nombreArchivo = "TRX000"+bupla+fecha[2].substring(2,4)+fecha[1]+fecha[0]+hora[0]+hora[1]+foliocl+".xml";
+	   			String nombreArchivo = "TRX"+terminal+bupla+fecha[2].substring(2,4)+fecha[1]+fecha[0]+hora[0]+hora[1]+foliocl+".xml";
 	   			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	   			Transformer transformer = transformerFactory.newTransformer();
 	   			

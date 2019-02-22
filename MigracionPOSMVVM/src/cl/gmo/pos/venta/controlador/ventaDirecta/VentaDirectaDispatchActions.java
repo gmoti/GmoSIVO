@@ -269,10 +269,9 @@ public class VentaDirectaDispatchActions {
 				//INGRESA DETALLE BOLETA ALBARAN
 				ventaHelper.ingresaPago(listaPagos, sess, formulario);
 				
-				if(local.equals("S035") || local.equals("S064")){
+				if(local.equals("S035") || local.equals("S064") || local.equals("S070")){
 					try {
-						//fquiroz
-						//utils.generaXMLAeropuerto(spagoform, folio[1], sess);
+						utils.generaXMLAeropuerto(spagoform, folio[1], sess);
 						
 					    log.warn("generaXMLAeropuerto DIRECTA ==> "+local);
 

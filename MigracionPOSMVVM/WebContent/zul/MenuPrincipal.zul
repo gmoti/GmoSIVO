@@ -67,6 +67,7 @@
 				<menu label="Configuración">
 					<menupopup>
 						<menuitem label="General" onClick="@command('seleccionMenu',arg='M5_1')" iconSclass="z-icon-print"/>
+						<menuitem label="Reprocesa Aeropuerto" onClick="@command('seleccionMenu',arg='M5_2')" iconSclass="z-icon-print"/>
 					</menupopup>	
 				</menu>
 				

@@ -1,0 +1,64 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winReprocesaXML" border="none" width="85%" height="65%" sclass="container-fluid" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerReprocesaXML')">
+		
+		
+		
+	<div sclass="container-fluid">	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="Reprocesa XML Aeropuerto" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>		
+	
+		
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">			
+			<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="winReprocesaXML.detach()" tooltiptext="Cerrar"/>
+	   	</div>	   	 
+	</div>
+	
+	<div sclass="container-fluid">	
+		<div sclass="row" style="background-color:white">		
+			<div sclass="col-lg-2">
+				<label value="Local"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<combobox selectedItem="@bind(vm.local)">
+					<comboitem label="S35" value="S35"/>
+					<comboitem label="S64" value="S64"/>
+					<comboitem label="S70" value="S70"/>
+				</combobox>
+			</div>			
+		</div>
+		
+		<div sclass="row" style="background-color:white">		
+			<div sclass="col-lg-2">
+				<label value="Fecha"/>
+			</div>
+			
+			<div sclass="col-lg-1">
+				<datebox value="@bind(vm.fecha)"  />
+			</div>			
+		</div>
+		
+		<div sclass="row" style="background-color:white">		
+			<div sclass="col-lg-2">
+				<space/>
+			</div>
+			
+			<div sclass="col-lg-2">
+				<button label="Procesar" onClick="@command('procesar',pLocal=vm.local,pFecha=vm.fecha)"/>
+			</div>			
+		</div>
+	</div>
+
+
+
+
+
+</window>
