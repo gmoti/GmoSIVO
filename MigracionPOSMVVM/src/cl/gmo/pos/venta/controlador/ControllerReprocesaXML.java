@@ -22,6 +22,8 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zul.Messagebox;
+
 import cl.gmo.pos.venta.utils.Constantes;
 import cl.gmo.pos.venta.utils.Utils;
 import cl.gmo.pos.venta.web.Integracion.Factory.ConexionFactory;
@@ -71,11 +73,33 @@ public class ControllerReprocesaXML implements Serializable {
 		String cdg="";
 		String serie="";
 		String numero="";
+		int tipo=0;
 		
 		Statement statement=null;
 		String sql="";
 		
-		sql="select cdg,serie,numero from ALBVTCB where fecha = to_date('"+fecha+"','yyyyMMdd') and serie='"+local+"'";
+		sql=	"select a.cdg,a.serie,a.numero,1 "
+				+ "from ALBVTCB a , ALBVTNUM b "
+				+ "where a.fecha = to_date('"+fecha+"','yyyyMMdd') and a.serie='"+local+"' "
+				+ "and a.cdg = b.albvtcb " 
+				+ "and a.fecha = b.fecha "
+			+ "union all "
+				+ "select a.cdg,a.serie,a.numero,2 "
+				+ "from pedVTCB a,  pedVTNUM b "         
+				+ "where a.fechapedido = to_date('"+fecha+"','yyyyMMdd') and a.serie='"+local+"' "
+				+ "and a.cdg = b.pedvtcb "
+				+ "and a.fechapedido = b.fecha";	
+			
+		
+		
+		/*sql="select a.cdg,a.serie,a.numero "
+				+ "from pedVTCB a,  pedVTNUM b "         
+				+ "where a.fechapedido = to_date('"+fecha+"','yyyyMMdd') and a.serie='"+local+"' "
+				+ "and a.cdg = b.pedvtcb "
+				+ "and a.fechapedido = b.fecha";*/
+		
+		
+		
 		
     	String usuario="gmo";
     	String pass="249gmo.,";
@@ -99,8 +123,9 @@ public class ControllerReprocesaXML implements Serializable {
     			  cdg= rs.getString(1);
     			  serie= rs.getString(2);
     			  numero= rs.getString(3);
+    			  tipo = rs.getInt(4);
     			  System.out.println(cdg);
-    			  creaArchivo(cdg,serie,numero,fecha);
+    			  creaArchivo(cdg,serie,numero,fecha,tipo);
     			 
     		  }   		 
     		  
@@ -114,16 +139,27 @@ public class ControllerReprocesaXML implements Serializable {
 	}
 	
 	
-	public void creaArchivo(String param, String param2, String param3,String param4) {		
+	public void creaArchivo(String param, String param2, String param3,String param4, int param5) {		
 		
 		CallableStatement cs = null;
 		ArrayList<TiendaBean> tienda = new ArrayList<TiendaBean>();
 		String salidaXML  =null;
+		String plsql="";
 		
 		String ruta = "c://archivos//" + param4 + "_" + param2 + "_" +param3 + ".xml";
         File archivo = new File(ruta);
         FileWriter fw=null;
         BufferedWriter bw =null;
+        
+        if(param5==1) {
+        	plsql = "{call  SP_GENERA_XML_AERO(?,?)}";
+        }else if(param5==2) {
+        	plsql = "{call  SP_GENERA_XML_AERO_PEDIDOS(?,?)}";
+        }else {
+        	Messagebox.show("Parametro invalido");
+        	return;
+        }     
+        
 		
 		con = ConexionFactory.INSTANCE.getConexion();
 		

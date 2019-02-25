@@ -1012,30 +1012,32 @@ public class ControllerEncargos implements Serializable {
 						" " + valor[1].trim()+".pdf";	
 				
 				/*
-				if(tmp[0].equals("0") || tmp[2].equals("true")){
+				if(valor[0].equals("0") || valor[2].equals("true")){
 					
 					Messagebox.show("Error: No se pudo generar la boleta, Inténtelo nuevamente.");
 					return;
-				}else if(tmp[0].equals("1") && tmp[2].equals("false")){
+					
+				}else if(valor[0].equals("1") && valor[2].equals("false")){
 					
 					objetos = new HashMap<String,Object>();
 					objetos.put("documento",url);
 					objetos.put("titulo","Encargo");
 					
 					Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
-			        window.doModal();	
-			        
-			        this.nuevaVenta();
-			        controlBotones.setEnableGenerico1("false");
-			        controlBotones.setEnableGenerico2("true");
+			        window.doModal();					
 					
-					
-				}else if(tmp[0].equals("2") && tmp[2].equals("false")){
-					
-					
-					
-				}	*/		
+				}else if(valor[0].equals("2") && valor[2].equals("false")){
 				
+					Messagebox.show("!ATENCIÓN! AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+					
+					objetos = new HashMap<String,Object>();
+					objetos.put("documento",url);
+					objetos.put("titulo","Encargo");
+				
+					Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
+		        	window.doModal();
+				}			
+				*/
 				
 				//original
 				objetos = new HashMap<String,Object>();
@@ -1043,8 +1045,7 @@ public class ControllerEncargos implements Serializable {
 				objetos.put("titulo","Encargo");
 				
 				Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
-		        window.doModal();		        
-				
+		        window.doModal();
 			}
 			
 			

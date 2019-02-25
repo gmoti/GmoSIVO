@@ -27,7 +27,7 @@
 							selectedItem="@bind(vm.familiaBean)"
 							onSelect="@command('cargaSubFamilias')"
 							placeholder="SELECCIONAR"
-							onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)" width="300px">
+							onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)" width="250px">
 							<template name='model'>
 								<comboitem
 									label="@load(each.descripcion)" />
@@ -46,7 +46,7 @@
 							selectedItem="@bind(vm.subFamiliaBean)"
 							onSelect="@command('cargaGrupoFamilias')"
 							placeholder="SELECCIONAR"
-							onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)" width="300px">
+							onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)" width="250px">
 							<template name='model'>
 								<comboitem
 									label="@load(each.descripcion)" />
@@ -64,8 +64,7 @@
 							model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
 							selectedItem="@bind(vm.grupoFamiliaBean)"
 							placeholder="SELECCIONAR"
-							onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
-							width="300px">
+							onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)" width="250px">
 							<template name='model'>
 								<comboitem
 									label="@load(each.descripcion)" />
@@ -78,7 +77,7 @@
 					<div sclass="col-lg-4">
 						<label value="Código de Producto SAP" />								
 					</div>
-					<div sclass="col-lg-3">
+					<div sclass="col-lg-2">
 						<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
 					</div>					
 				</div>
@@ -90,7 +89,7 @@
 					<div sclass="col-lg-3">
 						<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
 					</div>	
-					<div sclass="col-lg-1">
+					<div sclass="col-lg-1" align="right">
 						<button image="/iconos/lupa2.png" 
 								label="Buscar" onClick="@command('despachador')" />
 					</div>				
