@@ -145,7 +145,7 @@ public class ControllerAlbaran implements Serializable{
 	
 	@Command
 	@NotifyChange({"devolucionForm"})
-	public void pagarAlbaran(){
+	public void pagarAlbaran(){	
 		
 		Optional<Date> fg = Optional.ofNullable(fechaGarantia);
 		
@@ -158,8 +158,8 @@ public class ControllerAlbaran implements Serializable{
 		Optional<ConvenioBean> cb = Optional.ofNullable(convenioBean);
 		Optional<ProvinciaBean> pb = Optional.ofNullable(provinciaBean);
 		
-		if (tab.isPresent()) devolucionForm.setTipo_albaran(String.valueOf(tab.get().getDescripcion()));
-		else devolucionForm.setTipo_albaran("");
+		if (tab.isPresent()) devolucionForm.setTipoAlbaran(String.valueOf(tab.get().getDescripcion()));
+		else devolucionForm.setTipoAlbaran("");
 		
 		if(ib.isPresent()) devolucionForm.setIdioma(ib.get().getId());
 		else devolucionForm.setIdioma("0");
@@ -180,8 +180,7 @@ public class ControllerAlbaran implements Serializable{
 		else devolucionForm.setConvenio("0");
 		
 		if(pb.isPresent()) devolucionForm.setProvincia(pb.get().getCodigo());
-		else devolucionForm.setProvincia("0");
-		
+		else devolucionForm.setProvincia("0");		
 		
 		
 		if (fg.isPresent())		
@@ -191,7 +190,7 @@ public class ControllerAlbaran implements Serializable{
 		
 		if(devolucionForm.getTipo_albaran().equals("DIRECTA")) {			
 			devolucionForm.setAccion("traeAlbaranBuscado2");
-			devolucionDispatch.cargaFormulario(devolucionForm, sess);			
+			devolucionDispatch.cargaAlbaran(devolucionForm, sess);			
 		}		
 		
 		//String val_letras = "/^[A-Z a-z—Ò. ]{3,50}$/";	
@@ -218,7 +217,9 @@ public class ControllerAlbaran implements Serializable{
 	private void cobrar_albaran_validaCaja(){
 		
 		String fecha = devolucionForm.getFecha();
-		String codigo_cliente = devolucionForm.getCodigo_cliente();
+		//String codigo_cliente = devolucionForm.getCodigo_cliente();
+		String codigo_cliente = sess.getAttribute(Constantes.STRING_CLIENTE).toString();
+		
 		boolean resp=false;
 		
 		if(codigo_cliente.equals("")) {
@@ -603,11 +604,13 @@ public class ControllerAlbaran implements Serializable{
 		cliente.setNif(devolucionForm.getNif());
 		cliente.setDvnif(devolucionForm.getDvnif());
 		
+		
 		try {
 			fechaActual = dt.parse(devolucionForm.getFecha());
 			
 			Optional<String> d = Optional.ofNullable(devolucionForm.getFecha_garantia());
-			if(d.isPresent() || d.get().equals(""))
+			
+			if(d.isPresent() && !d.get().equals(""))
 				fechaGarantia = dt.parse(devolucionForm.getFecha_garantia());
 			else
 				fechaGarantia = null;

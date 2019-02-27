@@ -63,14 +63,14 @@
 						<menuitem label="Copia de guias y boletas" onClick="@command('seleccionMenu',arg='M3_7')" iconSclass="z-icon-copy"/>					
 					</menupopup>
 				</menu>
-				
+				<!-- 
 				<menu label="Configuración">
 					<menupopup>
 						<menuitem label="General" onClick="@command('seleccionMenu',arg='M5_1')" iconSclass="z-icon-print"/>
 						<menuitem label="Reprocesa Aeropuerto" onClick="@command('seleccionMenu',arg='M5_2')" iconSclass="z-icon-print"/>
 					</menupopup>	
 				</menu>
-				
+				 -->
 				<menu label="Salir">
 					<menupopup>
 						<menuitem label="Salir a Sucursal" onClick="@command('seleccionMenuEspecial',arg='M4_1',win=winMenuPrincipal)" iconSclass="z-icon-windows"/>

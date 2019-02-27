@@ -65,10 +65,17 @@
 				<textbox value="@bind(vm.devolucionForm.nif)" width="100px" disabled="@bind(vm.disabledCampo)"/>
 				<textbox value="@bind(vm.devolucionForm.dvnif)" width="30px" disabled="@bind(vm.disabledCampo)"/>				
 			</div>
+			
+			<div sclass="col-lg-4">
+				<label value="@bind(vm.devolucionForm.nombreCliente)" width="300px"/>				
+			</div>		
+			
 			<div sclass="col-lg-2">
 				<checkbox label="Kodak" checked="@bind(vm.devolucionForm.kodak)" disabled="true"/>
 				<checkbox label="Entrega" checked="@bind(vm.devolucionForm.entrega)" disabled="true"/>				
 			</div>
+			
+			<!-- 
 			<div sclass="col-lg-1">
 				<label value="T.Albaran"/>						
 			</div>
@@ -85,7 +92,8 @@
 			<div sclass="col-lg-1">
 				<space/>
 			</div>
-			
+			 --> 			
+			 
 			<div sclass="col-lg-2">
 				<textbox value="@bind(vm.devolucionForm.numero_boleta_guia)" width="100px" />
 				<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('cargarDatos')"/>
@@ -124,6 +132,21 @@
 					</template>
 				</combobox>
 			</div>
+			
+			
+			<div sclass="col-lg-1">
+				<label value="T.Albaran"/>						
+			</div>
+			
+			<div sclass="col-lg-2">
+				<combobox model="@bind(vm.devolucionForm.listaTipoAlbaranes)" selectedItem="@bind(vm.tipoAlbaranBean)"
+						width="150px" disabled="@bind(vm.disabledCampo)" placeholder="Seleccione">
+					<template name="model">										
+						<comboitem label="@load(each.descripcion)"/>
+					</template>
+				</combobox>															
+			</div>		
+			
 		</div>
 		
 		<!-- Row 4 (12)-->
@@ -265,7 +288,7 @@
 	<div sclass="container-fluid">
 		<div width="100%" height="100%">
 			<grid model="@bind(vm.devolucionForm.lista_productos)" 
-					width="100%" height="250px" oddRowSclass="none">
+					width="100%" height="250px" sclass="MyGridRowHeight" oddRowSclass="none">
 				
 				<columns style="background-color:black;color: white;">
 					<column  width="105px" />
@@ -283,10 +306,10 @@
 						<textbox value="@bind(each.cod_barra)" readonly="true" width="100px"/>
 						<textbox value="@bind(each.descripcion)" readonly="true" width="270px"/>
 						<textbox value="@bind(each.subAlm)" readonly="true" width="100px"/>
-						<textbox value="@bind(each.precio)" readonly="true" width="100px"/>
-						<textbox value="@bind(each.descuento)" readonly="true" width="100px"/>
-						<textbox value="@bind(each.cantidad)" readonly="true" width="100px"/>
-						<textbox value="@bind(each.precio_costo)" readonly="true" width="100px"/>
+						<intbox value="@bind(each.precio)" readonly="true" width="100px" style="text-align:right" format="#,###,##0" locale="it"/>
+						<doublebox value="@bind(each.descuento)" readonly="true" width="100px" style="text-align:right" format="#,###,##0" locale="it"/>
+						<intbox value="@bind(each.cantidad)" readonly="true" width="100px" style="text-align:right" format="#,###,##0" locale="it"/>
+						<intbox value="@bind(each.precio_costo)" readonly="true" width="100px" style="text-align:right" format="#,###,##0" locale="it"/>
 						<textbox value="@bind(each.identpedalbaran)" readonly="true" width="100px"/>
 					</row>
 				</template>

@@ -11,6 +11,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zul.Messagebox;
 
 import cl.gmo.pos.venta.controlador.general.BusquedaLiberacionesDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
@@ -36,7 +37,7 @@ public class ControllerLiberacionEncargos implements Serializable {
 	private String usuario;
 	private String sucursal;
 	private String sucursalDes;
-	
+	private String estado="false";
 	
 	@Init	
 	public void inicial() {
@@ -86,7 +87,7 @@ public class ControllerLiberacionEncargos implements Serializable {
 		busquedaLiberacionesForm.setFechaHasta(dt.format(fhasta));
 		busquedaLiberacionesForm.setEstado_encargo(encargo);
 		BusquedaLiberaciones.buscarLiberacion(busquedaLiberacionesForm, sess);
-		
+		estado="false";
 	}
 	
 	@NotifyChange({"busquedaLiberacionesForm"})
@@ -136,10 +137,15 @@ public class ControllerLiberacionEncargos implements Serializable {
 		//document.getElementById("accion").value='liberacion';
 		//document.busquedaLiberacionesForm.submit();
 		
-		busquedaLiberacionesForm.setAccion(Constantes.STRING_ACTION_LIBERACION);
-		
-		BusquedaLiberaciones.buscarLiberacion(busquedaLiberacionesForm, sess);	
-		
+		if (estado.equals("false")){
+			
+			estado="true";
+			busquedaLiberacionesForm.setAccion(Constantes.STRING_ACTION_LIBERACION);		
+			BusquedaLiberaciones.buscarLiberacion(busquedaLiberacionesForm, sess);			
+			
+			Messagebox.show("Resultado: " + busquedaLiberacionesForm.getRespuestaLiberacion());
+			
+		}		
 	}
 	
 	

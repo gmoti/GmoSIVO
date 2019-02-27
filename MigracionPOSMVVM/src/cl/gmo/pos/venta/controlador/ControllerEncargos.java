@@ -1004,14 +1004,21 @@ public class ControllerEncargos implements Serializable {
 				Messagebox.show("Error: No se pudo generar la boleta, Intentelo nuevamente.");
 			}else {
 				
-				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");					
+				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");
 				
-				String url ="http://10.216.4.24/39 " + 
+				//Produccion	
+				String url ="http://10.216.4.16/39 " + 
 						ventaPedidoForm.getNif().trim() + 
 						"-" + ventaPedidoForm.getDvnif().trim() + 
-						" " + valor[1].trim()+".pdf";	
+						" " + valor[1].trim()+".pdf";;	
 				
-				/*
+				//Desarrollo
+				/*String url ="http://10.216.4.24/39 " + 
+						ventaPedidoForm.getNif().trim() + 
+						"-" + ventaPedidoForm.getDvnif().trim() + 
+						" " + valor[1].trim()+".pdf";	*/
+				
+				
 				if(valor[0].equals("0") || valor[2].equals("true")){
 					
 					Messagebox.show("Error: No se pudo generar la boleta, Inténtelo nuevamente.");
@@ -1037,15 +1044,15 @@ public class ControllerEncargos implements Serializable {
 					Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
 		        	window.doModal();
 				}			
-				*/
+				
 				
 				//original
-				objetos = new HashMap<String,Object>();
+				/*objetos = new HashMap<String,Object>();
 				objetos.put("documento",url);
 				objetos.put("titulo","Encargo");
 				
 				Window window = (Window)Executions.createComponents("/zul/reportes/VisorDocumento.zul", null, objetos);				
-		        window.doModal();
+		        window.doModal();*/
 			}
 			
 			
