@@ -123,14 +123,14 @@
 			<div width="100%" vflex="min">
 
 				<grid model="@bind(vm.devolucionForm.lista_albaranes)" 
-					width="100%" height="200px" oddRowSclass="none" sclass="MyGridRowHeight">
+					width="100%" height="240px" oddRowSclass="none" sclass="MyGridRowHeight">
 					<columns>
 						<column width="150px" />
 						<column width="105px" />
 						<column width="85px" />
 						<column width="65px" />
 						<column width="105px" />
-						<column width="50px" />
+						<column width="30px" />
 					</columns>
 					<template name="model">
 						<row>

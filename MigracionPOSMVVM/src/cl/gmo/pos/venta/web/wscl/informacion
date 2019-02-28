@@ -1,0 +1,8 @@
+Desarrollo
+http://10.216.4.24/Signature.xDocCL.Web.Services/core.asmx?WSDL
+
+produccion
+http://10.216.4.16/Signature.xDocCL.Web.Services/core.asmx?wsdl
+
+package
+cl.gmo.pos.venta.web.wscl
