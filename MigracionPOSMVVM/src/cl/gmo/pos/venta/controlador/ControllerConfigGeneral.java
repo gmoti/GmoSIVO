@@ -1,7 +1,6 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
-
 import org.apache.log4j.Logger;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;

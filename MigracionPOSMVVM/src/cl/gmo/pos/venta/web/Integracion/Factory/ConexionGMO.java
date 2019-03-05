@@ -42,7 +42,7 @@ public class ConexionGMO implements ConexionFactory{
     	
         try{       	
         	context = new InitialContext();
-        	dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/gmodb");
+        	dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/gmodb_desa");
         	con = dataSource.getConnection();
               
          }catch(SQLException e){

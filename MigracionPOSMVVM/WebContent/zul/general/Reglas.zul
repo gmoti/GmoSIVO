@@ -1,0 +1,14 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window id="winReglas" border="none" width="85%" height="70%" sclass="container-fluid" 
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerReglas')">
+
+	<vbox>
+		<label value="Código:" />
+		<textbox/>
+		<label value="Regla"/>
+		<textbox  value="@bind(vm.script)"  rows="30" cols="100" />	
+		<label value="Resultado"/>
+		<textbox value="@bind(vm.resultado)" width="400px"/>
+		<button label="Procesar" onClick="@command('evaluar')"/>
+	</vbox>
+</window>

@@ -3181,7 +3181,7 @@ public class ControllerEncargos implements Serializable {
 	 		   }				
 				
 				break;
-				
+			//plan vuelta a clases	
 			case "PCOM":
 				
 				for(ProductosBean pb : ventaPedidoForm.getListaProductos()) {
