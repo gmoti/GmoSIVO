@@ -190,7 +190,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		win.detach();
 		
 		Window winPresup = (Window)Executions.createComponents(
-                "/zul/presupuestos/presupuesto.zul", null, objetos);			
+                "/zul/presupuestos/presupuestoBS.zul", null, objetos);			
 		winPresup.doModal();
 		
 	}
@@ -208,7 +208,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		win.detach();
 		
 		Window winEncargo = (Window)Executions.createComponents(
-                "/zul/encargos/encargos.zul", null, objetos);			
+                "/zul/encargos/encargosBS.zul", null, objetos);			
 		winEncargo.doModal();
 		
 	}

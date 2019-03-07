@@ -2140,6 +2140,10 @@ public class VentaPedidoHelper extends Utils{
 		} catch (Exception e) {
 			log.error("VentaPedidoHelper:entregaPedido error catch",e);
 		}
+		
+		//FQuiroz 7/2/2019 : agrego tipo de dato para mantener la respueta del metodo
+		form.setPedidosDelete(pedidosDelete);
+		
 		return pedidosDelete;
 	}
 		

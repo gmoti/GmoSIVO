@@ -274,7 +274,7 @@ public class ControllerCliente implements Serializable{
 		objetos.put("cliente",cliente);
 		
 		Window winGraduacion = (Window)Executions.createComponents(
-                "/zul/mantenedores/GraduacionClientes.zul", null, objetos);
+                "/zul/mantenedores/GraduacionClientesBS.zul", null, objetos);
 		
 		winGraduacion.doModal();
 		

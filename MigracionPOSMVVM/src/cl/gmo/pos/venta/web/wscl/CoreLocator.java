@@ -9,10 +9,7 @@ package cl.gmo.pos.venta.web.wscl;
 
 public class CoreLocator extends org.apache.axis.client.Service implements cl.gmo.pos.venta.web.wscl.Core {
 
-    
-	private static final long serialVersionUID = 6977960356558499059L;
-
-	public CoreLocator() {
+    public CoreLocator() {
     }
 
 
@@ -25,7 +22,7 @@ public class CoreLocator extends org.apache.axis.client.Service implements cl.gm
     }
 
     // Use to get a proxy class for CoreSoap
-    private java.lang.String CoreSoap_address = "http://10.216.4.16/Signature.xDocCL.Web.Services/core.asmx";
+    private java.lang.String CoreSoap_address = "http://10.216.4.24/Signature.xDocCL.Web.Services/core.asmx";
 
     public java.lang.String getCoreSoapAddress() {
         return CoreSoap_address;

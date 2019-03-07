@@ -1,6 +1,7 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -8,13 +9,17 @@ import org.zkoss.bind.annotation.NotifyChange;
 
 import bsh.EvalError;
 import bsh.Interpreter;
+import cl.gmo.pos.venta.web.beans.ProductosBean;
+import cl.gmo.pos.venta.web.forms.VentaPedidoForm;
 
-
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 
 public class ControllerReglas implements Serializable {
 
 	
 	private static final long serialVersionUID = 3239059522354989614L;
+	Session sess = Sessions.getCurrent();
 	
 	private String script;
 	private String resultado;
@@ -22,29 +27,29 @@ public class ControllerReglas implements Serializable {
 	Interpreter i = new Interpreter();
 	Object result;
 	
+	VentaPedidoForm ventaPedidoForm = new VentaPedidoForm();
+	ArrayList<ProductosBean>  pbs = new  ArrayList<ProductosBean>();
+	ProductosBean pb;
+	
 	@Init
 	public void inicial() {		
 		script = "import cl.gmo.pos.venta.web.forms.VentaPedidoForm;" +
 				 "import cl.gmo.pos.venta.web.beans.ProductosBean;"+
-				 "import java.util.ArrayList;"+
-
-				 "ArrayList  pbs = new  ArrayList();"+
-				 "ProductosBean pb;"+
-				 "VentaPedidoForm ventaPedidoForm;"+
-
-				 "ventaPedidoForm = new VentaPedidoForm();"+ 
-				 "pb = new ProductosBean ();"+
-		         "pbs.add(pb);"+
-
-				 "ventaPedidoForm.setListaProductos(pbs);"+
+				 "import java.util.ArrayList;"+	
+				 "import org.zkoss.zk.ui.Session;"+
+				 "import org.zkoss.zk.ui.Sessions;"+
+				 
+				 "Session sess = Sessions.getCurrent();"+
+				 
+				 //"VentaPedidoForm ventaPedidoForm = (VentaPedidoForm)sess.getAttribute(" + '"' + "ventaPedidoForm");' +
 
 				 "int x=0;"+
-
-		"for(ProductosBean pbw : ventaPedidoForm.getListaProductos()) {"+
-		"x++;"+
-		"}"+
+				 "for(ProductosBean pbw : ventaPedidoForm.getListaProductos()) {"+
+				 	"x++;"+
+				 "}"+
 
 		"resultado=x;";
+		
 		resultado= "";
 	}
 	
@@ -53,6 +58,16 @@ public class ControllerReglas implements Serializable {
 	public void evaluar() {
 		
 		result = new Object();
+		
+		pb = new ProductosBean();
+		pbs.add(pb);
+		
+		pb = new ProductosBean();
+		pbs.add(pb);
+		
+		ventaPedidoForm.setListaProductos(pbs);
+		
+		sess.setAttribute("ventaPedidoForm", ventaPedidoForm);
 		
 		try {
 			i.eval(script);

@@ -81,13 +81,12 @@ public class ControllerEncargos implements Serializable {
 	
 	private SeleccionPagoForm 		seleccionPagoForm;
 	private VentaPedidoForm 		ventaPedidoForm;
-	private BusquedaProductosForm 	busquedaProductosForm;
-	private DevolucionForm 			devolucionForm;
+	private BusquedaProductosForm 	busquedaProductosForm;	
 	private BusquedaConveniosForm 	busquedaConveniosForm;
 	private BusquedaClientesForm    busquedaClientesForm;
 	
 	private VentaPedidoDispatchActions 		 ventaPedidoDispatchActions;
-	private DevolucionDispatchActions 		 devolucionDispatchActions;
+	//private DevolucionDispatchActions 		 devolucionDispatchActions;
 	private BusquedaProductosDispatchActions busquedaProductosDispatchActions;	
 	private BusquedaConveniosDispatchActions busquedaConveniosDispatchActions;
 	private BusquedaClientesDispatchActions  busquedaClientesDispatchActions;
@@ -147,7 +146,7 @@ public class ControllerEncargos implements Serializable {
 		busquedaClientesForm			= new BusquedaClientesForm();
 		
 		ventaPedidoDispatchActions 		= new VentaPedidoDispatchActions();
-		devolucionDispatchActions  		= new DevolucionDispatchActions();
+		//devolucionDispatchActions  		= new DevolucionDispatchActions();
 		busquedaClientesDispatchActions = new BusquedaClientesDispatchActions();
 		
 		cliente      = new ClienteBean();
@@ -1007,16 +1006,16 @@ public class ControllerEncargos implements Serializable {
 				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");
 				
 				//Produccion	
-				String url ="http://10.216.4.16/39 " + 
+				/*String url ="http://10.216.4.16/39 " + 
 						ventaPedidoForm.getNif().trim() + 
 						"-" + ventaPedidoForm.getDvnif().trim() + 
-						" " + valor[1].trim()+".pdf";;	
+						" " + valor[1].trim()+".pdf";*/
 				
 				//Desarrollo
-				/*String url ="http://10.216.4.24/39 " + 
+				String url ="http://10.216.4.24/39 " + 
 						ventaPedidoForm.getNif().trim() + 
 						"-" + ventaPedidoForm.getDvnif().trim() + 
-						" " + valor[1].trim()+".pdf";	*/
+						" " + valor[1].trim()+".pdf";	
 				
 				
 				if(valor[0].equals("0") || valor[2].equals("true")){
@@ -1811,6 +1810,17 @@ public class ControllerEncargos implements Serializable {
 			
 			ventaPedidoForm.setAccion("pedidoEntrega");
 			ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			
+			if (!ventaPedidoForm.isPedidosDelete()) {
+				
+				if (!ventaPedidoForm.getCodigo_confirmacion().equals("")) {					
+					Messagebox.show(ventaPedidoForm.getMsnPedidoEntrega());
+				}
+				
+				return;
+			}
+			
+			
 				
 			objetos = new HashMap<String,Object>();			
 			objetos.put("origen", "encargo");
@@ -1821,7 +1831,7 @@ public class ControllerEncargos implements Serializable {
 			windowBusquedaEncargo.doModal(); 	*/	
 			
 			Window windowBusquedaEncargo = (Window)Executions.createComponents(
-	                "/zul/mantenedores/Albaran.zul", null, objetos);
+	                "/zul/mantenedores/AlbaranBS.zul", null, objetos);
 			
 			windowBusquedaEncargo.doModal();
 			

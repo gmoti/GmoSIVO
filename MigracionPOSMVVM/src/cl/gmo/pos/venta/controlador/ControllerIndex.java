@@ -48,7 +48,7 @@ public class ControllerIndex implements Serializable{
 		loginActions= new LoginActions();
 		menuForm    = new MenuForm();
 		menuDispatchActions = new MenuDispatchActions();
-		menuDispatchActions.cargaSucursal(menuForm, sess);
+		//menuDispatchActions.cargaSucursal(menuForm, sess);
 		divVisibleLogin="true";
 		divVisibleIndex="false";
 	}
@@ -69,6 +69,8 @@ public class ControllerIndex implements Serializable{
 			
 			sess.setAttribute(Constantes.STRING_USUARIO, usuarioForm.getNombreUsuario());
 			sess.setAttribute(Constantes.STRING_DESC_USUARIO, usuarioForm.getDescNombreUsuario());
+			
+			menuDispatchActions.cargaSucursal(menuForm, sess);
 			
 		}else {
 			

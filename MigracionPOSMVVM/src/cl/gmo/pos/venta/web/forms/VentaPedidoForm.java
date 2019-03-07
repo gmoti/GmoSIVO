@@ -170,6 +170,7 @@ public class VentaPedidoForm extends GenericForm{
 	private String email_inter;
 	private String ip;
 	
+	private boolean pedidosDelete;
 	
 	public VentaPedidoForm(){
 		
@@ -1189,5 +1190,14 @@ public class VentaPedidoForm extends GenericForm{
 
 	public void setIp(String ip) {
 		this.ip = ip;
-	}	
+	}
+
+	public boolean isPedidosDelete() {
+		return pedidosDelete;
+	}
+	
+	public void setPedidosDelete(boolean pedidosDelete) {
+		this.pedidosDelete = pedidosDelete;
+	}
+	
 }

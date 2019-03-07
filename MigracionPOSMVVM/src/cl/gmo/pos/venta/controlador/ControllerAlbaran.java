@@ -493,7 +493,12 @@ public class ControllerAlbaran implements Serializable{
 		
 		rut  = tmp[3];
 		nota = tmp[1]+".pdf";
-		urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;
+		
+		//Produccion
+		//urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;
+		
+		//Desarrollo
+		urlbol = "http://10.216.4.24/NC/61 "+rut+" "+nota;
 		
 		if(tmp[0].equals("0") || tmp[2].equals("true")){
 			Messagebox.show("Error: No se pudo generar la boleta");	
@@ -501,9 +506,9 @@ public class ControllerAlbaran implements Serializable{
 			
 		}else if(tmp[0].equals("1") && tmp[2].equals("false")){			
 			
-			Messagebox.show("Generando Nota de Cr\u00e9dito, espere un momento por favor....");
+			Messagebox.show("Generando Nota de Crédito, espere un momento por favor....");
 			
-			Messagebox.show("Albaran", "Generando Nota de Cr\\u00e9dito, espere un momento por favor...",
+			Messagebox.show("Albaran", "Generando Nota de Crédito, espere un momento por favor...",
 					Messagebox.OK,	Messagebox.INFORMATION, new EventListener<Event>() {			
 				@Override
 				public void onEvent(Event e) throws Exception {	
@@ -670,7 +675,7 @@ public class ControllerAlbaran implements Serializable{
 				//document.getElementById("tipoAlbaran").disabled=false;
 				//document.forms[0].submit();		
 				devolucionForm.setTipoAlbaran("D");
-				devolucionForm.setAccion("cargarDatos");
+				devolucionForm.setAccion(Constantes.STRING_ACTION_CARGA_DATOS);
 				devolucionDispatch.cargaAlbaran(devolucionForm, sess);
 				
 				cliente.setNif(devolucionForm.getNif());
