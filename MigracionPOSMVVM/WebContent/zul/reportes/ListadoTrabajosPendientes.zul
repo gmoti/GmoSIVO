@@ -20,7 +20,7 @@
 			</div>		
 	
 			<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
-				<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>
+				<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')" sclass="shrink24"/>
 				<toolbarbutton image="/iconos/cancel.png" onClick="reporte5.detach()" sclass="shrink24"/>
 		   	</div>			
 		

@@ -1,8 +1,8 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
 <zk xmlns:w="client"> 
-<window id="winClientes" border="none" width="75%" vflex="min" sclass="container-fluid"
-			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')  ">
+<window id="winClientes" border="none" width="75%" vflex="min" sclass="container-fluid" 
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCliente')">
 
 	<style>		
 		.z-textbox{
@@ -61,7 +61,7 @@
     ]]></script>
     
     
-    <div sclass="container-fluid">    		
+    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">    		
 		<div width="100%" height="30px" style="background-color:black;color: white;">			   	
 	   		<label value="CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
@@ -81,12 +81,12 @@
 	</div>
     
     
-    <div sclass="container-fluid">    	
+    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">    	
 		
 		<!-- Form Principal -->	
 		
 		<!-- Row 1 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Codigo"/>
@@ -100,7 +100,7 @@
 			<div sclass="col-lg-3">
 				<textbox value="@bind(vm.clienteForm.rut)" onBlur="@command('validarRut',persona='cliente')"
 					width="100px" disabled="@bind(vm.bDisableinicialRut)"
-					constraint="no empty, /[0-9]{8}/ : Sólo se Permiten Números!"/>
+					constraint="no empty, /[0-9]{7,8}/ : Sólo se Permiten Números!"/>
 					
 				<textbox value="@bind(vm.clienteForm.dv)" 
 					width="30px" readonly="true" />
@@ -126,7 +126,7 @@
    		</div>
    		
    		<!-- Row 2 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Apellidos(*)"/><!-- w:onBlur="upperValid(this)" -->
@@ -148,7 +148,7 @@
    		</div>
    		
    		<!-- Row 3 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Nombres(*)"/>
@@ -173,7 +173,7 @@
    		</div>
    		
    		<!-- Row 4 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Tipo via"/>
@@ -211,7 +211,7 @@
    		</div>
    		
    		<!-- Row 5 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Localidad"/>
@@ -241,7 +241,7 @@
    		</div>
    		
    		<!-- Row 6 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Cod.Postal"/>
@@ -261,7 +261,7 @@
    		</div>
    		
    		<!-- Row 7 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Email(*)"/>
@@ -301,15 +301,14 @@
    		</div>
    		
    		<!-- Row 8 -->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 		
 			<div sclass="col-lg-1">
 				<label value="Profesion"/>
 			</div>
 				
 			<div sclass="col-lg-3">
-				<textbox value="@bind(vm.clienteForm.profesion)" 
-							disabled="@bind(vm.bDisableinicial)"/>
+				<textbox value="@bind(vm.clienteForm.profesion)" disabled="@bind(vm.bDisableinicial)"/>
 			</div>
 			
 			<div sclass="col-lg-1">
@@ -330,8 +329,9 @@
 		</div>
     </div>
     
-    <div sclass="container-fluid">
-    	<div sclass="row" style="background-color:white">
+    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+    
+    	<div sclass="row" style="background-color:transparent">
     		<div sclass="col-lg-1">
     			<label value="A:"/>
     		</div>
@@ -348,7 +348,7 @@
     		</div>
     	</div>
     	
-    	<div sclass="row" style="background-color:white">
+    	<div sclass="row" style="background-color:transparent">
     		<div sclass="col-lg-1">
     			<label value="Giro" />
     		</div>
@@ -378,11 +378,11 @@
 			<label value="Indique por qué medio desea recibir información de productos y promociones."/>			
 		    <hbox>
 		       <radiogroup>	
-		    	<checkbox label="Correo postal" checked="@bind(vm.clienteForm.mk_correo_postal)" disabled="@bind(vm.bDisableinicial)"/>
-		    	<checkbox label="Correo electronico" checked="@bind(vm.clienteForm.mk_correo_electronico)" disabled="@bind(vm.bDisableinicial)"/>
-		    	<checkbox label="Mensaje SMS(Celular)" checked="@bind(vm.clienteForm.mk_sms)" disabled="@bind(vm.bDisableinicial)"/>
-		    	<checkbox label="Llamada telefonica." checked="@bind(vm.clienteForm.mk_telefonia)" disabled="@bind(vm.bDisableinicial)"/>
-		    	<checkbox label="No quiero ser contactado" checked="@bind(vm.clienteForm.mk_nodata)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="Correo postal" checked="@bind(vm.clienteForm.mkCorreoPostal)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="Correo electronico" checked="@bind(vm.clienteForm.mkCorreoElectronico)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="Mensaje SMS(Celular)" checked="@bind(vm.clienteForm.mkSms)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="Llamada telefonica." checked="@bind(vm.clienteForm.mkTelefonia)" disabled="@bind(vm.bDisableinicial)"/>
+		    	<checkbox label="No quiero ser contactado" checked="@bind(vm.clienteForm.mkNodata)" disabled="@bind(vm.bDisableinicial)"/>
 		    	</radiogroup>		    
 		    </hbox>	
 		    

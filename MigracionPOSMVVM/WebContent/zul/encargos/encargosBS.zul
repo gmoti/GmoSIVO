@@ -16,6 +16,21 @@
        }
       
   	]]></script>
+  	
+  	<style>
+  	
+  		green {
+		   color: #e8f0de;
+		   border: solid 1px #538312;
+		   background: #64991e;
+		   background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+		   background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e);
+		   filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+		  }
+  	
+  	
+  	
+  	</style>
     	
     	
     <!-- Parte superior de la ventana-->
@@ -221,8 +236,9 @@
 			<div sclass="col-lg-3">
 				<button label="@bind(vm.ventaPedidoForm.entregado eq true?'Encargo entregado':'Entrega de encargos')" 
 					onClick="@command('pedidoEntrega')" 
-					style="@bind(vm.ventaPedidoForm.entregado eq true?'background-color:green':'background-color:blue')"
-					disabled="@bind(vm.ventaPedidoForm.entregado eq true?true:false)"  />			
+					style="@bind(vm.ventaPedidoForm.entregado eq true?'background:green':'background:cyan')" sclass="font-weight-bold" 
+					disabled="@bind(vm.ventaPedidoForm.entregado eq true?true:false)"  
+					width="200px"/>			
 			</div>
 			
 			<div sclass="col-lg-1">

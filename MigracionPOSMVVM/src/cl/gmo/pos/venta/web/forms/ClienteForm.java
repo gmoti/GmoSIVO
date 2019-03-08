@@ -4,6 +4,7 @@
  */
 package cl.gmo.pos.venta.web.forms;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cl.gmo.pos.venta.utils.Constantes;
@@ -16,11 +17,9 @@ import cl.gmo.pos.venta.web.beans.TipoViaBean;
  *
  * @author Advice70
  */
-public class ClienteForm{
+public class ClienteForm extends GenericForm implements Serializable {
     
-    /**
-	 * 
-	 */
+   
 	private static final long serialVersionUID = -7817605485399246594L;
 
 	private String error;
@@ -88,11 +87,18 @@ public class ClienteForm{
 	private String mk_correo_postal = Constantes.STRING_BLANCO;
 	private String mk_correo_electronico = Constantes.STRING_BLANCO;
 	private String mk_telefonia = Constantes.STRING_BLANCO;
-	private String mk_sms = Constantes.STRING_BLANCO;
-	
+	private String mk_sms = Constantes.STRING_BLANCO;	
 	private String mk_nodata = Constantes.STRING_BLANCO;
-	//fquiroz agrega por error
-	private int EstaGrabado;
+	
+	private boolean mkCorreoPostal = false;
+	private boolean mkCorreoElectronico = false;
+	private boolean mkTelefonia = false;
+	private boolean mkSms = false;	
+	private boolean mkNodata = false;
+	
+	
+	
+	
 	
 	public void cleanForm() {
     	
@@ -641,14 +647,61 @@ public class ClienteForm{
 	}
 
 
-	public int getEstaGrabado() {
-		return EstaGrabado;
+	//==========================
+	
+	
+	public boolean isMkCorreoPostal() {
+		return mkCorreoPostal;
 	}
 
 
-	public void setEstaGrabado(int estaGrabado) {
-		EstaGrabado = estaGrabado;
+	public void setMkCorreoPostal(boolean mkCorreoPostal) {
+		this.mkCorreoPostal = mkCorreoPostal;
 	}
+
+
+	public boolean isMkCorreoElectronico() {
+		return mkCorreoElectronico;
+	}
+
+
+	public void setMkCorreoElectronico(boolean mkCorreoElectronico) {
+		this.mkCorreoElectronico = mkCorreoElectronico;
+	}
+
+
+	public boolean isMkTelefonia() {
+		return mkTelefonia;
+	}
+
+
+	public void setMkTelefonia(boolean mkTelefonia) {
+		this.mkTelefonia = mkTelefonia;
+	}
+
+
+	public boolean isMkSms() {
+		return mkSms;
+	}
+
+
+	public void setMkSms(boolean mkSms) {
+		this.mkSms = mkSms;
+	}
+
+
+	public boolean isMkNodata() {
+		return mkNodata;
+	}
+
+
+	public void setMkNodata(boolean mkNodata) {
+		this.mkNodata = mkNodata;
+	}
+	
+	
+	
+	
 	
 	
 

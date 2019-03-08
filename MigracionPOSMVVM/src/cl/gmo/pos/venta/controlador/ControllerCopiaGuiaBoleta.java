@@ -80,6 +80,14 @@ public class ControllerCopiaGuiaBoleta implements Serializable {
 
 			byte[] bytes = reporte.traeCopiaGuiaBoleta(numeroBoleta, documento);
 			
+			if (bytes==null) {
+				Messagebox.show("No se logro recuperar la boleta");
+				return;
+			}
+			
+			
+			
+			
 			final AMedia media = new AMedia("CopiaBoleta.pdf", "pdf", "application/pdf", bytes);			
 			
 			objetos = new HashMap<String,Object>();

@@ -4,34 +4,7 @@
 		border="normal" width="100%" height="100%" closable="false">
 		
 		
-		<style>
-		.MyGridRowHeight
-		    tr.z-row td.z-row-inner div.z-row-content{
-		        border:1px solid white;
-		        border-right:1px solid transparent;
-		        padding:0px;
-		        margin:0px;
-		}
-		
-		.shrink24 img {
-		  		vertical-align: middle;
-		  		border-style: none;
-		  		width: 24px;
-		  		height: 24px;
-		}
-				
-		.shrink16 img {
-		  		vertical-align: middle;
-		  		border-style: none;
-		  		width: 16px;
-		  		height: 16px;
-		  		
-		tr.z-row td.z-row-inner { 
-		 		border: none;  		
-		}
-		
-		
-	</style>	
+	
 		
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 	   		<label value="Listado Informe Optico" style="float: left ; font-weight: bold; font-size: 150%;"/>
@@ -43,7 +16,7 @@
 		</div>		
 	
 		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">
-			<toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>					
+			<!-- <toolbarbutton image="/iconos/lupa.png" onClick="@command('reporte')" sclass="shrink24"/>	 -->				
 			<toolbarbutton image="/iconos/cancel.png" onClick="reporte2.detach()" sclass="shrink24"/>
 	   	</div>		
 		
@@ -55,6 +28,7 @@
 							<label value="Cliente"/>
 							<textbox value = "@bind(vm.informeOpticoForm.nombreCli)" readonly="true" width="300px"/>
 							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarCliente')" />
+							<toolbarbutton image="/iconos/printer.png" onClick="@command('reporte')" sclass="shrink24"/>
 						</hbox>					
 					</vbox>
 				</div>

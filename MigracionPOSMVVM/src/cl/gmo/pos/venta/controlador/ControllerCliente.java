@@ -90,7 +90,8 @@ public class ControllerCliente implements Serializable{
 		tipoViaBean = new TipoViaBean();
 		provinciaBean = new ProvinciaBean();
 		 
-		clienteForm = clid.cargaFormulario(clienteForm, sess);	
+		clienteForm = clid.cargaFormulario(clienteForm, sess);
+		
 	}
 	
 	
@@ -104,7 +105,32 @@ public class ControllerCliente implements Serializable{
 		
 		
 		 if (!validacionGeneral())
-			 return;		
+			 return;		 
+		 
+		 if (clienteForm.isMkCorreoPostal())
+			 clienteForm.setMk_correo_postal("1"); 
+		 else
+			 clienteForm.setMk_correo_postal("-1");
+		 
+		 if(clienteForm.isMkCorreoElectronico())
+			 clienteForm.setMk_correo_electronico("1");
+		 else
+			 clienteForm.setMk_correo_electronico("-1");
+		 
+		 if(clienteForm.isMkSms())
+			 clienteForm.setMk_sms("1");
+		 else
+			 clienteForm.setMk_sms("-1");
+		 
+		 if(clienteForm.isMkTelefonia())
+			 clienteForm.setMk_telefonia("1");
+		 else
+			 clienteForm.setMk_telefonia("-1");
+		 
+		 if(clienteForm.isMkNodata())
+			 clienteForm.setMk_nodata("1");
+		 else
+			 clienteForm.setMk_nodata("-1");			 
 		
 		clienteForm.setAccion("ingresoCliente");	
 		clid.ingresoCliente(clienteForm, sess);	
@@ -115,12 +141,16 @@ public class ControllerCliente implements Serializable{
 			break;
 			
 		case Constantes.STRING_ACTION_EXISTE:
-			Messagebox.show("Se ingreso exitosamente el Cliente.");
+			Messagebox.show("El RUT del cliente ya existe");
 			break;
 			
 		case Constantes.STRING_FALSE:
 			Messagebox.show("No se pudo Ingresar el Cliente.");
-			break;		
+			break;
+			
+		case Constantes.STRING_TRUE:
+			Messagebox.show("El cliente se ingreso exitosamente.");
+			break;	
 
 		default:
 			Messagebox.show("Informacion " + clienteForm.getExito());
@@ -146,11 +176,13 @@ public class ControllerCliente implements Serializable{
 		Optional<String> ema = Optional.ofNullable(clienteForm.getEmail());
 		Optional<String> pro = Optional.ofNullable(clienteForm.getProfesion());
 		
+		Optional<String> via = Optional.ofNullable(clienteForm.getVia());
+		
 		
 		if (!r.isPresent() || clienteForm.getRut().trim().equals("") || clienteForm.getRut().trim().equals("0")) {
-			Messagebox.show("Debe indicar el rut");
-		    return false;		
-		}
+				Messagebox.show("Debe indicar el rut");
+			    return false;		
+		}		
 		
 		if(!nom.isPresent() || nom.get().trim().equals("")) {
 			Messagebox.show("Debe indicar el Nombre del cliente");
@@ -166,8 +198,15 @@ public class ControllerCliente implements Serializable{
 			clienteForm.setApellidos(ape.get());
 		}	
 		
-		if(fn.isPresent()) 
-			clienteForm.setFnacimiento(dt.format(fechaNac));
+		if (!bfechaNac) {
+			if(!fn.isPresent()) {
+				Messagebox.show("Debe indicar la fecha de nacimiento");
+				return false;
+			}else 
+				clienteForm.setFnacimiento(dt.format(fechaNac));			
+		}else 
+			clienteForm.setFnacimiento("");
+		
 		
 		if(!ab.isPresent() || ab.get().getUsuario().equals("Seleccione") || ab.get().getUsuario().equals("")) {
 			Messagebox.show("Debe indicar un agente");
@@ -176,20 +215,31 @@ public class ControllerCliente implements Serializable{
 			clienteForm.setAgente(agenteBean.getUsuario());
 		
 		
+		
 		if(!tvb.isPresent() || tvb.get().equals(""))	
 			clienteForm.setTipo_via("0");
 		else	
 			clienteForm.setTipo_via(tipoViaBean.getCodigo());
-		 
 		
-		if(!pb.isPresent() || pb.get().equals("")) {
-			clienteForm.setProvincia_cliente("0");
-			Messagebox.show("Debe indicar la provincia o comuna");
-			return false;
+		
+		
+		if(!bDireccion) {			
+			if(!via.isPresent() || via.get().equals("")) {
+				clienteForm.setVia("");
+				Messagebox.show("Debe indicar una dirección");
+				return false;
+			}
 		}
-		else
-			clienteForm.setProvincia_cliente(provinciaBean.getCodigo());
 		
+		if(!bProvincia) {
+			if(!pb.isPresent() || pb.get().equals("")) {
+				clienteForm.setProvincia_cliente("0");
+				Messagebox.show("Debe indicar la provincia o comuna");
+				return false;
+			}
+			else
+				clienteForm.setProvincia_cliente(provinciaBean.getCodigo());
+		}
 		
 		if(!loc.isPresent() || loc.get().equals("")) {
 			clienteForm.setLocalidad("");
@@ -209,14 +259,15 @@ public class ControllerCliente implements Serializable{
 			clienteForm.setContacto(con.get());
 		
 		
-		if(!ema.isPresent() || ema.get().equals("")) {
-			clienteForm.setEmail("");
-			Messagebox.show("Debe indicar un Email");
-			return false;
+		if(!bEmail) {
+			if(!ema.isPresent() || ema.get().equals("")) {
+				clienteForm.setEmail("");
+				Messagebox.show("Debe indicar un Email");
+				return false;
+			}
+			else
+				clienteForm.setEmail(ema.get());
 		}
-		else
-			clienteForm.setEmail(ema.get());
-		
 		
 		if(!pro.isPresent() || pro.get().equals("")) {
 			clienteForm.setProfesion("");
@@ -226,15 +277,41 @@ public class ControllerCliente implements Serializable{
 		else
 			clienteForm.setProfesion(pro.get());
 		
-		if(clienteForm.getMk_correo_postal().equals("false") &&
-			clienteForm.getMk_correo_electronico().equals("false") &&
-			clienteForm.getMk_sms().equals("false") &&
-			clienteForm.getMk_telefonia().equals("false") &&
-			clienteForm.getMk_nodata().equals("false")) {
+		
+		//=================================================
+		
+		if(!bTelefono) {
+			if (clienteForm.getTelefono().equals(null) || clienteForm.getTelefono().equals("")) {
+				Messagebox.show("Debe indicar el telefono");
+				return false;
+			}			
+		}
+		
+		if(!bMovil) {
+			if (clienteForm.getTelefono_movil().equals(null) || clienteForm.getTelefono_movil().equals("")) {
+				Messagebox.show("Debe indicar el telefono movil");
+				return false;
+			}			
+		}
+		
+		if(!bNumero) {
+			if(clienteForm.getNumero().equals(null) || clienteForm.getNumero().equals("")) {
+				Messagebox.show("Debe indicar el numero de la dirección");
+				return false;
+			}			
+		}
+		
+		//=====================================================
+		
+		if(!clienteForm.isMkCorreoPostal() &&
+			!clienteForm.isMkCorreoElectronico() &&
+			!clienteForm.isMkSms() &&
+			!clienteForm.isMkTelefonia() &&
+			!clienteForm.isMkNodata()) {
 			
 			Messagebox.show("Debe indicar un tipo de marketing");
 			return false;
-		}
+		}	
 		
 		
 		
@@ -255,7 +332,14 @@ public class ControllerCliente implements Serializable{
 		clid.ingresoCliente(clienteForm, sess);
 		//fechaNac = new Date(System.currentTimeMillis());
 		fechaNac =null;
-		bDisableinicialRut = false;
+		bDisableinicialRut = false;		
+		
+		clienteForm.setMkCorreoPostal(false);
+		clienteForm.setMkCorreoElectronico(false);
+		clienteForm.setMkSms(false);
+		clienteForm.setMkTelefonia(false);
+		clienteForm.setMkNodata(false);		
+		
 	}
 	
 	@Command
@@ -301,8 +385,7 @@ public class ControllerCliente implements Serializable{
 			
 			clienteForm.setAccion("traeClienteSeleccionado");
 			clienteForm.setNif_cliente_agregado(cliente.getNif());
-			clienteForm.setCodigo_cliente_agregado(cliente.getCodigo());
-			
+			clienteForm.setCodigo_cliente_agregado(cliente.getCodigo());			
 			clid.ingresoCliente(clienteForm, sess);
 			
 			clienteForm.setFnacimiento(cliente.getFecha_nac());
@@ -323,9 +406,34 @@ public class ControllerCliente implements Serializable{
 			clienteForm.setTipo_via(b.orElse(""));		
 			
 			Optional<String> c = Optional.ofNullable(clienteForm.getProvincia_cliente());	
-			clienteForm.setProvincia_cliente(c.orElse(""));					
+			clienteForm.setProvincia_cliente(c.orElse(""));	
 			
 			posicionaCombos();
+			
+			if (clienteForm.getMk_correo_postal().equals("1"))
+				 clienteForm.setMkCorreoPostal(true); 
+			 else
+				 clienteForm.setMkCorreoPostal(false); 
+			 
+			 if(clienteForm.getMk_correo_electronico().equals("1"))
+				 clienteForm.setMkCorreoElectronico(true);
+			 else
+				 clienteForm.setMkCorreoElectronico(false);
+			 
+			 if(clienteForm.getMk_sms().equals("1"))
+				 clienteForm.setMkSms(true);
+			 else
+				 clienteForm.setMkSms(false);
+			 
+			 if(clienteForm.getMk_telefonia().equals("1"))
+				 clienteForm.setMkTelefonia(true);
+			 else
+				 clienteForm.setMkTelefonia(false);
+			 
+			 if(clienteForm.getMk_nodata().equals("1"))
+				 clienteForm.setMkNodata(true);
+			 else
+				 clienteForm.setMkNodata(false);			
 			
 			bDisableinicial = true;
 			bDisableinicialRut = true;
@@ -378,7 +486,7 @@ public class ControllerCliente implements Serializable{
 		if (c.isPresent())
 			provinciaBean = c.get();
 		else
-			provinciaBean = null;
+			provinciaBean = new ProvinciaBean();
 		
 	}
 	
