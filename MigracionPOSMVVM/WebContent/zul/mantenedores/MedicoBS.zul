@@ -10,7 +10,7 @@
 	</style>
 	
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 		   	<label value="MEDICOS" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
@@ -26,8 +26,9 @@
 	   	</div>	
 	</div>
 	
-	<div sclass="container-fluid">
-		<div sclass="row" style="background-color:white">
+	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Código"/>				
 			</div>
@@ -41,7 +42,7 @@
 				<toolbarbutton image="/iconos/lupa.png" width="50px" onClick="@command('buscarMedico')" sclass="shrink16"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Apellidos (*)"/>						
 			</div>
@@ -49,7 +50,7 @@
 				<textbox value="@bind(vm.medicoForm.apellidos)" width="400px"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Nombres (*)"/>						
 			</div>
@@ -57,7 +58,7 @@
 				<textbox value="@bind(vm.medicoForm.nombres)" width="400px"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Direccion"/>						
 			</div>
@@ -65,7 +66,7 @@
 				<textbox value="@bind(vm.medicoForm.direccion)" width="500px"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Localidad"/>						
 			</div>
@@ -73,7 +74,7 @@
 				<textbox value="@bind(vm.medicoForm.locali)" width="500px"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Provincia(*)"/>						
 			</div>
@@ -86,7 +87,7 @@
 				</combobox>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Doctor Externo"/>					
 			</div>		
@@ -94,7 +95,7 @@
 				<checkbox checked="@bind(vm.medicoForm.externo)"/>		
 			</div>	
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Telefono"/>						
 			</div>
@@ -102,7 +103,7 @@
 				<textbox value="@bind(vm.medicoForm.tfno)" width="500px"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Fax"/>						
 			</div>
@@ -110,7 +111,7 @@
 				<textbox value="@bind(vm.medicoForm.fax)" width="500px"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Email"/>						
 			</div>
@@ -118,7 +119,7 @@
 				<textbox value="@bind(vm.medicoForm.email)" width="500px"/>
 			</div>
 		</div>
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
 				<label value="Cód postal"/>						
 			</div>

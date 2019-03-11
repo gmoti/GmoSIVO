@@ -3,7 +3,7 @@
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAlbaran')  ">
 			
 			
-	<div sclass="container-fluid">	
+	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">	
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 	   		<label value="ALBARAN" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
@@ -25,10 +25,10 @@
 	</div>		
 	
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 	
 		<!-- Row 1 (10)-->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-1">
 				<label value="Codigo"/>	
 			</div>
@@ -57,7 +57,7 @@
 		</div>
 		
 		<!-- Row 2 (10)-->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-1">
 				<label value="Cliente"/>														
 			</div>
@@ -101,7 +101,7 @@
 		</div>
 		
 		<!-- Row 3 (8)-->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-1">
 				<label value="Idioma"/>				
 			</div>
@@ -150,7 +150,7 @@
 		</div>
 		
 		<!-- Row 4 (12)-->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-1">
 				<label value="Divisa"/>					
 			</div>
@@ -175,7 +175,7 @@
 		</div>
 		
 		<!-- Row 5 (11)-->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-1">
 				<label value="Motivo"/>					
 			</div>
@@ -210,7 +210,7 @@
 		</div>
 		
 		<!-- Row 6 (11)-->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-1">
 				<label value="F.Garantia"/>					
 			</div>
@@ -238,7 +238,7 @@
 		</div>
 		
 		<!-- Row 7 (10)-->
-		<div sclass="row" style="background-color:white">
+		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-1">
 				<label value="Direccion cliente"/>			
 			</div>
@@ -262,7 +262,7 @@
 	</div>
 	
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 		<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
 			<space width="10px"/>
 			<label value="Articulo"/>
@@ -285,7 +285,7 @@
 		</div>
 	</div>
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 		<div width="100%" height="100%">
 			<grid model="@bind(vm.devolucionForm.lista_productos)" 
 					width="100%" height="250px" sclass="MyGridRowHeight" oddRowSclass="none">
