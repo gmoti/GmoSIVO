@@ -323,7 +323,7 @@
    		</div>
     </div>  
     
-    <div sclass="container-fluid">
+    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
     	<div width="100%" vflex="min" style="background-color:black;color: white;">
 			<label value="Facturacion"/>
 		</div>
@@ -367,13 +367,13 @@
     	</div>
     </div>
     
-    <div sclass="container-fluid">
+    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
     	<div width="100%" vflex="min" style="background-color:black;color: white;">
 			<label value="Marketing"/>
 		</div>
     </div>
     
-    <div sclass="container-fluid">
+    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
     	<div width="100%" vflex="min">
 			<label value="Indique por qué medio desea recibir información de productos y promociones."/>			
 		    <hbox>

@@ -5,7 +5,7 @@
 		
 		<!-- Parte superior de la ventana-->
 			
-		<div sclass="container-fluid">
+		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 			<div width="100%" height="25px" style="background-color:black;color: white">
 				<label value="PRESUPUESTO" style="float: left ; font-weight: bold; font-size: 150%;"/>	
 				<div style="float: right">					
@@ -29,9 +29,9 @@
 			</div>	
 		</div>
 		
-		<div sclass="container-fluid">
+		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 			<!-- Row 1 -->
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-1">
 					<label value="Codigo" sclass="font-weight-bold"/>
 				</div>
@@ -63,7 +63,7 @@
 			</div>
 			
 			<!-- Row 2 -->
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-1">
 					<label value="Forma pago" />
 				</div>
@@ -114,7 +114,7 @@
 			</div>
 			
 			<!-- Row 3 -->
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-1">
 					<label value="Agente" />
 				</div>
@@ -163,7 +163,7 @@
 		
 		<!-- Centro de la ventana -->
 	
-		<div sclass="container-fluid">	
+		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">	
 			<!-- Encabezado de la grid -->
 			<div width="100%"   style="background-color:black;color:white; font-size: 6px;">
 				<space width="10px"/>
@@ -263,7 +263,7 @@
 			</div>
 		</div>
 		
-		<div align="center" sclass="container-fluid">
+		<div align="center" sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 			<div width="370px" style="background-color:black;color: white;">
 				<label value="Graduacion del articulo" />
 			</div>
@@ -281,15 +281,15 @@
 		</div>
 		
 		<!-- Parte inferior de la ventana -->
-		<div sclass="container-fluid">
+		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 			<div vflex="min"  style="background-color:black;color: white">
 				<div width="100%" style="background-color:black;color: white"><label value="Graduacion del cliente"/></div>				
 			</div>
 		</div>
 		
-		<div sclass="container-fluid">
+		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 		
-			<div sclass="row" style="background-color:white">		
+			<div sclass="row" style="background-color:transparent">		
 				<div sclass="col-lg-1">
 					<label value="Fecha" sclass="font-weight-bold"/>
 				</div>
@@ -327,7 +327,7 @@
 				</div>			
 			</div>
 		
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 		
 				<div sclass="col-lg-1">
 					<label value="Orden" sclass="font-weight-bold"/>
@@ -370,7 +370,7 @@
 				</div>		
 			</div>
 		
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 		
 				<div sclass="col-lg-1">
 					<label value="Doctor" sclass="font-weight-bold"/>
@@ -414,15 +414,16 @@
 			</div>						
 		</div>
 		
-		<div sclass="container-fluid">
+		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
 			<div vflex="min"  style="background-color:black;color: white">
 				<div width="100%" style="background-color:black;color: white"><label value="Totales"/></div>				
 			</div>
 		</div>
 		
 		
-		<div sclass="container-fluid">		
-			<div sclass="row" style="background-color:white">
+		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">	
+			
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-5">
 					<space/>
 				</div>		
@@ -440,7 +441,7 @@
 				</div>			
 			</div>
 			
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-4" align="right">
 					<label value="Fecha de entrega" sclass="font-weight-bold"/>
 				</div>
@@ -461,7 +462,7 @@
 				</div>			
 			</div>
 			
-			<div sclass="row" style="background-color:white" >
+			<div sclass="row" style="background-color:transparent" >
 				<div sclass="col-lg-4" align="right">
 					<label value="Notas" sclass="font-weight-bold"/>
 				</div>
