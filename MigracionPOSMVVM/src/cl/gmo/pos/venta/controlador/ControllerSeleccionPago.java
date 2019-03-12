@@ -690,7 +690,7 @@ public class ControllerSeleccionPago implements Serializable{
 		if (correcto == 1) {
 			
 			try {
-				seleccionPagoForm.setAccion("pagar");
+				seleccionPagoForm.setAccion(Constantes.STRING_PAGAR);
 				seleccionPagoDispatchActions.IngresaPago(seleccionPagoForm, sess);
 				
 				//impresion de nota de credito

@@ -577,10 +577,10 @@ public class ControllerGraduacionCliente implements Serializable{
 		Optional<String> i ;
 		
 		
-		graduacionesForm.setAccion("verGraduacion");
+		//graduacionesForm.setAccion(Constantes.STRING_ACTION_VER_GRADUACION);
 		graduacionesForm.setFecha_graduacion(graduacion.getFecha());
 		graduacionesForm.setNumero_graduacion(graduacion.getNumero());		
-		graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+		//graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
 		
 		//ojo derecho
 		

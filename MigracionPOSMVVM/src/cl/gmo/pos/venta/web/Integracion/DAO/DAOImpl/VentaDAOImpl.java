@@ -555,12 +555,12 @@ public class VentaDAOImpl implements VentaDAO{
 			cs.setDouble(13, descuento);
 			cs.setString(14, tipo_documento);
 			
-			cs.execute();
+			cs.execute();			
 			
 		} catch (Exception e) {
 			estado = false;
 			log.error("VentaDAOImpl:insertaPago error controlado",e);
-			throw new Exception("Error en DAO, SP_PAGO_INS_PAGO_VTA");
+			throw new Exception("Error en DAO, SP_PAGO_INS_PAGO_VTA" + e.getMessage());
 		} finally {
 			try{
 				if (null != cs){

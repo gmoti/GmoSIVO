@@ -243,8 +243,8 @@ public class ControllerCliente implements Serializable{
 		
 		if(!loc.isPresent() || loc.get().equals("")) {
 			clienteForm.setLocalidad("");
-			Messagebox.show("Debe indicar la localidad");
-			return false;
+			//Messagebox.show("Debe indicar la localidad");
+			//return false;
 		}
 		else
 			clienteForm.setLocalidad(loc.get());
@@ -252,8 +252,8 @@ public class ControllerCliente implements Serializable{
 		
 		if(!con.isPresent() || con.get().equals("")) {
 			clienteForm.setContacto("");
-			Messagebox.show("Debe indicar un contacto");
-			return false;
+			//Messagebox.show("Debe indicar un contacto");
+			//return false;
 		}
 		else
 			clienteForm.setContacto(con.get());

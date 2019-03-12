@@ -22,9 +22,11 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Window;
+
+import cl.gmo.pos.venta.controlador.ventaDirecta.DevolucionDispatchActions;
 import cl.gmo.pos.venta.controlador.ventaDirecta.SeleccionPagoDispatchActions;
 import cl.gmo.pos.venta.utils.Constantes;
-import cl.gmo.pos.venta.web.actions.DevolucionDispatchActions;
+
 import cl.gmo.pos.venta.web.beans.AgenteBean;
 import cl.gmo.pos.venta.web.beans.AlbaranBean;
 import cl.gmo.pos.venta.web.beans.ClienteBean;
@@ -158,14 +160,16 @@ public class ControllerAlbaran implements Serializable{
 		Optional<ConvenioBean> cb = Optional.ofNullable(convenioBean);
 		Optional<ProvinciaBean> pb = Optional.ofNullable(provinciaBean);
 		
-		if (tab.isPresent()) devolucionForm.setTipoAlbaran(String.valueOf(tab.get().getDescripcion()));
+		if (tab.isPresent()) devolucionForm.setTipoAlbaran(String.valueOf(tab.get().getCodigo()));
 		else devolucionForm.setTipoAlbaran("");
 		
 		if(ib.isPresent()) devolucionForm.setIdioma(ib.get().getId());
 		else devolucionForm.setIdioma("0");
 		
-		if(ab.isPresent()) devolucionForm.setAgente(ab.get().getUsuario());
-		else devolucionForm.setAgente("0");
+		devolucionForm.setAgente(usuario);		
+		
+		if(ab.isPresent()) devolucionForm.setAgenteSeleccionado(ab.get().getUsuario());
+		else devolucionForm.setAgenteSeleccionado("0");
 		
 		if(db.isPresent()) devolucionForm.setDivisa(db.get().getId());
 		else devolucionForm.setDivisa("0");
@@ -180,7 +184,10 @@ public class ControllerAlbaran implements Serializable{
 		else devolucionForm.setConvenio("0");
 		
 		if(pb.isPresent()) devolucionForm.setProvincia(pb.get().getCodigo());
-		else devolucionForm.setProvincia("0");		
+		else devolucionForm.setProvincia("0");	
+		
+		if(pb.isPresent()) devolucionForm.setComu_cli(pb.get().getCodigo());
+		else devolucionForm.setComu_cli("");	
 		
 		
 		if (fg.isPresent())		
@@ -508,12 +515,12 @@ public class ControllerAlbaran implements Serializable{
 			
 			Messagebox.show("Generando Nota de Crédito, espere un momento por favor....");
 			
-			Messagebox.show("Albaran", "Generando Nota de Crédito, espere un momento por favor...",
+			/*Messagebox.show("Albaran", "Generando Nota de Crédito, espere un momento por favor...",
 					Messagebox.OK,	Messagebox.INFORMATION, new EventListener<Event>() {			
 				@Override
 				public void onEvent(Event e) throws Exception {	
 					
-						if( ((Integer) e.getData()).intValue() == Messagebox.OK ) {
+						if( ((Integer) e.getData()).intValue() == Messagebox.OK ) {*/
 							
 							objetos = new HashMap<String,Object>();
 							objetos.put("documento",urlbol);
@@ -523,9 +530,9 @@ public class ControllerAlbaran implements Serializable{
 					                "/zul/reportes/VisorDocumento.zul", null, objetos);
 							
 					        window.doModal();
-						}						
+						/*}						
 					}
-			});	
+			});	*/
 			
 			
 		}else if(tmp[0].equals("2") && tmp[2].equals("false")){
