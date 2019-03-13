@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 
-<window id="winListaAlbaranes" border="none" width="45%" height="45%" 
+<window id="winListaAlbaranes" border="none" width="45%" height="75%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListaAlbaranes')">
 			
 		
@@ -26,9 +26,10 @@
 			<label value="NIF" />									
 		</div>
 		
-		<div width="100%" height="100%">
+		<div width="100%" height="90%">
+		
 			<grid model="@bind(vm.devolucionForm.lista_albaranes)" 
-					sclass="MyGridRowHeight" width="100%" height="335px" oddRowSclass="none">
+					sclass="MyGridRowHeight" oddRowSclass="none" width="100%" height="95%" style="overflow-y: scroll" >
 			<columns>
 				<column label=""/>
 				<column label=""/>
@@ -49,12 +50,6 @@
 				</template>
 			</grid>	
 		</div>
-		
-	
-	
-	
-	</div>	
-			
-			
+	</div>			
 
 </window>

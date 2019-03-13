@@ -6,7 +6,7 @@
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSearchProduct')">		
 
 		
-		<div width="100%" height="25%">	
+		<div width="100%" vflex="min">	
 		
 			<div width="100%" vflex="min" style="background-color:black;color: white">
 				<label value="Busqueda Productos" />
@@ -15,9 +15,9 @@
 				</div>																			
 			</div>	
 			
-			<div sclass="container-fluid">
+			<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 			
-				<div sclass="row" style="background-color:white">
+				<div sclass="row" style="background-color:transparent">
 					<div sclass="col-lg-4">						
 						<label value="Familia de Productos"/>						
 					</div>
@@ -36,7 +36,7 @@
 					</div>					
 				</div>
 				
-				<div sclass="row" style="background-color:white">
+				<div sclass="row" style="background-color:transparent">
 					<div sclass="col-lg-4">
 						<label value="Sub-familia de Productos" />
 					</div>
@@ -55,7 +55,7 @@
 					</div>					
 				</div>
 				
-				<div sclass="row" style="background-color:white">
+				<div sclass="row" style="background-color:transparent">
 					<div sclass="col-lg-4">
 						<label value="Grupo de Productos" />									
 					</div>
@@ -73,7 +73,7 @@
 					</div>					
 				</div>
 				
-				<div sclass="row" style="background-color:white">
+				<div sclass="row" style="background-color:transparent">
 					<div sclass="col-lg-4">
 						<label value="Código de Producto SAP" />								
 					</div>
@@ -82,7 +82,7 @@
 					</div>					
 				</div>
 				
-				<div sclass="row" style="background-color:white">
+				<div sclass="row" style="background-color:transparent">
 					<div sclass="col-lg-4">
 						<label value="Codigo Barra Producto" />	
 					</div>
@@ -94,91 +94,13 @@
 								label="Buscar" onClick="@command('despachador')" />
 					</div>				
 				</div>						
-			</div>					
-			
-			<!-- 
-			<grid sclass="MyGridRowHeight" width="100%" fixedLayout="true" oddRowSclass="none">
-				<columns>							
-					<column hflex="min"/>
-					<column hflex="min"/>							
-				</columns>
-				<rows >
-					<row>
-						<label value="Familia de Productos" />
-						<combobox
-							model="@load(vm.busquedaProductosForm.listaFamilias)"
-							selectedItem="@bind(vm.familiaBean)"
-							onSelect="@command('cargaSubFamilias')"
-							placeholder="SELECCIONAR"
-							onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
-							width="300px">
-							<template name='model'>
-								<comboitem
-									label="@load(each.descripcion)" />
-							</template>
-						</combobox>
-						<space />
-					</row>
-
-					<row>
-						<label value="Sub-familia de Productos" />
-						<combobox
-							model="@load(vm.busquedaProductosForm.listaSubFamilias)"
-							selectedItem="@bind(vm.subFamiliaBean)"
-							onSelect="@command('cargaGrupoFamilias')"
-							placeholder="SELECCIONAR"
-							onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
-							width="300px">
-							<template name='model'>
-								<comboitem
-									label="@load(each.descripcion)" />
-							</template>
-						</combobox>
-						<space />
-					</row>
-
-					<row>
-						<label value="Grupo de Productos" />
-						<combobox
-							model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
-							selectedItem="@bind(vm.grupoFamiliaBean)"
-							placeholder="SELECCIONAR"
-							onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
-							width="300px">
-							<template name='model'>
-								<comboitem
-									label="@load(each.descripcion)" />
-							</template>
-						</combobox>
-						<space />
-					</row>
-
-					<row>
-						<label value="Código de Producto SAP" />								
-						<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
-						<space />
-					</row>
-
-					<row>
-						<label value="Codigo Barra Producto" />	
-						<cell colspan="1" style="padding: 0px 0px 0px 0px">							
-							<textbox
-								value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
-
-							<space width="10px"/>	
-
-							<button image="/iconos/lupa2.png" width="100px"
-								label="Buscar" onClick="@command('despachador')" />
-						</cell>	
-					</row>
-				</rows>
-			</grid>	 -->			
+			</div>			
 		</div>			
 				
 		
 		<div width="100%" height="3px"/>
 			
-		<div width="100%" height="70%">				
+		<div width="100%" height="70%" style="background-color:#c1c1c1; border-style:none">				
 			
 			<div width="100%" style="background-color:black;color: white">
 				<space width="20px"/>
@@ -191,9 +113,9 @@
 				<label value="Grupo" />																		
 			</div>
 				
-			<div width="100%" vflex="max">	
+			<div width="100%" vflex="min" style="background-color:#c1c1c1; border-style:none">	
 				<grid model= "@load(vm.busquedaProductosForm.listaProductos)" 
-						sclass="MyGridRowHeight" height="480px"  
+						sclass="MyGridRowHeight" height="465px"  
 						emptyMessage="Sin registros" fixedLayout="true" oddRowSclass="none">						
 					<columns>
 						<column width="120px"/>

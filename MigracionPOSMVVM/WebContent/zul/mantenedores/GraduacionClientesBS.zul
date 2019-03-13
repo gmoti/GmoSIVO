@@ -1,11 +1,11 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <zk>
-<window id="winGraduacionClientes" border="none"  width="65%" height="65%" vflex="min" sclass="container-fluid"
+<window id="winGraduacionClientes" border="none"  width="65%" vflex="min" sclass="container-fluid"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
 			
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">    		
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">    		
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 	   		<!-- <label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/> -->
 	   		<label value="${c:l('cliente.graduacion.graduacion.cliente')}" style="float: left ; font-weight: bold; font-size: 150%;"/>
@@ -42,7 +42,7 @@
 	   	</div>	   	
 	</div>
 	
-	<div sclass="container-fluid" align="right" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" align="right" style="background-color:#c1c1c1; border-style:none">
 	
 		<!-- Row 1 -->
 		<div sclass="row" style="background-color:transparent">
@@ -167,7 +167,7 @@
 		</div>				
 	</div>	
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 		<div width="100%" vflex="min" style="background-color:black;color: white;">
 	   		<label value="Historico"/>				   		
 		</div>
@@ -177,7 +177,7 @@
 	</div>
 		
 	
-	<div  sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div  sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 		<div width="100%" vflex="min" style="background-color:black;color: white">
 			<space width="5px"/>
 			<label value="Fecha"/>	
@@ -191,7 +191,7 @@
 		</div>	
 	</div>			
 		
-	<div  sclass="container-fluid" style="background-color:#99bce8; border-style:none">	
+	<div  sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">	
 	
 									
 			<div width="30%" height="150px" style="float:left">
@@ -206,7 +206,7 @@
 						<row>
 							<textbox value="@load(each.fecha)" width="80px" readonly="true"/>
 							<textbox value="@load(each.numero)" width="45px" readonly="true"/>
-							<button label="ver" onClick="@command('verGraduacion',graduacion=each)" width="50px"/>
+							<button label="ver" onClick="@command('verGraduacion',graduacion=each,origen=1)" width="50px"/>
 						</row>
 					</template>
 				</grid>					
@@ -285,7 +285,7 @@
 		
 			
 			
-	<div width="100%" sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div width="100%" sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 	
 		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">

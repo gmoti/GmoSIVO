@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:w="client">
-<window id="winBusquedaMedico" width="40%" height="50%" border="none" 
+<window id="winBusquedaMedico" width="40%" height="75%" border="none" 
 		position="center" closable="false" mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaMedico')">
 		
@@ -29,82 +29,82 @@
 		
 		
 		<div width="100%" height="100%">
-			<borderlayout>
-				<north>
-					<div>						
-						<div width="100%" style="background-color:black;color: white" height="40px">
-							<label value="Busqueda de Medicos" />
-							<div style="float: right">					
-								<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaMedico.detach()" sclass="shrink24"/>		
-							</div>																			
-						</div>
-										
-					
-						<grid sclass="MyGridRowHeight" oddRowSclass="none">
-							<columns>
-								<column width="100px" />
-								<column width="200px" />
-							</columns>
-							<rows>
-								<row>
-									<label value="Codigo" width="95px"/>
-									<textbox value="@bind(vm.busquedaMedicoForm.codigo)" width="195px"/>								
-								</row>
-								<row>
-									<label value="Nif" width="95px"/>
-									<textbox value="@bind(vm.busquedaMedicoForm.nif)" width="195px"/>								
-								</row>
-								<row>
-									<label value="Apellido" width="95px"/>
-									<textbox id="id_apellido" value="@bind(vm.busquedaMedicoForm.apellido)"  width="195px"/>								
-								</row>
-								<row>
-									<label value="Nombre" width="95px"/>
-									<textbox id="id_nombre" value="@bind(vm.busquedaMedicoForm.nombre)"  width="195px"/>								
-								</row>
-								<row>
-									<label/>
-									<button image="/iconos/lupa.png" label="Buscar" onClick="@command('buscar')" sclass="shrink16"/>							
-								</row>
-							</rows>
-						</grid>
-					</div>
-				</north>
+			
+			<div width="100%" vflex="min">						
+				<div width="100%" style="background-color:black;color: white" height="40px">
+					<label value="Busqueda de Medicos" />
+					<div style="float: right">					
+						<toolbarbutton image="/iconos/cancel.png" onClick="winBusquedaMedico.detach()" sclass="shrink24"/>		
+					</div>																			
+				</div>
+								
+			
+				<grid sclass="MyGridRowHeight" oddRowSclass="none">
+					<columns>
+						<column width="100px" />
+						<column width="200px" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Codigo" width="95px"/>
+							<textbox value="@bind(vm.busquedaMedicoForm.codigo)" width="195px"/>								
+						</row>
+						<row>
+							<label value="Nif" width="95px"/>
+							<textbox value="@bind(vm.busquedaMedicoForm.nif)" width="195px"/>								
+						</row>
+						<row>
+							<label value="Apellido" width="95px"/>
+							<textbox id="id_apellido" value="@bind(vm.busquedaMedicoForm.apellido)"  width="195px"/>								
+						</row>
+						<row>
+							<label value="Nombre" width="95px"/>
+							<textbox id="id_nombre" value="@bind(vm.busquedaMedicoForm.nombre)"  width="195px"/>								
+						</row>
+						<row>
+							<label/>
+							<button image="/iconos/lupa.png" label="Buscar" onClick="@command('buscar')" sclass="shrink16"/>							
+						</row>
+					</rows>
+				</grid>
+			</div>
 				
-				<center>
-					<div>					
-						<div width="100%" style="background-color:black;color: white;">
-							<label value="Nif" />
-							<space width="80px"/>
-							<label value="Apellido" />
-							<space width="110px"/>
-							<label value="Nombre" />
-							<space width="105px"/>
-							<label value="Agregar" />														   	
-						</div>
-						
-						<grid model="@bind(vm.busquedaMedicoForm.listaOftalmologos)" oddRowSclass="none"  
-								sclass="MyGridRowHeight" height="250px">
-							<columns>
-								<column width="100px" />
-								<column width="155px" />
-								<column width="155px" />
-								<column width="50px" />								
-							</columns>
-							<template name="model">							
-								<row>
-									<textbox value="@load(each.nif)" readonly="true" width="95px"/>
-									<textbox value="@load(each.apelli)" readonly="true" width="150px"/>
-									<textbox value="@load(each.nombre)" readonly="true" width="150px"/>								
-									<toolbarbutton image="/iconos/add.png" 
-											onClick="@command('medicoSeleccionado',medico=each,win=winBusquedaMedico)" 
-											sclass="shrink16"/>
-								</row>							
-							</template>
-						</grid>
-					</div>				
-				</center>				
-			</borderlayout>
+			<div width="100%" height="80%">
+								
+				<div width="100%" style="background-color:black;color: white;">
+					<label value="Nif" />
+					<space width="80px"/>
+					<label value="Apellido" />
+					<space width="110px"/>
+					<label value="Nombre" />
+					<space width="105px"/>
+					<label value="Agregar" />														   	
+				</div>
+				
+				<div width="100%" height="90%">
+					<grid model="@bind(vm.busquedaMedicoForm.listaOftalmologos)" 
+							oddRowSclass="none"  
+							sclass="MyGridRowHeight" height="95%" style="overflow-y: scroll">
+						<columns>
+							<column width="100px" />
+							<column width="155px" />
+							<column width="155px" />
+							<column width="50px" />								
+						</columns>
+						<template name="model">							
+							<row>
+								<textbox value="@load(each.nif)" readonly="true" width="95px"/>
+								<textbox value="@load(each.apelli)" readonly="true" width="150px"/>
+								<textbox value="@load(each.nombre)" readonly="true" width="150px"/>								
+								<toolbarbutton image="/iconos/add.png" 
+										onClick="@command('medicoSeleccionado',medico=each,win=winBusquedaMedico)" 
+										sclass="shrink16"/>
+							</row>							
+						</template>
+					</grid>
+				</div>
+			</div>	
+					
 		</div>
 </window>
 </zk>

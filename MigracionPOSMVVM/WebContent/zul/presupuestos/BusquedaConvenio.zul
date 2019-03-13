@@ -1,89 +1,79 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winBusquedaConvenio" border="none" width="45%" height="45%" 
+<window id="winBusquedaConvenio" border="none" width="45%" height="75%"  
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaConvenio')">
 		
 		
-		<borderlayout vflex="min" hflex="min">
-			<north hflex="min">
-				<div width="100%" height="30%">				
-					
-					<div width="100%" style="background-color:black;color: white" height="40px">
-						<label value="Busqueda Convenios" style="float: left"/>	
-						<div style="float: right">					
-							<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
-								onClick="winBusquedaConvenio.detach()"/>	
-						</div>				
-					</div>
-					
-					
-					<div width="100%">
-
-						<grid sclass="MyGridRowHeight" height="150x" fixedLayout="true" oddRowSclass="none">
-							<columns>
-								<column width="250px" />
-								<column width="200px" />
-							</columns>
-							<rows>
-								<row>
-									<label value="Codigo convenio"/>
-									<textbox width="180px" value="@bind(vm.busquedaConveniosForm.codigo)"/>
-								</row>
-								<row>
-									<label value="Nombre convenio"/>
-									<textbox value="@bind(vm.busquedaConveniosForm.nombre)" width="180px"/>
-								</row>
-								<row>
-									<label value="Nif empresa"/>
-									<textbox value="@bind(vm.busquedaConveniosForm.empresa)" width="180px"/>
-								</row>
-								<row>
-									<cell/>								
-									<button image="/iconos/lupa.png" sclass="shrink16" 
-										label="Buscar"   
-										onClick="@command('buscarConvenios')"/>
-								</row>
-							</rows>
-						</grid>
-						
-					</div>
-				</div>
-			</north>
+		
+		<div width="100%" vflex="min">				
 			
-			<center hflex="min"> 
-				<div width="100%" height="70%">
-				
-					<div width="100%" style="background-color:black;color: white">
-						<space width="10px"/>
-						<label value="Codigo" />
-						<space width="50px"/>
-						<label value="Descripcion" />
-						<!-- <space width="300px"/>
-						<label value="Seleccion" />	 -->					
-					</div>
-					<div width="100%">	
-						
-						<grid model="@load(vm.busquedaConveniosForm.lista_convenios)"
-								sclass="MyGridRowHeight" height="225px" 
-								fixedLayout="true" oddRowSclass="none">
-							<columns>
-								<column width="105px" />
-								<column width="350px" />
-								<column width="55px" />
-							</columns>
-							<template name="model">
-								<row>
-									<textbox value="@load(each.id)" readonly="true" width="100px"/>
-									<textbox value="@load(each.descripcion)" width="350px" readonly="true"/>									
-									<toolbarbutton image="/iconos/add.png"  width="50px"
-										onClick="@command('seleccionaConvenio',arg=each,win=winBusquedaConvenio)"/>
-								</row>
-							</template>
-						</grid>	
-						
-					</div>
-				</div>
-			</center>
-		</borderlayout>
+			<div width="100%" style="background-color:black;color: white" height="40px">
+				<label value="Busqueda Convenios" style="float: left"/>	
+				<div style="float: right">					
+					<toolbarbutton image="/iconos/cancel.png" sclass="shrink24"
+						onClick="winBusquedaConvenio.detach()"/>	
+				</div>				
+			</div>
+			
+			
+			<div width="100%" vflex="min">
+				<grid oddRowSclass="none" sclass="MyGridRowHeight" width="100%" vflex="min" >
+					<columns>
+						<column width="250px" />
+						<column width="200px" />
+					</columns>
+					<rows>
+						<row>
+							<label value="Codigo convenio"/>
+							<textbox width="180px" value="@bind(vm.busquedaConveniosForm.codigo)"/>
+						</row>
+						<row>
+							<label value="Nombre convenio"/>
+							<textbox value="@bind(vm.busquedaConveniosForm.nombre)" width="180px"/>
+						</row>
+						<row>
+							<label value="Nif empresa"/>
+							<textbox value="@bind(vm.busquedaConveniosForm.empresa)" width="180px"/>
+						</row>
+						<row>
+							<cell/>								
+							<button image="/iconos/lupa.png" sclass="shrink16" 
+								label="Buscar"   
+								onClick="@command('buscarConvenios')"/>
+						</row>
+					</rows>
+				</grid>				
+			</div>
+		</div>
+		
+		<div width="100%" vflex="min" style="background-color:black;color: white">
+			<space width="10px"/>
+			<label value="Codigo" />
+			<space width="50px"/>
+			<label value="Descripcion" />
+			<!-- <space width="300px"/>
+			<label value="Seleccion" />	 -->					
+		</div>		
+			
+		<div width="100%" height="70%">				
+			<grid model="@load(vm.busquedaConveniosForm.lista_convenios)"
+					oddRowSclass="none" sclass="MyGridRowHeight" 
+					width="100%" height="95%" style="overflow-y: scroll">
+				<columns>
+					<column width="105px" />
+					<column width="350px" />
+					<column width="55px" />
+				</columns>
+				<template name="model">
+					<row>
+						<textbox value="@load(each.id)" readonly="true" width="100px"/>
+						<textbox value="@load(each.descripcion)" width="350px" readonly="true"/>									
+						<toolbarbutton image="/iconos/add.png"  width="50px"
+							onClick="@command('seleccionaConvenio',arg=each,win=winBusquedaConvenio)"/>
+					</row>
+				</template>
+			</grid>	
+		</div>
+			
 </window>
 </zk>

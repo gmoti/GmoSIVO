@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<window id="winBusquedaAlbaran" border="none" width="45%" height="50%" 
+<window id="winBusquedaAlbaran" border="none" width="45%" height="75%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaAlbaran')">
 			
 	
@@ -60,52 +60,7 @@
 									image="/iconos/lupa.png" width="100px" sclass="shrink16"/>
 					</div>
 				</div>
-			</div>
-			
-			<!-- 
-			<div width="100%" vflex="min">
-				<grid width="100%" vflex="min" oddRowSclass="none">
-					<columns>
-						<column width="150px" />
-						<column hflex="min" />
-					</columns>
-					<rows>
-						<row>
-							<label value="Codigo Albaran"/>
-							<cell>
-								<textbox value="@bind(vm.devolucionForm.codigo1)" width="50px"/>
-								<textbox value="@bind(vm.devolucionForm.codigo2)" width="150px"/>
-							</cell>
-						</row>
-						
-						<row>
-							<label value="Rut del Cliente"/>
-							<textbox value="@bind(vm.devolucionForm.nif)" width="200px"/>
-						</row>
-						
-						<row>
-							<label value="Fecha Albaran"/>
-							<datebox value="@bind(vm.fechaAlbaran)" width="200px" format="dd/MM/yyyy"/>
-						</row>
-						
-						<row>
-							<label value="Agente"/>
-							<combobox model="@bind(vm.devolucionForm.listaAgentes)" selectedItem="@bind(vm.agenteBean)">
-								<template name="model">
-									<comboitem label="@load(each.usuario)"/>
-								</template>							
-							</combobox>
-						</row>
-						
-						<row>
-							<cell/>
-							<button label="Buscar" onClick="@command('buscarAlbaranes')" 
-									image="/iconos/lupa.png" width="100px" sclass="shrink16"/>
-						</row>
-					</rows>
-				</grid>
-			</div> 
-			-->
+			</div>			
 
 			<div width="100%" vflex="min" style="background-color:black;color: white">
 				<space width="20px"/>
@@ -120,10 +75,10 @@
 				<label value="NIF" />																		
 			</div>
 			
-			<div width="100%" vflex="min">
+			<div width="100%" height="90%">
 
 				<grid model="@bind(vm.devolucionForm.lista_albaranes)" 
-					width="100%" height="240px" oddRowSclass="none" sclass="MyGridRowHeight">
+					oddRowSclass="none" sclass="MyGridRowHeight" width="100%" height="95%" style="overflow-y: scroll" >
 					<columns>
 						<column width="150px" />
 						<column width="105px" />
@@ -145,7 +100,6 @@
 				</grid>
 
 			</div>
-		</div>	
-			
+		</div>
 
 </window>

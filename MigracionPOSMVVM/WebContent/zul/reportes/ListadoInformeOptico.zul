@@ -20,7 +20,7 @@
 			<toolbarbutton image="/iconos/cancel.png" onClick="reporte2.detach()" sclass="shrink24"/>
 	   	</div>		
 		
-		<borderlayout>
+		<borderlayout style="background-color:#c1c1c1; border-style:none">
 			<north>
 				<div>
 					<vbox>

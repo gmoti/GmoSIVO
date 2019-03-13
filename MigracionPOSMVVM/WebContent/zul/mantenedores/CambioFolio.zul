@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winCambioFolio" border="none"  width="45%" height="40%" vflex="min"
+<window id="winCambioFolio" border="none"  width="45%"  vflex="min"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerCambioFolio')">
 			
 	

@@ -3,7 +3,8 @@
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAlbaran')  ">
 			
 			
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">	
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">	
+	
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 	   		<label value="ALBARAN" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
@@ -25,7 +26,7 @@
 	</div>		
 	
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 	
 		<!-- Row 1 (10)-->
 		<div sclass="row" style="background-color:transparent">
@@ -262,7 +263,8 @@
 	</div>
 	
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
+	
 		<div width="100%" vflex="min" style="background-color:black;color:white; font-size: 6px;">							
 			<space width="10px"/>
 			<label value="Articulo"/>
@@ -285,12 +287,15 @@
 		</div>
 	</div>
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
-		<div width="100%" height="100%">
+	<div sclass="container-fluid" height="100%" style="background-color:#c1c1c1; border-style:none">
+	
+		<!-- <div width="100%" height="100%" style="background-color:#c1c1c1; border-style:none"> -->
+		
 			<grid model="@bind(vm.devolucionForm.lista_productos)" 
-					width="100%" height="250px" sclass="MyGridRowHeight" oddRowSclass="none">
+					sclass="MyGridRowHeight" oddRowSclass="none" 
+					height="95%" style="overflow-y: scroll" emptyMessage="Sin Registros">
 				
-				<columns style="background-color:black;color: white;">
+				<columns>
 					<column  width="105px" />
 					<column  width="275px"/>
 					<column  width="105px"/>
@@ -314,7 +319,7 @@
 					</row>
 				</template>
 			</grid>
-		</div>	
+		<!-- </div> -->	
 	</div>		
 		
 	<popup id="ListaAlbaranes" width="45%" height="65%">	

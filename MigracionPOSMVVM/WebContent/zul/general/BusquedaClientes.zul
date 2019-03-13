@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk >
-<window id="winBusquedaClientes" border="none" width="40%" height="50%" 
+<window id="winBusquedaClientes" border="none" width="40%" height="75%" 
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaClientes')">
 		
 		
@@ -14,7 +14,7 @@
 			</div>
 			
 			<div width="100%" vflex="min">
-				<grid width="100%" vflex="min" oddRowSclass="none" sclass="MyGridRowHeight">
+				<grid oddRowSclass="none" sclass="MyGridRowHeight" width="100%" vflex="min" >
 					<columns>
 						<column width="150px" />
 						<column hflex="min" />
@@ -57,10 +57,9 @@
 				<label value="Agregar" />																		
 			</div>
 			
-			<div width="100%" vflex="max">
-
+			<div width="100%" height="70%">
 				<grid model="@bind(vm.busquedaClientesForm.listaClientes)" 
-					width="100%" height="250px" oddRowSclass="none" sclass="MyGridRowHeight"> <!-- height="200px" -->
+					oddRowSclass="none" sclass="MyGridRowHeight" width="100%" height="95%" style="overflow-y: scroll" > 
 					<columns>
 						<column width="85px" />
 						<column width="165px" />

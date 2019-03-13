@@ -15,7 +15,7 @@ public class ConexionGMO implements ConexionFactory{
     
     public Connection getConexion() {
     
-    	/*
+    	
 		Connection con = null;
     	String usuario="gmo";
     	String pass="249gmo.,";
@@ -23,20 +23,20 @@ public class ConexionGMO implements ConexionFactory{
     	try{	
     		Class.forName(driver).newInstance();
     		//PROD
-    		  con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.34:1521:POSCL",usuario,pass);
+    		  //con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.34:1521:POSCL",usuario,pass);
     		
     		//QA
-    		//con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.134:1521:POSCL",usuario,pass);
+    		con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.134:1521:POSCL",usuario,pass);
     		
     	   
     	}catch(Exception e) {    
     		
     		 System.out.println("Error de conexion");
     	}
-    	return con;*/
+    	return con;
     	 
     	/*jndi*/
-    	Connection con = null; 
+    	/*Connection con = null; 
     	DataSource dataSource = null;
     	InitialContext context = null;
     	
@@ -50,7 +50,7 @@ public class ConexionGMO implements ConexionFactory{
          }catch(NamingException e){
         	 e.printStackTrace();
          }
-         return con;
+         return con;*/
     }
 
     

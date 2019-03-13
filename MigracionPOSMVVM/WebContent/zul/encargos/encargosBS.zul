@@ -35,7 +35,7 @@
     	
     <!-- Parte superior de la ventana-->
 			
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 		<div width="100%" height="25px" style="background-color:black; color: white">
 			<label value="ENCARGOS" style="float: left ; font-weight: bold; font-size: 150%;"/>	
 			<div style="float: right">					
@@ -65,7 +65,7 @@
 		</div>
 	</div>	
     	
-    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none"> 
+    <div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none"> 
 		<!-- Row 1 -->
 		<div sclass="row" style="background-color:transparent">
 		
@@ -267,7 +267,7 @@
 	
 	<!-- Centro de la ventana -->
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">	
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">	
 		<!-- Encabezado de la grid -->
 		<div width="100%"   style="background-color:black;color:white; font-size: 6px;">
 			
@@ -479,7 +479,7 @@
 		</div>
 	</div>
 	
-	<div align="center" sclass="container-fluid" style="background-color:#99bce8; border-style:none">		
+	<div align="center" sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">		
 		<div vflex="min"  style="background-color:black;color: white" width="590px">
 			<label value="Graduacion de articulo"/>				
 		</div>
@@ -502,13 +502,13 @@
 	</div>
 	
 	<!-- Parte inferior de la ventana -->
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 		<div vflex="min"  style="background-color:black;color: white">
 				<label value="Graduacion Cliente"/>				
 		</div>
 	</div>
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 	
 		<div sclass="row" style="background-color:transparent">		
 			<div sclass="col-lg-1">
@@ -638,13 +638,13 @@
 	
 	
 	<!-- Parte inferior de la ventana -->
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 		<div vflex="min"  style="background-color:black;color: white">
 			<label value="Totales"/>				
 		</div>
 	</div>	
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 	
 		<div sclass="row" style="background-color:transparent">
 		

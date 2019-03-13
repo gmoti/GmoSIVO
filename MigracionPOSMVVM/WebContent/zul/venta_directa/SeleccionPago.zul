@@ -1,9 +1,9 @@
 <?page title="Seleccion de Pago" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winSeleccionPago" border="none" height="42%" width="65%" sclass="container-fluid"
+	<window id="winSeleccionPago" border="none" width="65%" vflex="min" sclass="container-fluid"
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionPago')">	
 		
-		
+		<!-- height="42%" -->
 		
 	<div sclass="container-fluid">
 		<div width="100%" vflex="min" style="background-color:black;color: white">

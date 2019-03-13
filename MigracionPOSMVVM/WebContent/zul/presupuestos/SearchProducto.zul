@@ -16,8 +16,9 @@
 						</div>																			
 					</div>
 					
-					<div sclass="container-fluid">
-						<div sclass="row" style="background-color:white">
+					<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
+					
+						<div sclass="row" style="background-color:transparent">
 							<div sclass="col-lg-4">
 								<label value="Familia de Productos" />
 							</div>
@@ -38,7 +39,7 @@
 							</div>					
 						</div>
 						
-						<div sclass="row" style="background-color:white">
+						<div sclass="row" style="background-color:transparent">
 							<div sclass="col-lg-4">
 								<label value="Sub-familia de Productos" />
 							</div>
@@ -59,7 +60,7 @@
 							</div>					
 						</div>
 						
-						<div sclass="row" style="background-color:white">
+						<div sclass="row" style="background-color:transparent">
 							<div sclass="col-lg-4">
 								<label value="Grupo de Productos" />									
 							</div>
@@ -80,7 +81,7 @@
 							</div>					
 						</div>
 						
-						<div sclass="row" style="background-color:white">
+						<div sclass="row" style="background-color:transparent">
 							<div sclass="col-lg-4">
 								<label value="Código de Producto SAP" />								
 							</div>
@@ -89,7 +90,7 @@
 							</div>					
 						</div>
 						
-						<div sclass="row" style="background-color:white">
+						<div sclass="row" style="background-color:transparent">
 							<div sclass="col-lg-4">
 								<label value="Codigo Barra Producto" />	
 							</div>
@@ -102,109 +103,25 @@
 									onClick="@command('despachador')" />
 							</div>				
 						</div>						
-					</div>	
-					
-					<!-- 
-					<div width="100%" vflex="min">
-						<grid sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none" width="100%">
-							<columns>
-								<column width="180px"/>
-								<column width="305px"/>
-								<column width="100px"/>
-							</columns>
-							<rows>
-								<row>
-									<label value="Familia de Productos" />								
-									<combobox
-										model="@load(vm.busquedaProductosForm.listaFamilias)"
-										selectedItem="@bind(vm.familiaBean)"
-										onSelect="@command('cargaSubFamilias')"
-										placeholder="SELECCIONAR"
-										onRightClick="@command('comboSetNull',objetoBean=vm.familiaBean)"
-										width="300px">
-	
-										<template name='model'>
-											<comboitem
-												label="@load(each.descripcion)" />
-										</template>
-									</combobox>
-									<space/>
-								</row>
-	
-								<row>
-									<label value="Sub-familia de Productos" />								
-									<combobox
-										model="@load(vm.busquedaProductosForm.listaSubFamilias)"
-										selectedItem="@bind(vm.subFamiliaBean)"
-										onSelect="@command('cargaGrupoFamilias')"
-										placeholder="SELECCIONAR"
-										onRightClick="@command('comboSetNull',objetoBean=vm.subFamiliaBean)"
-										width="300px">
-	
-										<template name='model'>
-											<comboitem
-												label="@load(each.descripcion)" />
-										</template>
-									</combobox>
-									<space/>
-								</row>
-	
-								<row>
-									<label value="Grupo de Productos" />								
-									<combobox
-										model="@load(vm.busquedaProductosForm.listaGruposFamilias)"
-										selectedItem="@bind(vm.grupoFamiliaBean)"
-										onSelect="@command('cambiaGrupoFamilias')"
-										placeholder="SELECCIONAR"
-										onRightClick="@command('comboSetNull',objetoBean=vm.grupoFamiliaBean)"
-										width="300px">
-	
-										<template name='model'>
-											<comboitem
-												label="@load(each.descripcion)" />
-										</template>
-									</combobox>
-									<space/>
-								</row>
-	
-								<row>
-									<label value="Código de Producto SAP" />								
-									<textbox value="@bind(vm.busquedaProductosForm.codigoBusqueda)" />
-									<space/>	
-								</row>
-	
-								<row>
-									<label value="Codigo Barra Producto" />														
-									<cell colspan="1" style="padding:0px 0px 0px 0px">							
-										<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" />
-										<space width="10px"/>
-										<button image="/iconos/lupa2.png"
-											label="Buscar" onClick="@command('despachador')" />
-									</cell> 
-								</row>
-							</rows>
-						</grid>
-					</div>												
-					 -->
-				</div>	
-					
+					</div>
+				</div>					
 			</north>
 
 			<center>
-				<div width="100%" height="70%">
+				<div width="100%" height="70%" style="background-color:#c1c1c1; border-style:none">
 							
 					<radiogroup id="ojos"/>
 					<radiogroup id="ojosLentillas"/>
 						
 					<!-- Aqui se incluyen las busquedas especificas de cristales y lentillas  -->	
 					<!-- <div height="45%" visible="@bind(vm.busquedaAvanzadaLentilla)"> -->
-					<div width="100%" visible="@bind(vm.busquedaAvanzadaLentilla)">
+					<div width="100%" visible="@bind(vm.busquedaAvanzadaLentilla)" style="background-color:#c1c1c1; border-style:none">
 					
 						<div width="100%" style="background-color:black;color: white">
 							<label value="Seleccion por:" />													
 						</div>	
 						
-						<grid sclass="MyGridRowHeight" width="100%"
+						<grid sclass="MyGridRowHeight" width="100%" 
 								fixedLayout="true" oddRowSclass="none">
 							<columns>
 								<column hflex="1" />
@@ -317,7 +234,7 @@
 					</div>
 					
 					<!-- Resultado de la busqueda -->					
-					<div width="100%">					
+					<div width="100%" style="background-color:#c1c1c1; border-style:none">					
 						<div width="100%" style="background-color:black;color: white">
 							<space width="20px"/>
 							<label value="Articulo" />	

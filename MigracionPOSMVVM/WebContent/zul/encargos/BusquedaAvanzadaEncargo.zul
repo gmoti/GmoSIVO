@@ -1,20 +1,20 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window id="winBusquedaAvanzadaEncargo" border="none" width="60%" height="45%" 
+<window id="winBusquedaAvanzadaEncargo" border="none" width="60%" height="70%" 
 		position="center" closable="false" mode="modal" sizable="false" 		
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBusquedaAvanzadaEncargo')">
 		
 	
-	<borderlayout>
-		<north>
-		<div width="100%" height="30%">					
+		<div width="100%" height="100%">
+		
+			<div width="100%" vflex="min">					
 				
 				<div width="100%" style="background-color:black;color: white" height="40px">
 					<label value="Busqueda Avanzada de Encargos" />
 					<div style="float: right">					
 						<toolbarbutton image="/iconos/cancel.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)"/>		
 					</div>																			
-				</div>
+				</div>				
 				
 				<grid sclass="MyGridRowHeight" oddRowSclass="none">
 					<columns>
@@ -56,29 +56,30 @@
 				</grid>									
 			</div>			
 			
-		</north>
-	
-		<center>
-			<div height="70%">				
+		
+							
 				
-				<div width="100%" style="background-color:black;color: white">
-					<space width="10px"/>
-					<label value="Agente" />	
-					<space width="100px"/>
-					<label value="Codigo" />
-					<space width="80px"/>
-					<label value="F. Pedido" />
-					<space width="20px"/>
-					<label value="Hora" />
-					<space width="40px"/>
-					<label value="F. Entrega" />		
-					<space width="25px"/>
-					<label value="Anticipo" />
-					<space width="30px"/>			
-					<label value="Sel" />								
-					</div>	
-					<grid model= "@load(vm.busquedaPedidosForm.lista_pedidos)" oddRowSclass="none"
-							sclass="MyGridRowHeight" height="200px"  emptyMessage="Sin registros">						
+			<div width="100%" style="background-color:black;color: white">
+				<space width="10px"/>
+				<label value="Agente" />	
+				<space width="100px"/>
+				<label value="Codigo" />
+				<space width="80px"/>
+				<label value="F. Pedido" />
+				<space width="20px"/>
+				<label value="Hora" />
+				<space width="40px"/>
+				<label value="F. Entrega" />		
+				<space width="25px"/>
+				<label value="Anticipo" />
+				<space width="30px"/>			
+				<label value="Sel" />								
+			</div>	
+				
+			<div width="100%" height="90%">
+			
+				<grid model= "@load(vm.busquedaPedidosForm.lista_pedidos)" oddRowSclass="none"
+						sclass="MyGridRowHeight" emptyMessage="Sin registros" height="95%" style="overflow-y: scroll">						
 					<columns>
 						<column width="150px"/>
 						<column width="150px"/>
@@ -103,12 +104,10 @@
 									@global-command('encargoSeleccionado', arg=vm.busquedaPedidosForm.lista_pedidos, arg2=each)"/>										
 						</row>							
 					</template>
-					</grid>	
-				
+				</grid>	
 			</div>
-		</center>
-	
-	</borderlayout>
+			
+	</div>		
 
 </window>
 </zk>

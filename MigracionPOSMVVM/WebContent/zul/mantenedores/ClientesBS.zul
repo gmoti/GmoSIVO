@@ -61,7 +61,7 @@
     ]]></script>
     
     
-    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">    		
+    <div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">    		
 		<div width="100%" height="30px" style="background-color:black;color: white;">			   	
 	   		<label value="CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
@@ -81,7 +81,7 @@
 	</div>
     
     
-    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">    	
+    <div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">    	
 		
 		<!-- Form Principal -->	
 		
@@ -323,13 +323,13 @@
    		</div>
     </div>  
     
-    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+    <div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
     	<div width="100%" vflex="min" style="background-color:black;color: white;">
 			<label value="Facturacion"/>
 		</div>
     </div>
     
-    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+    <div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
     
     	<div sclass="row" style="background-color:transparent">
     		<div sclass="col-lg-1">
@@ -367,13 +367,13 @@
     	</div>
     </div>
     
-    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+    <div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
     	<div width="100%" vflex="min" style="background-color:black;color: white;">
 			<label value="Marketing"/>
 		</div>
     </div>
     
-    <div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+    <div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
     	<div width="100%" vflex="min">
 			<label value="Indique por qué medio desea recibir información de productos y promociones."/>			
 		    <hbox>

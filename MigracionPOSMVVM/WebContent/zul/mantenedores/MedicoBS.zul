@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:w="client"> 
-<window id="winMedico" border="none" width="55%" height="45%" sclass="container-fluid"
+<window id="winMedico" border="none" width="55%" vflex="min" sclass="container-fluid"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMedico')  ">
 			
 	<style>	 
@@ -10,7 +10,7 @@
 	</style>
 	
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
 		   	<label value="MEDICOS" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
@@ -26,7 +26,7 @@
 	   	</div>	
 	</div>
 	
-	<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 	
 		<div sclass="row" style="background-color:transparent">
 			<div sclass="col-lg-2">
@@ -129,6 +129,7 @@
 		</div>
 	
 	</div>	
+	
 	
 	
 </window>

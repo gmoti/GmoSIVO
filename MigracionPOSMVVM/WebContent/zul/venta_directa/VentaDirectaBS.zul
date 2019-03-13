@@ -4,7 +4,7 @@
 	
 	<div sclass="container-fluid" visible="@bind(vm.controlBotones.enableGenerico1)">
 	
-		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">		
+		<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">		
 			<div width="100%" height="25px" style="background-color:black;color: white">
 				<label value="VENTA DIRECTA" style="float: left ; font-weight: bold; font-size: 150%;"/>	
 				<div style="float: right">					
@@ -22,7 +22,7 @@
 			</div>	
 		</div>
 		
-		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none" >
+		<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none" >
 		
 			<div sclass="row" style="background-color:transparent">
 			
@@ -143,7 +143,7 @@
 			</div>			
 		</div>
 		
-		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+		<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 			<!-- Encabezado de la grid -->
 			<div width="100%" height="10%" style="background-color:black;color: white;">
 		    	<space width="10px"/>
@@ -204,7 +204,7 @@
 			</div>	    	
 		</div>
 		
-		<div sclass="container-fluid" style="background-color:#99bce8; border-style:none">
+		<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
 			<space width="750px"/>
 			<label value="Total " sclass="font-weight-bold"/>						
 			<intbox value="@bind(vm.ventaDirectaForm.sumaTotal)" readonly="true" style="text-align:right;background-color: #d5f4e6;" format="#,###,##0" locale="it"/>		
@@ -214,7 +214,7 @@
 
 	
 		
-	<div sclass="container-fluid" visible="@bind(vm.controlBotones.enableGenerico2)" style="background-color:#99bce8; border-style:none">
+	<div sclass="container-fluid" visible="@bind(vm.controlBotones.enableGenerico2)" style="background-color:#c1c1c1; border-style:none">
 	
 		<div width="100%" vflex="min" style="background-color:black;color: white">
 			<label value="DATOS DE CAJA" style="float: left ; font-weight: bold; font-size: 150%;"/>	

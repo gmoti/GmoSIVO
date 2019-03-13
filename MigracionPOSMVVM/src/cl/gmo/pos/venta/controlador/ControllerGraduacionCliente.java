@@ -106,7 +106,7 @@ public class ControllerGraduacionCliente implements Serializable{
 				graduacionesBean.setFecha(graduacionesForm.getFecha_graduacion());
 				graduacionesBean.setNumero((int)graduacionesForm.getNumero_graduacion());
 				
-				verGraduacion(graduacionesBean);
+				verGraduacion(graduacionesBean,0);
 			}else {
 				
 				graduacionesForm.setNifdoctor("");
@@ -554,7 +554,8 @@ public class ControllerGraduacionCliente implements Serializable{
 	//@NotifyChange({"graduacionesForm","beanGraduaciones","prismaCantidadOD","prismaBaseOD","prismaCantidadOI","prismaBaseOI","fechaEmision","fechaProxRevision"})
 	@NotifyChange("*")
 	@Command
-	public void verGraduacion(@BindingParam("graduacion")GraduacionesBean graduacion)
+	public void verGraduacion(@BindingParam("graduacion")GraduacionesBean graduacion,
+							@BindingParam("origen")int origen)
 	{	
 		String esfera="0";
 		String cilindro="0";		
@@ -574,14 +575,15 @@ public class ControllerGraduacionCliente implements Serializable{
 		Optional<String> f ;
 		Optional<String> g ;
 		Optional<String> h ;
-		Optional<String> i ;
+		Optional<String> i ;	
 		
-		
-		//graduacionesForm.setAccion(Constantes.STRING_ACTION_VER_GRADUACION);
 		graduacionesForm.setFecha_graduacion(graduacion.getFecha());
-		graduacionesForm.setNumero_graduacion(graduacion.getNumero());		
-		//graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+		graduacionesForm.setNumero_graduacion(graduacion.getNumero());
 		
+		if (origen==1) {
+			graduacionesForm.setAccion(Constantes.STRING_ACTION_VER_GRADUACION);
+			graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+		}
 		//ojo derecho
 		
 		a = Optional.ofNullable(graduacionesForm.getOD_esfera()); 
