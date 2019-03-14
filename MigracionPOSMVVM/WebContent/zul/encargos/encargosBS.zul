@@ -1,6 +1,6 @@
 <?page title="Encargos" contentType="text/html;charset=UTF-8"?>
  
-<window id="winEncargos" border="none" width="100%" height="100%" sclass="container-fluid"
+<window id="winEncargos" border="none" width="100%" height="100%" sclass="container-fluid"  
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerEncargos')">		
 		
 	<script><![CDATA[

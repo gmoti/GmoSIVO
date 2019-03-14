@@ -139,7 +139,7 @@ public class ControllerContactologia implements Serializable {
 		win.detach();
 		
 		Window winPresup = (Window)Executions.createComponents(
-                "/zul/presupuestos/presupuesto.zul", null, objetos);			
+                "/zul/presupuestos/PresupuestoBS.zul", null, objetos);			
 		winPresup.doModal();		
 	}
 	
@@ -156,7 +156,7 @@ public class ControllerContactologia implements Serializable {
 		win.detach();
 		
 		Window winPresup = (Window)Executions.createComponents(
-                "/zul/encargos/encargos.zul", null, objetos);			
+                "/zul/encargos/encargosBS.zul", null, objetos);			
 		winPresup.doModal();		
 	}
 	

@@ -4,11 +4,10 @@
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerContactologia')">
 			
 	
-	
 	<div width="100%" height="100%">
 	
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
-	   		<label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
+	   		<label value="GRADUACIÓN CONTACTOLGIA CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
 				<label value="@load(vm.sucursalDes)"/>
 				<label value="::"/>

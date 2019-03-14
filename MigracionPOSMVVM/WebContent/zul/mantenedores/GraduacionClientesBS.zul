@@ -3,11 +3,24 @@
 <zk>
 <window id="winGraduacionClientes" border="none"  width="65%" vflex="min" sclass="container-fluid"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
-			
-	
+	<!-- 		
+	<style>		
+		.fgrid tr.z-row td.z-row-inner,	tr.z-row, div.z-grid-body div.z-cell, div.z-grid 
+		{
+		  border: none;
+		  overflow: hidden;
+		  zoom: 1;
+		  background: #c1c1c1;
+		  border-top: none;
+		  border-left: none;
+		  border-right: none;
+		  border-bottom: none;
+		}	
+	</style>
+	 -->
 	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">    		
 		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
-	   		<!-- <label value="GRADUACION CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/> -->
+	   		<!-- <label value="GRADUACIÓN CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/> -->
 	   		<label value="${c:l('cliente.graduacion.graduacion.cliente')}" style="float: left ; font-weight: bold; font-size: 150%;"/>
 			<div style="float: right">					
 				<label value="@load(vm.sucursalDes)"/>
@@ -195,7 +208,7 @@
 	
 									
 			<div width="30%" height="150px" style="float:left">
-				<grid model="@bind(vm.graduacionesForm.listaGraduaciones)" 
+				<grid model="@bind(vm.graduacionesForm.listaGraduaciones)"
 						width="100%" height="125px" oddRowSclass="none">
 					<columns>
 						<column width="85px" />

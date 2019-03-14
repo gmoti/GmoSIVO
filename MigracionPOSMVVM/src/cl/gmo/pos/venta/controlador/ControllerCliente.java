@@ -271,8 +271,8 @@ public class ControllerCliente implements Serializable{
 		
 		if(!pro.isPresent() || pro.get().equals("")) {
 			clienteForm.setProfesion("");
-			Messagebox.show("Debe indicar una Profesion");
-			return false;
+			//Messagebox.show("Debe indicar una Profesion");
+			//return false;
 		}
 		else
 			clienteForm.setProfesion(pro.get());
@@ -379,6 +379,11 @@ public class ControllerCliente implements Serializable{
 		
 		try {
 			cliente = busquedaClientes.buscarClienteAjax(busquedaClientesForm, sess);
+			
+			if (cliente.getNif().equals("")) {
+				Messagebox.show("El cliente no existe.");
+				return;
+			}
 			
 			clienteForm.setCodigo(Integer.parseInt(cliente.getCodigo()));
 			clienteForm.setDv(cliente.getDvnif());			

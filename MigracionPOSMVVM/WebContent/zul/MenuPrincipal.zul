@@ -12,7 +12,7 @@
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMenuPrincipal')">
 		
 	
-	<div sclass="container-fluid">	
+	<div sclass="container-fluid" style="background-color: #001624">	
 		<div width="100%" style="background-color:black;color: white;" height="40px">	    
 			<div >
 			    <label value="MENU PRINCIPAL" style="float: left ; font-weight: bold; font-size: 150%;"/> 
@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" style="background-color: #001624">
 		<div>		
 			<menubar>
 				<menu label="Venta">
@@ -80,6 +80,14 @@
 				</menu>
 			</menubar>
 		</div>
+	</div>
+	
+	<div width="100%" height="100%" style="background-color: #001624">
+	
+		<div style="padding:5% 5% 5% 5%">
+			<image src="/iconos/fondo_bn.jpg" width="100%" height="100%"/>
+		</div>
+			
 	</div>
 		
 </window>
