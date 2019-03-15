@@ -833,13 +833,8 @@ public class ControllerEncargos implements Serializable {
 						}
 					
 				}		
-			}	
-			
-		}	
-		
-		
-		
-		
+			}			
+		}		
 	}
 	
 	
@@ -882,12 +877,7 @@ public class ControllerEncargos implements Serializable {
 		if (ventaPedidoForm.getNombre_cliente().equals("")) {
 			Messagebox.show("Debe seleccionar un Cliente");
 			return;
-		}
-		
-		if (ventaPedidoForm.getNombre_cliente().equals("")) {
-			Messagebox.show("Debe seleccionar un Cliente");
-			return;
-		}
+		}	
 		
 		if (ventaPedidoForm.getListaProductos().size() < 1) {
 			Messagebox.show("Debe ingresar articulos para generar cobros");

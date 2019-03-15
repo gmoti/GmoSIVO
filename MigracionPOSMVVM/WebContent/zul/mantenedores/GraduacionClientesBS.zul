@@ -55,7 +55,7 @@
 	   	</div>	   	
 	</div>
 	
-	<div sclass="container-fluid" align="right" style="background-color:#c1c1c1; border-style:none">
+	<div sclass="container-fluid" align="right" style="background-color:#c1c1c1; border-style:none" xmlns:w="client">
 	
 		<!-- Row 1 -->
 		<div sclass="row" style="background-color:transparent">
@@ -97,31 +97,49 @@
 				<label value="OD"/>				
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="##,##" locale="it" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OD_esfera)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />			
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="##,##" locale="it" />				
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="#.##"  locale="us" /> -->
+				<textbox value="@bind(vm.graduacionesForm.OD_cilindro)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />				
 			</div>
 			<div sclass="col-lg-1">
-				<intbox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##" locale="it" />			
+				<!-- <intbox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##" locale="us" /> -->
+				<textbox value="@bind(vm.graduacionesForm.OD_eje)" width="50px"  
+					constraint="/^([0-9]{1,3})?$/: Numero invalido" />			
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="##,##" locale="it" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="#.##" locale="us"/> -->	
+				<textbox value="@bind(vm.graduacionesForm.OD_cerca)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />		
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="##,##" locale="it" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OD_adicion)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />			
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="##,##" locale="it" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OD_dnpl)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />			
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" width="50px" format="##,##" locale="it" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" width="50px" format="#.##" locale="us"/> -->	
+				<textbox value="@bind(vm.graduacionesForm.OD_dnpc)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />		
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" width="50px" format="##,##" locale="it"/>			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" width="50px" format="#.##" locale="us"/> -->	
+				<textbox value="@bind(vm.graduacionesForm.OD_avsc)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />		
 			</div>
-			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" width="50px" format="##,##" locale="it"/>
+			<div sclass="col-lg-1">			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />
 			</div>
 		</div>
 		
@@ -141,31 +159,49 @@
 				<label value="OI"/>				
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="##,##" locale="it" />						   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OI_esfera)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />						   						
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="##,##" locale="it" />								   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OI_cilindro)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />								   						
 			</div>
 			<div sclass="col-lg-1">
-				<intbox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##" locale="it" /> 						   						
+				<!-- <intbox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##" locale="us"/>  -->
+				<textbox value="@bind(vm.graduacionesForm.OI_eje)" width="50px"  
+					constraint="/^([0-9]{1,3})?$/: Numero invalido" />						   						
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="##,##" locale="it" />								   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OI_cerca)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />								   						
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="##,##" locale="it" />							   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OI_adicion)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />							   						
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="##,##" locale="it" />							   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="#.##" locale="us"/> -->	
+				<textbox value="@bind(vm.graduacionesForm.OI_dnpl)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />						   						
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" width="50px" format="##,##" locale="it" />							   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" width="50px" format="#.##" locale="us"/> -->
+				<textbox value="@bind(vm.graduacionesForm.OI_dnpc)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />							   						
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" width="50px" format="##,##" locale="it"/>							   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" width="50px" format="#.##" locale="us"/>	 -->
+				<textbox value="@bind(vm.graduacionesForm.OI_avsc)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />						   						
 			</div>
 			<div sclass="col-lg-1">
-				<doublebox value="@bind(vm.beanGraduaciones.OI_avcc)" width="50px" format="##,##" locale="it"/>			   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_avcc)" width="50px" format="#.##" locale="us"/>	 -->
+				<textbox value="@bind(vm.graduacionesForm.OI_avcc)" width="50px"  
+					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />		   						
 			</div>
 		</div>
 		

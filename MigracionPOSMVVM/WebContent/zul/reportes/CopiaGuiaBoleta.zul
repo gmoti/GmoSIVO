@@ -37,7 +37,7 @@
 						
 						<row>
 							<label value="Tipo de documento"/>
-							<combobox value="@bind(vm.documento)">
+							<combobox selectedItem="@bind(vm.documento)">
 								<attribute name="onCreate">
 										self.setSelectedIndex(0);
 								</attribute>

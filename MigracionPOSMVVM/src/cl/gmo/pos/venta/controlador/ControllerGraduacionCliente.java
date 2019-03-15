@@ -155,7 +155,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		beanGraduaciones = new BeanGraduaciones();
 		fechaEmision = new Date(System.currentTimeMillis());
 		fechaProxRevision = null;
-		graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
+		//graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
 		graduacionesForm.setOD_cantidad("-1");
 		graduacionesForm.setOI_cantidad("-1");
 		
@@ -259,6 +259,8 @@ public class ControllerGraduacionCliente implements Serializable{
 		String mensaje4="";
 		//String mensaje5="";
 		
+		//FQuiroz elimino las variable intermedias para el manejo de las formulas opticas
+		/*
 		graduacionesForm.setOD_esfera(String.valueOf(beanGraduaciones.getOD_esfera()));
 		graduacionesForm.setOD_cilindro(String.valueOf(beanGraduaciones.getOD_cilindro()));
 		graduacionesForm.setOD_eje(String.valueOf(Integer.parseInt(String.valueOf(beanGraduaciones.getOD_eje()))));
@@ -278,7 +280,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm.setOI_dnpl(String.valueOf(beanGraduaciones.getOI_dnpl()));
 		graduacionesForm.setOI_avcc(String.valueOf(beanGraduaciones.getOI_avcc()));
 		graduacionesForm.setOI_avsc(String.valueOf(beanGraduaciones.getOI_avsc()));
-		
+		*/
 		
 		graduacionesForm.setAccion("insertarGraduacion");
 		pagina = graduacionesForm.getPagina();

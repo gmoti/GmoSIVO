@@ -645,9 +645,9 @@ public class Constantes {
 	
 	/*Defino parametros WS boleta*/
 	//public static final String STRING_WS_AREA_NC   ="PRD-NCBOLGMO";
-	public static final String STRING_WS_AREA_NC   ="NC-GMO";
-	public static final String STRING_WS_PASSWD_ ="administrador";
-	public static final String STRING_WS_DTYPE_NC  ="61";
+	public static final String STRING_WS_AREA_NC   	="NC-GMO";
+	public static final String STRING_WS_PASSWD_ 	="administrador";
+	public static final String STRING_WS_DTYPE_NC  	="61";
 	
 	
 	
