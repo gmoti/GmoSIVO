@@ -66,8 +66,8 @@ public class ControllerContactologia implements Serializable {
 		
 		try {			
 			contactologiaDispatch.cargaFormulario(contactologiaForm, sess);
-			//contactologiaForm.setExisteContactologia("false");
-			
+			contactologiaForm.setExisteContactologia("false");
+			//System.out.println("prueba");
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}
@@ -123,6 +123,7 @@ public class ControllerContactologia implements Serializable {
 		contactologiaForm.setNombre_doctor("");
 		
 		contactologiaForm.setExisteContactologia("false");
+		contactologiaForm.setGrabar("true");
 		
 	}
 	
@@ -207,7 +208,7 @@ public class ControllerContactologia implements Serializable {
 			
 			respuesta= validaInfoContactologia();
 			
-			if((!pagina.equals("false")) || (respuesta=false)) {
+			if((!pagina.equals("false")) || (!respuesta)) {
 				
 				if (respuesta) {
 					
@@ -363,16 +364,16 @@ public class ControllerContactologia implements Serializable {
 	
 	public boolean validaInfoContactologia(){
 		
-		String radio_1D = contactologiaForm.getO_radio1();
-		String radio_1I = contactologiaForm.getI_radio1();		
-		String esfera_D= contactologiaForm.getO_esfera();
-		String esfera_I= contactologiaForm.getI_esfera();
-		String cilindro_D= contactologiaForm.getO_cilindro();
-		String cilindro_I= contactologiaForm.getI_cilindro();
-		String diamt_D= contactologiaForm.getO_diamt();
-		String diamt_I= contactologiaForm.getI_diamt();
-		String eje_D= contactologiaForm.getO_eje();
-		String eje_I= contactologiaForm.getI_eje();		
+		String radio_1D = contactologiaForm.getO_radio1().trim();
+		String radio_1I = contactologiaForm.getI_radio1().trim();		
+		String esfera_D= contactologiaForm.getO_esfera().trim();
+		String esfera_I= contactologiaForm.getI_esfera().trim();
+		String cilindro_D= contactologiaForm.getO_cilindro().trim();
+		String cilindro_I= contactologiaForm.getI_cilindro().trim();
+		String diamt_D= contactologiaForm.getO_diamt().trim();
+		String diamt_I= contactologiaForm.getI_diamt().trim();
+		String eje_D= contactologiaForm.getO_eje().trim();
+		String eje_I= contactologiaForm.getI_eje().trim();		
 		
 		Double radio1D = 0.00;
 		Double radio1I = 0.00;
@@ -385,8 +386,73 @@ public class ControllerContactologia implements Serializable {
 		int ejeD = 0;
 		int ejeI = 0;
 		
+		
+		//Conversiones
+		try {
+			radio1D = Double.parseDouble(radio_1D);
+		}catch (Exception e) {
+			radio1D = 0.0;
+		}
+		
+		try {
+			radio1I = Double.parseDouble(radio_1I);
+		}catch (Exception e) {
+			radio1I = 0.0;
+		}
+		
+		try {
+			esferaD = Double.parseDouble(esfera_D);
+		}catch (Exception e) {
+			esferaD = 0.0;
+		}
+		
+		try {
+			esferaI = Double.parseDouble(esfera_I);
+		}catch (Exception e) {
+			esferaI = 0.0;
+		}
+		
+		try {
+			cilindroD = Double.parseDouble(cilindro_D);
+		}catch (Exception e) {
+			cilindroD = 0.0;
+		}
+		
+		try {
+			cilindroI = Double.parseDouble(cilindro_I);
+		}catch (Exception e) {
+			cilindroI = 0.0;
+		}
+		
+		try {
+			diamtD = Double.parseDouble(diamt_D);
+		}catch (Exception e) {
+			diamtD = 0.0;
+		}
+		
+		try {
+			diamtI = Double.parseDouble(diamt_I);
+		}catch (Exception e) {
+			diamtI = 0.0;
+		}
+		
+		try {
+			ejeD = Integer.parseInt(eje_D);
+		}catch (Exception e) {
+			ejeD = 0;
+		}
+		
+		try {
+			ejeI = Integer.parseInt(eje_I);
+		}catch (Exception e) {
+			ejeI = 0;
+		}
+		
+		
+		//Validaciones
+		
 		if(!radio_1D.equals("")){
-			radio1D = Double.valueOf(radio_1D.trim());
+			//radio1D = Double.valueOf(radio_1D.trim());
 			
 			if(radio1D <= 0.00 || radio1D > 99.99){
 				Messagebox.show("El valor radio1 derecho est\u00E1 fuera del rango permitido mayor a 0 y menor a 99.99");
@@ -399,7 +465,7 @@ public class ControllerContactologia implements Serializable {
 			
 		
 		if(!radio_1I.equals("")){
-			radio1I = Double.valueOf(radio_1I.trim());
+			//radio1I = Double.valueOf(radio_1I.trim());
 			
 			if(radio1I <= 0.00 || radio1I > 99.99){
 				Messagebox.show("El valor radio1 izquierdo est\u00E1 fuera del rango permitido mayor a 0 y menor a 99.99");
@@ -412,7 +478,7 @@ public class ControllerContactologia implements Serializable {
 		
 					
 		if(!esfera_D.equals("")){
-			esferaD = Double.valueOf(esfera_D.trim());
+			//esferaD = Double.valueOf(esfera_D.trim());
 			
 			if(esferaD < -99.00 || esferaD > 99.00){					
 				Messagebox.show("El valor esfera derecha est\u00E1 fuera del rango permitido entre -99 y 99");
@@ -425,7 +491,7 @@ public class ControllerContactologia implements Serializable {
 		
 					
 		if(!esfera_I.equals("")){
-			esferaI = Double.valueOf(esfera_I.trim());
+			//esferaI = Double.valueOf(esfera_I.trim());
 			
 			if(esferaI < -99.00 || esferaI > 99.00){					
 				Messagebox.show("El valor esfera izquierda est\u00E1 fuera del rango permitido entre -99 y 99");
@@ -438,7 +504,7 @@ public class ControllerContactologia implements Serializable {
 		
 			
 		if(!cilindro_D.equals("")){
-			cilindroD = Double.valueOf(cilindro_D.trim());
+			//cilindroD = Double.valueOf(cilindro_D.trim());
 			
 			if(cilindroD < -99.00 || cilindroD > 0){					
 				Messagebox.show("El valor cilindro derecho est\u00E1 fuera del rango permitido entre -99 y 0");
@@ -451,7 +517,7 @@ public class ControllerContactologia implements Serializable {
 		
 		
 		if(!cilindro_I.equals("")){
-			cilindroI = Double.valueOf(cilindro_I.trim());
+			//cilindroI = Double.valueOf(cilindro_I.trim());
 			
 			if(cilindroI < -99.00 || cilindroI > 0){					
 				Messagebox.show("El valor cilindro izquierdo est\u00E1 fuera del rango permitido entre -99 y 0");
@@ -465,7 +531,7 @@ public class ControllerContactologia implements Serializable {
 				
 		if(cilindroD < 0){				
 			if(!eje_D.equals("")){	
-				ejeD = Integer.valueOf(eje_D.trim());
+				//ejeD = Integer.valueOf(eje_D.trim());
 				
 				if(ejeD < 0 || ejeD > 180){
 					Messagebox.show("El valor eje derecho est\u00E1 fuera del rango permitido entre 0 y 180");
@@ -479,8 +545,8 @@ public class ControllerContactologia implements Serializable {
 		
 					
 		if(cilindroI < 0){				
-			if(eje_I.equals("")){
-				ejeI = Integer.valueOf(eje_I.trim());
+			if(!eje_I.equals("")){
+				//ejeI = Integer.valueOf(eje_I.trim());
 				
 				if(ejeI < 0 || ejeI > 180){
 					Messagebox.show("El valor eje izquierdo est\u00E1 fuera del rango permitido entre 0 y 180");
@@ -494,7 +560,7 @@ public class ControllerContactologia implements Serializable {
 		
 			
 		if(!diamt_D.equals("")){	
-			diamtD = Double.valueOf(diamt_D.trim());
+			//diamtD = Double.valueOf(diamt_D.trim());
 			
 			if(diamtD < 0.00  || diamtD > 30.00){
 				Messagebox.show("El valor diametro total derecho est\u00E1 fuera del rango permitido entre 0 y 30");
@@ -507,7 +573,7 @@ public class ControllerContactologia implements Serializable {
 		
 				
 		if(!diamt_I.equals("")){	
-			diamtI = Double.valueOf(diamt_I.trim());
+			//diamtI = Double.valueOf(diamt_I.trim());
 			
 			if(diamtI < 0.00  || diamtI > 30.00){
 				Messagebox.show("El valor diametro total izquierdo est\u00E1 fuera del rango permitido entre 0 y 30");

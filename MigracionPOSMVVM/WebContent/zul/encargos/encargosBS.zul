@@ -413,8 +413,8 @@
 						
 						<zk if="${each.familia != 'MUL'}">
 							<zk if="${each.tiene_grupo =='true'}">
-								<textbox value="@bind(each.grupo)" width="60px" style="text-align:right"  
-									onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>
+								<textbox value="@bind(each.grupo)" width="60px" style="text-align:right" /> 
+									<!--  onBlur="@command('actualiza_grupo',index=forEachStatus.index)"/>-->
 							</zk>
 							
 							<zk if="${each.tiene_grupo !='true'}">

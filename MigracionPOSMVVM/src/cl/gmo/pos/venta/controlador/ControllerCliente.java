@@ -155,7 +155,20 @@ public class ControllerCliente implements Serializable{
 		default:
 			Messagebox.show("Informacion " + clienteForm.getExito());
 			break;
-		}	
+		}		
+		
+		
+		sess.setAttribute("nif",clienteForm.getRut());
+		sess.setAttribute("pagina","");	
+		cliente=null;
+		
+		try {
+			cliente = busquedaClientes.buscarClienteAjax(busquedaClientesForm, sess);
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	
@@ -352,6 +365,13 @@ public class ControllerCliente implements Serializable{
 	
 	@Command
 	public void clienteGraduacion() {
+		
+		Optional<ClienteBean> cl = Optional.ofNullable(cliente);
+		
+		if(!cl.isPresent()) {
+			cliente = new ClienteBean();
+			cliente.setCodigo("0");
+		}	
 		
 		objetos = new HashMap<String,Object>();		
 		objetos.put("origen","cliente");
@@ -555,11 +575,11 @@ public class ControllerCliente implements Serializable{
 	
 	@NotifyChange({"clienteForm","bDisableinicial","bDisableinicialRut","agenteBean","tipoViaBean","provinciaBean"})
 	@GlobalCommand
-	public void buscarClienteCliente(@BindingParam("cliente")ClienteBean cliente) {
+	public void buscarClienteCliente(@BindingParam("cliente")ClienteBean clienteRet) {
 		
 		clienteForm.setAccion("traeClienteSeleccionado");
-		clienteForm.setNif_cliente_agregado(cliente.getNif());
-		clienteForm.setCodigo_cliente_agregado(cliente.getCodigo());
+		clienteForm.setNif_cliente_agregado(clienteRet.getNif());
+		clienteForm.setCodigo_cliente_agregado(clienteRet.getCodigo());		
 		
 		clid.ingresoCliente(clienteForm, sess);		
 		
@@ -576,6 +596,8 @@ public class ControllerCliente implements Serializable{
 		
 		bDisableinicial = true;
 		bDisableinicialRut = true;
+		
+		cliente = clienteRet;
 		
 	}
 	

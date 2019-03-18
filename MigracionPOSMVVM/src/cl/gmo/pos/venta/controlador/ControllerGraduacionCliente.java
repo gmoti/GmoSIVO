@@ -45,7 +45,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	GraduacionesForm graduacionesForm ;
 	GraduacionesBean graduacionesBean ;
 	BusquedaClientesForm busquedaClientesForm;
-	BeanGraduaciones beanGraduaciones;
+	//BeanGraduaciones beanGraduaciones;
 	
 	GraduacionesDispatchActions graduacionesDispatch; 	
 	BusquedaClientesDispatchActions busquedaClientesDispatch;
@@ -81,7 +81,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm = new GraduacionesForm();
 		graduacionesBean = new GraduacionesBean();
 		busquedaClientesForm = new BusquedaClientesForm();	
-		beanGraduaciones = new BeanGraduaciones();
+		//beanGraduaciones = new BeanGraduaciones();
 		
 		graduacionesDispatch = new GraduacionesDispatchActions();
 		busquedaClientesDispatch = new BusquedaClientesDispatchActions();	
@@ -95,7 +95,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		} 
 		
 		
-		if (origen.equals("cliente")) {			
+		if (origen.equals("cliente") && !cliente.getCodigo().equals("0")) {			
 			graduacionesForm.setCliente(Integer.parseInt(cliente.getCodigo()));
 			graduacionesForm.setNombre(cliente.getNombre());
 			graduacionesForm.setApellido(cliente.getApellido());			
@@ -103,10 +103,11 @@ public class ControllerGraduacionCliente implements Serializable{
 			
 			if (graduacionesForm.getPagina().equals("NOGRABAR")) {			
 				
-				graduacionesBean.setFecha(graduacionesForm.getFecha_graduacion());
-				graduacionesBean.setNumero((int)graduacionesForm.getNumero_graduacion());
+				//graduacionesBean.setFecha(graduacionesForm.getFecha_graduacion());
+				//graduacionesBean.setNumero((int)graduacionesForm.getNumero_graduacion());
 				
 				verGraduacion(graduacionesBean,0);
+				//verGraduacion(0);
 			}else {
 				
 				graduacionesForm.setNifdoctor("");
@@ -152,7 +153,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	@Command
 	public void nuevaGraduacion() {
 		
-		beanGraduaciones = new BeanGraduaciones();
+		//beanGraduaciones = new BeanGraduaciones();
 		fechaEmision = new Date(System.currentTimeMillis());
 		fechaProxRevision = null;
 		//graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
@@ -169,6 +170,26 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm.setDvnifdoctor("");
 		graduacionesForm.setNombre_doctor("");
 		//solo limpia los campos visualmente
+		
+		graduacionesForm.setOD_esfera("");
+		graduacionesForm.setOD_cilindro("");
+		graduacionesForm.setOD_eje("");
+		graduacionesForm.setOD_cerca("");
+		graduacionesForm.setOD_adicion("");
+		graduacionesForm.setOD_dnpl("");
+		graduacionesForm.setOD_dnpc("");
+		graduacionesForm.setOD_avsc("");
+		graduacionesForm.setOD_avcc("");
+		
+		graduacionesForm.setOI_esfera("");
+		graduacionesForm.setOI_cilindro("");
+		graduacionesForm.setOI_eje("");
+		graduacionesForm.setOI_cerca("");
+		graduacionesForm.setOI_adicion("");
+		graduacionesForm.setOI_dnpl("");
+		graduacionesForm.setOI_dnpc("");
+		graduacionesForm.setOI_avsc("");
+		graduacionesForm.setOI_avcc("");		
 		
 		graduacionesForm.setPagina("");		
 		graduacionesForm.setExiste_graduacion("");
@@ -301,16 +322,17 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		//valida diferente adicion
 		check = graduacionesForm.isDiferenteAdd();		
-		pasaValidacionADD = true;
+		pasaValidacionADD = false;
 		
 		if (!check) {
 			if (!graduacionesForm.getOI_adicion().equals("0.0") || !graduacionesForm.getOD_adicion().equals("0.0")) {
 				if (graduacionesForm.getOI_adicion().equals(graduacionesForm.getOD_adicion()))
 				{
-					pasaValidacionADD = false;
+					pasaValidacionADD = true;
 				}
-			}
-			
+			}			
+		}else {
+			pasaValidacionADD = true;
 		}
 		
 		
@@ -558,6 +580,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	@Command
 	public void verGraduacion(@BindingParam("graduacion")GraduacionesBean graduacion,
 							@BindingParam("origen")int origen)
+	/*public void verGraduacion(@BindingParam("origen")int origen)	*/
 	{	
 		String esfera="0";
 		String cilindro="0";		
@@ -568,6 +591,8 @@ public class ControllerGraduacionCliente implements Serializable{
 		String dnpc="0";
 		String avcc="0";
 		String avsc="0";
+		Optional<String> fechaEmi;
+		Optional<String> fechaRev;
 		
 		Optional<String> a ; 
 		Optional<String> b ;
@@ -577,12 +602,13 @@ public class ControllerGraduacionCliente implements Serializable{
 		Optional<String> f ;
 		Optional<String> g ;
 		Optional<String> h ;
-		Optional<String> i ;	
+		Optional<String> i ;			
 		
-		graduacionesForm.setFecha_graduacion(graduacion.getFecha());
-		graduacionesForm.setNumero_graduacion(graduacion.getNumero());
 		
 		if (origen==1) {
+			graduacionesForm.setFecha_graduacion(graduacion.getFecha());
+			graduacionesForm.setNumero_graduacion(graduacion.getNumero());
+			
 			graduacionesForm.setAccion(Constantes.STRING_ACTION_VER_GRADUACION);
 			graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
 		}
@@ -598,6 +624,9 @@ public class ControllerGraduacionCliente implements Serializable{
 		h = Optional.ofNullable(graduacionesForm.getOD_avcc());
 		i = Optional.ofNullable(graduacionesForm.getOD_avsc());
 		
+		fechaEmi = Optional.ofNullable(graduacionesForm.getFechaEmision());
+		fechaRev = Optional.ofNullable(graduacionesForm.getFechaProxRevision());
+		
 		if (!a.isPresent() || a.get().equals("")) esfera="0"; else esfera = a.get();
 		if (!b.isPresent() || b.get().equals("")) cilindro="0";	else cilindro = b.get();	
 		if (!c.isPresent() || c.get().equals("")) eje="0"; else eje = c.get();
@@ -608,7 +637,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		if (!h.isPresent() || h.get().equals("")) avcc="0";else avcc = h.get(); 
 		if (!i.isPresent() || i.get().equals("")) avsc="0";else avsc = i.get();		   
 		
-		beanGraduaciones.setOD_esfera(Double.parseDouble(esfera));
+		/*beanGraduaciones.setOD_esfera(Double.parseDouble(esfera));
 		beanGraduaciones.setOD_cilindro(Double.parseDouble(cilindro));
 		beanGraduaciones.setOD_eje(Integer.parseInt(eje));
 		beanGraduaciones.setOD_cerca(Double.parseDouble(cerca));
@@ -616,7 +645,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		beanGraduaciones.setOD_dnpl(Double.parseDouble(dnpl));
 		beanGraduaciones.setOD_dnpc(Double.parseDouble(dnpc));
 		beanGraduaciones.setOD_avcc(Double.parseDouble(avcc));
-		beanGraduaciones.setOD_avsc(Double.parseDouble(avsc));
+		beanGraduaciones.setOD_avsc(Double.parseDouble(avsc));*/
 		
 		//ojo izquierdo
 		
@@ -640,7 +669,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		if (!h.isPresent() || h.get().equals("")) avcc="0";else avcc = h.get(); 
 		if (!i.isPresent() || i.get().equals("")) avsc="0";else avsc = i.get();			
 		
-		beanGraduaciones.setOI_esfera(Double.parseDouble(esfera));
+		/*beanGraduaciones.setOI_esfera(Double.parseDouble(esfera));
 		beanGraduaciones.setOI_cilindro(Double.parseDouble(cilindro));
 		beanGraduaciones.setOI_eje(Integer.parseInt(eje));
 		beanGraduaciones.setOI_cerca(Double.parseDouble(cerca));
@@ -648,15 +677,22 @@ public class ControllerGraduacionCliente implements Serializable{
 		beanGraduaciones.setOI_dnpl(Double.parseDouble(dnpl));
 		beanGraduaciones.setOI_dnpc(Double.parseDouble(dnpc));
 		beanGraduaciones.setOI_avcc(Double.parseDouble(avcc));
-		beanGraduaciones.setOI_avsc(Double.parseDouble(avsc));	
+		beanGraduaciones.setOI_avsc(Double.parseDouble(avsc));	*/
 		
+		try {
+			fechaEmision  =  dt.parse(fechaEmi.orElse("31/12/2999"));
+			fechaProxRevision = dt.parse(fechaRev.orElse("31/12/2999"));			
+		} catch (ParseException e1) {			
+			e1.printStackTrace();
+		}
 		
+		/*
 		try {
 			fechaEmision = dt.parse(graduacionesForm.getFechaEmision());
 			fechaProxRevision = dt.parse(graduacionesForm.getFechaProxRevision());
 		} catch (ParseException x) {			
 			x.printStackTrace();
-		}
+		}*/
 		
 		
 		posicionaCombo();
@@ -668,7 +704,7 @@ public class ControllerGraduacionCliente implements Serializable{
 	@NotifyChange({"*"})
 	public void posicionaCombo() {	
 		
-		Optional<String> CantidadOD = Optional.ofNullable(graduacionesForm.getOD_cantidad());
+		Optional<String> CantidadOD = Optional.ofNullable(graduacionesForm.getOD_cantidad());		
 		if(!CantidadOD.isPresent()) 
 			graduacionesForm.setOD_cantidad("");
 		
@@ -684,6 +720,8 @@ public class ControllerGraduacionCliente implements Serializable{
 		if(!BaseOI.isPresent()) 
 			graduacionesForm.setOI_base("");
 		
+		Optional<String> Agente = Optional.ofNullable(graduacionesForm.getAgente());		
+		graduacionesForm.setAgente(Agente.orElse(""));
 		
 		Optional<PrismaCantidadBean> a = graduacionesForm.getListaCantidadOD()
 				.stream().filter(s ->graduacionesForm.getOD_cantidad().equals(String.valueOf(s.getCodigo()))).findFirst();		
@@ -795,33 +833,50 @@ public class ControllerGraduacionCliente implements Serializable{
 					 
 					 //elemento.value=esfera.toFixed(2);
 					 
-					 if(lado.equals("derecha")){
-						 elementoadicion = beanGraduaciones.getOD_adicion();
-						 validaAdicion(elementoadicion, lado);
-						 
-					 }else if(lado.equals("izquierda")){
-						 elementoadicion = beanGraduaciones.getOI_adicion();
-						 validaAdicion(elementoadicion, lado);
+					 try {
+						 if(lado.equals("derecha")){
+							 elementoadicion = Double.parseDouble(graduacionesForm.getOD_adicion());
+							 //validaAdicion(elementoadicion, lado);
+							 
+						 }else if(lado.equals("izquierda")){
+							 elementoadicion = Double.parseDouble(graduacionesForm.getOI_adicion());
+							 //validaAdicion(elementoadicion, lado);
+						 }
+					 }catch (Exception e) { 
+						 elementoadicion=0.0;				
 					 }
+					 
+					 validaAdicion(elementoadicion, lado);
+					 
 				}else{	
 					
 					 //elemento = esfera;	
-					 
-					 if(lado.equals("derecha")){
-						 elementoadicion = beanGraduaciones.getOD_adicion();
-						 validaAdicion(elementoadicion, lado);
-						 
-					 }else if(lado.equals("izquierda")){
-						 elementoadicion = beanGraduaciones.getOI_adicion();
-						 validaAdicion(elementoadicion, lado);
+					 try {
+						 if(lado.equals("derecha")){
+							 elementoadicion = Double.parseDouble(graduacionesForm.getOD_adicion());
+							 //validaAdicion(elementoadicion, lado);
+							 
+						 }else if(lado.equals("izquierda")){
+							 elementoadicion = Double.parseDouble(graduacionesForm.getOI_adicion());
+							 //validaAdicion(elementoadicion, lado);
+						 }
+					 }catch (Exception e) {
+						 elementoadicion=0.0;
 					 }
+					 
+					 validaAdicion(elementoadicion, lado);
 				}
 			}else{
 				Messagebox.show("El valor esfera "+lado+" esta fuera del rango permitido -30 y 30");
 				elemento=0.00;
 				
-				if(lado.equals("derecha"))beanGraduaciones.setOD_esfera(0);
-				else beanGraduaciones.setOI_esfera(0);
+				if(lado.equals("derecha"))
+					//beanGraduaciones.setOD_esfera(0);
+					graduacionesForm.setOD_esfera("");
+				else 
+					//beanGraduaciones.setOI_esfera(0);
+					graduacionesForm.setOI_esfera("");
+				
 				return;
 				//elemento.focus();
 			}
@@ -830,9 +885,15 @@ public class ControllerGraduacionCliente implements Serializable{
 			Messagebox.show("Debe ingresar valores entre -30 y 30");
 			elemento=0.00;
 			
-			if(lado.equals("derecha"))beanGraduaciones.setOD_esfera(0);
-			else beanGraduaciones.setOI_esfera(0);
+			if(lado.equals("derecha"))
+				//beanGraduaciones.setOD_esfera(0);
+				graduacionesForm.setOD_esfera("");
+			else 
+				//beanGraduaciones.setOI_esfera(0);
+				graduacionesForm.setOI_esfera("");
+			
 			return;
+			
 			//elemento.value = parseFloat(esfera).toFixed(2);
 			//elemento.focus();
 		}		
@@ -848,15 +909,25 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		adicion = elemento;		
 		
-		
-		if(lado.equals("derecha")){	
-			esfera = beanGraduaciones.getOD_esfera();			
-			dnpl = beanGraduaciones.getOD_dnpl();
-			
-		}else if(lado.equals("izquierda")){
-			esfera = beanGraduaciones.getOI_esfera();			
-			dnpl = beanGraduaciones.getOI_dnpl();			
-		}		
+		try {
+			if(lado.equals("derecha")){	
+				//esfera = beanGraduaciones.getOD_esfera();			
+				//dnpl = beanGraduaciones.getOD_dnpl();
+				
+				esfera=Double.parseDouble(graduacionesForm.getOD_esfera());
+				dnpl=Double.parseDouble(graduacionesForm.getOD_dnpl());
+				
+			}else if(lado.equals("izquierda")){
+				//esfera = beanGraduaciones.getOI_esfera();			
+				//dnpl = beanGraduaciones.getOI_dnpl();		
+				
+				esfera=Double.parseDouble(graduacionesForm.getOI_esfera());
+				dnpl=Double.parseDouble(graduacionesForm.getOI_dnpl());
+			}		
+		}catch (Exception e) {
+			esfera=0.0;
+			dnpl=0.0;
+		}
 		
 		if(esfera != 0){	
 			
@@ -872,25 +943,38 @@ public class ControllerGraduacionCliente implements Serializable{
 						
 						//document.getElementById('OD_cerca').value = cerca.toFixed(2);						
 						elemento = adicion;//.toFixed(2);
-						dnpl = beanGraduaciones.getOD_dnpl();
+						//dnpl = beanGraduaciones.getOD_dnpl();
+						try {
+							dnpl = Double.parseDouble(graduacionesForm.getOD_dnpl());
+						}catch (Exception e) {
+							dnpl = 0.0;
+						}
+						
 						validaDNPL(dnpl, lado);
 						
 					}else{
 						if(adicion <= 0 ){						
 							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
-							beanGraduaciones.setOD_adicion(0);
+							//beanGraduaciones.setOD_adicion(0);
+							graduacionesForm.setOD_adicion("");
 							return;
 						}else{
 							Messagebox.show("El valor de la adicion no puede ser mayor a 4");
-							beanGraduaciones.setOD_adicion(0);
+							//beanGraduaciones.setOD_adicion(0);
+							graduacionesForm.setOD_adicion("");
 							return;
 						}
 					}	
 					
 				}else{
-					beanGraduaciones.setOD_cerca(0.00);				
-					beanGraduaciones.setOD_dnpl(0.00);
-					beanGraduaciones.setOD_dnpc(0.00);	
+					//beanGraduaciones.setOD_cerca(0.00);				
+					//beanGraduaciones.setOD_dnpl(0.00);
+					//beanGraduaciones.setOD_dnpc(0.00);	
+					
+					graduacionesForm.setOD_cerca("");
+					graduacionesForm.setOD_dnpl("");
+					graduacionesForm.setOD_dnpc("");
+					
 					return;
 				}		
 				
@@ -905,24 +989,35 @@ public class ControllerGraduacionCliente implements Serializable{
 						double cerca = adicion + esfera;
 						//document.getElementById('OI_cerca').value = cerca.toFixed(2);
 						elemento = adicion; //.toFixed(2);
-						dnpl = beanGraduaciones.getOI_dnpl();
+						//dnpl = beanGraduaciones.getOI_dnpl();
+						
+						try {
+							dnpl = Double.parseDouble(graduacionesForm.getOI_dnpl());
+						}catch (Exception e) {
+							dnpl=0.0;
+						}
+						
 						validaDNPL(dnpl, lado);
 					}else{
 						if(adicion <= 0 ){						
 							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
-							beanGraduaciones.setOI_adicion(0);
+							//beanGraduaciones.setOI_adicion(0);
+							graduacionesForm.setOI_adicion("");
 							return;
 						}else{
 							Messagebox.show("El valor de la adicion no puede ser mayor a 4");
-							beanGraduaciones.setOI_adicion(0);
 							return;
 						}
 						
 					}					
 				}else{
-					beanGraduaciones.setOI_cerca(0.00);
-					beanGraduaciones.setOI_dnpl(0.00);
-					beanGraduaciones.setOI_dnpc(0.00);
+					//beanGraduaciones.setOI_cerca(0.00);
+					//beanGraduaciones.setOI_dnpl(0.00);
+					//beanGraduaciones.setOI_dnpc(0.00);
+					
+					graduacionesForm.setOI_cerca("");
+					graduacionesForm.setOI_dnpl("");
+					graduacionesForm.setOI_dnpc("");
 					return;
 				}			
 			}	
@@ -948,13 +1043,21 @@ public class ControllerGraduacionCliente implements Serializable{
 				if(lado.equals("derecha")){		
 					
 					res = dnpl - 1;
-					adicion = beanGraduaciones.getOD_adicion();
+					//adicion = beanGraduaciones.getOD_adicion();
+					
+					try {
+						adicion = Double.parseDouble(graduacionesForm.getOD_adicion());
+					}catch (Exception e) {
+						adicion=0.0;
+					}					
 			
 					if(adicion != 0){
-						beanGraduaciones.setOD_dnpc(res);
+						//beanGraduaciones.setOD_dnpc(res);
+						graduacionesForm.setOD_dnpc(String.valueOf(res));
 						//document.getElementById('OD_dnpc').value = parseFloat(res).toFixed(2);
 					}else{
-						beanGraduaciones.setOD_dnpc(0.00);
+						//beanGraduaciones.setOD_dnpc(0.00);
+						graduacionesForm.setOD_dnpc("");
 					}
 					
 					//elemento = parseFloat(dnpl).toFixed(2);
@@ -964,14 +1067,22 @@ public class ControllerGraduacionCliente implements Serializable{
 				}else if(lado.equals("izquierda")){
 					
 					res = dnpl - 1;				
-					adicion = beanGraduaciones.getOI_adicion();
+					//adicion = beanGraduaciones.getOI_adicion();
+					try {
+						adicion =  Double.parseDouble(graduacionesForm.getOI_adicion());
+					}catch (Exception e) {
+						adicion=0.0;
+					}
+					
 					
 					if(adicion != 0){
-						beanGraduaciones.setOI_dnpc(res);
+						//beanGraduaciones.setOI_dnpc(res);
+						graduacionesForm.setOI_dnpc(String.valueOf(res));
 						//document.getElementById('OI_dnpc').value = parseFloat(res).toFixed(2);
 					}else{
 						//document.getElementById('OI_dnpc').value="";
-						beanGraduaciones.setOI_dnpc(0.00);
+						//beanGraduaciones.setOI_dnpc(0.00);
+						graduacionesForm.setOI_dnpc("");
 					}				
 					
 					//elemento.value = parseFloat(dnpl).toFixed(2);
@@ -982,22 +1093,24 @@ public class ControllerGraduacionCliente implements Serializable{
 				Messagebox.show("Distancia Naso pupilar, valor esta fuera de rango");
 				
 				if(lado.equals("derecha")){					
-					beanGraduaciones.setOD_dnpc(0.00);
+					//beanGraduaciones.setOD_dnpc(0.00);
+					graduacionesForm.setOD_dnpc("");
 					
 				}else if(lado.equals("izquierda")){
-					beanGraduaciones.setOI_dnpc(0.00);
-					
+					//beanGraduaciones.setOI_dnpc(0.00);
+					graduacionesForm.setOI_dnpc("");
 				}
 				
 				return false;	
 			}
 		}else{		
 			if(lado.equals("derecha")){					
-				beanGraduaciones.setOD_dnpc(0.00);
+				//beanGraduaciones.setOD_dnpc(0.00);
+				graduacionesForm.setOD_dnpc("");
 				
 			}else if(lado.equals("izquierda")){
-				beanGraduaciones.setOI_dnpc(0.00);
-				
+				//beanGraduaciones.setOI_dnpc(0.00);
+				graduacionesForm.setOI_dnpc("");
 			}
 			return false;	
 		}	
@@ -1044,9 +1157,11 @@ public class ControllerGraduacionCliente implements Serializable{
 					elemento=0.00;
 					
 					if(lado.equals("derecho")){									
-						beanGraduaciones.setOD_cilindro(0);
+						//beanGraduaciones.setOD_cilindro(0);
+						graduacionesForm.setOD_cilindro("");
 					}else {
-						beanGraduaciones.setOI_cilindro(0);
+						//beanGraduaciones.setOI_cilindro(0);
+						graduacionesForm.setOD_cilindro("");
 					}	
 					//elemento.focus();
 				}
@@ -1071,11 +1186,13 @@ public class ControllerGraduacionCliente implements Serializable{
 			}else{
 				
 				if(lado.equals("derecho")){	
-					beanGraduaciones.setOD_eje(0);					
+					//beanGraduaciones.setOD_eje(0);
+					graduacionesForm.setOD_eje("");
 					//document.getElementById('OD_eje').disabled =true;		
 					
 				}else if(lado.equals("izquierda")){				
-					beanGraduaciones.setOI_eje(0);
+					//beanGraduaciones.setOI_eje(0);
+					graduacionesForm.setOI_eje("");
 					//document.getElementById('OI_eje').disabled =true;
 				}
 			}			
@@ -1114,13 +1231,17 @@ public class ControllerGraduacionCliente implements Serializable{
 		Double adicion = 0.0;
 		Double dnpl = 0.0;
 		
-		if(lado.equals("derecha")){	
-			esfera = beanGraduaciones.getOD_esfera();			
-			
-		}else if(lado.equals("izquierda")){
-			esfera = beanGraduaciones.getOI_esfera();
-			
-		}		
+		try {
+			if(lado.equals("derecha")){	
+				//esfera = beanGraduaciones.getOD_esfera();			
+				esfera = Double.parseDouble(graduacionesForm.getOD_esfera());
+			}else if(lado.equals("izquierda")){
+				//esfera = beanGraduaciones.getOI_esfera();
+				esfera = Double.parseDouble(graduacionesForm.getOI_esfera());
+			}
+		}catch (Exception e) {
+			esfera=0.00;
+		}
 		
 		if(esfera != 0){		
 			if(lado.equals("derecha")){	
@@ -1132,16 +1253,25 @@ public class ControllerGraduacionCliente implements Serializable{
 					if(cerca > esfera){
 						
 						adicion = cerca - esfera;
-						beanGraduaciones.setOD_adicion(adicion);
+						//beanGraduaciones.setOD_adicion(adicion);
+						graduacionesForm.setOD_adicion(String.valueOf(adicion));
+						
 						//document.getElementById('OD_adicion').value = adicion.toFixed(2);
 						//elemento.value = parseFloat(cerca).toFixed(2);
 						elemento=cerca;
-						dnpl = beanGraduaciones.getOD_dnpl();
+						try {
+							//dnpl = beanGraduaciones.getOD_dnpl();
+							dnpl = Double.parseDouble(graduacionesForm.getOD_dnpl());
+						}catch (Exception e) {
+							dnpl = 0.0;
+						}	
+						
 						validaDNPL(dnpl, lado);
 						
 					}else{
 						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
-						beanGraduaciones.setOD_cerca(0);
+						//beanGraduaciones.setOD_cerca(0);
+						graduacionesForm.setOD_cerca("");
 						return;
 					}	
 					
@@ -1153,15 +1283,25 @@ public class ControllerGraduacionCliente implements Serializable{
 				if(cerca != 0){
 					if(cerca > esfera){
 						adicion = cerca - esfera;
-						beanGraduaciones.setOI_adicion(adicion);
+						//beanGraduaciones.setOI_adicion(adicion);
+						graduacionesForm.setOI_adicion(String.valueOf(adicion));
+						
 						//document.getElementById('OI_adicion').value = adicion.toFixed(2);
 						//elemento.value = parseFloat(cerca).toFixed(2); 
 						elemento=cerca;
-						dnpl = beanGraduaciones.getOI_dnpl();
+						//dnpl = beanGraduaciones.getOI_dnpl();
+						
+						try {
+							dnpl = Double.parseDouble(graduacionesForm.getOI_dnpl());
+						}catch (Exception e) {
+							dnpl=0.0;
+						}						
+						
 						validaDNPL(dnpl, lado);
 					}else{
 						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
-						beanGraduaciones.setOI_cerca(0);
+						//beanGraduaciones.setOI_cerca(0);
+						graduacionesForm.setOI_cerca("");
 						return;
 					}				
 				}	
@@ -1185,21 +1325,36 @@ public class ControllerGraduacionCliente implements Serializable{
 			if(dnpc >= 20 && dnpc <= 40){
 			
 				if(lado.equals("derecha")){			
-					adicion = beanGraduaciones.getOD_adicion();
+					//adicion = beanGraduaciones.getOD_adicion();
+					
+					try {
+						adicion = Double.parseDouble(graduacionesForm.getOD_adicion());
+					}catch(Exception e) {
+						adicion=0.0;
+					}
+					
 					
 					if(adicion == 0){
 						Messagebox.show("Debe ingresar receta de cerca");
-						beanGraduaciones.setOD_dnpc(0.0);						
+						//beanGraduaciones.setOD_dnpc(0.0);	
+						graduacionesForm.setOD_dnpc("");
 						return false;
 					}
 					
 				}else if("izquierda" == lado){
 					
-					adicion = beanGraduaciones.getOI_adicion();
+					//adicion = beanGraduaciones.getOI_adicion();
+					
+					try {
+						adicion = Double.parseDouble(graduacionesForm.getOI_adicion());
+					}catch(Exception e) {
+						adicion=0.0;
+					}					
 					
 					if(adicion == 0){
 						Messagebox.show("Debe ingresar receta de cerca");
-						beanGraduaciones.setOI_dnpc(0.0);						
+						//beanGraduaciones.setOI_dnpc(0.0);
+						graduacionesForm.setOI_dnpc("");
 						return false;
 					}
 				}		
@@ -1320,25 +1475,57 @@ public class ControllerGraduacionCliente implements Serializable{
 
 	public boolean validaGraduacion(){
 		
-		double esferaD = 0;
-		double cilindroD = 0;
-		double ejeD = 0;
-		double adicionD=0;
-		double OD_dnpl=0;
+		double esferaD 		= 0.0;
+		double cilindroD 	= 0.0;
+		double ejeD 		= 0.0;
+		double adicionD		= 0.0;
+		double OD_dnpl		= 0.0;
 		
-		double esferaI = 0;
-		double cilindroI = 0;
-		double ejeI = 0;
-		double adicionI=0;
-		double OI_dnpl=0;
-		double intCilindro=0;
+		double esferaI 		= 0.0;
+		double cilindroI 	= 0.0;
+		double ejeI 		= 0.0;
+		double adicionI		= 0.0;
+		double OI_dnpl		= 0.0;
+		double intCilindro	= 0.0;
+		
+		double valorDoble   = 0.0;
 		
 		/********* VALIDACIONES OJO DERECHO ********/
-		esferaD = beanGraduaciones.getOD_esfera();		
-		cilindroD = beanGraduaciones.getOD_cilindro();		
-		ejeD = beanGraduaciones.getOD_eje();			
-		adicionD = beanGraduaciones.getOD_adicion();	
-		OD_dnpl = beanGraduaciones.getOD_dnpl();
+		//esferaD = beanGraduaciones.getOD_esfera();		
+		//cilindroD = beanGraduaciones.getOD_cilindro();		
+		//ejeD = beanGraduaciones.getOD_eje();			
+		//adicionD = beanGraduaciones.getOD_adicion();	
+		//OD_dnpl = beanGraduaciones.getOD_dnpl();	
+		
+		try {			
+			esferaD = Double.parseDouble(graduacionesForm.getOD_esfera());
+		}catch(Exception e) {
+			esferaD=0;
+		}
+		
+		try {			
+			cilindroD = Double.parseDouble(graduacionesForm.getOD_cilindro());
+		}catch(Exception e) {
+			cilindroD=0;
+		}
+		
+		try {			
+			ejeD = Double.parseDouble(graduacionesForm.getOD_eje());
+		}catch(Exception e) {
+			ejeD=0;
+		}
+		
+		try {			
+			adicionD = Double.parseDouble(graduacionesForm.getOD_adicion());
+		}catch(Exception e) {
+			adicionD=0;
+		}
+		
+		try {			
+			OD_dnpl = Double.parseDouble(graduacionesForm.getOD_dnpl());
+		}catch(Exception e) {
+			OD_dnpl=0;
+		}	
 				
 		
 		//if(esferaD != 0){
@@ -1401,13 +1588,18 @@ public class ControllerGraduacionCliente implements Serializable{
 			Messagebox.show("Debe ingresar distancia naso pupilar derecha.");
 			return false;
 		}else{
-			boolean respuesta = validaDNPL(beanGraduaciones.getOD_dnpl(), "derecha");
+			
+			try {
+				valorDoble = Double.parseDouble(graduacionesForm.getOD_dnpl());
+			}catch (Exception e) {
+				valorDoble = 0.0;
+			}
+			
+			boolean respuesta = validaDNPL(valorDoble, "derecha");
 			if(respuesta == false){
 				return false;
 			}
-		}
-		
-		
+		}		
 		
 		/********* FIN VALIDACIONES OJO DERECHO ********/
 		
@@ -1415,11 +1607,41 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		/********* VALIDACIONES OJO IZQUIERDO ********/
 		
-		esferaI = beanGraduaciones.getOI_esfera();		
-		cilindroI = beanGraduaciones.getOI_cilindro();	
-		ejeI = beanGraduaciones.getOI_eje();		
-		adicionI = beanGraduaciones.getOI_adicion();		
-		OI_dnpl = beanGraduaciones .getOI_dnpl();
+		//esferaI = beanGraduaciones.getOI_esfera();		
+		//cilindroI = beanGraduaciones.getOI_cilindro();	
+		//ejeI = beanGraduaciones.getOI_eje();		
+		//adicionI = beanGraduaciones.getOI_adicion();		
+		//OI_dnpl = beanGraduaciones .getOI_dnpl();
+		
+		try {			
+			esferaI = Double.parseDouble(graduacionesForm.getOI_esfera());
+		}catch(Exception e) {
+			esferaI=0;
+		}
+		
+		try {			
+			cilindroI = Double.parseDouble(graduacionesForm.getOI_cilindro());
+		}catch(Exception e) {
+			cilindroI=0;
+		}
+		
+		try {			
+			ejeI = Double.parseDouble(graduacionesForm.getOI_eje());
+		}catch(Exception e) {
+			ejeI=0;
+		}
+		
+		try {			
+			adicionI = Double.parseDouble(graduacionesForm.getOI_adicion());
+		}catch(Exception e) {
+			adicionI=0;
+		}
+		
+		try {			
+			OI_dnpl = Double.parseDouble(graduacionesForm.getOI_dnpl());
+		}catch(Exception e) {
+			OI_dnpl=0;
+		}
 		
 		
 		//if(esferaI != 0){
@@ -1474,13 +1696,27 @@ public class ControllerGraduacionCliente implements Serializable{
 			Messagebox.show("Debe ingresar distancia naso pupilar izquierda.");
 			return false;
 		}else{
-			boolean respuesta = validaDNPL(beanGraduaciones.getOI_dnpl(), "izquierda");
+			
+			try {
+				valorDoble = Double.parseDouble(graduacionesForm.getOI_dnpl());
+			}catch (Exception e) {
+				valorDoble = 0.0;
+			}
+			
+			
+			boolean respuesta = validaDNPL(valorDoble, "izquierda");
 			if(respuesta == false){
 				return false;
 			}
 		}
 		
-		boolean respuestadnpc = validaDNPC(beanGraduaciones.getOD_dnpc(), "derecha");
+		try {
+			valorDoble = Double.parseDouble(graduacionesForm.getOD_dnpc());
+		}catch (Exception e) {
+			valorDoble = 0.0;
+		}
+		
+		boolean respuestadnpc = validaDNPC(valorDoble, "derecha");
 		if(respuestadnpc == false){
 			return false;
 		}
@@ -1589,13 +1825,13 @@ public class ControllerGraduacionCliente implements Serializable{
 		this.prismaBaseOI = prismaBaseOI;
 	}
 
-	public BeanGraduaciones getBeanGraduaciones() {
+	/*public BeanGraduaciones getBeanGraduaciones() {
 		return beanGraduaciones;
 	}
 
 	public void setBeanGraduaciones(BeanGraduaciones beanGraduaciones) {
 		this.beanGraduaciones = beanGraduaciones;
-	}
+	}*/
 
 	public AgenteBean getAgenteBean() {
 		return agenteBean;

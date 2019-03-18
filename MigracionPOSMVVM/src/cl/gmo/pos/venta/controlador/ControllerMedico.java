@@ -88,7 +88,7 @@ public class ControllerMedico implements Serializable {
 			
 		
 	   	
-	   	medicoForm.setAccion("ingresaMedico");
+	   	medicoForm.setAccion(Constantes.STRING_ACTION_INGRESA_MEDICO);
 	   	medicoDispatchActions.ingresaMedico(medicoForm, sess);
 	   	
 	   	if (medicoForm.getExito().equals("0")) {

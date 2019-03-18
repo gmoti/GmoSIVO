@@ -109,6 +109,7 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 		busquedaProductosForm.setCodigoBusqueda(codbus.orElse("").trim());
 		busquedaProductosForm.setCodigoBarraBusqueda(codbusbar.orElse("").trim());			
 		
+		/*
 		if (tipoFamiliaBean.getCodigo().equals("C") || tipoFamiliaBean.getCodigo().equals("L")) {			
 			if (!ojoDerecho && !ojoIzquierdo) {				
 				Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
@@ -120,8 +121,21 @@ public class ControllerBusquedaMultiofertas implements Serializable{
 			if (busquedaProductosForm.getFamilia().equals("0") || busquedaProductosForm.getSubFamilia().equals("0") || busquedaProductosForm.getGrupo().equals("0")) {				
 				Messagebox.show("Debes seleccionar todos los filtros");
 				return;
-			} 
-			
+			}			
+		}*/		
+		
+		if (busquedaProductosForm.getTipofamilia().equals("C") || busquedaProductosForm.getTipofamilia().equals("L")) {			
+			if (!ojoDerecho && !ojoIzquierdo) {				
+				Messagebox.show("Debe seleccionar un ojo, para realizar la busqueda.");
+				return;
+			}		
+		}
+		
+		if (busquedaProductosForm.getTipofamilia().equals("C")) {				
+			if (busquedaProductosForm.getFamilia().equals("0") || busquedaProductosForm.getSubFamilia().equals("0") || busquedaProductosForm.getGrupo().equals("0")) {				
+				Messagebox.show("Debes seleccionar todos los filtros");
+				return;
+			}			
 		}		
 			
 		
