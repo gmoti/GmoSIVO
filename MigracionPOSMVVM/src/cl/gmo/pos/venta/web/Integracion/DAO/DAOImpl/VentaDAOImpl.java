@@ -375,8 +375,8 @@ public class VentaDAOImpl implements VentaDAO{
 		try {
 			log.info("VentaDAOImpl:insertaDocumento conectando base datos");
 			con = ConexionFactory.INSTANCE.getConexion();
-			//cs = con.prepareCall("{call SP_PAGO_INS_DOCUMENTO_BE(?,?,?,?,?,?,?)}");
-			cs = con.prepareCall("{call SP_PAGO_INS_DOCUMENTO_QA(?,?,?,?,?,?,?)}");
+			cs = con.prepareCall("{call SP_PAGO_INS_DOCUMENTO_BE(?,?,?,?,?,?,?)}");
+			//cs = con.prepareCall("{call SP_PAGO_INS_DOCUMENTO_QA(?,?,?,?,?,?,?)}");
 			cs.setString(1, ticket);
 			cs.setInt(2, documento);
 			cs.setInt(3, total);

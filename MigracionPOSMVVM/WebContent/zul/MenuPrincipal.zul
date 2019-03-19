@@ -21,6 +21,10 @@
 				<label value="@load(vm.usuario)" style="float: right"/>			
 			</div>																			
 		</div>
+		
+		<div width="100%" style="background-color:black;color: white;" height="40px">
+			<label value="Versión QA. 19-03-2019 :: 12:45"/>
+		</div>
 	</div>
 	
 	<div sclass="container-fluid" style="background-color: #001624">

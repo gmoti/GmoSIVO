@@ -502,10 +502,10 @@ public class ControllerAlbaran implements Serializable{
 		nota = tmp[1]+".pdf";
 		
 		//Produccion
-		//urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;
+		urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;
 		
 		//Desarrollo
-		urlbol = "http://10.216.4.24/NC/61 "+rut+" "+nota;
+		//urlbol = "http://10.216.4.24/NC/61 "+rut+" "+nota;
 		
 		if(tmp[0].equals("0") || tmp[2].equals("true")){
 			Messagebox.show("Error: No se pudo generar la boleta");	

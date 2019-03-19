@@ -211,7 +211,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		win.detach();
 		
 		Window winPresup = (Window)Executions.createComponents(
-                "/zul/presupuestos/presupuestoBS.zul", null, objetos);			
+                "/zul/presupuestos/PresupuestoBS.zul", null, objetos);			
 		winPresup.doModal();
 		
 	}
