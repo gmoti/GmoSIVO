@@ -3,6 +3,9 @@
 <zk>
 <window id="winGraduacionClientes" border="none"  width="65%" vflex="min" sclass="container-fluid"
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerGraduacionCliente')">
+			
+			
+			
 	<!-- 		
 	<style>		
 		.fgrid tr.z-row td.z-row-inner,	tr.z-row, div.z-grid-body div.z-cell, div.z-grid 
@@ -55,7 +58,7 @@
 	   	</div>	   	
 	</div>
 	
-	<div sclass="container-fluid" align="right" style="background-color:#c1c1c1; border-style:none" xmlns:w="client">
+	<div sclass="container-fluid" align="right" style="background-color:#c1c1c1; border-style:none">
 	
 		<!-- Row 1 -->
 		<div sclass="row" style="background-color:transparent">
@@ -97,48 +100,48 @@
 				<label value="OD"/>				
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OD_esfera)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_esfera)" width="50px" format="#.##" locale="us"/> w:onBlur="validaEsfera(this,'derecha')" -->
+				<textbox id="OD_esfera" value="@bind(vm.graduacionesForm.OD_esfera)" width="50px"						
+						onBlur="@command('validaEsfera',elemento=OD_esfera.value,lado='derecha')" />		
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="#.##"  locale="us" /> -->
-				<textbox value="@bind(vm.graduacionesForm.OD_cilindro)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />				
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_cilindro)" width="50px" format="#.##"  locale="us" /> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->
+				<textbox id="OD_cilindro" value="@bind(vm.graduacionesForm.OD_cilindro)" width="50px"  
+						onBlur="@command('validaCilindro',elemento=OD_cilindro.value,lado='derecha')" />				
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <intbox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##" locale="us" /> -->
-				<textbox value="@bind(vm.graduacionesForm.OD_eje)" width="50px"  
-					constraint="/^([0-9]{1,3})?$/: Numero invalido" />			
+				<!-- <intbox value="@bind(vm.beanGraduaciones.OD_eje)" width="50px" format="##" locale="us" /> constraint="/^([0-9]{1,3})?$/: Numero invalido"-->
+				<textbox id="OD_eje" value="@bind(vm.graduacionesForm.OD_eje)" width="50px"  
+					 	onBlur="@command('validaEje',elemento=OD_eje.value,lado='derecha')"	/>			
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="#.##" locale="us"/> -->	
-				<textbox value="@bind(vm.graduacionesForm.OD_cerca)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />		
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_cerca)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->	
+				<textbox id="OD_cerca" value="@bind(vm.graduacionesForm.OD_cerca)" width="50px"  
+					onBlur="@command('validacionCerca',elemento=OD_cerca.value,lado='derecha')" />		
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OD_adicion)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_adicion)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" -->
+				<textbox id="OD_adicion" value="@bind(vm.graduacionesForm.OD_adicion)" width="50px"  
+					 onBlur="@command('validaAdicion',elemento=OD_adicion.value,lado='derecha')" />			
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OD_dnpl)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />			
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_dnpl)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->
+				<textbox id="OD_dnpl" value="@bind(vm.graduacionesForm.OD_dnpl)" width="50px"  
+					 onBlur="@command('validaDNPL',elemento=OD_dnpl.value,lado='derecha')" />			
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" width="50px" format="#.##" locale="us"/> -->	
-				<textbox value="@bind(vm.graduacionesForm.OD_dnpc)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />		
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_dnpc)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->	
+				<textbox id="OD_dnpc" value="@bind(vm.graduacionesForm.OD_dnpc)" width="50px"  
+					 onBlur="@command('validaDNPC',elemento=OD_dnpc.value,lado='derecha')" />		
 			</div>
 			<div sclass="col-lg-1">
 				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_avsc)" width="50px" format="#.##" locale="us"/> -->	
-				<textbox value="@bind(vm.graduacionesForm.OD_avsc)" width="50px"  
+				<textbox id="OD_avsc" value="@bind(vm.graduacionesForm.OD_avsc)" width="50px"  
 					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />		
 			</div>
 			<div sclass="col-lg-1">			
 				<!-- <doublebox value="@bind(vm.beanGraduaciones.OD_avcc)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"  
+				<textbox id="OD_avcc" value="@bind(vm.graduacionesForm.OD_avcc)" width="50px"  
 					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />
 			</div>
 		</div>
@@ -159,39 +162,39 @@
 				<label value="OI"/>				
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OI_esfera)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />						   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_esfera)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->
+				<textbox id="OI_esfera" value="@bind(vm.graduacionesForm.OI_esfera)" width="50px"  
+					 onBlur="@command('validaEsfera',elemento=OI_esfera.value,lado='izquierda')"/>						   						
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OI_cilindro)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />								   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_cilindro)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->
+				<textbox id="OI_cilindro" value="@bind(vm.graduacionesForm.OI_cilindro)" width="50px"  
+					 onBlur="@command('validaCilindro',elemento=OI_cilindro.value,lado='izquierda')"/>								   						
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <intbox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##" locale="us"/>  -->
-				<textbox value="@bind(vm.graduacionesForm.OI_eje)" width="50px"  
-					constraint="/^([0-9]{1,3})?$/: Numero invalido" />						   						
+				<!-- <intbox value="@bind(vm.beanGraduaciones.OI_eje)" width="50px" format="##" locale="us"/>  constraint="/^([0-9]{1,3})?$/: Numero invalido"-->
+				<textbox id="OI_eje" value="@bind(vm.graduacionesForm.OI_eje)" width="50px"  
+					 onBlur="@command('validaEje',elemento=OI_eje.value,lado='izquierda')"/>						   						
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OI_cerca)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />								   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_cerca)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->
+				<textbox id="OI_cerca" value="@bind(vm.graduacionesForm.OI_cerca)" width="50px"  
+					 onBlur="@command('validacionCerca',elemento=OI_cerca.value,lado='izquierda')"/>								   						
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OI_adicion)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />							   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_adicion)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->
+				<textbox id="OI_adicion" value="@bind(vm.graduacionesForm.OI_adicion)" width="50px"  
+					 onBlur="@command('validaAdicion',elemento=OI_adicion.value,lado='izquierda')" />							   						
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="#.##" locale="us"/> -->	
-				<textbox value="@bind(vm.graduacionesForm.OI_dnpl)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />						   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_dnpl)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->	
+				<textbox id="OI_dnpl" value="@bind(vm.graduacionesForm.OI_dnpl)" width="50px"  
+					 onBlur="@command('validaDNPL',elemento=OI_dnpl.value,lado='izquierda')"/>						   						
 			</div>
 			<div sclass="col-lg-1">
-				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" width="50px" format="#.##" locale="us"/> -->
-				<textbox value="@bind(vm.graduacionesForm.OI_dnpc)" width="50px"  
-					constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido" />							   						
+				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_dnpc)" width="50px" format="#.##" locale="us"/> constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"-->
+				<textbox id="OI_dnpc" value="@bind(vm.graduacionesForm.OI_dnpc)" width="50px"  
+					 onBlur="@command('validaDNPC',elemento=OI_dnpc.value,lado='izquierda')"/>							   						
 			</div>
 			<div sclass="col-lg-1">
 				<!-- <doublebox value="@bind(vm.beanGraduaciones.OI_avsc)" width="50px" format="#.##" locale="us"/>	 -->
@@ -383,4 +386,195 @@ function meterUpdate() {
 	alert("validacion");
 }
 </script>
+
+
+<script><![CDATA[
+     function validaEsferap(elemento,lado) {
+         var valLabel = zk.$('$'+elemento.id);            
+         
+         if (elemento.getValue().trim() == "") {           	
+         	alert("seleccion no puede estar en blanco");
+         	//valLabel.$n().value="ARMAZON CLIENTE";
+         	//valLabel.$n().focus();
+         }
+     }
+     
+    
+     function validaEsfera(elemento, lado){
+    		
+    		var esfera = elemento.getValue();
+    		var mult = 0.25;
+			var cont = 0;
+			
+    		esfera = trim(esfera);    			
+    			
+    			if("" != esfera){
+    				if(esfera >= -30 && esfera <= 30){
+    					esfera = parseFloat(elemento.getValue()).toFixed(2);
+    					
+    					if (esfera%mult!=0){			 
+    						 while((esfera%mult!=0) && (cont < 55)){
+    							 
+    							 if(esfera > 0){				 
+    								 esfera = parseFloat(esfera) + 0.01;
+    							 }else{
+    								 esfera = parseFloat(esfera) + (-0.01);
+    							 }
+    							 esfera = parseFloat(esfera.toFixed(2));
+    							 cont++;
+    						 }	
+    						 
+    						 elemento.value=esfera.toFixed(2);
+    						 
+    							 if("derecha" == lado){
+    								 var elementoadicion = document.getElementById('OD_adicion');
+    								 validaAdicion(elementoadicion, lado);
+    							 }else if("izquierda" == lado){
+    								 var elementoadicion = document.getElementById('OI_adicion');
+    								 validaAdicion(elementoadicion, lado);
+    							 }
+    					}else{			
+    						 elemento.value = esfera;	
+    						 if("derecha" == lado){
+    							 var elementoadicion = document.getElementById('OD_adicion');
+    							 validaAdicion(elementoadicion, lado);
+    						 }else if("izquierda" == lado){
+    							 var elementoadicion = document.getElementById('OI_adicion');
+    							 validaAdicion(elementoadicion, lado);
+    						 }
+    					}
+    				}else{
+    					alert("El valor esfera "+lado+" esta fuera del rango permitido -30 y 30");
+    					elemento.value = "";
+    					//elemento.focus();
+    				}
+    			}else{
+    				esfera = 0;
+    				alert("Debe ingresar valores entre -30 y 30");
+    				elemento.value = "";    				
+    			}		
+    	}
+     
+     function validaAdicion(elemento, lado){
+    		
+    		var esfera = 0;
+    		var dnpl = 0;
+    		var adicion = elemento.value;
+    		adicion = trim(adicion);
+    		
+    		if("derecha" == lado){	
+    			esfera = document.getElementById('OD_esfera').value;
+    			esfera = trim(esfera);
+    			dnpl = document.getElementById('OD_dnpl').value;
+    			dnpl = trim(dnpl);
+    			
+    		}else if("izquierda" == lado){
+    			esfera = document.getElementById('OI_esfera').value;
+    			esfera = trim(esfera);
+    			dnpl = document.getElementById('OI_dnpl').value;
+    			dnpl = trim(dnpl);
+    		}
+    		
+    		
+    		if("" != esfera){		
+    			if("derecha" == lado){	
+    				esfera = parseFloat(document.getElementById('OD_esfera').value).toFixed(2);
+    				if("" != adicion){
+    					if(adicion >0 && adicion <=4){
+    						var cerca = parseFloat(adicion) + parseFloat(esfera);
+    						document.getElementById('OD_cerca').value = cerca.toFixed(2);
+    						elemento.value = parseFloat(adicion).toFixed(2);
+    						dnpl = document.getElementById('OD_dnpl');
+    						validaDNPL(dnpl, lado);
+    					}else{
+    						if(adicion <= 0 ){						
+    							alert("El valor de la adici\u00F3n no puede ser menor o igual a 0");
+    						}else{
+    							alert("El valor de la adici\u00F3n no puede ser mayor a 4");
+    						}
+    					}	
+    					
+    				}else{
+    					document.getElementById('OD_cerca').value="";				
+    					document.getElementById('OD_dnpl').value = "";
+    					document.getElementById('OD_dnpc').value = "";			
+    				}		
+    				
+    			}else if("izquierda" == lado){
+    				esfera = parseFloat(document.getElementById('OI_esfera').value).toFixed(2);
+    				if("" != adicion){
+    					if(adicion >0 && adicion <=4){
+    						var cerca = parseFloat(adicion) + parseFloat(esfera);
+    						document.getElementById('OI_cerca').value = cerca.toFixed(2);
+    						elemento.value = parseFloat(adicion).toFixed(2);
+    						dnpl = document.getElementById('OI_dnpl');
+    						validaDNPL(dnpl, lado);
+    					}else{
+    						if(adicion <= 0 ){						
+    							alert("El valor de la adici\u00F3n no puede ser menor o igual a 0");
+    						}else{
+    							alert("El valor de la adici\u00F3n no puede ser mayor a 4");
+    						}
+    						
+    					}					
+    				}else{
+    					document.getElementById('OI_cerca').value="";
+    					document.getElementById('OI_dnpl').value = "";
+    					document.getElementById('OI_dnpc').value = "";
+    				}			
+    			}	
+    		}else{
+    			alert("Debe ingresar esfera "+lado+"");		
+    		}
+    	}
+     
+     function validaDNPL(elemento, lado){
+    		
+    		var dnpl = elemento.value;
+    		dnpl = trim(dnpl);
+    		
+    		if("" != dnpl){
+    			if(dnpl >= 20 && dnpl <= 40){
+    				
+    				dnpl = parseFloat(elemento.value).toFixed(2);		
+    				if("derecha" == lado){			
+    					var res = parseFloat(dnpl) - parseFloat(1);
+    					var adicion = document.getElementById('OD_adicion').value;
+    					if("" != adicion){
+    						document.getElementById('OD_dnpc').value = parseFloat(res).toFixed(2);
+    					}else{
+    						document.getElementById('OD_dnpc').value="";
+    					}
+    					elemento.value = parseFloat(dnpl).toFixed(2);
+    					return true;
+    				}else if("izquierda" == lado){
+    					var res = parseFloat(dnpl) - parseFloat(1);				
+    					var adicion = document.getElementById('OI_adicion').value;
+    					if("" != adicion){
+    						document.getElementById('OI_dnpc').value = parseFloat(res).toFixed(2);
+    					}else{
+    						document.getElementById('OI_dnpc').value="";
+    					}				
+    					elemento.value = parseFloat(dnpl).toFixed(2);
+    					return true;	
+    				}
+    			}else{			
+    				alert("Distancia Naso pupilar, valor est\u00e1 fuera de rango");
+    				return false;	
+    			}
+    		}else{		
+    			if("derecha" == lado){
+    				document.getElementById('OD_dnpc').value="";
+    			}else if("izquierda" == lado){
+    				document.getElementById('OI_dnpc').value="";
+    			}
+    			return false;	
+    		}	
+    			
+    	}
+
+      
+]]></script>	
+
+
 </zk>

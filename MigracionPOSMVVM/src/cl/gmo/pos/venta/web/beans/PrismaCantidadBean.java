@@ -4,6 +4,13 @@ public class PrismaCantidadBean {
 	
 	private int codigo;
 	private String descripcion;
+	
+	public PrismaCantidadBean() {
+		codigo=0;
+		descripcion="";
+	}
+	
+	
 	public int getCodigo() {
 		return codigo;
 	}

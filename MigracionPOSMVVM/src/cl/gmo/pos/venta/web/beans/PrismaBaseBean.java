@@ -3,6 +3,12 @@ package cl.gmo.pos.venta.web.beans;
 public class PrismaBaseBean {
 	private String codigo;
 	private String descripcion;
+	
+	public PrismaBaseBean() {
+		codigo="";
+		descripcion="";
+	}	
+	
 	public String getCodigo() {
 		return codigo;
 	}

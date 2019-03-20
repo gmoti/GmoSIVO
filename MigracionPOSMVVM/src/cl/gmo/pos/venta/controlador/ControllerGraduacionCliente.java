@@ -1,11 +1,15 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -64,6 +68,9 @@ public class ControllerGraduacionCliente implements Serializable{
 	private PrismaBaseBean prismaBaseOI;
 	private AgenteBean agenteBean;
 	
+	String regexp1 = "^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$";
+	String regexp2 = "^([0-9]{1,3})?$";
+	
 
 	@Init	
 	public void inicial(@ExecutionArgParam("origen")String origen,
@@ -87,6 +94,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		busquedaClientesDispatch = new BusquedaClientesDispatchActions();	
 		
 		fechaEmision = new Date(System.currentTimeMillis());
+		fechaProxRevision = new Date(System.currentTimeMillis());
 		
 		Optional<String> o = Optional.ofNullable(origen);
 		if(!o.isPresent()) {
@@ -155,7 +163,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		//beanGraduaciones = new BeanGraduaciones();
 		fechaEmision = new Date(System.currentTimeMillis());
-		fechaProxRevision = null;
+		fechaProxRevision = new Date(System.currentTimeMillis());
 		//graduacionesDispatch.cargaFormulario(graduacionesForm, sess);
 		graduacionesForm.setOD_cantidad("-1");
 		graduacionesForm.setOI_cantidad("-1");
@@ -189,7 +197,10 @@ public class ControllerGraduacionCliente implements Serializable{
 		graduacionesForm.setOI_dnpl("");
 		graduacionesForm.setOI_dnpc("");
 		graduacionesForm.setOI_avsc("");
-		graduacionesForm.setOI_avcc("");		
+		graduacionesForm.setOI_avcc("");	
+		
+		graduacionesForm.setOD_observaciones("");
+		graduacionesForm.setOI_observaciones("");
 		
 		graduacionesForm.setPagina("");		
 		graduacionesForm.setExiste_graduacion("");
@@ -726,28 +737,28 @@ public class ControllerGraduacionCliente implements Serializable{
 		Optional<PrismaCantidadBean> a = graduacionesForm.getListaCantidadOD()
 				.stream().filter(s ->graduacionesForm.getOD_cantidad().equals(String.valueOf(s.getCodigo()))).findFirst();		
 						
-			if (a.isPresent()) prismaCantidadOD = a.get(); else prismaCantidadOD=null;
+			if (a.isPresent()) prismaCantidadOD = a.get(); else prismaCantidadOD=new PrismaCantidadBean();
 		
 		Optional<PrismaCantidadBean> b = graduacionesForm.getListaCantidadOI()
 				.stream().filter(s ->graduacionesForm.getOI_cantidad().equals(String.valueOf(s.getCodigo()))).findFirst();		
 						
-			if (b.isPresent()) prismaCantidadOI = b.get(); else prismaCantidadOI=null;
+			if (b.isPresent()) prismaCantidadOI = b.get(); else prismaCantidadOI=new PrismaCantidadBean();
 		
 			
 		Optional<PrismaBaseBean> c = graduacionesForm.getListaBaseOD()				
 				.stream().filter(s ->graduacionesForm.getOD_base().equals(s.getDescripcion())).findFirst();		
 						
-			if (c.isPresent()) prismaBaseOD = c.get(); else prismaBaseOD=null;
+			if (c.isPresent()) prismaBaseOD = c.get(); else prismaBaseOD=new PrismaBaseBean();
 		
 		Optional<PrismaBaseBean> d = graduacionesForm.getListaBaseOI()				
 				.stream().filter(s ->graduacionesForm.getOI_base().equals(s.getDescripcion())).findFirst();		
 						
-			if (d.isPresent()) prismaBaseOI = d.get(); else prismaBaseOI=null;			
+			if (d.isPresent()) prismaBaseOI = d.get(); else prismaBaseOI=new PrismaBaseBean();			
 				
 		Optional<AgenteBean> e = graduacionesForm.getListaAgentes()				
 			.stream().filter(s ->graduacionesForm.getAgente().equals(s.getUsuario())).findFirst();	
 			
-			if (e.isPresent()) agenteBean = e.get(); else agenteBean=null;
+			if (e.isPresent()) agenteBean = e.get(); else agenteBean=new AgenteBean();
 	}
 	
 	
@@ -800,21 +811,33 @@ public class ControllerGraduacionCliente implements Serializable{
 	//===================================================
 	//=======Validaciones varias ========================
 	//===================================================	
-	
+	@NotifyChange({"graduacionesForm"})
 	@Command
-	public void validaEsfera(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+	public void validaEsfera(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
 		
 		Double mult = 0.25;
 		Double cont = 0.00;		
 		Double esfera= 0.00;	
-		Double elementoadicion=0.00;		
+		Double elementoadicion=0.00;	
+		
+		//String regexp = "^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$";
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}	
+		
 			
-		if(elemento != 0){
+		if(!elemento.equals("")){
 			
-			esfera = elemento;
+			try {
+				esfera = Double.valueOf(elemento);
+			}catch(Exception e) {
+				esfera = 0.00;
+			}
 			
-			if(esfera >= -30 && esfera <= 30){
+			if(esfera >= -30.00 && esfera <= 30.00){
 				
 				//esfera = parseFloat(elemento.value).toFixed(2);
 				
@@ -836,17 +859,17 @@ public class ControllerGraduacionCliente implements Serializable{
 					 try {
 						 if(lado.equals("derecha")){
 							 elementoadicion = Double.parseDouble(graduacionesForm.getOD_adicion());
-							 //validaAdicion(elementoadicion, lado);
+							 validaAdicion(graduacionesForm.getOD_adicion(), lado);
 							 
 						 }else if(lado.equals("izquierda")){
 							 elementoadicion = Double.parseDouble(graduacionesForm.getOI_adicion());
-							 //validaAdicion(elementoadicion, lado);
+							 validaAdicion(graduacionesForm.getOI_adicion(), lado);
 						 }
 					 }catch (Exception e) { 
 						 elementoadicion=0.0;				
 					 }
 					 
-					 validaAdicion(elementoadicion, lado);
+					 //validaAdicion(elementoadicion, lado);
 					 
 				}else{	
 					
@@ -854,27 +877,25 @@ public class ControllerGraduacionCliente implements Serializable{
 					 try {
 						 if(lado.equals("derecha")){
 							 elementoadicion = Double.parseDouble(graduacionesForm.getOD_adicion());
-							 //validaAdicion(elementoadicion, lado);
+							 validaAdicion(graduacionesForm.getOD_adicion(), lado);
 							 
 						 }else if(lado.equals("izquierda")){
 							 elementoadicion = Double.parseDouble(graduacionesForm.getOI_adicion());
-							 //validaAdicion(elementoadicion, lado);
+							 validaAdicion(graduacionesForm.getOI_adicion(), lado);
 						 }
 					 }catch (Exception e) {
 						 elementoadicion=0.0;
 					 }
 					 
-					 validaAdicion(elementoadicion, lado);
+					 //validaAdicion(elementoadicion, lado);
 				}
 			}else{
 				Messagebox.show("El valor esfera "+lado+" esta fuera del rango permitido -30 y 30");
-				elemento=0.00;
+				elemento="";
 				
-				if(lado.equals("derecha"))
-					//beanGraduaciones.setOD_esfera(0);
-					graduacionesForm.setOD_esfera("");
-				else 
-					//beanGraduaciones.setOI_esfera(0);
+				if(lado.equals("derecha"))					
+					graduacionesForm.setOD_esfera("");				
+				else					
 					graduacionesForm.setOI_esfera("");
 				
 				return;
@@ -883,13 +904,11 @@ public class ControllerGraduacionCliente implements Serializable{
 		}else{
 			esfera = 0.00;
 			Messagebox.show("Debe ingresar valores entre -30 y 30");
-			elemento=0.00;
+			elemento="";
 			
-			if(lado.equals("derecha"))
-				//beanGraduaciones.setOD_esfera(0);
+			if(lado.equals("derecha"))				
 				graduacionesForm.setOD_esfera("");
-			else 
-				//beanGraduaciones.setOI_esfera(0);
+			else				
 				graduacionesForm.setOI_esfera("");
 			
 			return;
@@ -899,33 +918,45 @@ public class ControllerGraduacionCliente implements Serializable{
 		}		
 	}
 	
-	
+	@NotifyChange({"graduacionesForm"})
 	@Command
-	public void validaAdicion(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+	public void validaAdicion(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
 		Double esfera = 0.0;
 		Double dnpl = 0.0;
-		Double adicion =0.0;		
+		Double adicion =0.0;	
 		
-		adicion = elemento;		
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}		
 		
 		try {
-			if(lado.equals("derecha")){	
-				//esfera = beanGraduaciones.getOD_esfera();			
-				//dnpl = beanGraduaciones.getOD_dnpl();
-				
+			adicion = Double.parseDouble(elemento);	
+		}catch(Exception e) {
+			adicion = 0.00;
+		}
+			
+		
+		try {
+			if(lado.equals("derecha")){
 				esfera=Double.parseDouble(graduacionesForm.getOD_esfera());
-				dnpl=Double.parseDouble(graduacionesForm.getOD_dnpl());
-				
 			}else if(lado.equals("izquierda")){
-				//esfera = beanGraduaciones.getOI_esfera();			
-				//dnpl = beanGraduaciones.getOI_dnpl();		
-				
 				esfera=Double.parseDouble(graduacionesForm.getOI_esfera());
-				dnpl=Double.parseDouble(graduacionesForm.getOI_dnpl());
 			}		
 		}catch (Exception e) {
 			esfera=0.0;
+		}
+		
+		
+		try {
+			if(lado.equals("derecha")){
+				dnpl=Double.parseDouble(graduacionesForm.getOD_dnpl());
+			}else if(lado.equals("izquierda")){				
+				dnpl=Double.parseDouble(graduacionesForm.getOI_dnpl());
+			}		
+		}catch (Exception e) {
 			dnpl=0.0;
 		}
 		
@@ -937,39 +968,29 @@ public class ControllerGraduacionCliente implements Serializable{
 				
 				if(adicion != 0){
 					
-					if(adicion >0 && adicion <=4){
+					if(adicion > 0 && adicion <= 4){
 						
 						double cerca = adicion + esfera;
-						
+						graduacionesForm.setOD_cerca(String.valueOf(cerca));						
 						//document.getElementById('OD_cerca').value = cerca.toFixed(2);						
-						elemento = adicion;//.toFixed(2);
-						//dnpl = beanGraduaciones.getOD_dnpl();
-						try {
-							dnpl = Double.parseDouble(graduacionesForm.getOD_dnpl());
-						}catch (Exception e) {
-							dnpl = 0.0;
-						}
+						//elemento = adicion;//.toFixed(2);			
 						
-						validaDNPL(dnpl, lado);
+						validaDNPL(graduacionesForm.getOD_dnpl(), lado);
 						
 					}else{
+						
 						if(adicion <= 0 ){						
-							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
-							//beanGraduaciones.setOD_adicion(0);
+							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");							
 							graduacionesForm.setOD_adicion("");
 							return;
 						}else{
-							Messagebox.show("El valor de la adicion no puede ser mayor a 4");
-							//beanGraduaciones.setOD_adicion(0);
+							Messagebox.show("El valor de la adicion no puede ser mayor a 4");							
 							graduacionesForm.setOD_adicion("");
 							return;
 						}
 					}	
 					
-				}else{
-					//beanGraduaciones.setOD_cerca(0.00);				
-					//beanGraduaciones.setOD_dnpl(0.00);
-					//beanGraduaciones.setOD_dnpc(0.00);	
+				}else{						
 					
 					graduacionesForm.setOD_cerca("");
 					graduacionesForm.setOD_dnpl("");
@@ -987,21 +1008,14 @@ public class ControllerGraduacionCliente implements Serializable{
 					if(adicion >0 && adicion <=4){
 						
 						double cerca = adicion + esfera;
+						graduacionesForm.setOI_cerca(String.valueOf(cerca));	
 						//document.getElementById('OI_cerca').value = cerca.toFixed(2);
-						elemento = adicion; //.toFixed(2);
-						//dnpl = beanGraduaciones.getOI_dnpl();
+						//elemento = adicion; //.toFixed(2);						
 						
-						try {
-							dnpl = Double.parseDouble(graduacionesForm.getOI_dnpl());
-						}catch (Exception e) {
-							dnpl=0.0;
-						}
-						
-						validaDNPL(dnpl, lado);
+						validaDNPL(graduacionesForm.getOI_dnpl(), lado);
 					}else{
 						if(adicion <= 0 ){						
-							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");
-							//beanGraduaciones.setOI_adicion(0);
+							Messagebox.show("El valor de la adicion no puede ser menor o igual a 0");							
 							graduacionesForm.setOI_adicion("");
 							return;
 						}else{
@@ -1010,10 +1024,7 @@ public class ControllerGraduacionCliente implements Serializable{
 						}
 						
 					}					
-				}else{
-					//beanGraduaciones.setOI_cerca(0.00);
-					//beanGraduaciones.setOI_dnpl(0.00);
-					//beanGraduaciones.setOI_dnpc(0.00);
+				}else{			
 					
 					graduacionesForm.setOI_cerca("");
 					graduacionesForm.setOI_dnpl("");
@@ -1026,13 +1037,25 @@ public class ControllerGraduacionCliente implements Serializable{
 		}
 	}
 	
-	
+	@NotifyChange({"graduacionesForm"})
 	@Command
-	public boolean validaDNPL(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+	public boolean validaDNPL(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
-		Double dnpl = elemento;	
+		Double dnpl = 0.00;	
 		Double adicion = 0.00;
 		Double res=0.00;
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return false;
+		}
+		
+		try {
+			dnpl = Double.valueOf(elemento);
+		}catch(Exception e) {
+			dnpl = 0.00;
+		}
+		
 		
 		if(dnpl != 0){
 			
@@ -1042,8 +1065,7 @@ public class ControllerGraduacionCliente implements Serializable{
 				
 				if(lado.equals("derecha")){		
 					
-					res = dnpl - 1;
-					//adicion = beanGraduaciones.getOD_adicion();
+					res = dnpl - 1;					
 					
 					try {
 						adicion = Double.parseDouble(graduacionesForm.getOD_adicion());
@@ -1051,65 +1073,55 @@ public class ControllerGraduacionCliente implements Serializable{
 						adicion=0.0;
 					}					
 			
-					if(adicion != 0){
-						//beanGraduaciones.setOD_dnpc(res);
+					if(adicion != 0){						
 						graduacionesForm.setOD_dnpc(String.valueOf(res));
 						//document.getElementById('OD_dnpc').value = parseFloat(res).toFixed(2);
-					}else{
-						//beanGraduaciones.setOD_dnpc(0.00);
+					}else{						
 						graduacionesForm.setOD_dnpc("");
 					}
 					
 					//elemento = parseFloat(dnpl).toFixed(2);
-					elemento = dnpl;
+					elemento = String.valueOf(dnpl);
 					return true;
 					
 				}else if(lado.equals("izquierda")){
 					
 					res = dnpl - 1;				
-					//adicion = beanGraduaciones.getOI_adicion();
+					
 					try {
 						adicion =  Double.parseDouble(graduacionesForm.getOI_adicion());
 					}catch (Exception e) {
 						adicion=0.0;
-					}
+					}					
 					
-					
-					if(adicion != 0){
-						//beanGraduaciones.setOI_dnpc(res);
+					if(adicion != 0){						
 						graduacionesForm.setOI_dnpc(String.valueOf(res));
 						//document.getElementById('OI_dnpc').value = parseFloat(res).toFixed(2);
-					}else{
-						//document.getElementById('OI_dnpc').value="";
-						//beanGraduaciones.setOI_dnpc(0.00);
+					}else{						
 						graduacionesForm.setOI_dnpc("");
 					}				
 					
 					//elemento.value = parseFloat(dnpl).toFixed(2);
-					elemento = dnpl;
+					elemento = String.valueOf(dnpl);
 					return true;	
 				}
 			}else{			
 				Messagebox.show("Distancia Naso pupilar, valor esta fuera de rango");
-				
+				/*
 				if(lado.equals("derecha")){					
-					//beanGraduaciones.setOD_dnpc(0.00);
 					graduacionesForm.setOD_dnpc("");
 					
-				}else if(lado.equals("izquierda")){
-					//beanGraduaciones.setOI_dnpc(0.00);
+				}else if(lado.equals("izquierda")){					
 					graduacionesForm.setOI_dnpc("");
-				}
+				}*/
 				
 				return false;	
 			}
 		}else{		
-			if(lado.equals("derecha")){					
-				//beanGraduaciones.setOD_dnpc(0.00);
+			if(lado.equals("derecha")){	
 				graduacionesForm.setOD_dnpc("");
 				
-			}else if(lado.equals("izquierda")){
-				//beanGraduaciones.setOI_dnpc(0.00);
+			}else if(lado.equals("izquierda")){				
 				graduacionesForm.setOI_dnpc("");
 			}
 			return false;	
@@ -1120,21 +1132,36 @@ public class ControllerGraduacionCliente implements Serializable{
 	}
 
 
+	@NotifyChange({"graduacionesForm"})
 	@Command
-	public void validaCilindro(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+	public void validaCilindro(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
 		Double cilindro=0.0; 	
 		Double mult = 0.25;
 		Double cont = 0.0;
 		Double intCilindro=0.0;
+		
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);		
+		//DecimalFormat df = (DecimalFormat)nf;
+		//nf.setRoundingMode(roundingMode);
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}		
 			
-		if(cilindro != 0){
+		if(!elemento.equals("")){
 				
-				cilindro = elemento;
+				try {
+					cilindro = Double.valueOf(elemento);
+				}catch(Exception e) {
+					cilindro=0.00;
+				}				
 				
-				if(cilindro >= -8 && cilindro <= 8){
+				if(cilindro >= -8 && cilindro <= 8){				
 					
 					//cilindro = parseFloat(elemento.value).toFixed(2);
+					cilindro = Double.valueOf(nf.format(cilindro));
 					
 					if (cilindro%mult != 0){	
 						
@@ -1145,39 +1172,58 @@ public class ControllerGraduacionCliente implements Serializable{
 							 }else{
 								 cilindro = cilindro + (-0.01F);
 							 }
+							 
 							 //cilindro = parseFloat(cilindro.toFixed(2));
+							 cilindro = Double.valueOf(nf.format(cilindro));
 							 cont++;
 						 }				 
 						 //elemento.value=cilindro.toFixed(2);
+						 
+						 if(lado.equals("derecha")){
+							graduacionesForm.setOD_cilindro(nf.format(cilindro));
+						 }else {						
+							graduacionesForm.setOI_cilindro(nf.format(cilindro));
+						 }
 					}else{			
-						 elemento = cilindro;			
-					}
+						//elemento.value = cilindro;
+						
+						if(lado.equals("derecha")){
+							graduacionesForm.setOD_cilindro(String.valueOf(cilindro));
+						}else {						
+							graduacionesForm.setOI_cilindro(String.valueOf(cilindro));
+						}						
+					}	
+							
+					
 				}else{
 					Messagebox.show("El valor cilindro "+lado+" esta fuera del rango permitido -8 y 8");
-					elemento=0.00;
+					elemento="";
 					
-					if(lado.equals("derecho")){									
-						//beanGraduaciones.setOD_cilindro(0);
+					if(lado.equals("derecha")){
 						graduacionesForm.setOD_cilindro("");
-					}else {
-						//beanGraduaciones.setOI_cilindro(0);
-						graduacionesForm.setOD_cilindro("");
+					}else {						
+						graduacionesForm.setOI_cilindro("");
 					}	
 					//elemento.focus();
 				}
 			}else{
 				cilindro = 0.00;
 				Messagebox.show("Debe ingresar valores entre -8 y 8");
-				elemento = 0.00;
+				elemento = "";
 				//elemento.value = parseFloat(cilindro).toFixed(2);
 				//elemento.focus();
+				if(lado.equals("derecha")){
+					graduacionesForm.setOD_cilindro("");
+				}else {						
+					graduacionesForm.setOI_cilindro("");
+				}
 			}
 			
 			intCilindro = cilindro;
 			
 			if(((intCilindro >= -8 && intCilindro < 0) || (intCilindro > 0 && intCilindro <= 8)) || (intCilindro >= -8.00 && intCilindro < 0.00) || (intCilindro > 0.00 && intCilindro <= 8.00) ){
 				
-				if(lado.equals("derecho")){				
+				if(lado.equals("derecha")){				
 					// document.getElementById('OD_eje').disabled =false;	
 					
 				}else if(lado.equals("izquierda")){
@@ -1185,35 +1231,52 @@ public class ControllerGraduacionCliente implements Serializable{
 				}			
 			}else{
 				
-				if(lado.equals("derecho")){	
-					//beanGraduaciones.setOD_eje(0);
+				if(lado.equals("derecha")){					
 					graduacionesForm.setOD_eje("");
-					//document.getElementById('OD_eje').disabled =true;		
-					
-				}else if(lado.equals("izquierda")){				
-					//beanGraduaciones.setOI_eje(0);
+					//document.getElementById('OD_eje').disabled =true;					
+				}else if(lado.equals("izquierda")){					
 					graduacionesForm.setOI_eje("");
 					//document.getElementById('OI_eje').disabled =true;
 				}
 			}			
 	}
 	
-	
+	@NotifyChange({"graduacionesForm"})
 	@Command
-	public void validaEje(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+	public void validaEje(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
-		Double eje = elemento;
+		Double eje = 0.00;
 		//boolean esnumero=false;
+		
+		if (!Pattern.matches(regexp2, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}
+		
+		try {
+			eje = Double.valueOf(elemento);
+		}catch(Exception e) {
+			eje=0.00;
+		}		
 		
 		if(eje != 0){		
 			
-			//esnumero = validarSiNumero(eje);
-			
+			//esnumero = validarSiNumero(eje);			
 			//if(true == esnumero){
 				if(eje < 0 || eje >180){
 					Messagebox.show("El valor del eje "+lado+" esta fuera de rango [0..100]");
 					eje = 0.00;
-					elemento = 0.00;
+					elemento="";
+					//elemento.value = "";
+					
+					if(lado.equals("derecha")){					
+						graduacionesForm.setOD_eje("");
+										
+					}else if(lado.equals("izquierda")){					
+						graduacionesForm.setOI_eje("");
+						
+					}
+					
 					
 				}
 			/*}else{
@@ -1222,21 +1285,32 @@ public class ControllerGraduacionCliente implements Serializable{
 		}	
 	}
 	
-	
+	@NotifyChange({"graduacionesForm"})
 	@Command
-	public void validacionCerca(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+	public void validacionCerca(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
 		Double esfera = 0.0;
-		Double cerca = elemento;	
+		Double cerca = 0.0;	
 		Double adicion = 0.0;
 		Double dnpl = 0.0;
 		
+		DecimalFormat df = new DecimalFormat("##.##");
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}
+		
 		try {
-			if(lado.equals("derecha")){	
-				//esfera = beanGraduaciones.getOD_esfera();			
+			cerca = Double.valueOf(elemento);	
+		}catch(Exception e) {
+			cerca=0.00;
+		}		
+		
+		try {
+			if(lado.equals("derecha")){						
 				esfera = Double.parseDouble(graduacionesForm.getOD_esfera());
-			}else if(lado.equals("izquierda")){
-				//esfera = beanGraduaciones.getOI_esfera();
+			}else if(lado.equals("izquierda")){				
 				esfera = Double.parseDouble(graduacionesForm.getOI_esfera());
 			}
 		}catch (Exception e) {
@@ -1252,25 +1326,18 @@ public class ControllerGraduacionCliente implements Serializable{
 					
 					if(cerca > esfera){
 						
-						adicion = cerca - esfera;
-						//beanGraduaciones.setOD_adicion(adicion);
+						adicion = cerca - esfera;						
 						graduacionesForm.setOD_adicion(String.valueOf(adicion));
-						
+						graduacionesForm.setOD_cerca(df.format(cerca));
 						//document.getElementById('OD_adicion').value = adicion.toFixed(2);
 						//elemento.value = parseFloat(cerca).toFixed(2);
-						elemento=cerca;
-						try {
-							//dnpl = beanGraduaciones.getOD_dnpl();
-							dnpl = Double.parseDouble(graduacionesForm.getOD_dnpl());
-						}catch (Exception e) {
-							dnpl = 0.0;
-						}	
+						//elemento=cerca;				
 						
-						validaDNPL(dnpl, lado);
+						validaDNPL(graduacionesForm.getOD_dnpl(), lado);
 						
 					}else{
 						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
-						//beanGraduaciones.setOD_cerca(0);
+						
 						graduacionesForm.setOD_cerca("");
 						return;
 					}	
@@ -1282,25 +1349,17 @@ public class ControllerGraduacionCliente implements Serializable{
 				
 				if(cerca != 0){
 					if(cerca > esfera){
-						adicion = cerca - esfera;
-						//beanGraduaciones.setOI_adicion(adicion);
-						graduacionesForm.setOI_adicion(String.valueOf(adicion));
 						
+						adicion = cerca - esfera;						
+						graduacionesForm.setOI_adicion(String.valueOf(adicion));
+						graduacionesForm.setOI_cerca(df.format(cerca));
 						//document.getElementById('OI_adicion').value = adicion.toFixed(2);
 						//elemento.value = parseFloat(cerca).toFixed(2); 
-						elemento=cerca;
-						//dnpl = beanGraduaciones.getOI_dnpl();
+						//elemento=cerca;						
 						
-						try {
-							dnpl = Double.parseDouble(graduacionesForm.getOI_dnpl());
-						}catch (Exception e) {
-							dnpl=0.0;
-						}						
-						
-						validaDNPL(dnpl, lado);
+						validaDNPL(graduacionesForm.getOI_dnpl(), lado);
 					}else{
-						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");
-						//beanGraduaciones.setOI_cerca(0);
+						Messagebox.show("El valor de esfera de cerca no puede ser menor o igual a esfera");						
 						graduacionesForm.setOI_cerca("");
 						return;
 					}				
@@ -1313,19 +1372,29 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 	}
 
-	
+	@NotifyChange({"graduacionesForm"})
 	@Command
-	public boolean validaDNPC(@BindingParam("elemento")double elemento, @BindingParam("lado")String lado){
+	public boolean validaDNPC(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
-		Double dnpc = elemento;	
-		Double adicion = 0.0;
+		Double dnpc 	= 0.0;	
+		Double adicion 	= 0.0;
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return false;
+		}
+		
+		try {
+			dnpc = Double.valueOf(elemento);
+		}catch(Exception e) {
+			dnpc = 0.00;
+		}
 		
 		if(dnpc != 0){
 			
 			if(dnpc >= 20 && dnpc <= 40){
 			
-				if(lado.equals("derecha")){			
-					//adicion = beanGraduaciones.getOD_adicion();
+				if(lado.equals("derecha")){				
 					
 					try {
 						adicion = Double.parseDouble(graduacionesForm.getOD_adicion());
@@ -1335,15 +1404,12 @@ public class ControllerGraduacionCliente implements Serializable{
 					
 					
 					if(adicion == 0){
-						Messagebox.show("Debe ingresar receta de cerca");
-						//beanGraduaciones.setOD_dnpc(0.0);	
+						Messagebox.show("Debe ingresar receta de cerca");						
 						graduacionesForm.setOD_dnpc("");
 						return false;
 					}
 					
-				}else if("izquierda" == lado){
-					
-					//adicion = beanGraduaciones.getOI_adicion();
+				}else if("izquierda" == lado){					
 					
 					try {
 						adicion = Double.parseDouble(graduacionesForm.getOI_adicion());
@@ -1352,8 +1418,7 @@ public class ControllerGraduacionCliente implements Serializable{
 					}					
 					
 					if(adicion == 0){
-						Messagebox.show("Debe ingresar receta de cerca");
-						//beanGraduaciones.setOI_dnpc(0.0);
+						Messagebox.show("Debe ingresar receta de cerca");						
 						graduacionesForm.setOI_dnpc("");
 						return false;
 					}
@@ -1380,11 +1445,46 @@ public class ControllerGraduacionCliente implements Serializable{
 		String OI_cantidad;
 		String OI_base;
 		
-		graduacionesForm.setOD_cantidad(String.valueOf(prismaCantidadOD.getCodigo()));
-		graduacionesForm.setOI_cantidad(String.valueOf(prismaCantidadOI.getCodigo()));
-		graduacionesForm.setOD_base(prismaBaseOD.getDescripcion());
-		graduacionesForm.setOI_base(prismaBaseOI.getDescripcion());
-		graduacionesForm.setAgente(agenteBean.getUsuario());
+		Optional<AgenteBean> ab;
+		Optional<Integer> pcb;
+		Optional<String> pbb;
+		
+		pcb = Optional.ofNullable(prismaCantidadOD.getCodigo());
+		if (pcb.isPresent())
+			graduacionesForm.setOD_cantidad(String.valueOf(prismaCantidadOD.getCodigo()));
+		else
+			graduacionesForm.setOD_cantidad("");
+		
+		pcb = Optional.ofNullable(prismaCantidadOI.getCodigo());
+		if (pcb.isPresent())
+			graduacionesForm.setOI_cantidad(String.valueOf(prismaCantidadOI.getCodigo()));
+		else
+			graduacionesForm.setOI_cantidad("");
+		
+		pbb = Optional.ofNullable(prismaBaseOD.getDescripcion());
+		if(pbb.isPresent())
+			graduacionesForm.setOD_base(prismaBaseOD.getDescripcion());
+		else
+			graduacionesForm.setOD_base("");
+		
+		pbb = Optional.ofNullable(prismaBaseOI.getDescripcion());
+		if(pbb.isPresent())
+			graduacionesForm.setOI_base(prismaBaseOI.getDescripcion());
+		else
+			graduacionesForm.setOI_base("");
+		
+		
+		ab =  Optional.ofNullable(agenteBean);
+		if (ab.isPresent())
+			graduacionesForm.setAgente(agenteBean.getUsuario());
+		else {
+			Messagebox.show("Debe Seleccionar agente");
+			graduacionesForm.setAgente("");
+			agenteBean=null;
+			return false;
+		}
+			
+		
 		nombre_cliente = graduacionesForm.getNombre_cliente().trim();
 		
 		if(nombre_cliente.equals("")){
@@ -1406,12 +1506,12 @@ public class ControllerGraduacionCliente implements Serializable{
 			return false;		
 		}
 		
-		agente = graduacionesForm.getAgente();
+		/*agente = graduacionesForm.getAgente();
 		
 		if(agente.equals("Seleccione")){
 			Messagebox.show("Debe Seleccionar agente");
 			return false;		
-		}
+		}*/
 		
 		
 		
@@ -1424,32 +1524,30 @@ public class ControllerGraduacionCliente implements Serializable{
 		
 		OD_cantidad = graduacionesForm.getOD_cantidad();
 		OD_cantidad = OD_cantidad.trim();
-		if(!OD_cantidad.equals("")  && !OD_cantidad.equals("-1") ){
+		/*if(!OD_cantidad.equals("")  && !OD_cantidad.equals("-1") ){
 			
 			OD_base = graduacionesForm.getOD_base();
 			
 			if(OD_base.equals("")  || OD_base.equals("Seleccione") ){
 				Messagebox.show("Debe seleccionar Base de Prisma Derecho");
 				return false;
-			}
-			
-		}
+			}			
+		}*/
 		
 		OI_cantidad = graduacionesForm.getOI_cantidad();
 		OI_cantidad = OI_cantidad.trim();
-		if(!OI_cantidad.equals("")  && !OI_cantidad.equals("-1") ){
+		/*if(!OI_cantidad.equals("")  && !OI_cantidad.equals("-1") ){
 			
 			OI_base = graduacionesForm.getOI_base();
 			
 			if(OI_base.equals("")  || OI_base.equals("Seleccione") ){
 				Messagebox.show("Debe seleccionar Base de Prisma Izquierdo");
 				return false;
-			}
-			
-		}
+			}			
+		}*/
 		
 		OD_base = graduacionesForm.getOD_base();
-		if(!OD_base.equals("")  && !OD_base.equals("Seleccione") ){
+		/*if(!OD_base.equals("")  && !OD_base.equals("Seleccione") ){
 			
 			OD_cantidad = graduacionesForm.getOD_cantidad();		
 			
@@ -1457,17 +1555,17 @@ public class ControllerGraduacionCliente implements Serializable{
 				Messagebox.show("Debe seleccionar Cantidad de Prisma Derecho");
 				return false;
 			}
-		}
+		}*/
 		
 		OI_base = graduacionesForm.getOI_base();
-		if(!OI_base.equals("")  &&  OI_base.equals("Seleccione") ){
+		/*if(!OI_base.equals("")  &&  OI_base.equals("Seleccione") ){
 			
 			OI_cantidad = graduacionesForm.getOI_cantidad();
 			if(OI_cantidad.equals("")  || OI_cantidad.equals("-1") ){
 				Messagebox.show("Debe seleccionar Cantidad de Prisma Izquierdo");
 				return false;
 			}
-		}
+		}*/
 		
 		return true; //true si llega hasta aqui
 	}
@@ -1589,13 +1687,7 @@ public class ControllerGraduacionCliente implements Serializable{
 			return false;
 		}else{
 			
-			try {
-				valorDoble = Double.parseDouble(graduacionesForm.getOD_dnpl());
-			}catch (Exception e) {
-				valorDoble = 0.0;
-			}
-			
-			boolean respuesta = validaDNPL(valorDoble, "derecha");
+			boolean respuesta = validaDNPL(graduacionesForm.getOD_dnpl(), "derecha");
 			if(respuesta == false){
 				return false;
 			}
@@ -1697,26 +1789,20 @@ public class ControllerGraduacionCliente implements Serializable{
 			return false;
 		}else{
 			
-			try {
-				valorDoble = Double.parseDouble(graduacionesForm.getOI_dnpl());
-			}catch (Exception e) {
-				valorDoble = 0.0;
-			}
+			boolean respuesta = validaDNPL(graduacionesForm.getOI_dnpl(), "izquierda");
 			
-			
-			boolean respuesta = validaDNPL(valorDoble, "izquierda");
 			if(respuesta == false){
 				return false;
 			}
 		}
 		
-		try {
+		/*try {
 			valorDoble = Double.parseDouble(graduacionesForm.getOD_dnpc());
 		}catch (Exception e) {
 			valorDoble = 0.0;
-		}
+		}*/
 		
-		boolean respuestadnpc = validaDNPC(valorDoble, "derecha");
+		boolean respuestadnpc = validaDNPC(graduacionesForm.getOD_dnpc(), "derecha");
 		if(respuestadnpc == false){
 			return false;
 		}
@@ -1740,10 +1826,10 @@ public class ControllerGraduacionCliente implements Serializable{
 		}
 		
 		
-		if(fProxRevision.equals("")){
+		/*if(fProxRevision.equals("")){
 			Messagebox.show("Debe ingresar fecha de revisi\u00F3n");
 			return false;
-		}
+		}*/
 		
 		return true;//CAMBIAR  a true
 	}

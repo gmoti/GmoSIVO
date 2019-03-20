@@ -1517,8 +1517,8 @@ public class VentaPedidoDAOImpl implements VentaPedidoDAO{
 				con = ConexionFactory.INSTANCE.getConexion();
 				System.out.println("====> SP_VTA_PEDI_INS_DOCUMENTO_BE("+ticket+","+documento+","+tipo_doc+","+total+","+fecha+","+local+","+nisapre+","+dto+");");
 
-				cs = con.prepareCall("{call SP_VTA_PEDI_INS_DOCUMENTO_BE(?,?,?,?,?,?,?,?,?)}");
-				//cs = con.prepareCall("{call SP_VTA_PEDI_INS_DOCUMENTO_QA(?,?,?,?,?,?,?,?,?)}");
+				//cs = con.prepareCall("{call SP_VTA_PEDI_INS_DOCUMENTO_BE(?,?,?,?,?,?,?,?,?)}");
+				cs = con.prepareCall("{call SP_VTA_PEDI_INS_DOCUMENTO_QA(?,?,?,?,?,?,?,?,?)}");
 				cs.setString(1, fecha);
 				cs.setLong(2, total);
 				cs.setInt(3, documento);
