@@ -40,7 +40,7 @@
 				</div>
 				
 				<div sclass="col-lg-3">
-					<textbox value="@bind(vm.ventaDirectaForm.nif)" width="100px"/> 
+					<textbox value="@bind(vm.ventaDirectaForm.nif)" width="100px" onOK="@command('buscarCliente')"/> 
 					<textbox value="@bind(vm.ventaDirectaForm.dv)" width="20px" disabled="true"/>
 					<toolbarbutton onClick="@command('buscarCliente')" image="/iconos/luparapida.png" width="20px"/>
 					<toolbarbutton onClick="@command('buscarClienteGenerico')" image="/iconos/cliente_generico.png" width="20px"/>

@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
@@ -421,13 +422,14 @@ public class ControllerGraduacionCliente implements Serializable{
 										
 										graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
 										
-										if (graduacionesForm.getExito().equals("true")) {
-											Messagebox.show("Los datos fueron grabados correctamente");
+										//if (graduacionesForm.getExito().equals("true")) {
+											Messagebox.show("Los datos fueron grabados correctamente");											
+											BindUtils.postGlobalCommand(null, null, "notificacionCambios", null);
 											return;
-										}else {
+										/*}else {
 											Messagebox.show("Error al intentar grabar los datos");
 											return;
-										}
+										}*/
 										
 									}						
 								}
@@ -543,6 +545,10 @@ public class ControllerGraduacionCliente implements Serializable{
 			}		
 	}
 	
+	@GlobalCommand
+	public void notificacionCambios() {		
+		BindUtils.postNotifyChange(null, null, ControllerGraduacionCliente.this, "graduacionesForm");
+	}
 		
 	
 	@Command
@@ -1624,27 +1630,29 @@ public class ControllerGraduacionCliente implements Serializable{
 		}catch(Exception e) {
 			OD_dnpl=0;
 		}	
+		
+		//=========================================================================
 				
 		
-		//if(esferaD != 0){
+		if(!graduacionesForm.getOD_esfera().equals("") &&  !graduacionesForm.getOD_esfera().equals(null)){
 			if(esferaD < -30 || esferaD > 30){
 				Messagebox.show("El valor esfera derecha esta fuera del rango permitido -30 y 30");
 				return false;
 			}		
-		/*}else{
+		}else{
 			Messagebox.show("Debe ingresar esfera derecha.");
 			return false;
-		}*/		
+		}		
 		
-		//if(cilindroD != 0){		
+		if(!graduacionesForm.getOD_cilindro().equals("") &&  !graduacionesForm.getOD_cilindro().equals(null)){		
 			if(cilindroD < -8  || cilindroD > 8){
 				Messagebox.show("El valor cilindro derecho esta fuera de rango");
 				return false;
 			}		
-		/*}else{
+		}else{
 			Messagebox.show("Debe ingresar valor del cilindro derecho");
 			return false;
-		}*/
+		}
 		
 		
 		intCilindro = cilindroD;
@@ -1657,32 +1665,32 @@ public class ControllerGraduacionCliente implements Serializable{
 		}
 		
 		
-		if(ejeD != 0){
-			if(cilindroD == 0){
+		if(!graduacionesForm.getOD_eje().equals("")  && !graduacionesForm.getOD_eje().equals(null)){
+			if(graduacionesForm.getOD_cilindro().equals("") || graduacionesForm.getOD_cilindro().equals(null)){
 				Messagebox.show("Debe ingresar cilindro derecho");
 				return false;
 			}
 		}	
 		
-		if(ejeD != 0){
+		if(!graduacionesForm.getOD_eje().equals("")  && !graduacionesForm.getOD_eje().equals(null)){
 			if(ejeD < 0 || ejeD >180){
 				Messagebox.show("El valor del eje derecho esta fuera de rango");
 				return false;
 			}
-		}
+		}	
 		
 		
-		if(adicionD > 0){
+		if(!graduacionesForm.getOD_adicion().equals("")  && !graduacionesForm.getOD_adicion().equals(null)){
 			if(adicionD < 0.50 || adicionD > 4){
 				Messagebox.show("El valor de la adicion derecha esta fuera de rango");
 				return false;
 			}
-		}else {
+		/*}else {
 			Messagebox.show("El Valor de la adicion no puede ser menor o igual a 0");
-			return false;
+			return false;*/
 		}
 		
-		if(OD_dnpl == 0){
+		if(graduacionesForm.getOD_dnpl().equals("") || graduacionesForm.getOD_dnpl().equals(null)){
 			Messagebox.show("Debe ingresar distancia naso pupilar derecha.");
 			return false;
 		}else{
@@ -1735,26 +1743,27 @@ public class ControllerGraduacionCliente implements Serializable{
 			OI_dnpl=0;
 		}
 		
+		//=============================
 		
-		//if(esferaI != 0){
-			if(esferaI < -30 || esferaI >30){
-				Messagebox.show("El valor esfera izquierda esta fuera de rango");
+		if(!graduacionesForm.getOI_esfera().equals("") &&  !graduacionesForm.getOI_esfera().equals(null)){
+			if(esferaI < -30 || esferaI > 30){
+				Messagebox.show("El valor esfera izquierda esta fuera del rango permitido -30 y 30");
 				return false;
-			}	
-		/*}else{
+			}		
+		}else{
 			Messagebox.show("Debe ingresar esfera izquierda.");
 			return false;
-		}*/
+		}		
 		
-		//if(cilindroI != 0){		
+		if(!graduacionesForm.getOI_cilindro().equals("") &&  !graduacionesForm.getOI_cilindro().equals(null)){		
 			if(cilindroI < -8  || cilindroI > 8){
 				Messagebox.show("El valor cilindro izquierdo esta fuera de rango");
 				return false;
 			}		
-		/*}else{
+		}else{
 			Messagebox.show("Debe ingresar valor del cilindro izquierdo");
 			return false;
-		}*/
+		}
 		
 		if(cilindroI != 0){
 			if(ejeI == 0){
@@ -1763,34 +1772,37 @@ public class ControllerGraduacionCliente implements Serializable{
 			}
 		}	
 		
-		if(ejeI != 0){
-			if(cilindroI == 0){
+		if(!graduacionesForm.getOI_eje().equals("")  && !graduacionesForm.getOI_eje().equals(null)){
+			if(graduacionesForm.getOI_cilindro().equals("") || graduacionesForm.getOI_cilindro().equals(null)){
 				Messagebox.show("Debe ingresar cilindro izquierdo");
 				return false;
 			}
-		}
-		if(ejeI != 0){
+		}	
+		
+		if(!graduacionesForm.getOI_eje().equals("")  && !graduacionesForm.getOI_eje().equals(null)){
 			if(ejeI < 0 || ejeI >180){
 				Messagebox.show("El valor del eje izquierdo esta fuera de rango");
 				return false;
 			}
-		}
+		}	
 		
 		
-		if(adicionI != 0){
-			if(adicionI <= 0 || adicionI > 4){
+		if(!graduacionesForm.getOI_adicion().equals("")  && !graduacionesForm.getOI_adicion().equals(null)){
+			if(adicionI < 0.50 || adicionI > 4){
 				Messagebox.show("El valor de la adicion izquierda esta fuera de rango");
 				return false;
 			}
+		/*}else {
+			Messagebox.show("El Valor de la adicion no puede ser menor o igual a 0");
+			return false;*/
 		}
 		
-		if(OI_dnpl == 0){
+		if(graduacionesForm.getOI_dnpl().equals("") || graduacionesForm.getOI_dnpl().equals(null)){
 			Messagebox.show("Debe ingresar distancia naso pupilar izquierda.");
 			return false;
 		}else{
 			
-			boolean respuesta = validaDNPL(graduacionesForm.getOI_dnpl(), "izquierda");
-			
+			boolean respuesta = validaDNPL(graduacionesForm.getOI_dnpl(), "derecha");
 			if(respuesta == false){
 				return false;
 			}

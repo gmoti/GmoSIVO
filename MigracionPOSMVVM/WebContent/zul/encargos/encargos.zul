@@ -89,7 +89,7 @@
 							<rows>
 								<row><!-- fila 1 -->
 									<cell>
-									<label value="Codigo" />
+									<label value="Codigo"/>
 									</cell>
 									<cell colspan="1">
 										<textbox value="@bind(vm.ventaPedidoForm.codigo_suc)" width="30px" readonly="true" />
@@ -99,12 +99,12 @@
 					    			<label value="Cliente"/>
 					    			
 					    			<cell colspan="1">
-					    				<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="150px"/>
+					    				<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="150px" onOK="@command('buscarCliente')" tabindex="1"/>
 										<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="30px" readonly="true"/>
 									</cell>
 									
 									<cell colspan="1">
-										<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
+										<toolbarbutton id="btnSearch" image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px" tooltiptext="Busqueda rapida cliente"/>
 										<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaCliente')" width="30px" tooltiptext="Busqueda cliente"/>
 										<toolbarbutton image="/iconos/cliente_generico.png" onClick="@command('buscarClienteGenerico')"  width="30px" tooltiptext="Cliente generico"/>										
 									</cell>									

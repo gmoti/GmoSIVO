@@ -1,10 +1,11 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window  id="${arg.name}" border="none" width="40%" height="40%" 
+<window  id="${arg.name}" border="none" width="40%" height="75%" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAgregaSuplemento')">
 		<!-- id="winAgregaSuplemento" -->		
 		
-		<div>		    
+		<div width="100%" height="100%">	
+			    
 		    <div width="100%" style="background-color:black;color: white" height="40px">
 				<label value="Suplementos :: ${arg.descripcion}"  />
 				<div style="float: right">				
@@ -12,44 +13,43 @@
 				</div>																			
 			</div>
 
-			<div>
-				<vbox>
-					<label value="Seleccionar Suplemento" />
-					<combobox model="@bind(vm.suplementosForm.suplementos)" 
-							onChange="@command('recupera_suplemento')" 
-							selectedItem="@bind(vm.suplementopedidoBean)" placeholder="Seleccione" width="250px">
+			
+			<vbox>
+				<label value="Seleccionar Suplemento" />
+				<combobox model="@bind(vm.suplementosForm.suplementos)" 
+						onChange="@command('recupera_suplemento')" 
+						selectedItem="@bind(vm.suplementopedidoBean)" placeholder="Seleccione" width="250px">
+					<template name="model">
+						<comboitem label="@load(each.descripcion)"/>
+					</template>						
+				</combobox>
+				<space/>
+				
+				<hbox>
+					<combobox model="@bind(vm.suplementosForm.lista_valores_suplementos)"  width="200px" 
+							selectedItem="@bind(vm.suplementosValores)">
 						<template name="model">
 							<comboitem label="@load(each.descripcion)"/>
 						</template>						
 					</combobox>
-					<space/>
-					
-					<hbox>
-						<combobox model="@bind(vm.suplementosForm.lista_valores_suplementos)"  width="200px" 
-								selectedItem="@bind(vm.suplementosValores)">
-							<template name="model">
-								<comboitem label="@load(each.descripcion)"/>
-							</template>						
-						</combobox>
-					  	
-					 	<button image="/iconos/add.png" label="Agregar" onClick="@command('enviar')"/>
-					</hbox>
-										
-				</vbox>
-			</div>
-
-			<div>
+				  	
+				 	<button image="/iconos/add.png" label="Agregar" onClick="@command('enviar')"/>
+				</hbox>
+									
+			</vbox>		
 		    	
-		    	<div width="100%" style="background-color:black;color: white">
-		    		<space width="20px"/>
-					<label value="Codigo"/>
-					<space width="30px"/>
-					<label value="Descripcion"/>
-					<space width="100px"/>
-					<label value="Valor"/>
-		    	</div>		    
-		    
-		    	<grid model="@bind(vm.suplementosForm.listaSuplementos)">
+	    	<div width="100%" style="background-color:black;color: white">
+	    		<space width="20px"/>
+				<label value="Codigo"/>
+				<space width="30px"/>
+				<label value="Descripcion"/>
+				<space width="100px"/>
+				<label value="Valor"/>
+	    	</div>		
+		    	    
+		    <div width="100%" height="70%">
+		    	<grid model="@bind(vm.suplementosForm.listaSuplementos)" 
+		    			oddRowSclass="none" sclass="MyGridRowHeight" width="100%" height="95%" style="overflow-y: scroll">
 		    		<columns>
 		    			<column width="65px"/>
 		    			<column width="205px"/>

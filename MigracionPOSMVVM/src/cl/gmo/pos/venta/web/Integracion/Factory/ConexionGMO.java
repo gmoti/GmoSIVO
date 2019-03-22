@@ -23,10 +23,10 @@ public class ConexionGMO implements ConexionFactory{
     	try{	
     		Class.forName(driver).newInstance();
     		//PROD
-    		  //con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.34:1521:POSCL",usuario,pass);
+    		  con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.34:1521:POSCL",usuario,pass);
     		
     		//QA
-    		con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.134:1521:POSCL",usuario,pass);
+    		//con =DriverManager.getConnection("jdbc:oracle:thin:@10.216.4.134:1521:POSCL",usuario,pass);
     		
     	   
     	}catch(Exception e) {    

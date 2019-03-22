@@ -83,7 +83,7 @@
 			</div>			
 			
 			<div sclass="col-lg-5">				
-				<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="100px"/>
+				<textbox value="@bind(vm.ventaPedidoForm.nif)"   width="100px" onOK="@command('buscarCliente')"/>
 				<textbox value="@bind(vm.ventaPedidoForm.dvnif)" width="20px" readonly="true"/>				
 				<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="20px" tooltiptext="Busqueda rapida cliente"/>
 				<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaCliente')" width="20px" tooltiptext="Busqueda cliente"/>

@@ -304,22 +304,22 @@ public class ControllerVentaDirecta implements Serializable{
 				String tmp[] =  ventaDirectaForm.getEstado_boleta().split("_");				
 					
 				//Produccion	
-				/*String url ="http://10.216.4.16/39 " + 
+				String url ="http://10.216.4.16/39 " + 
 						ventaDirectaForm.getNif().trim() + 
 						"-" + ventaDirectaForm.getDv().trim() + 
-						" " + tmp[1].trim()+".pdf";	*/
+						" " + tmp[1].trim()+".pdf";	
 					
 					
 				//Desarrollo
-				String url ="http://10.216.4.24/39 " + 
+				/*String url ="http://10.216.4.24/39 " + 
 							ventaDirectaForm.getNif().trim() + 
 							"-" + ventaDirectaForm.getDv().trim() + 
-							" " + tmp[1].trim()+".pdf";
+							" " + tmp[1].trim()+".pdf";*/
 						
 				
 				if(tmp[0].equals("0") || tmp[2].equals("true")){
 					
-					Messagebox.show("Error: No se pudo generar la boleta, favor revisar el modulo de reimpresión de Boletas.");
+					Messagebox.show("Error: No se pudo generar la boleta, favor revisar el modulo de reimpresiï¿½n de Boletas.");
 					return;
 				}else if(tmp[0].equals("1") && tmp[2].equals("false")){
 					
@@ -337,7 +337,7 @@ public class ControllerVentaDirecta implements Serializable{
 					
 				}else if(tmp[0].equals("2") && tmp[2].equals("false")){
 					
-					Messagebox.show("!ATENCIÓN¡ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+					Messagebox.show("!ATENCIï¿½Nï¿½ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
 					
 					objetos = new HashMap<String,Object>();
 					objetos.put("documento",url);

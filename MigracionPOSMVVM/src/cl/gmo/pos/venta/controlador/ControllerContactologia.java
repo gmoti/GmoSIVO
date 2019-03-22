@@ -1,11 +1,14 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -46,6 +49,13 @@ public class ControllerContactologia implements Serializable {
 	
 	SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat tt = new SimpleDateFormat("hh:mm:ss");
+	
+	String regexp1 = "^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$";
+	String regexp2 = "^([0-9]{1,3})?$";
+	
+	NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);		
+	//DecimalFormat df = (DecimalFormat)nf;
+	//nf.setRoundingMode(roundingMode);
 	
 	
 	@Init	
@@ -602,6 +612,468 @@ public class ControllerContactologia implements Serializable {
 	    //return s != null && s.matches("[-+]?\\d*\\.?\\d+");
 		return bRet;
 	} 
+	
+	
+	//==========validaciones onblur =====================
+	//===================================================
+	@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaRadio1(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+		
+		String valorelemento = elemento;			
+		valorelemento = valorelemento.trim();
+		Double radio1=0.00;
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}	
+		
+		if(!valorelemento.equals("")){
+			
+			//var respuesta = isNaN(valorelemento);
+			
+			//if(!(respuesta)){
+											
+				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				try{
+					radio1 = Double.valueOf(valorelemento);
+				}catch(Exception e){
+					radio1=0.00;
+				}				
+				
+				
+				if(radio1 <= 0.00 || radio1 > 99.99){				
+					Messagebox.show("El valor radio1 "+lado+" est\u00E1 fuera del rango permitido mayor a 0 y menor a 99.99");					
+				}else{
+					//elemento.value=valorelemento;
+					if(lado.equals("izquierda"))
+						contactologiaForm.setI_radio1(String.valueOf(radio1));
+					else;	
+						contactologiaForm.setO_radio1(String.valueOf(radio1));
+					
+				}
+			//}else{
+				//Messagebox.show("Debe ingresar solo n\u00FAmeros");
+				//elemento.focus();					
+			//}		
+		}else{
+			Messagebox.show("Debe ingresar valor en radio 1 "+lado+"");				
+		}
+	}
+	
+	
+	@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaRadio2(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+		
+		String valorelemento = elemento;			
+		valorelemento = valorelemento.trim();
+		Double radio2=0.00;
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}
+		
+		if(!valorelemento.equals("")){
+			//var respuesta = isNaN(valorelemento);
+			//if(!(respuesta)){
+											
+				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				try{
+					radio2 = Double.valueOf(valorelemento);
+				}catch(Exception e){
+					radio2=0.00;
+				}	
+				
+				if(radio2 <= 0.00 || radio2 > 99.99){					
+					Messagebox.show("El valor radio1 "+lado+" est\u00E1 fuera del rango permitido mayor a 0 y menor a 99.99");					
+				}else{
+					//elemento.value=valorelemento;
+					if(lado.equals("izquierda"))
+						contactologiaForm.setI_radio2(String.valueOf(radio2));
+					else;	
+						contactologiaForm.setO_radio2(String.valueOf(radio2));
+				}
+			//}else{
+				//alert("Debe ingresar solo n\u00FAmeros");
+				//elemento.focus();					
+			//}		
+		}
+	}
+	
+	
+	@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaEsfera(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+		
+		String valorelemento = elemento;		
+		Double mult = 0.25;
+		Double cont = 0.00;
+		Double esfera  = 0.00;
+		valorelemento = valorelemento.trim();	
+		
+		if (!Pattern.matches(regexp1, elemento)) {
+			Messagebox.show("Formato incorrecto");
+			return;
+		}
+		
+		
+		if(!valorelemento.equals("")){
+						
+			//var respuesta = isNaN(valorelemento);
+			
+			//if(!(respuesta)){
+			
+				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				try{
+					esfera = Double.valueOf(valorelemento);
+				}catch(Exception e){
+					esfera = 0.00;
+				}					
+			
+				if(esfera < -99.00 || esfera > 99.00){					
+					Messagebox.show("El valor esfera "+lado+" est\u00E1 fuera del rango permitido entre -99 y 99");					
+				}else{
+					
+					if (esfera%mult!=0){
+					
+						while((esfera%mult!=0) && (cont < 55)){
+							
+							if(esfera > 0){				 
+								esfera = esfera + 0.01;
+							 }else{
+								 esfera = esfera + (-0.01);
+							 }	
+							 
+							//esfera = parseFloat(valorelemento.toFixed(2));
+							  cont++;						 
+						}				
+						
+						//elemento.value=valorelemento;
+						if(lado.equals("izquierda"))
+							contactologiaForm.setI_esfera(String.valueOf(esfera));
+						else;	
+							contactologiaForm.setO_esfera(String.valueOf(esfera));
+					}else{
+						
+						//elemento.value=valorelemento;
+						if(lado.equals("izquierda"))
+							contactologiaForm.setI_esfera(String.valueOf(esfera));
+						else;	
+							contactologiaForm.setO_esfera(String.valueOf(esfera));
+					}					
+				}
+				
+			/*}else{
+				Messagebox.show("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();	
+			}		*/
+		
+		}else{
+			Messagebox.show("Debe ingresar valor en esfera "+lado+"");	
+		}			
+	}
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaCilindro(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+	
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		var mult = 0.25;
+		var cont = 0;
+		
+		if("" != valorelemento){
+		
+			var respuesta = isNaN(valorelemento);
+			
+			if(!(respuesta)){
+				
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				if(valorelemento < -99.00 || valorelemento > 0){					
+					alert("El valor cilindro "+lado+" est\u00E1 fuera del rango permitido entre -99 y 0");					
+				}else{
+					if (valorelemento%mult!=0){	
+					
+						while((valorelemento%mult!=0) && (cont < 55)){
+							
+							if(valorelemento > 0){				 
+						 		valorelemento = parseFloat(valorelemento) + 0.01;
+							 }else{
+								 valorelemento = parseFloat(valorelemento) + (-0.01);
+							 }	
+							 
+							  valorelemento = parseFloat(valorelemento.toFixed(2));
+							  cont++;						 
+						}							
+						elemento.value=valorelemento;
+					
+					}else{
+						elemento.value=valorelemento;
+					}
+				}				
+			}else{
+				alert("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();		
+			}			
+		
+		}else{
+			alert("Debe ingresar valor en cilindro "+lado+"");		
+		}
+	
+	
+	}*/
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaEje(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+		
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		
+		var cilindro = 0;
+		
+		if("derecho" == lado){
+			cilindro = document.getElementById('o_cilindro').value;
+		}else if("izquierdo" == lado){
+			cilindro = document.getElementById('i_cilindro').value;
+		}
+		
+		if("" != valorelemento){
+			
+			var respuesta = isNaN(valorelemento);				
+			if(!(respuesta)){
+			
+				valorelemento = parseInt(valorelemento);
+				
+				if(valorelemento >= 0 && valorelemento <= 180){
+					elemento.valeu=	valorelemento;
+				}else{
+					alert("El valor eje "+lado+" est\u00E1 fuera del rango permitido entre 0 y 180");
+				}							
+			
+			}else{
+				alert("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();
+			}				
+			
+		}else{				
+			if(cilindro < 0 && cilindro > -99){
+				alert("Debe ingresar eje dentro de los rangos  0 y 180");
+			}		
+		}
+	
+	}*/
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaDiamT(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+		
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		
+		if("" != valorelemento){
+			var respuesta = isNaN(valorelemento);	
+			
+			if(!(respuesta)){
+			
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				
+				if(valorelemento >= 0.00  && valorelemento <= 30.00){
+					elemento.value = valorelemento;	
+				}else{
+					alert("El valor diametro total "+lado+" est\u00E1 fuera del rango permitido entre 0 y 30");	
+				}
+				
+			}else{
+				alert("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();
+			}
+		}else{
+			alert("Debe ingresar valor en diametro total "+lado+"");	
+		}	
+	}*/
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaDiaZ(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+	
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		
+		if("" != valorelemento){
+						
+			var respuesta = isNaN(valorelemento);
+			
+			if(!(respuesta)){
+				
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				
+				if(valorelemento >= 0.00 && valorelemento <= 10.00){
+					elemento.value=valorelemento;
+				}else{
+					alert("El valor diametro zona \u00F3ptica "+lado+" est\u00E1 fuera del rango permitido entre 0 y 10");	
+				}
+			
+			}else{
+				alert("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();
+			}
+			
+		}
+		
+	}*/
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaBandasP(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+	
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		
+		if("" != valorelemento){
+			
+			var respuesta = isNaN(valorelemento);
+			
+			if(!(respuesta)){
+				
+				valorelemento = parseInt(valorelemento);
+				
+				if(valorelemento >= 0 && valorelemento <= 9){
+					elemento.value=valorelemento;
+				}else{
+					alert("El valor bandas perisf\u00E9ricas "+lado+" est\u00E1 fuera del rango permitido entre 0 y 9");	
+				}					
+			
+			}else{
+				alert("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();
+			}			
+		}		
+	}*/
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaRadio3(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+		
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		
+		if("" != valorelemento){
+			
+			var respuesta = isNaN(valorelemento);
+							
+			if(!(respuesta)){
+				
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+			
+				if(valorelemento >= 0 && valorelemento <= 99.99){
+					elemento.value=valorelemento;
+				}else{
+					alert("El valor radio 3 "+lado+" est\u00E1 fuera del rango permitido entre 0 y 99.99");
+				}					
+					
+			}else{				
+				alert("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();				
+			}			
+		}				
+	}*/
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaDiamP(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+	
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		
+		if("" != valorelemento){
+			
+			var respuesta = isNaN(valorelemento);
+			
+			if(!(respuesta)){
+			
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				
+				if(valorelemento >= 0 && valorelemento <= 10.00){
+					elemento.value=valorelemento;
+				}else{
+					alert("El valor diametro pupilar "+lado+" est\u00E1 fuera del rango permitido entre 0 y 10.00");
+				}					
+			
+			}else{				
+				alert("Debe ingresar solo n\u00FAmeros");
+				elemento.focus();				
+			}
+		}		
+	}*/
+	
+	
+	/*@NotifyChange({"contactologiaForm"})
+	@Command
+	public void validaAdicion(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
+	
+		var valorelemento = elemento.value;			
+		valorelemento = trim(valorelemento);
+		var mult = 0.25;
+		var cont = 0;
+		
+		
+		if("" != valorelemento){
+		
+			var respuesta = isNaN(valorelemento);
+			
+			if(!(respuesta)){
+				
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				
+				if(valorelemento >= 0.00 && valorelemento <= 5.00){
+				
+					if (valorelemento%mult!=0){	
+					
+						while((valorelemento%mult!=0) && (cont < 55)){
+							
+							if(valorelemento > 0){				 
+						 		valorelemento = parseFloat(valorelemento) + 0.01;
+							 }else{
+								 valorelemento = parseFloat(valorelemento) + (-0.01);
+							 }	
+							 
+							  valorelemento = parseFloat(valorelemento.toFixed(2));
+							  cont++;						 
+						}							
+						elemento.value=valorelemento;
+					
+					}else{
+						elemento.value=valorelemento;
+					}
+					
+					
+				}else{
+					alert("El valor adici\u00F3n "+lado+" est\u00E1 fuera del rango permitido entre 0 y 5.00");
+				}
+			
+			}else{
+				elemento.value=valorelemento;
+			}
+			
+		}
+	
+	}*/
+	
+		
+	
+	
+	
 	
 	//======Getter and Setter =====================
 	//=============================================

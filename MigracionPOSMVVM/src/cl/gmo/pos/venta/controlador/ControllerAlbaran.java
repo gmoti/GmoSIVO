@@ -200,15 +200,15 @@ public class ControllerAlbaran implements Serializable{
 			devolucionDispatch.cargaAlbaran(devolucionForm, sess);			
 		}		
 		
-		//String val_letras = "/^[A-Z a-zÑñ. ]{3,50}$/";	
+		//String val_letras = "/^[A-Z a-zï¿½ï¿½. ]{3,50}$/";	
 		/*
 		if(!Pattern.matches(val_letras, devolucionForm.getDireccion())) {
-			Messagebox.show("Debe Ingresar una dirección de cliente válida.");
+			Messagebox.show("Debe Ingresar una direcciï¿½n de cliente vï¿½lida.");
 			return;
 		}
 		
 		if(!Pattern.matches(val_letras, devolucionForm.getNdireccion_cli())) {
-			Messagebox.show("Debes ingresar el N° de Dirección del cliente.");
+			Messagebox.show("Debes ingresar el Nï¿½ de Direcciï¿½n del cliente.");
 			return;
 		}
 		
@@ -300,7 +300,7 @@ public class ControllerAlbaran implements Serializable{
 			}
 			
 			if(motivo.equals("0")) {
-				Messagebox.show("Debe seleccionar un motivo de devolución");
+				Messagebox.show("Debe seleccionar un motivo de devoluciï¿½n");
 				return;
 			}
 			
@@ -340,7 +340,7 @@ public class ControllerAlbaran implements Serializable{
 					
 					
 				}else{
-					Messagebox.show("Los productos son ópticos, solo un controller puede hacer la devolución");
+					Messagebox.show("Los productos son ï¿½pticos, solo un controller puede hacer la devoluciï¿½n");
 					return;
 				}
 			}else{
@@ -459,7 +459,7 @@ public class ControllerAlbaran implements Serializable{
 	@Command
 	public void cerrar_ventanas(@BindingParam("win")  Window win) {
 		
-		Messagebox.show("Se perderan todos los datos, Esta seguro de cancelar la venta?","Notificación",
+		Messagebox.show("Se perderan todos los datos, Esta seguro de cancelar la venta?","Notificaciï¿½n",
 				Messagebox.YES|
 				Messagebox.NO,
 				Messagebox.QUESTION ,new EventListener<Event>() {
@@ -502,10 +502,10 @@ public class ControllerAlbaran implements Serializable{
 		nota = tmp[1]+".pdf";
 		
 		//Produccion
-		//urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;
+		urlbol = "http://10.216.4.16/NC/61 "+rut+" "+nota;
 		
 		//Desarrollo
-		urlbol = "http://10.216.4.24/NC/61 "+rut+" "+nota;
+		//urlbol = "http://10.216.4.24/NC/61 "+rut+" "+nota;
 		
 		if(tmp[0].equals("0") || tmp[2].equals("true")){
 			Messagebox.show("Error: No se pudo generar la boleta");	
@@ -513,9 +513,9 @@ public class ControllerAlbaran implements Serializable{
 			
 		}else if(tmp[0].equals("1") && tmp[2].equals("false")){			
 			
-			Messagebox.show("Generando Nota de Crédito, espere un momento por favor....");
+			Messagebox.show("Generando Nota de Crï¿½dito, espere un momento por favor....");
 			
-			/*Messagebox.show("Albaran", "Generando Nota de Crédito, espere un momento por favor...",
+			/*Messagebox.show("Albaran", "Generando Nota de Crï¿½dito, espere un momento por favor...",
 					Messagebox.OK,	Messagebox.INFORMATION, new EventListener<Event>() {			
 				@Override
 				public void onEvent(Event e) throws Exception {	
@@ -536,7 +536,7 @@ public class ControllerAlbaran implements Serializable{
 			
 			
 		}else if(tmp[0].equals("2") && tmp[2].equals("false")){
-			Messagebox.show("!ATENCI\u00d3N¡ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+			Messagebox.show("!ATENCI\u00d3Nï¿½ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
 			return;
 		}
 		
@@ -561,7 +561,7 @@ public class ControllerAlbaran implements Serializable{
 			}, 4000);						
 			
 		}else if(tmp[0] == "2" && tmp[2] =="false"){
-			alert("!ATENCI\u00d3N¡ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+			alert("!ATENCI\u00d3Nï¿½ AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
 		}	
 		*/
 		
@@ -590,7 +590,7 @@ public class ControllerAlbaran implements Serializable{
 		}
 		
 		if(cdg.equals("")){
-			Messagebox.show("Debe ingresar un código de albaran válido");
+			Messagebox.show("Debe ingresar un cï¿½digo de albaran vï¿½lido");
 			respuesta = true;
 		}else{
 			devolucionForm.setCdg_venta(cdg);						

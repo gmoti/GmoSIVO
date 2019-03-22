@@ -1,9 +1,9 @@
 <?page title="Busqueda Encargo" contentType="text/html;charset=UTF-8"?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <zk>
-<window id="winAdicionalesArcli" border="normal" width="45%" height="25%"
+<window id="winAdicionalesArcli" border="normal" width="45%" vflex="min"
 		 position="center"  mode="modal" sizable="false" 
-		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAdicionalesArcli')">
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerAdicionalesArcli')"><!-- height="25%" -->
 		
 		
 		<div width="100%" height="100%">			
@@ -15,7 +15,7 @@
 				</div> -->																			
 			</div>
 			
-			<div>
+			<div width="100%" vflex="min">
 				<grid sclass="MyGridRowHeight" oddRowSclass="none">
 					<columns>
 						<column width="250px" />

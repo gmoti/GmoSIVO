@@ -95,7 +95,7 @@
 								<label value="Codigo Barra Producto" />	
 							</div>
 							<div sclass="col-lg-3">
-								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)"/>
+								<textbox value="@bind(vm.busquedaProductosForm.codigoBarraBusqueda)" onOK="@command('despachador')"/>
 							</div>	
 							<div sclass="col-lg-1">
 								<button image="/iconos/lupa2.png" 

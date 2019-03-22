@@ -46,7 +46,7 @@
 				</div>
 				
 				<div sclass="col-lg-5">
-					<textbox value="@bind(vm.presupuestoForm.nif)" width="100px"/>
+					<textbox value="@bind(vm.presupuestoForm.nif)" width="100px" onOK="@command('buscarCliente')"/>
 					<textbox value="@load(vm.presupuestoForm.dvnif)" width="50px" readonly="true"/>
 					<toolbarbutton image="/iconos/luparapida.png" onClick="@command('buscarCliente')"  width="30px"/>	
 					<toolbarbutton image="/iconos/lupa2.png" onClick="@command('busquedaCliente')" width="30px"/>				

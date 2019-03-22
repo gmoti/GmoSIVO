@@ -996,21 +996,21 @@ public class ControllerEncargos implements Serializable {
 				String valor[] =  ventaPedidoForm.getEstado_boleta().split("_");
 				
 				//Produccion	
-				/*String url ="http://10.216.4.16/39 " + 
-						ventaPedidoForm.getNif().trim() + 
-						"-" + ventaPedidoForm.getDvnif().trim() + 
-						" " + valor[1].trim()+".pdf";*/
-				
-				//Desarrollo
-				String url ="http://10.216.4.24/39 " + 
+				String url ="http://10.216.4.16/39 " + 
 						ventaPedidoForm.getNif().trim() + 
 						"-" + ventaPedidoForm.getDvnif().trim() + 
 						" " + valor[1].trim()+".pdf";
 				
+				//Desarrollo
+				/*String url ="http://10.216.4.24/39 " + 
+						ventaPedidoForm.getNif().trim() + 
+						"-" + ventaPedidoForm.getDvnif().trim() + 
+						" " + valor[1].trim()+".pdf";*/
+				
 				
 				if(valor[0].equals("0") || valor[2].equals("true")){
 					
-					Messagebox.show("Error: No se pudo generar la boleta, Inténtelo nuevamente.");
+					Messagebox.show("Error: No se pudo generar la boleta, Intï¿½ntelo nuevamente.");
 					return;
 					
 				}else if(valor[0].equals("1") && valor[2].equals("false")){
@@ -1024,7 +1024,7 @@ public class ControllerEncargos implements Serializable {
 					
 				}else if(valor[0].equals("2") && valor[2].equals("false")){
 				
-					Messagebox.show("!ATENCIÓN! AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
+					Messagebox.show("!ATENCIï¿½N! AGREGAR MAS FOLIOS, SE ESTAN AGOTANDO");
 					
 					objetos = new HashMap<String,Object>();
 					objetos.put("documento",url);
@@ -1130,7 +1130,7 @@ public class ControllerEncargos implements Serializable {
 					
 					
 				}else {				
-					Messagebox.show("Debe ingresar un código de convenio");			
+					Messagebox.show("Debe ingresar un cï¿½digo de convenio");			
 				}		
 			}else {
 				Messagebox.show("No se pueden modificar convenio, presupuesto esta cerrado");	
@@ -1274,13 +1274,88 @@ public class ControllerEncargos implements Serializable {
 	@Command
 	public void buscaProducto() {
 		
+		if(ventaPedidoForm.getEstado().equals("cerrado"))
+		{
+			Messagebox.show("La venta esta cerrada, no es posible agregar productos");
+			return;
+		}
+		else
+		{
+			if (!ventaPedidoForm.getFlujo().equals("formulario")) 
+			{
+				if (ventaPedidoForm.getFlujo().equals("modificar")) 
+				{
+					if(!ventaPedidoForm.getBloquea().equals("bloquea"))
+					{
+						//showPopWin('<%=request.getContextPath()%>/BusquedaProductos.do?method=cargaBusquedaProductos&formulario=PEDIDO', 710, 380, cargaProducto, false);
+						if (bWin) {
+							objetos = new HashMap<String,Object>();
+							objetos.put("objetoForm",ventaPedidoForm);		
+							wBusqueda = (Window)Executions.createComponents(
+					                "/zul/presupuestos/SearchProducto.zul", null, objetos);
+							
+							wBusqueda.doModal();
+							bWin=false;
+						}else {
+							wBusqueda.setVisible(true);
+						} 
+					}
+					else
+					{
+						Messagebox.show("Encargo bloqueado, no es posible agregar productos");
+						return;
+					}
+				}
+				else
+				{
+							
+					//if(!$j("#agregar_prod").hasClass("inactivo")){
+							if(!ventaPedidoForm.getCliente().equals("") && !ventaPedidoForm.getCliente().equals("0"))
+			            	{
+			            		//showPopWin('<%=request.getContextPath()%>/BusquedaProductos.do?method=cargaBusquedaProductos&formulario=PEDIDO', 710, 380, cargaProducto, false);
+								if (bWin) {
+									objetos = new HashMap<String,Object>();
+									objetos.put("objetoForm",ventaPedidoForm);		
+									wBusqueda = (Window)Executions.createComponents(
+							                "/zul/presupuestos/SearchProducto.zul", null, objetos);
+									
+									wBusqueda.doModal();
+									bWin=false;
+								}else {
+									wBusqueda.setVisible(true);
+								} 
+								
+			            	}
+			            	else
+			            	{
+			            		Messagebox.show("Debe seleccionar un cliente, para agregar articulos");
+			            		return;
+			            	}
+			       /* }else{
+			        	Messagebox.show("Debes tener agregados todos los productos del encargo para poder asociar un convenio o borrar el convenio, agregar nuevos productos y volver asociar el convenio.");
+			        }*/
+					
+				}
+			}
+			else
+			{
+				Messagebox.show("No hay ventas en curso, no es posible agregar productos");
+				return;
+			}
+		}
+		
+		
+		
+		
+		
+		/*
 		if (ventaPedidoForm.getNif().equals("") || ventaPedidoForm.getNif().equals("0") || ventaPedidoForm.getCliente().equals("")) {
 			Messagebox.show("El encargo no tiene un cliente asociado aun");
 			return;
-		} 
+		} */
 		
 		
-		
+		/*
 		if (bWin) {
 			objetos = new HashMap<String,Object>();
 			objetos.put("objetoForm",ventaPedidoForm);		
@@ -1291,7 +1366,7 @@ public class ControllerEncargos implements Serializable {
 			bWin=false;
 		}else {
 			wBusqueda.setVisible(true);
-		}       
+		}       */
 	}
 	
 	
@@ -2230,7 +2305,7 @@ public class ControllerEncargos implements Serializable {
 			}
 			
 			if (ventaPedidoForm.getConvenio().equals("")) {
-				Messagebox.show("debe ingresar un código de convenio");
+				Messagebox.show("debe ingresar un cï¿½digo de convenio");
 				return;
 			}			
 			
@@ -2791,7 +2866,7 @@ public class ControllerEncargos implements Serializable {
     		descuento = BigDecimal.valueOf(ventaPedidoForm.getDtcoPorcentaje());		
 			
 			if (descuento.compareTo(descuento_autorizado)==1) {
-				Messagebox.show("El descuento máximo autorizado es de " + descuento_autorizado);
+				Messagebox.show("El descuento mï¿½ximo autorizado es de " + descuento_autorizado);
 				ventaPedidoForm.setDtcoPorcentaje(0);
 				return;
 			}
@@ -2842,7 +2917,7 @@ public class ControllerEncargos implements Serializable {
 			comparacion = descuento_ingresado.compareTo(descuento_autorizado);
 			
 			if (comparacion==1) {
-				Messagebox.show("El descuento máximo autorizado es de " + descuento_autorizado);				
+				Messagebox.show("El descuento mï¿½ximo autorizado es de " + descuento_autorizado);				
 				ventaPedidoForm.getListaProductos().get(index).setDescuento(0);
 				return;
 			}
@@ -3177,7 +3252,7 @@ public class ControllerEncargos implements Serializable {
 	 			 ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);		 		   		
 	 			   
 	 		   }else{
-	 			   Messagebox.show("La promoción sólo es aplicable al encargo  compuesto por un tíro y una gafa.");
+	 			   Messagebox.show("La promociï¿½n sï¿½lo es aplicable al encargo  compuesto por un tï¿½ro y una gafa.");
 	 		   }				
 				
 				break;
@@ -3345,7 +3420,7 @@ public class ControllerEncargos implements Serializable {
 		            //$j.cookie("des_seg_armazon","777");
 				}else {
 					
-					Messagebox.show("Promoción no aplicable a los productos seleccionados.");
+					Messagebox.show("Promociï¿½n no aplicable a los productos seleccionados.");
 					
 				}				
 				
