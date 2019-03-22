@@ -54,7 +54,7 @@
 				<toolbarbutton image="/iconos/lupa.png"  onClick="@command('busquedaAvanzada')"    disabled="@bind(vm.beanControlBotones.enableBuscar)" tooltiptext="Busqueda Avnzada Encargos" sclass="shrink24"/>
 				<toolbarbutton image="/iconos/delete.png" onClick="@command('eliminarPedido')"	  disabled="@bind(vm.beanControlBotones.enableEliminar)" tooltiptext="Eliminar Encargo" sclass="shrink24"/>
 				
-				<toolbarbutton image="/iconos/boleta.png" onClick="@command('mostrar_pagos_boletas')"  	disabled="@bind(vm.beanControlBotones.enableListar)" tooltiptext="Mostrar Pagos y Boletas" sclass="shrink24"/>
+				<toolbarbutton image="/iconos/boleta.png" onClick="@command('mostrar_pagos_boletas')"   tooltiptext="Mostrar Pagos y Boletas" sclass="shrink24"/><!--disabled="@bind(vm.beanControlBotones.enableListar)"  -->
 				<toolbarbutton image="/iconos/Hoja.png" onClick="@command('generaFichaTecnica')" 	    disabled="@bind(vm.beanControlBotones.enableTaller)" tooltiptext="Ficha Taller" sclass="shrink24"/>
 				<toolbarbutton image="/iconos/cliente.png" onClick="@command('generaFichaCliente')"        disabled="@bind(vm.beanControlBotones.enableCliente)" tooltiptext="Ficha Cliente" sclass="shrink24"/>
 				
@@ -303,7 +303,7 @@
 		
 		<div width="100%" vflex="min">
 			<grid model="@bind(vm.ventaPedidoForm.listaProductos)" 
-					width="100%" height="150px" 
+					width="100%" height="130px" 
 					sclass="MyGridRowHeight" 
 					emptyMessage="Sin registros cargados" oddRowSclass="none"><!-- overflow: scroll; "250px" -->
 				<columns>
@@ -721,7 +721,7 @@
 			</div>
 			
 			<div sclass="col-lg-1">
-				<textbox value="@bind(vm.ventaPedidoForm.nota)" width="740px" />
+				<textbox value="@bind(vm.ventaPedidoForm.nota)" width="740px" rows="2"/>
 			</div>		
 		</div>		
 	</div>		

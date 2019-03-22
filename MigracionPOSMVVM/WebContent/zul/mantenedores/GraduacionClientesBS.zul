@@ -387,7 +387,7 @@ function meterUpdate() {
 }
 </script>
 
-
+<!-- 
 <script><![CDATA[
      function validaEsferap(elemento,lado) {
          var valLabel = zk.$('$'+elemento.id);            
@@ -575,6 +575,6 @@ function meterUpdate() {
 
       
 ]]></script>	
-
+ -->
 
 </zk>

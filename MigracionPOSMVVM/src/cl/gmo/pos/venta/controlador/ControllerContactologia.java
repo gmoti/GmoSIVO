@@ -1,6 +1,7 @@
 package cl.gmo.pos.venta.controlador;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +54,8 @@ public class ControllerContactologia implements Serializable {
 	String regexp1 = "^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$";
 	String regexp2 = "^([0-9]{1,3})?$";
 	
-	NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);		
+	NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+	DecimalFormat df = new DecimalFormat("0.00"); 
 	//DecimalFormat df = (DecimalFormat)nf;
 	//nf.setRoundingMode(roundingMode);
 	
@@ -622,12 +624,40 @@ public class ControllerContactologia implements Serializable {
 		
 		String valorelemento = elemento;			
 		valorelemento = valorelemento.trim();
-		Double radio1=0.00;
+		Double radio1 = 0.00;
 		
-		if (!Pattern.matches(regexp1, elemento)) {
+		/*if (!Pattern.matches(regexp1, elemento)) {
 			Messagebox.show("Formato incorrecto");
 			return;
-		}	
+		}*/	
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				radio1 = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_radio1(nf.format(radio1));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_radio1(nf.format(radio1));
+				}
+				
+				elemento = nf.format(radio1);
+			}catch(Exception e) {
+				radio1 = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_radio1("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_radio1("");
+				}
+				
+				Messagebox.show("Formato de campo Radio1 es incorrecto");
+				return;
+			}
+		}
+		
 		
 		if(!valorelemento.equals("")){
 			
@@ -636,11 +666,11 @@ public class ControllerContactologia implements Serializable {
 			//if(!(respuesta)){
 											
 				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
-				try{
+				/*try{
 					radio1 = Double.valueOf(valorelemento);
 				}catch(Exception e){
 					radio1=0.00;
-				}				
+				}*/				
 				
 				
 				if(radio1 <= 0.00 || radio1 > 99.99){				
@@ -648,9 +678,9 @@ public class ControllerContactologia implements Serializable {
 				}else{
 					//elemento.value=valorelemento;
 					if(lado.equals("izquierda"))
-						contactologiaForm.setI_radio1(String.valueOf(radio1));
+						contactologiaForm.setI_radio1(nf.format(radio1));
 					else;	
-						contactologiaForm.setO_radio1(String.valueOf(radio1));
+						contactologiaForm.setO_radio1(nf.format(radio1));
 					
 				}
 			//}else{
@@ -671,9 +701,37 @@ public class ControllerContactologia implements Serializable {
 		valorelemento = valorelemento.trim();
 		Double radio2=0.00;
 		
-		if (!Pattern.matches(regexp1, elemento)) {
+		/*if (!Pattern.matches(regexp1, elemento)) {
 			Messagebox.show("Formato incorrecto");
 			return;
+		}*/
+		
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				radio2 = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_radio2(nf.format(radio2));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_radio2(nf.format(radio2));
+				}
+				
+				elemento = nf.format(radio2);
+			}catch(Exception e) {
+				radio2 = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_radio2("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_radio2("");
+				}
+				
+				Messagebox.show("Formato de campo Radio2 es incorrecto");
+				return;
+			}
 		}
 		
 		if(!valorelemento.equals("")){
@@ -692,9 +750,9 @@ public class ControllerContactologia implements Serializable {
 				}else{
 					//elemento.value=valorelemento;
 					if(lado.equals("izquierda"))
-						contactologiaForm.setI_radio2(String.valueOf(radio2));
+						contactologiaForm.setI_radio2(nf.format(radio2));
 					else;	
-						contactologiaForm.setO_radio2(String.valueOf(radio2));
+						contactologiaForm.setO_radio2(nf.format(radio2));
 				}
 			//}else{
 				//alert("Debe ingresar solo n\u00FAmeros");
@@ -714,10 +772,40 @@ public class ControllerContactologia implements Serializable {
 		Double esfera  = 0.00;
 		valorelemento = valorelemento.trim();	
 		
-		if (!Pattern.matches(regexp1, elemento)) {
+		/*if (!Pattern.matches(regexp1, elemento)) {
 			Messagebox.show("Formato incorrecto");
 			return;
+		}*/
+		
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				esfera = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_esfera(nf.format(esfera));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_esfera(nf.format(esfera));
+				}
+				
+				elemento = nf.format(esfera);
+			}catch(Exception e) {
+				esfera = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_esfera("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_esfera("");
+				}
+				
+				Messagebox.show("Formato de campo Esfera es incorrecto");
+				return;
+			}
 		}
+		
+		
 		
 		
 		if(!valorelemento.equals("")){
@@ -727,11 +815,11 @@ public class ControllerContactologia implements Serializable {
 			//if(!(respuesta)){
 			
 				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
-				try{
+				/*try{
 					esfera = Double.valueOf(valorelemento);
 				}catch(Exception e){
 					esfera = 0.00;
-				}					
+				}*/					
 			
 				if(esfera < -99.00 || esfera > 99.00){					
 					Messagebox.show("El valor esfera "+lado+" est\u00E1 fuera del rango permitido entre -99 y 99");					
@@ -753,16 +841,16 @@ public class ControllerContactologia implements Serializable {
 						
 						//elemento.value=valorelemento;
 						if(lado.equals("izquierda"))
-							contactologiaForm.setI_esfera(String.valueOf(esfera));
+							contactologiaForm.setI_esfera(nf.format(esfera));
 						else;	
-							contactologiaForm.setO_esfera(String.valueOf(esfera));
+							contactologiaForm.setO_esfera(nf.format(esfera));
 					}else{
 						
 						//elemento.value=valorelemento;
 						if(lado.equals("izquierda"))
-							contactologiaForm.setI_esfera(String.valueOf(esfera));
-						else;	
-							contactologiaForm.setO_esfera(String.valueOf(esfera));
+							contactologiaForm.setI_esfera(nf.format(esfera));
+						else	
+							contactologiaForm.setO_esfera(nf.format(esfera));
 					}					
 				}
 				
@@ -777,298 +865,593 @@ public class ControllerContactologia implements Serializable {
 	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaCilindro(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 	
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
-		var mult = 0.25;
-		var cont = 0;
+		String valorelemento = elemento;	
+		Double mult = 0.25;
+		Double cont = 0.00;
+		Double cilindro = 0.00;
 		
-		if("" != valorelemento){
+		valorelemento = valorelemento.trim();		
 		
-			var respuesta = isNaN(valorelemento);
-			
-			if(!(respuesta)){
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				cilindro = Double.valueOf(elemento);
 				
-				valorelemento = (parseFloat(valorelemento)).toFixed(2);
-				if(valorelemento < -99.00 || valorelemento > 0){					
-					alert("El valor cilindro "+lado+" est\u00E1 fuera del rango permitido entre -99 y 0");					
-				}else{
-					if (valorelemento%mult!=0){	
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_cilindro(nf.format(cilindro));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_cilindro(nf.format(cilindro));
+				}
+				
+				elemento = nf.format(cilindro);
+			}catch(Exception e) {
+				cilindro = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_cilindro("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_cilindro("");
+				}
+				
+				Messagebox.show("Formato de campo Esfera es incorrecto");
+				return;
+			}
+		}
+		
+		if(!valorelemento.equals("")){
+		
+			/*var respuesta = isNaN(valorelemento);
+			
+			if(!(respuesta)){*/
+				
+				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				
+				if(cilindro < -99.00 || cilindro > 0){					
+					Messagebox.show("El valor cilindro "+lado+" est\u00E1 fuera del rango permitido entre -99 y 0");
 					
-						while((valorelemento%mult!=0) && (cont < 55)){
+				}else{
+					if (cilindro%mult!=0){	
+					
+						while((cilindro%mult!=0) && (cont < 55)){
 							
-							if(valorelemento > 0){				 
-						 		valorelemento = parseFloat(valorelemento) + 0.01;
+							if(cilindro > 0){				 
+								cilindro = cilindro + 0.01;
 							 }else{
-								 valorelemento = parseFloat(valorelemento) + (-0.01);
+								 cilindro = cilindro + (-0.01);
 							 }	
 							 
-							  valorelemento = parseFloat(valorelemento.toFixed(2));
+							  //valorelemento = parseFloat(valorelemento.toFixed(2));
 							  cont++;						 
 						}							
-						elemento.value=valorelemento;
+						
+						//elemento.value=valorelemento;
+						if(lado.equals("derecha")){
+							contactologiaForm.setO_cilindro(nf.format(cilindro));				 
+						}else if(lado.equals("izquierda")){				 
+							contactologiaForm.setI_cilindro(nf.format(cilindro));
+						}
 					
 					}else{
-						elemento.value=valorelemento;
+						//elemento.value=valorelemento;
+						if(lado.equals("derecha")){
+							contactologiaForm.setO_cilindro(nf.format(cilindro));				 
+						}else if(lado.equals("izquierda")){				 
+							contactologiaForm.setI_cilindro(nf.format(cilindro));
+						}
 					}
 				}				
 			}else{
-				alert("Debe ingresar solo n\u00FAmeros");
-				elemento.focus();		
+				Messagebox.show("Debe ingresar solo n\u00FAmeros");
+				//elemento.focus();		
 			}			
 		
-		}else{
+		/*}else{
 			alert("Debe ingresar valor en cilindro "+lado+"");		
-		}
+		}*/
 	
 	
-	}*/
+	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaEje(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
+		String valorelemento = elemento;	
+		Double cilindro = 0.00;
+		Double eje = 0.00;
+		valorelemento = valorelemento.trim();
 		
-		var cilindro = 0;
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
 		
-		if("derecho" == lado){
-			cilindro = document.getElementById('o_cilindro').value;
-		}else if("izquierdo" == lado){
-			cilindro = document.getElementById('i_cilindro').value;
+		if(!elemento.equals("")){
+			try {
+				eje = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_eje(nf.format(eje));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_eje(nf.format(eje));
+				}
+				
+				elemento = nf.format(eje);
+			}catch(Exception e) {
+				eje = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_eje("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_eje("");
+				}
+				
+				Messagebox.show("Formato de campo Eje es incorrecto");
+				return;
+			}
+		}		
+		
+		
+		try {
+			if(lado.equals("derecha")){
+				cilindro = Double.valueOf(contactologiaForm.getO_cilindro());
+			}else if(lado.equals("izquierda")){
+				cilindro = Double.valueOf(contactologiaForm.getI_cilindro());
+			}			
+		}catch(Exception e) {
+			cilindro = 0.00;
 		}
 		
-		if("" != valorelemento){
+		
+		if(!valorelemento.equals("")){
 			
-			var respuesta = isNaN(valorelemento);				
-			if(!(respuesta)){
+			/*var respuesta = isNaN(valorelemento);				
+			if(!(respuesta)){*/
 			
-				valorelemento = parseInt(valorelemento);
+				//valorelemento = parseInt(valorelemento);
 				
-				if(valorelemento >= 0 && valorelemento <= 180){
-					elemento.valeu=	valorelemento;
+				if(eje >= 0 && eje <= 180){
+					//elemento.valeu=	valorelemento;
+					if(lado.equals("derecha")){
+						contactologiaForm.setO_eje(nf.format(eje));				 
+					}else if(lado.equals("izquierda")){				 
+						contactologiaForm.setI_eje(nf.format(eje));
+					}					
+					
 				}else{
-					alert("El valor eje "+lado+" est\u00E1 fuera del rango permitido entre 0 y 180");
+					Messagebox.show("El valor eje "+lado+" est\u00E1 fuera del rango permitido entre 0 y 180");
 				}							
 			
-			}else{
-				alert("Debe ingresar solo n\u00FAmeros");
+			/*}else{
+				Messagebox.show("Debe ingresar solo n\u00FAmeros");
 				elemento.focus();
-			}				
+			}		*/		
 			
 		}else{				
 			if(cilindro < 0 && cilindro > -99){
-				alert("Debe ingresar eje dentro de los rangos  0 y 180");
+				Messagebox.show("Debe ingresar eje dentro de los rangos  0 y 180");
 			}		
 		}
 	
-	}*/
+	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaDiamT(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
+		String valorelemento = elemento.trim();			
+		Double DiamT = 0.00;
 		
-		if("" != valorelemento){
-			var respuesta = isNaN(valorelemento);	
-			
-			if(!(respuesta)){
-			
-				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				DiamT = Double.valueOf(elemento);
 				
-				if(valorelemento >= 0.00  && valorelemento <= 30.00){
-					elemento.value = valorelemento;	
-				}else{
-					alert("El valor diametro total "+lado+" est\u00E1 fuera del rango permitido entre 0 y 30");	
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_diamt(nf.format(DiamT));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_diamt(nf.format(DiamT));
 				}
 				
-			}else{
-				alert("Debe ingresar solo n\u00FAmeros");
-				elemento.focus();
+				elemento = nf.format(DiamT);
+			}catch(Exception e) {
+				DiamT = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_diamt("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_diamt("");
+				}
+				
+				Messagebox.show("Formato de campo DiamT es incorrecto");
+				return;
 			}
+		}
+		
+		
+		if(!valorelemento.equals("")){
+			
+			/*var respuesta = isNaN(valorelemento);	
+			
+			if(!(respuesta)){*/
+			
+				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				
+				if(DiamT >= 0.00  && DiamT <= 30.00){
+					//elemento.value = valorelemento;
+					if(lado.equals("derecha")){
+						contactologiaForm.setO_diamt(nf.format(DiamT));				 
+					}else if(lado.equals("izquierda")){				 
+						contactologiaForm.setI_diamt(nf.format(DiamT));
+					}
+				}else{
+					Messagebox.show("El valor diametro total "+lado+" est\u00E1 fuera del rango permitido entre 0 y 30");	
+				}
+				
+			/*}else{
+				Messagebox.show("Debe ingresar solo n\u00FAmeros");
+				//elemento.focus();
+			}*/
 		}else{
-			alert("Debe ingresar valor en diametro total "+lado+"");	
+			Messagebox.show("Debe ingresar valor en diametro total "+lado+"");	
 		}	
-	}*/
+	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaDiaZ(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 	
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
+		String valorelemento = elemento.trim();			
+		Double DiaZ = 0.00;
 		
-		if("" != valorelemento){
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				DiaZ = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_diaz(nf.format(DiaZ));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_diaz(nf.format(DiaZ));
+				}
+				
+				elemento = nf.format(DiaZ);
+			}catch(Exception e) {
+				DiaZ = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_diaz("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_diaz("");
+				}
+				
+				Messagebox.show("Formato de campo Diaz es incorrecto");
+				return;
+			}
+		}
+		
+		if(!valorelemento.equals("")){
 						
-			var respuesta = isNaN(valorelemento);
+			/*var respuesta = isNaN(valorelemento);
 			
-			if(!(respuesta)){
+			if(!(respuesta)){*/
 				
-				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				//valorelemento = (parseFloat(valorelemento)).toFixed(2);
 				
-				if(valorelemento >= 0.00 && valorelemento <= 10.00){
-					elemento.value=valorelemento;
+				if(DiaZ >= 0.00 && DiaZ <= 10.00){
+					//elemento.value=valorelemento;
+					if(lado.equals("derecha")){
+						contactologiaForm.setO_diaz(nf.format(DiaZ));				 
+					}else if(lado.equals("izquierda")){				 
+						contactologiaForm.setI_diaz(nf.format(DiaZ));
+					}				
+					
 				}else{
-					alert("El valor diametro zona \u00F3ptica "+lado+" est\u00E1 fuera del rango permitido entre 0 y 10");	
+					Messagebox.show("El valor diametro zona \u00F3ptica "+lado+" est\u00E1 fuera del rango permitido entre 0 y 10");	
 				}
 			
-			}else{
+			/*}else{
 				alert("Debe ingresar solo n\u00FAmeros");
 				elemento.focus();
-			}
+			}*/
 			
 		}
 		
-	}*/
+	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaBandasP(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 	
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
+		String valorelemento = elemento.trim();			
+		Double BandasP=0.00;
 		
-		if("" != valorelemento){
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				BandasP = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_bandas(nf.format(BandasP));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_bandas(nf.format(BandasP));
+				}
+				
+				elemento = nf.format(BandasP);
+			}catch(Exception e) {
+				BandasP = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_bandas("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_bandas("");
+				}
+				
+				Messagebox.show("Formato de campo Bandas es incorrecto");
+				return;
+			}
+		}
+		
+		
+		
+		if(!valorelemento.equals("")){
 			
-			var respuesta = isNaN(valorelemento);
+			/*var respuesta = isNaN(valorelemento);
 			
 			if(!(respuesta)){
 				
-				valorelemento = parseInt(valorelemento);
+				valorelemento = parseInt(valorelemento);*/
 				
-				if(valorelemento >= 0 && valorelemento <= 9){
-					elemento.value=valorelemento;
+				if(BandasP >= 0 && BandasP <= 9){
+					//elemento.value=valorelemento;
+					if(lado.equals("derecha")){
+						contactologiaForm.setO_bandas(nf.format(BandasP));				 
+					}else if(lado.equals("izquierda")){				 
+						contactologiaForm.setI_bandas(nf.format(BandasP));
+					}
 				}else{
-					alert("El valor bandas perisf\u00E9ricas "+lado+" est\u00E1 fuera del rango permitido entre 0 y 9");	
+					Messagebox.show("El valor bandas perisf\u00E9ricas "+lado+" est\u00E1 fuera del rango permitido entre 0 y 9");	
 				}					
 			
-			}else{
+			/*}else{
 				alert("Debe ingresar solo n\u00FAmeros");
 				elemento.focus();
-			}			
+			}*/			
 		}		
-	}*/
+	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaRadio3(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
+		String valorelemento = elemento.trim();			
+		Double radio3=0.00;
 		
-		if("" != valorelemento){
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				radio3 = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_radio3(nf.format(radio3));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_radio3(nf.format(radio3));
+				}
+				
+				elemento = nf.format(radio3);
+			}catch(Exception e) {
+				radio3 = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_radio3("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_radio3("");
+				}
+				
+				Messagebox.show("Formato de campo Radio3 es incorrecto");
+				return;
+			}
+		}
+		
+		
+		if(!valorelemento.equals("")){
 			
-			var respuesta = isNaN(valorelemento);
+			/*var respuesta = isNaN(valorelemento);
 							
 			if(!(respuesta)){
 				
-				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);*/
 			
-				if(valorelemento >= 0 && valorelemento <= 99.99){
-					elemento.value=valorelemento;
+				if(radio3 >= 0 && radio3 <= 99.99){
+					//elemento.value=valorelemento;
+					if(lado.equals("derecha")){
+						contactologiaForm.setO_radio3(nf.format(radio3));				 
+					}else if(lado.equals("izquierda")){				 
+						contactologiaForm.setI_radio3(nf.format(radio3));
+					}
+					
 				}else{
-					alert("El valor radio 3 "+lado+" est\u00E1 fuera del rango permitido entre 0 y 99.99");
+					Messagebox.show("El valor radio 3 "+lado+" est\u00E1 fuera del rango permitido entre 0 y 99.99");
 				}					
 					
-			}else{				
+			/*}else{				
 				alert("Debe ingresar solo n\u00FAmeros");
 				elemento.focus();				
-			}			
+			}	*/		
 		}				
-	}*/
+	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaDiamP(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 	
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
+		String valorelemento = elemento.trim();			
+		Double diamp=0.00;
 		
-		if("" != valorelemento){
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				diamp = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_diamp(nf.format(diamp));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_diamp(nf.format(diamp));
+				}
+				
+				elemento = nf.format(diamp);
+			}catch(Exception e) {
+				diamp = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_diamp("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_diamp("");
+				}
+				
+				Messagebox.show("Formato de campo Diamp es incorrecto");
+				return;
+			}
+		}
+		
+		if(!valorelemento.equals("")){
 			
-			var respuesta = isNaN(valorelemento);
+			/*var respuesta = isNaN(valorelemento);
 			
 			if(!(respuesta)){
 			
-				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);*/
 				
-				if(valorelemento >= 0 && valorelemento <= 10.00){
-					elemento.value=valorelemento;
+				if(diamp >= 0 && diamp <= 10.00){
+					//elemento.value=valorelemento;
+					if(lado.equals("derecha")){
+						contactologiaForm.setO_diamp(nf.format(diamp));				 
+					}else if(lado.equals("izquierda")){				 
+						contactologiaForm.setI_diamp(nf.format(diamp));
+					}
+					
 				}else{
-					alert("El valor diametro pupilar "+lado+" est\u00E1 fuera del rango permitido entre 0 y 10.00");
+					Messagebox.show("El valor diametro pupilar "+lado+" est\u00E1 fuera del rango permitido entre 0 y 10.00");
 				}					
 			
-			}else{				
+			/*}else{				
 				alert("Debe ingresar solo n\u00FAmeros");
 				elemento.focus();				
-			}
+			}*/
 		}		
-	}*/
+	}
 	
 	
-	/*@NotifyChange({"contactologiaForm"})
+	@NotifyChange({"contactologiaForm"})
 	@Command
 	public void validaAdicion(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 	
-		var valorelemento = elemento.value;			
-		valorelemento = trim(valorelemento);
-		var mult = 0.25;
-		var cont = 0;
+		String valorelemento = elemento.trim();			
+		
+		Double mult = 0.25;
+		Double cont = 0.00;
+		Double adicion = 0.00;
+		
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		
+		if(!elemento.equals("")){
+			try {
+				adicion = Double.valueOf(elemento);
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_adic(nf.format(adicion));				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_adic(nf.format(adicion));
+				}
+				
+				elemento = nf.format(adicion);
+			}catch(Exception e) {
+				adicion = 0.00;
+				
+				if(lado.equals("derecha")){
+					contactologiaForm.setO_adic("");				 
+				}else if(lado.equals("izquierda")){				 
+					contactologiaForm.setI_adic("");
+				}
+				
+				Messagebox.show("Formato de campo Adicion es incorrecto");
+				return;
+			}
+		}
 		
 		
-		if("" != valorelemento){
+		if(!valorelemento.equals("")){
 		
-			var respuesta = isNaN(valorelemento);
+			/*var respuesta = isNaN(valorelemento);
 			
 			if(!(respuesta)){
 				
-				valorelemento = (parseFloat(valorelemento)).toFixed(2);
+				valorelemento = (parseFloat(valorelemento)).toFixed(2);*/
 				
-				if(valorelemento >= 0.00 && valorelemento <= 5.00){
+				if(adicion >= 0.00 && adicion <= 5.00){
 				
-					if (valorelemento%mult!=0){	
+					if (adicion%mult!=0){	
 					
-						while((valorelemento%mult!=0) && (cont < 55)){
+						while((adicion%mult!=0) && (cont < 55)){
 							
-							if(valorelemento > 0){				 
-						 		valorelemento = parseFloat(valorelemento) + 0.01;
+							if(adicion > 0){				 
+								adicion = adicion + 0.01;
 							 }else{
-								 valorelemento = parseFloat(valorelemento) + (-0.01);
+								 adicion = adicion + (-0.01);
 							 }	
 							 
-							  valorelemento = parseFloat(valorelemento.toFixed(2));
+							  //valorelemento = parseFloat(valorelemento.toFixed(2));
 							  cont++;						 
 						}							
-						elemento.value=valorelemento;
+						//elemento.value=valorelemento;
+						if(lado.equals("derecha")){
+							contactologiaForm.setO_adic(nf.format(adicion));				 
+						}else if(lado.equals("izquierda")){				 
+							contactologiaForm.setI_adic(nf.format(adicion));
+						}
 					
 					}else{
-						elemento.value=valorelemento;
+						//elemento.value=valorelemento;
+						if(lado.equals("derecha")){
+							contactologiaForm.setO_adic(nf.format(adicion));				 
+						}else if(lado.equals("izquierda")){				 
+							contactologiaForm.setI_adic(nf.format(adicion));
+						}
 					}
 					
 					
 				}else{
-					alert("El valor adici\u00F3n "+lado+" est\u00E1 fuera del rango permitido entre 0 y 5.00");
+					Messagebox.show("El valor adici\u00F3n "+lado+" est\u00E1 fuera del rango permitido entre 0 y 5.00");
 				}
 			
-			}else{
+			/*}else{
 				elemento.value=valorelemento;
-			}
+			}*/
 			
 		}
 	
-	}*/
+	}
 	
 		
 	

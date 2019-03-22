@@ -167,35 +167,35 @@
 			<!-- Encabezado de la grid -->
 			<div width="100%"   style="background-color:black;color:white; font-size: 6px;">
 				<space width="10px"/>
-				<label value="Articulo" />
+				<label value="Articulo"/>
 				<space width="100px"/>
-				<label value="Descripcion" />
+				<label value="Descripcion"/>
 				<space width="410px"/>
-				<label value="Precio IVA" />
+				<label value="Precio IVA"/>
 				<space width="40px"/>
-				<label value="Importe" />
+				<label value="Importe"/>
 				<space width="65px"/>
-				<label value="Cantidad" />
+				<label value="Cantidad"/>
 				<space width="45px"/>
-				<label value="Descuento (%)" />
+				<label value="Descuento (%)"/>
 				<space width="80px"/>							
 				<toolbarbutton image="/iconos/add.png" onClick="@command('buscaProducto')" />
 			</div>	
 			
 			<div width="100%" vflex="min">
 				<grid model="@bind(vm.presupuestoForm.listaProductos)" fixedLayout="true" oddRowSclass="none" 
-						width="100%" height="150px"	
+						width="100%" height="130px"	
 						sclass="MyGridRowHeight" 
 						emptyMessage="Sin registros cargados">
 					<columns>
-						<column width="155px" />
-						<column width="455px" />
-						<column width="105px" />
+						<column width="155px"/>
+						<column width="455px"/>
 						<column width="105px"/>
-						<column width="105px" />
-						<column width="105px" />
-						<column width="45px" />
-						<column width="45px" />
+						<column width="105px"/>
+						<column width="105px"/>
+						<column width="105px"/>
+						<column width="45px"/>
+						<column width="45px"/>
 					</columns>
 					<template name="model" >
 						<row>
