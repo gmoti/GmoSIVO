@@ -14,46 +14,56 @@
 					<div style="float: right">					
 						<toolbarbutton image="/iconos/cancel.png" onClick="@command('cierraVentana',win=winBusquedaAvanzadaEncargo)"/>		
 					</div>																			
-				</div>				
+				</div>		
 				
-				<grid sclass="MyGridRowHeight" oddRowSclass="none">
-					<columns>
-						<column width="300px" />
-						<column width="300px" />
-					</columns>
-					<rows>
-						<row>
-						<label value="Codigo de Encargo" />
-						<textbox value="@bind(vm.busquedaPedidosForm.encargo)"/>
-						</row>
-						
-						<row>
-						<label value="Rut de Cliente" />
-						<textbox value="@bind(vm.busquedaPedidosForm.cliente)"/>
-						</row>
-						
-						<row>
-						<label value="Fecha de Encargo" />
-						<datebox value="@bind(vm.fecha_encargo)" format="dd/MM/yyyy"/>
-						</row>
-						
-						<row>
-						<label value="Agente" />
-						<combobox
-							model="@load(vm.busquedaPedidosForm.lista_agentes)" 
-							selectedItem="@bind(vm.agenteBean)">
-							<template name="model">
-								<comboitem label="@load(each.usuario)" />
-							</template>
-						</combobox>
-						</row>
-						
-						<row>
-						<space width="85px"/>						
-						<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('buscar')"/>
-						</row>
-					</rows>
-				</grid>									
+				<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
+					<div sclass="row" style="background-color:transparent">		
+						<div sclass="col-lg-3">
+							<label value="Codigo de Encargo" />													
+						</div>
+						<div sclass="col-lg-1">
+							<textbox value="@bind(vm.busquedaPedidosForm.encargo)"/>							
+						</div>
+					</div>
+					<div sclass="row" style="background-color:transparent">		
+						<div sclass="col-lg-3">
+							<label value="Rut de Cliente" />													
+						</div>
+						<div sclass="col-lg-1">
+							<textbox value="@bind(vm.busquedaPedidosForm.cliente)"/>							
+						</div>
+					</div>
+					<div sclass="row" style="background-color:transparent">		
+						<div sclass="col-lg-3">
+							<label value="Fecha de Encargo" />												
+						</div>
+						<div sclass="col-lg-1">
+							<datebox value="@bind(vm.fecha_encargo)" format="dd/MM/yyyy"/>								
+						</div>
+					</div>
+					<div sclass="row" style="background-color:transparent">		
+						<div sclass="col-lg-3">
+							<label value="Agente" />												
+						</div>
+						<div sclass="col-lg-1">
+							<combobox
+								model="@load(vm.busquedaPedidosForm.lista_agentes)" 
+								selectedItem="@bind(vm.agenteBean)">
+								<template name="model">
+									<comboitem label="@load(each.usuario)" />
+								</template>
+							</combobox>								
+						</div>
+					</div>
+					<div sclass="row" style="background-color:transparent">		
+						<div sclass="col-lg-3">
+							<cell/>							
+						</div>
+						<div sclass="col-lg-1">
+							<button image="/iconos/lupa2.png" label="Buscar" onClick="@command('buscar')"/>							
+						</div>
+					</div>					
+				</div>								
 			</div>			
 			
 		
@@ -76,7 +86,7 @@
 				<label value="Sel" />								
 			</div>	
 				
-			<div width="100%" height="90%">
+			<div width="100%" height="90%" style="background-color:#c1c1c1; border-style:none">
 			
 				<grid model= "@load(vm.busquedaPedidosForm.lista_pedidos)" oddRowSclass="none"
 						sclass="MyGridRowHeight" emptyMessage="Sin registros" height="95%" style="overflow-y: scroll">						

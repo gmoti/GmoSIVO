@@ -209,7 +209,7 @@
 			
 			<div sclass="col-lg-3">				
 				<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="50px" />
-				<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="100px" readonly="true"/>	
+				<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="130px" readonly="true"/>	
 						
 				<toolbarbutton width="30px" image="/iconos/luparapida.png" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>
 				<toolbarbutton width="30px" image="/iconos/lupa2.png" onClick="@command('busqueda_convenio_avanzada')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')" tooltiptext="Busqueda rapida convenio"/>
