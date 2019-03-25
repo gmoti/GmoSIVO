@@ -259,7 +259,7 @@ public class ControllerGraduacionCliente implements Serializable{
 		sess.setAttribute("nombre_cliente", graduacionesForm.getNombre_cliente());
 		
 		Window winContactologia = (Window)Executions.createComponents(
-                "/zul/mantenedores/Contactologia.zul", null, null);
+                "/zul/mantenedores/ContactologiaBS.zul", null, null);
 		
 		winContactologia.doModal();			
 	}
@@ -994,7 +994,7 @@ public class ControllerGraduacionCliente implements Serializable{
 				   graduacionesForm.setOI_adicion("");
 				}
 				
-				Messagebox.show("Formato de campo adición es incorrecto");
+				Messagebox.show("Formato de campo adiciï¿½n es incorrecto");
 				return;
 			}
 		}

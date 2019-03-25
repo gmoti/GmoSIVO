@@ -1,0 +1,550 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?> -->
+<window id="winContactologia" border="none" width="80%" vflex="min"
+			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerContactologia')">
+			
+	
+	
+	
+		<div width="100%" vflex="min" style="background-color:black;color: white;">			   	
+	   		<label value="GRADUACIÓN CONTACTOLGIA CLIENTES" style="float: left ; font-weight: bold; font-size: 150%;"/>
+			<div style="float: right">					
+				<label value="@load(vm.sucursalDes)"/>
+				<label value="::"/>
+				<label value="@load(vm.usuario)"/>	
+			</div>
+		</div>	
+		
+		<div width="100%" vflex="min" style="background-color:black;color: white;" align="right">	
+			<toolbarbutton image="/iconos/nuevo.png" sclass="shrink24" onClick="@command('nuevoGraduacion')" tooltiptext="Nueva Graduación"/>
+			<toolbarbutton image="/iconos/presupuestos.jpg" sclass="shrink24" onClick="@command('ingresoPresupuesto',win=winContactologia)" tooltiptext="Ingreso de Presupuesto"/>
+			<toolbarbutton image="/iconos/foto.jpg" sclass="shrink24" onClick="@command('ingresoEncargo',win=winContactologia)" tooltiptext="Ingreso de Encargo"/>									
+	   		<toolbarbutton image="/iconos/check.png" sclass="shrink24" onClick="@command('insertarContactologia')" tooltiptext="Ingreso de Contactología"/>
+	   		<toolbarbutton image="/iconos/cancel.png" sclass="shrink24" onClick="@command('cerrarContactologia',win=winContactologia)" tooltiptext="Salir"/>
+	   	</div>
+	   	
+	   	<div width="100%" vflex="min">
+	   		<div style="float: left ;">
+	   			<label value="Cliente"/>
+	   			<textbox value="@bind(vm.contactologiaForm.nombre_cliente)" readonly="true"/>	   			
+	   		</div>	   					   	
+	   	</div>
+	   	
+	   	<div width="100%" vflex="min" style="background-color:black;color:white; float: left ;">
+	   		<label value="Graduacion"/>				   		
+	   	</div>
+	   	
+	   	<!-- Grid superior -->	  
+	   	
+	   	<div sclass="container-fluid" align="right" style="background-color:#c1c1c1; border-style:none">
+	
+			<!-- Row 1 -->
+			<div sclass="row" style="background-color:transparent">
+				<div sclass="col-lg-1">				
+					<label value="Radio 1" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Radio 2" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Esfera" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Cilindro" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Eje" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Diam T" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Dia Z0" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Bandas.P" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Radio 3" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Diam P" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Color" />
+				</div>
+				<div sclass="col-lg-1">
+					<label value="Adic" />	
+				</div>
+			</div>	
+			
+			<!-- Row 2 -->
+			<div sclass="row" style="background-color:transparent">
+				<div sclass="col-lg-1">		
+					<textbox id="o_radio1" value="@bind(vm.contactologiaForm.o_radio1)" width="50px"	   							 
+	   							onBlur="@command('validaRadio1', elemento=o_radio1.value, lado='derecho')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_radio2" value="@bind(vm.contactologiaForm.o_radio2)" width="50px" 
+	   							onBlur="@command('validaRadio2', elemento=o_radio2.value, lado='derecho')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_esfera" value="@bind(vm.contactologiaForm.o_esfera)" width="50px" 
+	   							onBlur="@command('validaEsfera', elemento=o_esfera.value, lado='derecho')" />	 
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_cilindro" value="@bind(vm.contactologiaForm.o_cilindro)" width="50px" 
+	   							onBlur="@command('validaCilindro', elemento=o_cilindro.value, lado='derecho')" />
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_eje" value="@bind(vm.contactologiaForm.o_eje)" width="50px" 
+	   							onBlur="@command('validaEje', elemento=o_eje.value, lado='derecho')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_diamt" value="@bind(vm.contactologiaForm.o_diamt)" width="50px" 
+	   							onBlur="@command('validaDiamT', elemento=o_diamt.value, lado='derecho')" />
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_diaz" value="@bind(vm.contactologiaForm.o_diaz)" width="50px" 
+	   							onBlur="@command('validaDiaZ', elemento=o_diaz.value, lado='derecho')" />
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_bandas" value="@bind(vm.contactologiaForm.o_bandas)" width="100px" 
+	   							onBlur="@command('validaBandasP', elemento=o_bandas.value, lado='derecho')" />
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_radio3" value="@bind(vm.contactologiaForm.o_radio3)" width="50px" 
+	   							onBlur="@command('validaRadio3', elemento=o_radio3.value, lado='derecho')" />
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_diamp" value="@bind(vm.contactologiaForm.o_diamp)" width="50px" 
+	   							onBlur="@command('validaDiamP', elemento=o_diamp.value, lado='derecho')" />
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_colo" value="@bind(vm.contactologiaForm.o_colo)" width="50px" />
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="o_adic" value="@bind(vm.contactologiaForm.o_adic)" width="50px" 
+	   							onBlur="@command('validaAdicion', elemento=o_adic.value, lado='derecho')" />
+				</div>
+			</div>	
+			
+			<!-- Row 3 -->
+			<div sclass="row" style="background-color:transparent">
+				<div sclass="col-lg-1">					
+					<textbox id="i_radio1" value="@bind(vm.contactologiaForm.i_radio1)" width="50px" 
+	   							onBlur="@command('validaRadio1', elemento=o_radio1.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_radio2" value="@bind(vm.contactologiaForm.i_radio2)" width="50px" 
+	   							onBlur="@command('validaRadio2', elemento=o_radio2.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_esfera" value="@bind(vm.contactologiaForm.i_esfera)" width="50px" 
+	   							onBlur="@command('validaEsfera', elemento=i_esfera.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_cilindro" value="@bind(vm.contactologiaForm.i_cilindro)" width="50px" 
+	   							onBlur="@command('validaCilindro', elemento=i_cilindro.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_eje" value="@bind(vm.contactologiaForm.i_eje)" width="50px" 
+	   							onBlur="@command('validaEje', elemento=i_eje.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_diamt" value="@bind(vm.contactologiaForm.i_diamt)" width="50px" 
+	   							onBlur="@command('validaDiamT', elemento=i_diamt.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_diaz" value="@bind(vm.contactologiaForm.i_diaz)" width="50px" 
+	   							onBlur="@command('validaDiaZ', elemento=i_diaz.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_bandas" value="@bind(vm.contactologiaForm.i_bandas)" width="100px" 
+	   							onBlur="@command('validaBandasP', elemento=i_bandas.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_radio3" value="@bind(vm.contactologiaForm.i_radio3)" width="50px" 
+	   							onBlur="@command('validaRadio3', elemento=i_radio3.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_diamp" value="@bind(vm.contactologiaForm.i_diamp)" width="50px" 
+	   							onBlur="@command('validaDiamP', elemento=i_diamp.value, lado='izquierda')"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_colo" value="@bind(vm.contactologiaForm.i_colo)" width="50px"/>
+				</div>
+				<div sclass="col-lg-1">
+					<textbox id="i_adic" value="@bind(vm.contactologiaForm.i_adic)" width="50px" 
+	   							onBlur="@command('validaAdicion', elemento=i_adic.value, lado='izquierda')"/>
+				</div>
+				
+			</div>	
+		</div>	
+		<!-- Fin Grid superior -->
+	  
+	   	
+	   	<!-- 
+	   	<div width="100%" height="10%" style="background-color:grey;color:white">
+				<space width="105px"/>
+ 				<label value="Radio 1" />
+ 				<space width="10px"/>
+ 				<label value="Radio 2" />
+ 				<space width="10px"/>
+ 				<label value="Esfera" />
+ 				<space width="10px"/>
+ 				<label value="Cilindro" />
+ 				<space width="15px"/>
+ 				<label value="Eje" />
+ 				<space width="35px"/>
+ 				<label value="Diam T" />
+ 				<space width="15px"/>
+ 				<label value="Dia Z0" />
+ 				<space width="15px"/>
+ 				<label value="Bandas Perifer" />
+ 				<space width="10px"/>
+ 				<label value="Radio 3" />
+ 				<space width="10px"/>
+ 				<label value="Diam P" />
+ 				<space width="10px"/>
+ 				<label value="Color" />
+ 				<space width="10px"/>
+ 				<label value="Adic" />																															
+		</div>	
+		 -->
+	   	
+	   	<!-- 
+	   	<div width="100%" vflex="min">   	
+	   		<grid oddRowSclass="none">
+	   			<columns>
+	   				<column width="100px"/>
+	   				<column width="60px" />
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="60px"/>
+	   				<column width="110px" />
+	   				<column width="60px" />	   					   				
+	   				<column width="60px" />
+	   				<column width="60px" />
+	   				<column width="60px" />	   					   					   				
+	   			</columns>
+	   			<rows>
+	   			
+	   				<row> 
+	   					<label value="OD"/>onBlur="@command('isNumeric',valor=self.value)" constraint="/^-?(([0-9]{1,2})+(?:[.][0-9]{0,2})+)?$/: Numero invalido"
+	   					<textbox id="o_radio1" value="@bind(vm.contactologiaForm.o_radio1)" width="50px"	   							 
+	   							onBlur="@command('validaRadio1', elemento=o_radio1.value, lado='derecho')"/>
+	   							
+	   					<textbox id="o_radio2" value="@bind(vm.contactologiaForm.o_radio2)" width="50px" 
+	   							onBlur="@command('validaRadio2', elemento=o_radio2.value, lado='derecho')"/>
+	   							
+	   					<textbox id="o_esfera" value="@bind(vm.contactologiaForm.o_esfera)" width="50px" 
+	   							onBlur="@command('validaEsfera', elemento=o_esfera.value, lado='derecho')" />	   					
+	   					
+	   					<textbox id="o_cilindro" value="@bind(vm.contactologiaForm.o_cilindro)" width="50px" 
+	   							onBlur="@command('validaCilindro', elemento=o_cilindro.value, lado='derecho')" />
+	   					
+	   					<textbox id="o_eje" value="@bind(vm.contactologiaForm.o_eje)" width="50px" 
+	   							onBlur="@command('validaEje', elemento=o_eje.value, lado='derecho')"/>
+	   					
+	   					<textbox id="o_diamt" value="@bind(vm.contactologiaForm.o_diamt)" width="50px" 
+	   							onBlur="@command('validaDiamT', elemento=o_diamt.value, lado='derecho')" />
+	   					
+	   					<textbox id="o_diaz" value="@bind(vm.contactologiaForm.o_diaz)" width="50px" 
+	   							onBlur="@command('validaDiaZ', elemento=o_diaz.value, lado='derecho')" />
+	   					
+	   					<textbox id="o_bandas" value="@bind(vm.contactologiaForm.o_bandas)" width="100px" 
+	   							onBlur="@command('validaBandasP', elemento=o_bandas.value, lado='derecho')" />
+	   					
+	   					<textbox id="o_radio3" value="@bind(vm.contactologiaForm.o_radio3)" width="50px" 
+	   							onBlur="@command('validaRadio3', elemento=o_radio3.value, lado='derecho')" />
+	   					
+	   					<textbox id="o_diamp" value="@bind(vm.contactologiaForm.o_diamp)" width="50px" 
+	   							onBlur="@command('validaDiamP', elemento=o_diamp.value, lado='derecho')" />
+	   					
+	   					<textbox id="o_colo" value="@bind(vm.contactologiaForm.o_colo)" width="50px" />
+	   					
+	   					<textbox id="o_adic" value="@bind(vm.contactologiaForm.o_adic)" width="50px" 
+	   							onBlur="@command('validaAdicion', elemento=o_adic.value, lado='derecho')" />	   				
+	   				</row>
+	   				
+	   				<row>
+	   					<label value="OI"/>
+	   					<textbox id="i_radio1" value="@bind(vm.contactologiaForm.i_radio1)" width="50px" 
+	   							onBlur="@command('validaRadio1', elemento=o_radio1.value, lado='izquierda')"/>
+	   							
+	   					<textbox id="i_radio2" value="@bind(vm.contactologiaForm.i_radio2)" width="50px" 
+	   							onBlur="@command('validaRadio2', elemento=o_radio2.value, lado='izquierda')"/>
+	   							
+	   					<textbox id="i_esfera" value="@bind(vm.contactologiaForm.i_esfera)" width="50px" 
+	   							onBlur="@command('validaEsfera', elemento=i_esfera.value, lado='izquierda')" />	   					
+	   					
+	   					<textbox id="i_cilindro" value="@bind(vm.contactologiaForm.i_cilindro)" width="50px" 
+	   							onBlur="@command('validaCilindro', elemento=i_cilindro.value, lado='izquierda')" />
+	   					
+	   					<textbox id="i_eje" value="@bind(vm.contactologiaForm.i_eje)" width="50px" 
+	   							onBlur="@command('validaEje', elemento=i_eje.value, lado='izquierda')"/>
+	   					
+	   					<textbox id="i_diamt" value="@bind(vm.contactologiaForm.i_diamt)" width="50px" 
+	   							onBlur="@command('validaDiamT', elemento=i_diamt.value, lado='izquierda')" />
+	   					
+	   					<textbox id="i_diaz" value="@bind(vm.contactologiaForm.i_diaz)" width="50px" 
+	   							onBlur="@command('validaDiaZ', elemento=i_diaz.value, lado='izquierda')" />
+	   					
+	   					<textbox id="i_bandas" value="@bind(vm.contactologiaForm.i_bandas)" width="100px" 
+	   							onBlur="@command('validaBandasP', elemento=i_bandas.value, lado='izquierda')" />
+	   					
+	   					<textbox id="i_radio3" value="@bind(vm.contactologiaForm.i_radio3)" width="50px" 
+	   							onBlur="@command('validaRadio3', elemento=i_radio3.value, lado='izquierda')" />
+	   					
+	   					<textbox id="i_diamp" value="@bind(vm.contactologiaForm.i_diamp)" width="50px" 
+	   							onBlur="@command('validaDiamP', elemento=i_diamp.value, lado='izquierda')" />
+	   					
+	   					<textbox id="i_colo" value="@bind(vm.contactologiaForm.i_colo)" width="50px" />
+	   					
+	   					<textbox id="i_adic" value="@bind(vm.contactologiaForm.i_adic)" width="50px" 
+	   							onBlur="@command('validaAdicion', elemento=i_adic.value, lado='izquierda')" />
+	   				</row>	   				
+	   				
+	   			</rows>
+	   		</grid>
+	   	</div> -->
+	   	
+	   	<div width="100%" vflex="min" style="background-color:black;color: white;">
+	   		<label value="Historico"/>				   		
+	   	</div>
+	   	
+	   	<div width="100%" vflex="max" style="background-color:black;color: white">
+			<space width="5px"/>
+			<label value="Fecha"/>	
+			<space width="25px"/>
+			<label value="Nunero"/>	
+			<space width="25px"/>	
+			<label value="Detalle"/>																														
+		</div>	   	
+	   	
+	   	<borderlayout width="100%" vflex="min">
+	   		<west width="25%" vflex="min">
+	   			<div width="100%" height="100%" style="background-color:#c1c1c1; border-style:none">	   		
+		   			<grid width="100%" height="300px" sclass="MyGridRowHeight" 
+		   				model="@bind(vm.contactologiaForm.listaContactologia)" oddRowSclass="none">
+		   				<columns>
+		   					<column width="85px" />
+							<column width="55px" />
+							<column width="58px" />
+		   				</columns>
+		   				
+		   				<template name="model">
+		   					<row>
+		   						<textbox value="@bind(each.fecha)" width="80px"/>
+		   						<textbox value="@bind(each.numero)" width="45px"/>	
+		   						<button label="ver" width="50px" onClick="@command('verGraduacion',contactologia=each)"/>   						
+		   					</row>
+		   				</template>
+		   			</grid>
+	   			</div>	   		
+	   		</west>
+	   		
+	   		<east width="75%" style="background-color:#c1c1c1; border-style:none">
+	   		
+	   			<div sclass="container-fluid"  style="background-color:#c1c1c1; border-style:none">
+	   			
+	   				<div sclass="row" style="background-color:transparent">
+	   					
+	   					<div sclass="col-lg-2">		
+							<label value="Optometria"/>	   													
+						</div>
+	   					
+						<div sclass="col-lg-6">		
+							<textbox value="@bind(vm.contactologiaForm.nifdoctor)" width="100px"/>
+		   					<textbox value="@bind(vm.contactologiaForm.dvnifdoctor)" width="30px"/>
+		   					<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="@command('buscarDoctorAjax')" />
+		   					<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarMedico')" />							
+						</div>						
+					</div>	
+					
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-2">		
+							<label value="Nombre"/>		   													
+						</div>
+						<div sclass="col-lg-2">				
+							<textbox value="@load(vm.contactologiaForm.nombre_doctor)" readonly="true" width="200px"/>
+						</div>						
+					</div>	
+					
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-2">		
+							<label value="Otros Datos"/>		   												
+						</div>
+						<div sclass="col-lg-3">			
+							<textbox value="@bind(vm.contactologiaForm.otros)" width="200px"/>		
+						</div>						
+					</div>	
+					
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-2">	
+							<label value="Laboratorio"/>		   														
+						</div>
+						<div sclass="col-lg-3">			
+							<textbox value="@bind(vm.contactologiaForm.laboratorio)" width="200px"/>	
+						</div>						
+					</div>	
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-2">		
+							<label value="1ra. Revision"/>		   												
+						</div>
+						<div sclass="col-lg-3">				
+							<textbox value="@bind(vm.contactologiaForm.revision1)"/>
+						</div>
+						<div sclass="col-lg-2">				
+							<label value="Cálculo Optom"/>		   						
+						</div>
+						<div sclass="col-lg-2">				
+							<textbox value="@bind(vm.contactologiaForm.calculo_opt)"/>
+						</div>						
+					</div>	
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-2">		
+							<label value="Fecha Encargo"/>		   												
+						</div>
+						<div sclass="col-lg-3">				
+							<datebox value="@bind(vm.fechaEncargo)" format="dd/MM/yyyy"/>	
+						</div>
+						<div sclass="col-lg-2">				
+							<label value="Fecha Recepción "/>		   						
+						</div>
+						<div sclass="col-lg-1">			
+							<datebox value="@bind(vm.fechaRecepcion)" format="dd/MM/yyyy"/>	
+						</div>						
+					</div>	
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-2">		
+							<label value="Fecha Entrega"/>		   												
+						</div>
+						<div sclass="col-lg-3">				
+							<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy"/>		   						
+						</div>
+						
+						<div sclass="col-lg-2">				
+							<label value="Fecha Caducidad"/>		   						
+						</div>
+						<div sclass="col-lg-1">				
+							<datebox value="@bind(vm.fechaCaducidad)" format="dd/MM/yyyy"/>
+						</div>
+					</div>	
+					
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-2">		
+							<space/>		   												
+						</div>
+						<div sclass="col-lg-2">		
+							<checkbox label="Seguro" checked="@bind(vm.contactologiaForm.seguro)"/>		   												
+						</div>
+					</div>	
+					
+					<div sclass="row" style="background-color:transparent">
+						<div sclass="col-lg-1">		
+							<label value="Recomendaciones"/>		   												
+						</div>
+						<div sclass="col-lg-1">		
+							<textbox value="@load(vm.contactologiaForm.recomendaciones)" width="300px" rows="2"/>			
+						</div>						
+					</div>	
+	   			</div>
+	   			   		
+	   			<!--  
+	   			<div width="100%" vflex="min">	   		
+		   			<grid width="100%" height="300px" oddRowSclass="none" >
+		   				<columns>
+		   					<column hflex="min" />
+		   					<column hflex="min" />
+		   					<column hflex="min" />
+		   					<column hflex="min" />
+		   					<column hflex="min" />	   					
+		   				</columns>
+		   				<rows>
+		   					<row>
+		   						<label value="Optometria"/>
+		   						<cell colspan="1">
+		   							<textbox value="@bind(vm.contactologiaForm.nifdoctor)" width="100px"/>
+		   							<textbox value="@bind(vm.contactologiaForm.dvnifdoctor)" width="30px"/>
+		   							<toolbarbutton image="/iconos/luparapida.png" sclass="shrink16" onClick="@command('buscarDoctorAjax')" />
+		   							<toolbarbutton image="/iconos/lupa.png" sclass="shrink16" onClick="@command('buscarMedico')" />	   							
+		   						</cell>	  
+		   						<cell/>
+		   						<cell/>
+		   						<cell/> 					
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Nombre Optometria"/>
+		   						<textbox value="@load(vm.contactologiaForm.nombre_doctor)" readonly="true" width="200px"/>
+		   						<cell/>
+		   						<cell/>
+		   						<cell/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Otros Datos"/>
+		   						<textbox value="@bind(vm.contactologiaForm.otros)" width="200px"/>
+		   						<cell/>
+		   						<cell/>
+		   						<cell/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Laboratorio"/>
+		   						<textbox value="@bind(vm.contactologiaForm.laboratorio)" width="200px"/>
+		   						<cell/>
+		   						<cell/>
+		   						<cell/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="1ra. Revision"/>
+		   						<textbox value="@bind(vm.contactologiaForm.revision1)"/>
+		   						<cell/>
+		   						<label value="Cálculo Optom"/>
+		   						<textbox value="@bind(vm.contactologiaForm.calculo_opt)"/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Fecha Encargo"/>
+		   						<datebox value="@bind(vm.fechaEncargo)" format="dd/MM/yyyy"/>		   						
+		   						<cell/>
+		   						<label value="Fecha Recepción "/>
+		   						<datebox value="@bind(vm.fechaRecepcion)" format="dd/MM/yyyy"/>
+		   					</row>
+		   					
+		   					<row>
+		   						<label value="Fecha Entrega"/>
+		   						<datebox value="@bind(vm.fechaEntrega)" format="dd/MM/yyyy"/>
+		   						<checkbox label="Seguro" checked="@bind(vm.contactologiaForm.seguro)"/>
+		   						
+		   						<label value="Fecha Caducidad"/>
+		   						<datebox value="@bind(vm.fechaCaducidad)" format="dd/MM/yyyy"/>
+		   					</row>   	
+		   					
+		   					<row>
+		   						<label value="Recomendaciones"/>
+		   						<cell colspan="2">
+		   						<textbox value="@load(vm.contactologiaForm.recomendaciones)" width="300px"/>
+		   						</cell>
+		   						<cell/>
+		   						<cell/>
+		   					</row>	   					
+		   				</rows>
+		   			</grid>	   	
+	   			</div>	   
+	   			-->		
+	   		</east>	   	
+	   	</borderlayout>
+	   	
+	   	
+	   	
+	
+
+</window>
