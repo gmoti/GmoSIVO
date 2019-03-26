@@ -2283,6 +2283,11 @@ public class ControllerEncargos implements Serializable {
 		busquedaConveniosForm = new BusquedaConveniosForm();		
 		busquedaConveniosDispatchActions = new BusquedaConveniosDispatchActions();	
 		
+		if(ventaPedidoForm.getConvenio().equals("") || ventaPedidoForm.getConvenio().equals(null) || ventaPedidoForm.getConvenio().equals("0")){		
+			Messagebox.show("No se ha indicado Nro de convenio");
+			return;
+		}	
+		
 		sess.setAttribute("convenio", ventaPedidoForm.getConvenio());
 		
 		if(ventaPedidoForm.getConvenio().equals("50464") && ventaPedidoForm.getCliente_dto().equals("")) {

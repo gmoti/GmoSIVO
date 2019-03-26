@@ -245,7 +245,7 @@ public class ControllerSeleccionPago implements Serializable{
 			
 			if(seleccionPagoForm.getN_isapre().trim().equals("")) {
 				
-				Messagebox.show("Debes ingresar el N° Doc Isapre para guardar pago.");
+				Messagebox.show("Debes ingresar el Nï¿½ Doc Isapre para guardar pago.");
 				return;
 			}else {				
 				if (tmpcrb >= 2) {
@@ -490,7 +490,7 @@ public class ControllerSeleccionPago implements Serializable{
 				
 			cadena = Optional.ofNullable(seleccionPagoForm.getRazon());
 			if ((cadena.orElse("").trim()).equals("")) {
-				Messagebox.show("Debe ingresar una razón social");	
+				Messagebox.show("Debe ingresar una razï¿½n social");	
 				return;
 			}
 			
@@ -566,7 +566,7 @@ public class ControllerSeleccionPago implements Serializable{
 		
 		objetos.put("seleccionPago",seleccionPagoForm);		
 		
-		Messagebox.show("¿Impresión correcta?","", 
+		Messagebox.show("ï¿½Impresiï¿½n correcta?","", 
 				Messagebox.YES | 
 				Messagebox.NO, 
 				Messagebox.QUESTION, new EventListener<Event>() {
@@ -862,17 +862,22 @@ public class ControllerSeleccionPago implements Serializable{
 	}
 	
 	
+	@NotifyChange("isapreVisible")
 	@Command
 	public void pagoEmpleados(@BindingParam("pop")Popup pop) {
 		
 		System.out.println(formaPagoBean.getId());
 		
-		if(formaPagoBean.getId().equals("8")) {
-			
-			pop.open(pop,"600px, 600px");
-			
+		if(formaPagoBean.getId().equals("8")) {			
+			pop.open(pop,"600px, 600px");			
 			//n("600px","600px");
 		}	
+		
+		if(formaPagoBean.getId().equals("ISAPR") && formaPagoBean.getId().equals("EXCED")) 
+			isapreVisible = true;
+		else
+			isapreVisible = false;
+		
 	}
 	
 	

@@ -14,6 +14,7 @@
 			</div>
 			
 			<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
+			
 				<div sclass="row" style="background-color:transparent">		
 					<div sclass="col-lg-2">
 						<label value="Nif"/>							

@@ -239,7 +239,7 @@ public class ControllerCliente implements Serializable{
 		if(!bDireccion) {			
 			if(!via.isPresent() || via.get().equals("")) {
 				clienteForm.setVia("");
-				Messagebox.show("Debe indicar una dirección");
+				Messagebox.show("Debe indicar una direcciï¿½n");
 				return false;
 			}
 		}
@@ -309,7 +309,7 @@ public class ControllerCliente implements Serializable{
 		
 		if(!bNumero) {
 			if(clienteForm.getNumero().equals(null) || clienteForm.getNumero().equals("")) {
-				Messagebox.show("Debe indicar el numero de la dirección");
+				Messagebox.show("Debe indicar el numero de la direcciï¿½n");
 				return false;
 			}			
 		}
@@ -393,6 +393,15 @@ public class ControllerCliente implements Serializable{
 	public void buscar()  {
 		
 		busquedaClientesForm = new BusquedaClientesForm();
+		Optional<String> rt  = Optional.ofNullable(clienteForm.getRut());
+		
+		if(!rt.isPresent()){
+			//if (rt.get().equals("") || rt.get().equals("0")){
+				Messagebox.show("Debe indicar el Rut del cliente");
+				return;				
+			//}						
+		}
+		
 		
 		sess.setAttribute("nif",clienteForm.getRut());
 		sess.setAttribute("pagina","");		
@@ -667,7 +676,7 @@ public class ControllerCliente implements Serializable{
 		   }	   	   
 		   
 	   }else{
-	   	Messagebox.show("Debe ingresar código de giro");
+	   	Messagebox.show("Debe ingresar cï¿½digo de giro");
 	   }
 	}
 	

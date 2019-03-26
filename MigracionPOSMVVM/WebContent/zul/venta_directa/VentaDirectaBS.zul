@@ -1,5 +1,5 @@
 <?page title="Venta Directa" contentType="text/html;charset=UTF-8"?>
-<window id="winVentaDirecta" border="normal" width="100%" height="100%" sclass="container-fluid" 
+<window id="winVentaDirecta" border="none" width="100%" height="100%" sclass="container-fluid" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerVentaDirecta')">	
 	
 	<div sclass="container-fluid" visible="@bind(vm.controlBotones.enableGenerico1)">
@@ -214,7 +214,8 @@
 
 	
 		
-	<div sclass="container-fluid" visible="@bind(vm.controlBotones.enableGenerico2)" style="background-color:#c1c1c1; border-style:none">
+	<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none" height="100%"
+			visible="@bind(vm.controlBotones.enableGenerico2)">
 	
 		<div width="100%" vflex="min" style="background-color:black;color: white">
 			<label value="DATOS DE CAJA" style="float: left ; font-weight: bold; font-size: 150%;"/>	
@@ -229,7 +230,8 @@
     		<toolbarbutton image="/iconos/cancel.png" onClick="@command('salir')" sclass="shrink24"/>			    		    					
 		</div>	
 		
-		<div sclass="container-fluid"></div>
+		<div sclass="container-fluid" style="background-color:#c1c1c1; border-style:none">
+		
 			<div sclass="row" style="background-color:transparent">
 			
 				<div sclass="col-lg-1">
@@ -259,7 +261,7 @@
 			</div>
 			
 			<button label="Aceptar" onClick="@command('seleccionaCaja')" />
-			
+		</div>		
 	</div>	<!-- fin -->	
 		
 		

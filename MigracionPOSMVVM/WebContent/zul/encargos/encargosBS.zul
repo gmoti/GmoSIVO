@@ -208,7 +208,7 @@
 			</div>		
 			
 			<div sclass="col-lg-3">				
-				<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="50px" />
+				<textbox value="@bind(vm.ventaPedidoForm.convenio)" width="50px" onOK="@command('buscarConvenioAjax')"/>
 				<textbox value="@bind(vm.ventaPedidoForm.convenio_det)" width="130px" readonly="true"/>	
 						
 				<toolbarbutton width="30px" image="/iconos/luparapida.png" onClick="@command('buscarConvenioAjax')" visible="@bind(vm.selConvenio eq 'true'? 'true':'false')"/>

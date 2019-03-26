@@ -4,7 +4,7 @@
 			viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerListaAlbaranes')">
 			
 		
-	<div width="100%" height="100%">	
+	<div width="100%" height="100%" style="background-color:#c1c1c1; border-style:none">	
 		
 		<div width="100%" style="background-color:black;color: white" height="40px">
 			<label value="Busqueda de Albaram"/>

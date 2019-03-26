@@ -1,6 +1,6 @@
 <?page title="Busqueda Presupuesto" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winBuscarPresupuesto"  border="normal" width="40%" height="75%" 
+	<window id="winBuscarPresupuesto"  border="none" width="40%" height="75%" 
 		position="center"  mode="modal" sizable="false" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerBuscarPresupuesto')">
 		
@@ -13,8 +13,8 @@
 			</div>				
 		</div>
 		
-		<div sclass="container-fluid" width="100%" vflex="min">			
-			<div sclass="row" style="background-color:white">
+		<div sclass="container-fluid" width="100%" vflex="min" style="background-color:#c1c1c1; border-style:none">			
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-4">
 					<label value="Codigo Presupuesto"/>							
 				</div>
@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-4">
 					<label value="Rut de Cliente"/>							
 				</div>
@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-4">
 					<label value="Fecha Presupuesto"/>							
 				</div>
@@ -41,7 +41,7 @@
 				</div>
 			</div>
 			
-			<div sclass="row" style="background-color:white">
+			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-4">
 					<label value="Agente"/>							
 				</div>
@@ -72,7 +72,7 @@
 			<label value="Estado"/>				
 		</div>
 		
-		<div width="100%" height="70%">
+		<div width="100%" height="70%" style="background-color:#c1c1c1; border-style:none">
 			<grid model="@load(vm.busquedaPresupuestos.lista_presupuestos)"  
 				sclass="MyGridRowHeight" fixedLayout="true" oddRowSclass="none" 
 				width="100%" height="95%" style="overflow-y: scroll">

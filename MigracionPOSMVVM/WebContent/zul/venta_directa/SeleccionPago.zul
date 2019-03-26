@@ -245,8 +245,8 @@
 								<template name='model'>
 									<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
  									<attribute name="style" if="${each.activo==true}">
-							color: RED;
-						</attribute>  
+										color: RED;
+									</attribute>  
 					</comboitem>	
 								</template>	   									
 							</combobox>
