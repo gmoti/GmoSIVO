@@ -8,7 +8,7 @@
 <!-- Latest compiled and minified JavaScript 
 <?script src="js/bootstrap.min.js" ?>-->
 
-<window id="winMenuPrincipal" border="none" width="100%" height="100%"	sclass="container-fluid" 	
+<window id="winMenuPrincipal" border="none" width="100%" height="99%"	sclass="container-fluid" 	
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerMenuPrincipal')">
 		
 	

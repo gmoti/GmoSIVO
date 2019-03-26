@@ -62,7 +62,7 @@ public class ControllerListadoBoleta implements Serializable{
 		
 		bytes= reportesHelper.creaListadoBoletas(sess);
 		
-		final AMedia media = new AMedia("prueba.pdf", "pdf", "application/pdf", bytes);			
+		final AMedia media = new AMedia("ListadoBoletas.pdf", "pdf", "application/pdf", bytes);			
 		
 		fileContent = media;
 		

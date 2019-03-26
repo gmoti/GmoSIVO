@@ -928,13 +928,15 @@ public class ControllerEncargos implements Serializable {
 	} 
 	
 	
-	//=========== Recupera Encargo seleccionado======
+	//=========== Recupera Encargo seleccionado======selConvenio
 	//===============================================	
 		
-	@NotifyChange({"ventaPedidoForm","beanControlCombos","beanControlBotones","encargoEntregado","agenteBean","divisaBean","formaPagoBean","idiomaBean","fecha","fechaEntrega","tipoPedidoBean"})
+	@NotifyChange({"ventaPedidoForm","beanControlCombos","beanControlBotones","encargoEntregado","agenteBean","divisaBean","formaPagoBean","idiomaBean","fecha","fechaEntrega","tipoPedidoBean","selConvenio"})
 	@GlobalCommand
 	public void encargoSeleccionado(@BindingParam("arg")ArrayList<PedidosPendientesBean> arg,
-									@BindingParam("arg2")PedidosPendientesBean arg2) {				
+									@BindingParam("arg2")PedidosPendientesBean arg2) {	
+		
+		Optional<String> convenio;
 		
 		try {
 			sess.setAttribute(Constantes.STRING_ACTION_CDG, arg2.getCdg());
@@ -944,6 +946,15 @@ public class ControllerEncargos implements Serializable {
 			java.util.Date lFecha =  dt.parse(ventaPedidoForm.getFecha()); 
 			java.util.Date lFechaEntrega=  dt.parse(ventaPedidoForm.getFecha_entrega());
 			//ventaPedidoForm.getHora()
+			convenio = Optional.ofNullable(ventaPedidoForm.getConvenio());
+			
+			/*if(!convenio.isPresent())				
+				selConvenio="false";				
+			else
+				if (convenio.get().equals("") || convenio.get().equals("0"))
+					selConvenio="false";
+				else
+					selConvenio="true";*/
 			
 			fecha = new Date(lFecha.getTime());
 			fechaEntrega = new Date(lFechaEntrega.getTime());			
@@ -1197,6 +1208,11 @@ public class ControllerEncargos implements Serializable {
 				ventaPedidoForm.setAccion("elimina_convenio");
 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 				selConvenio="true";	
+				
+				ventaPedidoForm.setConvenio("");
+				ventaPedidoForm.setConvenio_det("");
+				ventaPedidoForm.setIsapre("");
+				//FQuiroz
 			} catch (Exception e) {
 				
 				e.printStackTrace();

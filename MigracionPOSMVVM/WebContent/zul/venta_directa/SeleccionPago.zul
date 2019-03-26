@@ -1,11 +1,19 @@
 <?page title="Seleccion de Pago" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="winSeleccionPago" border="none" width="65%" vflex="min" sclass="container-fluid"
+	<window id="winSeleccionPago" border="none" width="65%" vflex="min" sclass="container-fluid" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerSeleccionPago')">	
 		
 		<!-- height="42%" -->
-		
-	<div sclass="container-fluid">
+	<!--	
+	<style>		
+		.z-grid-body {background: #c1c1c1;}
+		.z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background: #c1c1c1; !important}
+		.z-row-content, .z-row-content:hover {background: #c1c1c1; color: black; }
+		.z-row-content:hover > .z-label {background: #c1c1c1; color: black; background-clip: border-box; }    
+		.z-label {background: #c1c1c1; color: black;}
+	</style>	
+	  -->	
+	<div sclass="container-fluid" style="background-color:#c1c1c1;">
 		<div width="100%" vflex="min" style="background-color:black;color: white">
 			<label value="Seleccion de cobro" />
 			<div style="float: right">					
@@ -15,8 +23,9 @@
 		</div>		
 	</div>	
 	
-	<div sclass="container-fluid">
-		<div sclass="row" style="background-color:white">		
+	<div sclass="container-fluid" vflex="min" style="background-color:#c1c1c1; border-style:none">
+	
+		<div sclass="row" style="background-color:transparent">		
 			<div sclass="col-lg-2">
 				<label value="Fecha" />				
 			</div>
@@ -34,7 +43,7 @@
 			</div>
 		</div>
 		
-		<div sclass="row" style="background-color:white">		
+		<div sclass="row" style="background-color:transparent">		
 			<div sclass="col-lg-2">
 				<label value="Nif" />
 			</div>
@@ -49,7 +58,7 @@
 			</div>
 		</div>	
 		
-		<div sclass="row" style="background-color:white">		
+		<div sclass="row" style="background-color:transparent">		
 			<div sclass="col-lg-2">
 				<label value="Direccion" />     						
 			</div>
@@ -64,7 +73,7 @@
 			</div>
 		</div>
 		
-		<div sclass="row" style="background-color:white">		
+		<div sclass="row" style="background-color:transparent">		
 			<div sclass="col-lg-2">
 				<label value="Poblacion" />     						
 			</div>
@@ -81,7 +90,7 @@
 		</div>
 	</div>
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" style="background-color:#c1c1c1;">
 		<div width="100%" vflex="min" style="background-color:black;color: white">
 			<label value="Cobro" />
 			<div style="float: right">	
@@ -101,7 +110,7 @@
 	<div height="4px" width="100%"/>
 	
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" style="background-color:#c1c1c1;">
 		<div width="100%" height="15%" style="background-color:grey;color: black;">			
 			<space width="490px"/>
 			<label value="Fecha" sclass="font-weight-bold"/>
@@ -112,76 +121,73 @@
 		</div>
 	</div>
 	
-	<div sclass="container-fluid">
+	<div sclass="container-fluid" vflex="min" style="background-color:#c1c1c1; border-style:none">
 	
-		<div width="60%" height="150px" style="float:left">
+		<div sclass="container-fluid" width="60%" vflex="min" style="float:left; background-color:#c1c1c1; border-style:none"><!-- height="150px" -->
 		
-			<grid sclass="MyGridRowHeight" 
-					height="100%" width="100%" 
-					fixedLayout="true" oddRowSclass="none">
-				<columns>
-					<column hflex="min"/>
-					<column hflex="min"/>
-					<column hflex="min"/>
-					<column hflex="min"/>
-					<column hflex="min"/>
-				</columns>	
-	     							
-				<rows>
-					<row>
-						<label value="Valor total a pago" />
-						<intbox value="@bind(vm.seleccionPagoForm.v_total_parcial)" 
+			<div sclass="row" style="background-color:transparent">			
+				<div sclass="col-lg-3">
+					<label value="Total a pago" />
+				</div>
+				
+				<div sclass="col-lg-3">
+					<intbox value="@bind(vm.seleccionPagoForm.v_total_parcial)" 
 								width="100px" readonly="true" 
 								style="text-align:right" format="#,###,##0" locale="it"/>
-								
-						<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		
+				</div>
+				
+				<div sclass="col-lg-1">
+					<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		
 							<intbox value="@bind(vm.sumaTotal)" 
 								width="100px" readonly="true" 
 								style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
-						</zk>
+					</zk>
 						
-						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">		
+					<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">		
 							<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
 								width="100px" readonly="true" 
 								style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
-						</zk>
+					</zk>
 						
-						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">		
+					<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">		
 							<intbox value="@bind(vm.seleccionPagoForm.suma_total_albaranes)" 
 								width="100px" readonly="true" 
 								style="text-align:right" format="#,###,##0" locale="it" visible="@bind(vm.controlBotones.enableGenerico2)"/>
-						</zk>
-								
-						<cell/>		
-						<cell/>	     								
-					</row>
-					<row>
-						<label value="Valor a pagar" />
-						<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)"
+					</zk>				
+				</div>
+			
+			</div>
+			
+			<div sclass="row" style="background-color:transparent">
+			
+				<div sclass="col-lg-3">
+					<label value="Valor a pagar" />						
+				</div>
+				
+				<div sclass="col-lg-3">
+					<intbox value="@bind(vm.seleccionPagoForm.v_a_pagar)"
 							onBlur="@command('validaPago')" focus="true" readonly="@bind(vm.pagarReadOnly)"
 							width="100px" style="text-align:right" tooltiptext="Presione Enter para aceptar" 
 							format="########"/>
-							
-						<label value="Anticipo minimo" visible="@bind(vm.controlBotones.enableGenerico1)"/>     										
-						<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" 
+				</div>
+				
+				<div sclass="col-lg-2">
+					<label value="Anticipo" visible="@bind(vm.controlBotones.enableGenerico1)"/>
+				</div>
+				
+				<div sclass="col-lg-1">
+					<intbox value="@bind(vm.seleccionPagoForm.anticipo_pedido)" style="text-align:right" 
 								format="#,###,##0" locale="it" width="100px" 
 								visible="@bind(vm.controlBotones.enableGenerico1)" readonly="true" />
-						<cell/>		
-					</row>
-					<row>
-						<!-- 
-						<label value="Descuento(%)" visible="@bind(vm.disableDescuento)"/>
-						
-						<textbox value="@bind(vm.seleccionPagoForm.descuento)" 
-							width="100px" 
-							visible="@bind(vm.disableDescuento)" 
-							onOK="@command('calculaTotalvtaDirecta')" 
-							style="text-align:right" tooltiptext="Presione Enter para aceptar"/> -->
-					
-					
-						<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">		     								
-							<label value="Descuento(%)"/>	     									
-							
+				</div>
+			</div>
+			
+			<div sclass="row" style="background-color:transparent">
+				<div sclass="col-lg-3">
+					<label value="Descuento(%)"/>					
+				</div>
+				<div sclass="col-lg-1">
+					<zk if="${vm.seleccionPagoForm.origen=='DIRECTA'}">
 							<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 								<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
 									onBlur="@command('calculaTotalvtaDirecta')" 
@@ -192,11 +198,9 @@
 								<textbox value="@bind(vm.seleccionPagoForm.descuento)"
 									style="text-align:right" width="100px" readonly="true"/>
 							</zk>		     								 
-						</zk>
+					</zk>
 					
-						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">
-							<label value="Descuento(%)"/>
-						
+					<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DIRECTA'}">	
 							<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 								<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
 									onBlur="@command('calculaTotal')" 
@@ -208,63 +212,65 @@
 								<textbox value="@bind(vm.seleccionPagoForm.descuento)"
 									style="text-align:right" width="100px" readonly="true"/>
 							</zk>		     								
-						</zk>
+					</zk>
 						
-						<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">
-							<label value="Descuento(%)"/>
-						
+					<zk if="${vm.seleccionPagoForm.origen=='ALBARAN_DEVOLUCION'}">
 							<zk if="${vm.seleccionPagoForm.tiene_pagos =='0'}">
 								<textbox value="@bind(vm.seleccionPagoForm.descuento)"		     											     									 
 									onBlur="@command('calculaTotal')" 
 									style="text-align:right" width="100px" 
 									tooltiptext="Presione Enter para aceptar"/>
 							</zk>		
-						</zk>	
-							
-						<cell/>	
-						<cell/>	
-						<cell/>		
-					</row>
-					<row>
-						<label value="Diferencia" />
-						<intbox id="diferencia" 
+					</zk>					
+				</div>			
+			</div>
+			
+			<div sclass="row" style="background-color:transparent">
+				<div sclass="col-lg-3">
+					<label value="Diferencia" />											
+				</div>
+				
+				<div sclass="col-lg-1">
+					<intbox id="diferencia" 
 							value="@bind(vm.seleccionPagoForm.diferencia)" 
-							width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>	     								
-						<cell/>	
-						<cell/>	
-						<cell/>	
-					</row>
-					<row>	     							
-						<label value="Forma pago" />
-						<cell colspan="2" align="left">	
-							<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 		     										 
-									selectedItem="@bind(vm.formaPagoBean)" 
-									placeholder="Selecciona forma pago" width="230px" 
-									onSelect="@command('pagoEmpleados',pop=descuentoEmpleados)">
-									    								
-								<template name='model'>
-									<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
- 									<attribute name="style" if="${each.activo==true}">
-										color: RED;
-									</attribute>  
-					</comboitem>	
-								</template>	   									
-							</combobox>
-						</cell>	
-						<cell/>	
-						<cell/>	
-					</row>
-					<row visible="@bind(vm.isapreVisible)">	     							
-						<label value="N° Doc Isapre"/>
-						<textbox value="@bind(vm.seleccionPagoForm.n_isapre)"  width="100px"/>
-						<cell/>	
-						<cell/>	
-					</row>
-				</rows>
-			</grid>		
+							width="100px" readonly="true" style="text-align:right" format="#,###,##0" locale="it"/>
+				</div>
+			</div>
+			
+			<div sclass="row" style="background-color:transparent">
+				<div sclass="col-lg-3">
+					<label value="Forma pago" />																	
+				</div>
+			
+				<div sclass="col-lg-1">
+					<combobox model="@bind(vm.seleccionPagoForm.listaFormasPago)" 		     										 
+							selectedItem="@bind(vm.formaPagoBean)" 
+							placeholder="Selecciona forma pago" width="230px" 
+							onSelect="@command('pagoEmpleados',pop=descuentoEmpleados)">
+							    								
+						<template name='model'>
+							<comboitem label="@load(each.descripcion)" disabled="@bind(each.activo)"> 
+								<attribute name="style" if="${each.activo==true}">
+									color: RED;
+								</attribute>  
+							</comboitem>	
+						</template>	   									
+					</combobox>											
+				</div>			
+			</div>
+			
+			<div sclass="row" style="background-color:transparent" visible="@bind(vm.isapreVisible)">
+				<div sclass="col-lg-3">
+					<label value="N° Doc Isapre"/>																						
+				</div>
+				<div sclass="col-lg-1">
+					<textbox value="@bind(vm.seleccionPagoForm.n_isapre)"  width="100px"/>																		
+				</div>			
+			</div>			
+			
 		</div>
 		
-		<div width="40%" height="150px" style="float:right" align="center">	
+		<div width="40%" vflex="min" align="center" style="float:right; background-color:#c1c1c1; border-style:none">	<!-- height="150px" -->
 					     				
 		    <div width="100%" height="100%"> 				
 				<grid model="@bind(vm.seleccionPagoForm.listaPagos)" 

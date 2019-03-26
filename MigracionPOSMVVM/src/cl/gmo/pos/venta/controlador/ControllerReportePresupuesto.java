@@ -46,7 +46,7 @@ public class ControllerReportePresupuesto implements Serializable {
 		reportesHelper = new ReportesHelper();
 		bytes= reportesHelper.creaPresupuesto(sess);
 		
-		final AMedia media = new AMedia("prueba.pdf", "pdf", "application/pdf", bytes);	
+		final AMedia media = new AMedia("ReportePresupuesto.pdf", "pdf", "application/pdf", bytes);	
 		fileContent = media;
 	}
 	

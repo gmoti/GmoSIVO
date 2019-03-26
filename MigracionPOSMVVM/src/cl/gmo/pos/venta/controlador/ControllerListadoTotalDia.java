@@ -70,7 +70,7 @@ public class ControllerListadoTotalDia implements Serializable{
 			listasTotalesDiaBean = listadoTotalDiasImpl.traeListasTotales(fechaReporte, local);
 			bytes = reportesHelper.creaListadoTotalDia(listasTotalesDiaBean);		
 					
-			final AMedia media = new AMedia("prueba.pdf", "pdf", "application/pdf", bytes);			
+			final AMedia media = new AMedia("ListadoTotalDia.pdf", "pdf", "application/pdf", bytes);			
 			
 			fileContent = media;			
 			

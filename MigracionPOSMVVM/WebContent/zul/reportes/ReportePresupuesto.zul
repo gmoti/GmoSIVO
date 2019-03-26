@@ -1,6 +1,6 @@
 <?page title="Reporte Presupuesto" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window id="reporte5" title="Reporte Presupuesto" border="modal" 
+	<window id="reporte5" title="Reporte Presupuesto" border="none" mode="modal" 
 		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerReportePresupuesto')"	
 		width="70%" height="80%" closable="true">
 		

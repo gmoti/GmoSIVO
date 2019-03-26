@@ -103,7 +103,7 @@ public class ControllerInformeOptico implements Serializable{
 			sess.setAttribute("InformeOptico", informeOpticoForm);			
 			bytes = reportesHelper.creaListadoOptico(sess);
 					
-			final AMedia media = new AMedia("prueba.pdf", "pdf", "application/pdf", bytes);			
+			final AMedia media = new AMedia("InformeOptico.pdf", "pdf", "application/pdf", bytes);			
 			
 			fileContent = media;			
 			
