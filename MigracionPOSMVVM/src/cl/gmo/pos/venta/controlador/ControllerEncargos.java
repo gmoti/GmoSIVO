@@ -3,6 +3,7 @@ package cl.gmo.pos.venta.controlador;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,7 +167,8 @@ public class ControllerEncargos implements Serializable {
 		ventaPedidoForm.setConvenio("");		
 		
 		fecha= new Date(System.currentTimeMillis());
-		fechaEntrega= new Date(System.currentTimeMillis());		
+		//fechaEntrega= new Date(System.currentTimeMillis());
+		fechaEntrega = null; 
 		ventaPedidoForm.setFecha(dt.format(new Date(System.currentTimeMillis())));
 		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));		
 		
@@ -266,7 +268,8 @@ public class ControllerEncargos implements Serializable {
 		ventaPedidoForm.setListaProductos(new ArrayList<ProductosBean>());
 		
 		fecha= new Date(System.currentTimeMillis());
-		fechaEntrega= new Date(System.currentTimeMillis());	
+		//fechaEntrega = new Date(System.currentTimeMillis());	
+		fechaEntrega = null;
 		
 		ventaPedidoForm.setFecha(dt.format(new Date(System.currentTimeMillis())));
 		ventaPedidoForm.setHora(tt.format(new Date(System.currentTimeMillis())));
@@ -684,7 +687,7 @@ public class ControllerEncargos implements Serializable {
 	//@NotifyChange({"ventaPedidoForm"})
 	@NotifyChange({"ventaPedidoForm","beanControlBotones","beanControlCombos","agenteBean","divisaBean","formaPagoBean","idiomaBean","tipoPedidoBean","productoBean","fecha","fechaEntrega"})
 	@Command
-	public void ingresa_pedido() {		
+	public void ingresa_pedido() {	
 		
 		boolean valtienda=false;
 		boolean valGrabar=false;
@@ -747,8 +750,8 @@ public class ControllerEncargos implements Serializable {
 		ventaPedidoForm.setIdioma(idiomaBean.getId());
 		ventaPedidoForm.setDivisa(divisaBean.getId());
 		ventaPedidoForm.setTipo_pedido(tipoPedidoBean.getCodigo());	
-		ventaPedidoForm.setFecha_entrega(dt.format(fechaEntrega));	
-		
+		//ventaPedidoForm.setFecha_entrega(dt.format(fechaEntrega));	
+		ventaPedidoForm.setFecha_entrega("");
 		
 		if (!ventaPedidoForm.getFlujo().equals("formulario")) {	
 			
@@ -761,12 +764,14 @@ public class ControllerEncargos implements Serializable {
 						
 		 				ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
 		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+		 				converFechaEntrega(false);
 		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 						
 					}else {
 						
 						ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
-		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+		 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);	
+		 				converFechaEntrega(false);
 		 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 					}		
 					
@@ -797,6 +802,7 @@ public class ControllerEncargos implements Serializable {
 			 				
 			 				ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
 			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			 				converFechaEntrega(false);
 			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
 							break;
 						default:
@@ -824,8 +830,10 @@ public class ControllerEncargos implements Serializable {
 						}else {
 							
 			 				ventaPedidoForm.setAccion(Constantes.STRING_INGRESA_PEDIDO);
-			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);			 				
+			 				ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
+			 				converFechaEntrega(false);
 			 				RespuestaEncargos.evaluaEstado(ventaPedidoForm,sess);
+			 				
 			 				}
 						
 						} catch (Exception e) {					
@@ -3520,12 +3528,37 @@ public class ControllerEncargos implements Serializable {
 				ventaPedidoForm.setAccion("aplica_descuento_promocion");	
 	        	ventaPedidoDispatchActions.IngresaVentaPedido(ventaPedidoForm, sess);
 	        	
+		}		
+	}	
+	
+	
+	//===================================================================
+	//================== convrsiones de fechas ==========================
+	@NotifyChange({"ventaPedidoForm"})
+	@Command
+	public void converFechaEntrega(boolean dateToString) {
+		
+		Optional<Date> fe;		
+		
+		if (dateToString) {
+			fe = Optional.ofNullable(fechaEntrega);
+			
+			if(fe.isPresent())		
+				ventaPedidoForm.setFecha_entrega(dt.format(fechaEntrega));
+			else
+				ventaPedidoForm.setFecha_entrega("");
+		}else {
+			
+			if(!ventaPedidoForm.getFecha_entrega().equals(""))
+				try {
+					java.util.Date lFechaEntrega = dt.parse(ventaPedidoForm.getFecha_entrega());
+					fechaEntrega = new Date(lFechaEntrega.getTime());
+				} catch (ParseException e) {
+					fechaEntrega = null;
+				}
+			else
+				fechaEntrega = null;
 		}
-		
-		
-		
-		
-		
 	}	
 	
 	

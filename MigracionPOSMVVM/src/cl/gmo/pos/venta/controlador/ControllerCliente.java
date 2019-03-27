@@ -189,8 +189,8 @@ public class ControllerCliente implements Serializable{
 		Optional<String> ema = Optional.ofNullable(clienteForm.getEmail());
 		Optional<String> pro = Optional.ofNullable(clienteForm.getProfesion());
 		
-		Optional<String> via = Optional.ofNullable(clienteForm.getVia());
-		
+		Optional<String> via = Optional.ofNullable(clienteForm.getVia());		
+		Optional<String> tel = Optional.ofNullable(clienteForm.getTelefono());
 		
 		if (!r.isPresent() || clienteForm.getRut().trim().equals("") || clienteForm.getRut().trim().equals("0")) {
 				Messagebox.show("Debe indicar el rut");
@@ -294,10 +294,15 @@ public class ControllerCliente implements Serializable{
 		//=================================================
 		
 		if(!bTelefono) {
-			if (clienteForm.getTelefono().equals(null) || clienteForm.getTelefono().equals("")) {
+			if(tel.isPresent()) {			
+				if (clienteForm.getTelefono().equals("")) {
+					Messagebox.show("Debe indicar el telefono");
+					return false;
+				}
+			}else {
 				Messagebox.show("Debe indicar el telefono");
 				return false;
-			}			
+			}
 		}
 		
 		if(!bMovil) {
