@@ -965,15 +965,15 @@ public class ControllerContactologia implements Serializable {
 		
 		String valorelemento = elemento;	
 		Double cilindro = 0.00;
-		Double eje = 0.00;
+		Integer eje = 000;
 		valorelemento = valorelemento.trim();
 		
-		nf.setMinimumFractionDigits(2);
-		nf.setMaximumFractionDigits(2);
+		nf.setMinimumFractionDigits(0);
+		nf.setMaximumFractionDigits(0);
 		
 		if(!elemento.equals("")){
 			try {
-				eje = Double.valueOf(elemento);
+				eje = Integer.valueOf(elemento);
 				
 				if(lado.equals("derecha")){
 					contactologiaForm.setO_eje(nf.format(eje));				 
@@ -983,7 +983,7 @@ public class ControllerContactologia implements Serializable {
 				
 				elemento = nf.format(eje);
 			}catch(Exception e) {
-				eje = 0.00;
+				eje = 000;
 				
 				if(lado.equals("derecha")){
 					contactologiaForm.setO_eje("");				 

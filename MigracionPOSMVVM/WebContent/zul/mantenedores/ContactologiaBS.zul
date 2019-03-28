@@ -82,50 +82,50 @@
 			<div sclass="row" style="background-color:transparent">
 				<div sclass="col-lg-1">		
 					<textbox id="o_radio1" value="@bind(vm.contactologiaForm.o_radio1)" width="50px"	   							 
-	   							onBlur="@command('validaRadio1', elemento=o_radio1.value, lado='derecho')"/>
+	   							onBlur="@command('validaRadio1', elemento=o_radio1.value, lado='derecha')"/>
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_radio2" value="@bind(vm.contactologiaForm.o_radio2)" width="50px" 
-	   							onBlur="@command('validaRadio2', elemento=o_radio2.value, lado='derecho')"/>
+	   							onBlur="@command('validaRadio2', elemento=o_radio2.value, lado='derecha')"/>
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_esfera" value="@bind(vm.contactologiaForm.o_esfera)" width="50px" 
-	   							onBlur="@command('validaEsfera', elemento=o_esfera.value, lado='derecho')" />	 
+	   							onBlur="@command('validaEsfera', elemento=o_esfera.value, lado='derecha')" />	 
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_cilindro" value="@bind(vm.contactologiaForm.o_cilindro)" width="50px" 
-	   							onBlur="@command('validaCilindro', elemento=o_cilindro.value, lado='derecho')" />
+	   							onBlur="@command('validaCilindro', elemento=o_cilindro.value, lado='derecha')" />
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_eje" value="@bind(vm.contactologiaForm.o_eje)" width="50px" 
-	   							onBlur="@command('validaEje', elemento=o_eje.value, lado='derecho')"/>
+	   							onBlur="@command('validaEje', elemento=o_eje.value, lado='derecha')"/>
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_diamt" value="@bind(vm.contactologiaForm.o_diamt)" width="50px" 
-	   							onBlur="@command('validaDiamT', elemento=o_diamt.value, lado='derecho')" />
+	   							onBlur="@command('validaDiamT', elemento=o_diamt.value, lado='derecha')" />
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_diaz" value="@bind(vm.contactologiaForm.o_diaz)" width="50px" 
-	   							onBlur="@command('validaDiaZ', elemento=o_diaz.value, lado='derecho')" />
+	   							onBlur="@command('validaDiaZ', elemento=o_diaz.value, lado='derecha')" />
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_bandas" value="@bind(vm.contactologiaForm.o_bandas)" width="100px" 
-	   							onBlur="@command('validaBandasP', elemento=o_bandas.value, lado='derecho')" />
+	   							onBlur="@command('validaBandasP', elemento=o_bandas.value, lado='derecha')" />
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_radio3" value="@bind(vm.contactologiaForm.o_radio3)" width="50px" 
-	   							onBlur="@command('validaRadio3', elemento=o_radio3.value, lado='derecho')" />
+	   							onBlur="@command('validaRadio3', elemento=o_radio3.value, lado='derecha')" />
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_diamp" value="@bind(vm.contactologiaForm.o_diamp)" width="50px" 
-	   							onBlur="@command('validaDiamP', elemento=o_diamp.value, lado='derecho')" />
+	   							onBlur="@command('validaDiamP', elemento=o_diamp.value, lado='derecha')" />
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_colo" value="@bind(vm.contactologiaForm.o_colo)" width="50px" />
 				</div>
 				<div sclass="col-lg-1">
 					<textbox id="o_adic" value="@bind(vm.contactologiaForm.o_adic)" width="50px" 
-	   							onBlur="@command('validaAdicion', elemento=o_adic.value, lado='derecho')" />
+	   							onBlur="@command('validaAdicion', elemento=o_adic.value, lado='derecha')" />
 				</div>
 			</div>	
 			

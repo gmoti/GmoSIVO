@@ -638,14 +638,14 @@ public class Constantes {
 
 	
 	/*Defino parametros WS boleta*/
-	public static final String STRING_WS_AREA   ="PRD-BOLGMO";	
-	//public static final String STRING_WS_AREA   ="QA-BOLGMO";
+	//public static final String STRING_WS_AREA   ="PRD-BOLGMO";	
+	public static final String STRING_WS_AREA   ="QA-BOLGMO";
 	public static final String STRING_WS_PASSWD ="administrador";
 	public static final String STRING_WS_DTYPE  ="39";
 	
 	/*Defino parametros WS boleta*/
-	public static final String STRING_WS_AREA_NC   ="PRD-NCBOLGMO";
-	//public static final String STRING_WS_AREA_NC   	="NC-GMO";
+	//public static final String STRING_WS_AREA_NC   ="PRD-NCBOLGMO";
+	public static final String STRING_WS_AREA_NC   	="NC-GMO";
 	public static final String STRING_WS_PASSWD_ 	="administrador";
 	public static final String STRING_WS_DTYPE_NC  	="61";
 	

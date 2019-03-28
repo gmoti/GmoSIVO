@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<window id="winInformacion" border="normal" width="35%" height="20%" mode="modal"
+		viewModel="@id('vm') @init('cl.gmo.pos.venta.controlador.ControllerInformacion')">
+
+
+	<div width="100%" vflex="min" >	
+		<vbox>
+			<label value="@load(vm.mensaje1)" width="100%" style="font-size: large; font-weight: bold;"/>
+			<label value="@load(vm.mensaje2)" width="100%" style="font-size: large; font-weight: bold;"/>
+			<label value="@load(vm.mensaje3)" width="100%" style="font-size: large; font-weight: bold;"/>
+			<label value="@load(vm.mensaje4)" width="100%" style="font-size: large; font-weight: bold;"/>
+			<separator spacing="20px"/>	
+		</vbox>	
+	</div>
+	
+	<div width="100%" vflex="min" >	
+		<label value="@load(vm.pregunta)" width="100%" style="font-size: large; font-weight: bold;"/>
+		<separator spacing="10px"/>	
+		<hbox>
+			<button label="Si" onClick="@command('respSi',win=winInformacion)"/>
+			<button label="No" onClick="@command('respNo',win=winInformacion)"/>
+		</hbox>
+	</div>
+
+</window>

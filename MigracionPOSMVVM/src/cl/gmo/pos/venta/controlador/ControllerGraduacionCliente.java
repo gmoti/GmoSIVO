@@ -410,13 +410,29 @@ public class ControllerGraduacionCliente implements Serializable{
 							OI_dnpc="       ";
 						}						
 						
-						mensaje1 = "Estos son los datos de la receta registrados:    \n ";
-						mensaje2 = "  Ojo   Esf         Cil       Eje       Cerca         Add         DNPL         DNPC  \n ";
-						mensaje3 = "   D     "+OD_esfera+"          "+OD_cilindro+"        "+OD_eje+"          "+OD_cerca+"             "+OD_adicion+"          "+OD_dnpl+"           "+OD_dnpc+"\n ";
-						mensaje4 = "    I      "+OI_esfera+"          "+OI_cilindro+"        "+OI_eje+"          "+OI_cerca+"             "+OI_adicion+"          "+OI_dnpl+"           "+OI_dnpc+"\n ";
+						mensaje1 = "Estos son los datos de la receta registrados:";
+						mensaje2 = "  Ojo   Esf         Cil       Eje       Cerca         Add         DNPL         DNPC";
+						mensaje3 = "   D     "+OD_esfera+"          "+OD_cilindro+"        "+OD_eje+"          "+OD_cerca+"             "+OD_adicion+"          "+OD_dnpl+"           "+OD_dnpc;
+						mensaje4 = "   I     "+OI_esfera+"          "+OI_cilindro+"        "+OI_eje+"          "+OI_cerca+"             "+OI_adicion+"          "+OI_dnpl+"           "+OI_dnpc;
 						
-						mensaje = mensaje1 + mensaje2 + mensaje3 + mensaje4;						
+						mensaje = mensaje1 + mensaje2 + mensaje3 + mensaje4;	
 						
+						//prueba de ventana modal para responder
+						objetos = new HashMap<String,Object>();		
+						objetos.put("retornoSI","respuestaSIinserta");
+						objetos.put("retornoNO","respuestaNO");
+						objetos.put("mens1",mensaje1);
+						objetos.put("mens2",mensaje2);
+						objetos.put("mens3",mensaje3);
+						objetos.put("mens4",mensaje4);
+						objetos.put("pregunta","seguro(a) que esta correctos?");
+						
+						Window winInformacion = (Window)Executions.createComponents(
+				                "/zul/general/Informacion.zul", null, objetos);
+						
+						winInformacion.doModal();			
+						
+						/*
 						Messagebox.show(mensaje, "seguro(a) que esta correctos?",
 								Messagebox.YES | 
 								Messagebox.CANCEL, 
@@ -432,14 +448,14 @@ public class ControllerGraduacionCliente implements Serializable{
 											Messagebox.show("Los datos fueron grabados correctamente");											
 											BindUtils.postGlobalCommand(null, null, "notificacionCambios", null);
 											return;
-										/*}else {
-											Messagebox.show("Error al intentar grabar los datos");
-											return;
-										}*/
+										//}else {
+											//Messagebox.show("Error al intentar grabar los datos");
+											//return;
+										//}
 										
 									}						
 								}
-						});	
+						});	*/
 						
 					
 					}else if(graduacionesForm.getPagina().equals("NOGRABAR")){
@@ -477,13 +493,13 @@ public class ControllerGraduacionCliente implements Serializable{
 											OD_dnpc="       ";
 										}
 										
-										String OI_esfera = graduacionesForm.getOI_esfera();
-										String OI_cilindro = graduacionesForm.getOI_cilindro();
-										String OI_eje = graduacionesForm.getOI_eje();
-										String OI_cerca = graduacionesForm.getOI_cerca(); 
-										String OI_adicion = graduacionesForm.getOI_adicion();
-										String OI_dnpl = graduacionesForm.getOI_dnpl();
-										String OI_dnpc = graduacionesForm.getOI_dnpc();
+										String OI_esfera 	= graduacionesForm.getOI_esfera();
+										String OI_cilindro	= graduacionesForm.getOI_cilindro();
+										String OI_eje 		= graduacionesForm.getOI_eje();
+										String OI_cerca 	= graduacionesForm.getOI_cerca(); 
+										String OI_adicion 	= graduacionesForm.getOI_adicion();
+										String OI_dnpl 		= graduacionesForm.getOI_dnpl();
+										String OI_dnpc 		= graduacionesForm.getOI_dnpc();
 										
 										if(OI_eje.equals("")){
 											OI_eje="      ";
@@ -503,13 +519,29 @@ public class ControllerGraduacionCliente implements Serializable{
 										
 										//segunda pregunta
 										
-										String mensaje1 = "Estos son los datos de la receta registrados:    \n ";
-										String mensaje2 = "  Ojo   Esf         Cil       Eje       Cerca         Add         DNPL         DNPC  \n ";
-										String mensaje3 = "   D     "+OD_esfera+"          "+OD_cilindro+"        "+OD_eje+"          "+OD_cerca+"             "+OD_adicion+"          "+OD_dnpl+"           "+OD_dnpc+"\n ";
-										String mensaje4 = "    I      "+OI_esfera+"          "+OI_cilindro+"        "+OI_eje+"          "+OI_cerca+"             "+OI_adicion+"          "+OI_dnpl+"           "+OI_dnpc+"\n ";
+										String mensaje1 = "Estos son los datos de la receta registrados:";
+										String mensaje2 = "  Ojo   Esf         Cil       Eje       Cerca         Add         DNPL         DNPC";
+										String mensaje3 = "   D     "+OD_esfera+"          "+OD_cilindro+"        "+OD_eje+"          "+OD_cerca+"             "+OD_adicion+"          "+OD_dnpl+"           "+OD_dnpc;
+										String mensaje4 = "   I     "+OI_esfera+"          "+OI_cilindro+"        "+OI_eje+"          "+OI_cerca+"             "+OI_adicion+"          "+OI_dnpl+"           "+OI_dnpc;
 										
 										String mensaje = mensaje1 + mensaje2 + mensaje3 + mensaje4;
 										
+										//prueba de ventana modal para responder
+										objetos = new HashMap<String,Object>();		
+										objetos.put("retornoSI","respuestaSI");
+										objetos.put("retornoNO","respuestaNO");
+										objetos.put("mens1",mensaje1);
+										objetos.put("mens2",mensaje2);
+										objetos.put("mens3",mensaje3);
+										objetos.put("mens4",mensaje4);
+										objetos.put("pregunta","seguro(a) que esta correctos?");
+										
+										Window winInformacion = (Window)Executions.createComponents(
+								                "/zul/general/Informacion.zul", null, objetos);
+										
+										winInformacion.doModal();
+										
+										/*
 										Messagebox.show(mensaje, "seguro(a) que esta correctos?",
 												Messagebox.YES | 
 												Messagebox.CANCEL, 
@@ -532,7 +564,7 @@ public class ControllerGraduacionCliente implements Serializable{
 												}
 										});	
 										
-										
+										*/
 										
 									}						
 								}
@@ -550,6 +582,50 @@ public class ControllerGraduacionCliente implements Serializable{
 			Messagebox.show("La ADD para cada Ojo es distinta");
 			}		
 	}
+	
+	//==========================================================
+	//============ Respuesta de la ventana =====================
+	
+	@GlobalCommand
+	public void respuestaSI() {
+		
+		graduacionesForm.setAccion("modificarGraduacion");
+		graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+		
+		if (graduacionesForm.getExito().equals("true")) {
+			Messagebox.show("Los datos fueron grabados correctamente");
+			return;
+		}else {
+			Messagebox.show("Error al intentar grabar los datos");
+			return;
+		}
+		
+	}
+	
+	
+	@GlobalCommand
+	public void respuestaSIinserta() {
+		
+		graduacionesDispatch.IngresaGraduacion(graduacionesForm, sess);
+		
+		//if (graduacionesForm.getExito().equals("true")) {
+			Messagebox.show("Los datos fueron grabados correctamente");											
+			BindUtils.postGlobalCommand(null, null, "notificacionCambios", null);
+			return;
+		/*}else {
+			Messagebox.show("Error al intentar grabar los datos");
+			return;
+		}*/
+		
+	}
+	
+	@GlobalCommand
+	public void respuestaNO() {
+		
+	}
+	
+	
+	
 	
 	@GlobalCommand
 	public void notificacionCambios() {		
@@ -1352,7 +1428,9 @@ public class ControllerGraduacionCliente implements Serializable{
 	@Command
 	public void validaEje(@BindingParam("elemento")String elemento, @BindingParam("lado")String lado){
 		
-		Double eje = 0.00;
+		Integer eje = 000;
+		//NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+		//DecimalFormat df = new DecimalFormat("0.00");
 		//boolean esnumero=false;
 		
 		/*if (!Pattern.matches(regexp2, elemento)) {
@@ -1360,12 +1438,12 @@ public class ControllerGraduacionCliente implements Serializable{
 			return;
 		}*/
 		
-		nf.setMinimumFractionDigits(2);
-		nf.setMaximumFractionDigits(2);	
+		nf.setMinimumFractionDigits(0);
+		nf.setMaximumFractionDigits(0);	
 		
 		if(!elemento.equals("")){
 			try {
-				eje = Double.valueOf(elemento);
+				eje = Integer.valueOf(elemento);
 				
 				if(lado.equals("derecha")){
 				   graduacionesForm.setOD_eje(nf.format(eje));				 
@@ -1375,7 +1453,7 @@ public class ControllerGraduacionCliente implements Serializable{
 				
 				elemento = nf.format(eje);
 			}catch(Exception e) {
-				eje = 0.00;
+				eje = 000;
 				
 				if(lado.equals("derecha")){
 				   graduacionesForm.setOD_eje("");				 
@@ -1395,7 +1473,7 @@ public class ControllerGraduacionCliente implements Serializable{
 			//if(true == esnumero){
 				if(eje < 0 || eje >180){
 					Messagebox.show("El valor del eje "+lado+" esta fuera de rango [0..100]");
-					eje = 0.00;
+					eje = 000;
 					elemento="";
 					//elemento.value = "";
 					

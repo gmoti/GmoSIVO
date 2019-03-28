@@ -2971,6 +2971,7 @@ public class Utils {
 			int sumalb = Math.abs(devform.getSumaTotalAlabaranes());
 			int sumdest = 0,sneto = 0,sumades = 0,dtofinal =0,sumiva=0,sumfinal=0;
 			double dto=0;
+			int peti = 0;
 			
 			
 			System.out.println("PASO PRIMERA PARTE NC");	
@@ -3046,31 +3047,45 @@ public class Utils {
 				
 				System.out.println("CABECERA DESCRIPTIVA  NC linea4 =>"+linea4);
 				
-				ltotal = linea1.concat(linea2).concat(linea3).concat(linea4);
-						
-				System.out.println("LINEA TOTAL ==> "+ ltotal);
-				log.warn("LINEA TOTAL NC ==> "+ ltotal);
 				
-				resout = cr.convertDocument(Constantes.STRING_WS_AREA_NC, Constantes.STRING_WS_PASSWD, Constantes.STRING_WS_DTYPE_NC, ltotal);
+				 while(peti <= 5){
 				
-				log.warn("NC XML ==> "+resout);
+					Thread.sleep(1800);
+					
+					ltotal = linea1.concat(linea2).concat(linea3).concat(linea4);
+							
+					System.out.println("LINEA TOTAL ==> "+ ltotal);
+					log.warn("LINEA TOTAL NC ==> "+ ltotal);
+					
+					resout = cr.convertDocument(Constantes.STRING_WS_AREA_NC, Constantes.STRING_WS_PASSWD, Constantes.STRING_WS_DTYPE_NC, ltotal);
+					
+					log.warn("NC XML ==> "+resout);
+					 
+					Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+				            .parse(new InputSource(new StringReader(resout)));
 				 
-				Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-			            .parse(new InputSource(new StringReader(resout)));
-			 
-			    NodeList errNode = doc.getElementsByTagName("ProcessResult");
-			    if (errNode.getLength() > 0) {
-			         Element err = (Element)errNode.item(0);
-			         out = ((Node) err.getElementsByTagName("HasError").item(0)).getTextContent();
-			    }
+				    NodeList errNode = doc.getElementsByTagName("ProcessResult");
+				    if (errNode.getLength() > 0) {
+				         Element err = (Element)errNode.item(0);
+				         out = ((Node) err.getElementsByTagName("HasError").item(0)).getTextContent();
+				    }
+				    
+				    if(out.equals("false")){						
+						break;
+					}
+					
+					//out = "false";
 				
-				out = "false";
+					peti++;
+				 }
+				
 			}catch(Exception e){
 				log.warn("NOTA DE CREDITO ERROR ==> "+e);
 				System.out.println("Mensaje excepcion genera_notacredito  ===> "+e.getMessage());
 				return res = "true_"+devform.getNif()+"-"+devform.getDvnif();
 
 			}
+			
 			res = out+"_"+devform.getNif()+"-"+devform.getDvnif();
 			return res;
 	}
