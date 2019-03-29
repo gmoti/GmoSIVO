@@ -61,7 +61,7 @@
 				<label value="Agregar" />																		
 			</div>
 			
-			<div width="100%" height="70%">
+			<div width="100%" height="80%">
 				<grid model="@bind(vm.busquedaClientesForm.listaClientes)" 
 					oddRowSclass="none" sclass="MyGridRowHeight" width="100%" height="95%" style="overflow-y: scroll" > 
 					<columns>

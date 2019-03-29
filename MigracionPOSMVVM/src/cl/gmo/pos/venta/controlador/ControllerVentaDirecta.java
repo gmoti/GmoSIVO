@@ -304,17 +304,17 @@ public class ControllerVentaDirecta implements Serializable{
 				String tmp[] =  ventaDirectaForm.getEstado_boleta().split("_");				
 					
 				//Produccion	
-				/*String url ="http://10.216.4.16/39 " + 
+				String url ="http://10.216.4.16/39 " + 
 						ventaDirectaForm.getNif().trim() + 
 						"-" + ventaDirectaForm.getDv().trim() + 
-						" " + tmp[1].trim()+".pdf";	*/
+						" " + tmp[1].trim()+".pdf";	
 					
 					
 				//Desarrollo
-				String url ="http://10.216.4.24/39 " + 
+				/*String url ="http://10.216.4.24/39 " + 
 							ventaDirectaForm.getNif().trim() + 
 							"-" + ventaDirectaForm.getDv().trim() + 
-							" " + tmp[1].trim()+".pdf";
+							" " + tmp[1].trim()+".pdf";*/
 						
 				
 				if(tmp[0].equals("0") || tmp[2].equals("true")){

@@ -80,7 +80,7 @@
 				<label value="NIF" />																		
 			</div>
 			
-			<div width="100%" height="90%" style="background-color:#c1c1c1; border-style:none">
+			<div width="100%" height="69%" style="background-color:#c1c1c1; border-style:none">
 
 				<grid model="@bind(vm.devolucionForm.lista_albaranes)" 
 					oddRowSclass="none" sclass="MyGridRowHeight" width="100%" height="95%" style="overflow-y: scroll" >
